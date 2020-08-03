@@ -47,6 +47,9 @@ class SignIn extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
                           decoration: InputDecoration(
                             enabledBorder: _inputDecoration(),
                             focusedBorder: _inputDecoration(),
@@ -61,6 +64,9 @@ class SignIn extends StatelessWidget {
                           height: 15,
                         ),
                         TextFormField(
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
                           decoration: InputDecoration(
                             enabledBorder: _inputDecoration(),
                             focusedBorder: _inputDecoration(),
