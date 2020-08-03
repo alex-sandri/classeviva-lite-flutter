@@ -89,9 +89,18 @@ class SignIn extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
                           child: OutlineButton(
-                            onPressed: () {},
+                            borderSide: BorderSide(
+                              color: Theme.of(context).accentColor,
+                              width: 2,
+                            ),
+                            highlightedBorderColor: Theme.of(context).accentColor,
+                            padding: EdgeInsets.all(15),
                             child: Icon(Icons.check),
                             color: Theme.of(context).primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                            ),
+                            onPressed: () {},
                           ),
                         ),
                       ],
