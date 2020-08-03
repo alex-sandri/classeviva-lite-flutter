@@ -20,6 +20,7 @@ class SignIn extends StatelessWidget {
           title: Text(
             'ClasseViva Lite'
           ),
+          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {
