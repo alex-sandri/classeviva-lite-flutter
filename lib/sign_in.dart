@@ -19,6 +19,7 @@ class SignIn extends StatelessWidget {
                 'Accedi',
                 style: TextStyle(
                   fontSize: 50,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
