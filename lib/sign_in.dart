@@ -88,9 +88,9 @@ class SignIn extends StatelessWidget {
                             color: Theme.of(context).accentColor,
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
-                          child: IconButton(
+                          child: OutlineButton(
                             onPressed: () {},
-                            icon: Icon(Icons.check),
+                            child: Icon(Icons.check),
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
