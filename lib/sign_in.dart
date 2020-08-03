@@ -55,6 +55,10 @@ class SignIn extends StatelessWidget {
                               color: Theme.of(context).accentColor,
                             ),
                           ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.check),
                         )
                       ],
                     ),
