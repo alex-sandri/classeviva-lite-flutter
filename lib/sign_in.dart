@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _uidController = TextEditingController();
+    final _pwdController = TextEditingController();
+
     OutlineInputBorder _inputDecoration() {
       return OutlineInputBorder(
         borderSide: BorderSide(
@@ -48,6 +51,7 @@ class SignIn extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          controller: _uidController,
                           style: TextStyle(
                             color: Theme.of(context).accentColor,
                           ),
@@ -65,6 +69,7 @@ class SignIn extends StatelessWidget {
                           height: 15,
                         ),
                         TextFormField(
+                          controller: _pwdController,
                           style: TextStyle(
                             color: Theme.of(context).accentColor,
                           ),
