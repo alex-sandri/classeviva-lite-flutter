@@ -55,6 +55,7 @@ class SignIn extends StatelessWidget {
                               color: Theme.of(context).accentColor,
                             ),
                           ),
+                          cursorColor: Theme.of(context).accentColor,
                         ),
                         SizedBox(
                           height: 15,
@@ -68,6 +69,7 @@ class SignIn extends StatelessWidget {
                               color: Theme.of(context).accentColor,
                             ),
                           ),
+                          cursorColor: Theme.of(context).accentColor,
                           obscureText: true,
                         ),
                         SizedBox(
