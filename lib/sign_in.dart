@@ -59,6 +59,20 @@ class SignIn extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            enabledBorder: _inputDecoration(),
+                            focusedBorder: _inputDecoration(),
+                            labelText: 'Password',
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
+                          ),
+                          obscureText: true,
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
