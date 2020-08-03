@@ -30,7 +30,7 @@ class SignIn extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "Codice personale / Email / Badge"
+                        labelText: 'Codice personale / Email / Badge'
                       ),
                     )
                   ],
