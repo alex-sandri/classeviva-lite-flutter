@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ClasseViva Lite',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primaryColor: Colors.red,
+        accentColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: SignIn(),
