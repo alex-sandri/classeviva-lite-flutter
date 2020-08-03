@@ -56,10 +56,21 @@ class SignIn extends StatelessWidget {
                             ),
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.check),
-                        )
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).accentColor,
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                          ),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.check),
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
                       ],
                     ),
                   )
