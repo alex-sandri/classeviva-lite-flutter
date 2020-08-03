@@ -21,41 +21,46 @@ class SignIn extends StatelessWidget {
             'ClasseViva Lite'
           ),
         ),
-        body: Container(
-          color: Theme.of(context).primaryColor,
-          child: Padding(
-            padding: EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Accedi',
-                  style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w900,
-                    color: Theme.of(context).accentColor,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Container(
+            color: Theme.of(context).primaryColor,
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Accedi',
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.w900,
+                      color: Theme.of(context).accentColor,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Form(
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: _inputDecoration(),
-                          focusedBorder: _inputDecoration(),
-                          labelText: 'Codice personale / Email / Badge',
-                          labelStyle: TextStyle(
-                            color: Theme.of(context).accentColor,
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Form(
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          decoration: InputDecoration(
+                            enabledBorder: _inputDecoration(),
+                            focusedBorder: _inputDecoration(),
+                            labelText: 'Codice personale / Email / Badge',
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
