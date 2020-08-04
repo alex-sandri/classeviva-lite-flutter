@@ -77,6 +77,11 @@ class _SignInState extends State<SignIn> {
                             ),
                           ),
                           cursorColor: Theme.of(context).accentColor,
+                          onChanged: (value) {
+                            setState(() {
+                              _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                            });
+                          },
                         ),
                         SizedBox(
                           height: 15,
@@ -98,6 +103,11 @@ class _SignInState extends State<SignIn> {
                           ),
                           cursorColor: Theme.of(context).accentColor,
                           obscureText: true,
+                          onChanged: (value) {
+                            setState(() {
+                              _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                            });
+                          },
                         ),
                         SizedBox(
                           height: 15,
