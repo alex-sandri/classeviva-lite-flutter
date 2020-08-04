@@ -282,7 +282,7 @@ class ClasseViva
 
 		final responseJson = jsonDecode(response.body);
 
-    if (((responseJson["errors"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["errors"]);
+    if (((responseJson["data"]["auth"]["errors"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["data"]["auth"]["errors"]);
 
 		if (((responseJson["error"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["error"]);
 
