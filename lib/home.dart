@@ -31,6 +31,7 @@ class Home extends StatelessWidget {
               },
               child: Container(
                 color: Theme.of(context).primaryColor,
+                width: double.infinity,
                 child: Padding(
                   padding: EdgeInsets.all(15),
                   child: Column(
