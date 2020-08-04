@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/home.dart';
 import 'package:classeviva_lite/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             );
 
-          return preferences.data.getString("sessionId") != null ? Container() : SignIn();
+          return preferences.data.getString("sessionId") != null ? Home() : SignIn();
         },
       ),
       debugShowCheckedModeBanner: false,

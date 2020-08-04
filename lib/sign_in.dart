@@ -150,7 +150,7 @@ class _SignInState extends State<SignIn> {
                                     );
                                   })
                                   .then((session) async {
-                                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                                    final SharedPreferences preferences = await SharedPreferences.getInstance();
 
                                     await preferences.setString("sessionId", session.sessionId);
                                   })
