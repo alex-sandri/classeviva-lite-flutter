@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -41,8 +42,18 @@ class Home extends StatelessWidget {
                         future: session.data.getProfile(),
                         builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
                           if (!profile.hasData)
-                            return CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                            return SkeletonAnimation(
+                              shimmerColor: Colors.white54,
+                              gradientColor: Color.fromARGB(0, 244, 244, 244),
+                              curve: Curves.fastOutSlowIn,
+                              child: Container(  
+                                width: double.infinity,  
+                                height: 57, // Horrible but it works (height of the column below)
+                                decoration: BoxDecoration(  
+                                  color: Theme.of(context).disabledColor,  
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
                             );
 
                           return Column(
