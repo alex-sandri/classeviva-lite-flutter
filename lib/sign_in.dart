@@ -10,6 +10,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool _showSpinner = false;
+  bool _disableButton = true;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +113,7 @@ class _SignInState extends State<SignIn> {
                             width: double.infinity,
                             child: FlatButton(
                               color: Theme.of(context).accentColor,
+                              disabledColor: Theme.of(context).disabledColor,
                               padding: EdgeInsets.all(15),
                               child: Icon(
                                 Icons.check,
@@ -120,7 +122,7 @@ class _SignInState extends State<SignIn> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(5)),
                               ),
-                              onPressed: () async {
+                              onPressed: _disableButton ? null : () async {
                                 setState(() {
                                   _showSpinner = true;
                                 });
