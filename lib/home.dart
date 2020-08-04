@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/grades.dart';
+import 'package:classeviva_lite/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeleton_text/skeleton_text.dart';
@@ -26,6 +27,24 @@ class Home extends StatelessWidget {
                 'ClasseViva Lite'
               ),
               elevation: 0,
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.exit_to_app),
+                  onPressed: () async {
+                    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+                    await preferences.remove("sessionId");
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignIn(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                ),
+              ],
             ),
             body: GestureDetector(
               onTap: () {
