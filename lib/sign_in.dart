@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
@@ -107,7 +108,9 @@ class SignIn extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(5)),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await ClasseViva.createSession(_uidController.text, _pwdController.text);
+                            },
                           ),
                         ),
                       ],
