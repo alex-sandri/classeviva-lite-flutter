@@ -71,6 +71,27 @@ class Home extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
+                      ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.grade,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Valutazioni",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
