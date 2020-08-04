@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -184,10 +185,10 @@ class ClasseViva
 		final response = await http.post(
       ClasseVivaEndpoints.agenda(),
       headers: _getSessionCookieHeader(),
-			body: {
+			body: UrlSearchParams({
 				start: (start.millisecondsSinceEpoch / 1000).truncate(),
 				end: (end.millisecondsSinceEpoch / 1000).truncate(),
-			}.toString(),
+			}).toString(),
     );
 
 		return response.body as List<ClasseVivaAgendaItem>;
@@ -271,13 +272,13 @@ class ClasseViva
       headers: {
 				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
 			},
-			body: {
+			body: UrlSearchParams({
         "uid": uid,
         "pwd": pwd,
         "cid": "",
         "pin": "",
         "target": ""
-      }.toString(),
+      }).toString(),
 		);
 
 		final responseJson = jsonDecode(response.body);
