@@ -32,12 +32,11 @@ class Grades extends StatelessWidget {
               child: Container(
                 color: Theme.of(context).primaryColor,
                 width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      FutureBuilder(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: FutureBuilder(
                         future: session.data.getGrades(),
                         builder: (context, AsyncSnapshot<List<ClasseVivaGrade>> grades) {
                           if (!grades.hasData)
@@ -57,15 +56,26 @@ class Grades extends StatelessWidget {
                                 leading: CircleAvatar(
                                   child: Text(grade.grade),
                                 ),
-                                title: Text(grade.subject),
-                                subtitle: Text(grade.description),
+                                title: Text(
+                                  grade.subject,
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  grade.description,
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ),
                               );
                             },
                           );
                         },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
