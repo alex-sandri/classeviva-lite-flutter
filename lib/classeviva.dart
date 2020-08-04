@@ -46,7 +46,7 @@ class ClasseVivaGrade
 	String grade;
 	String type;
 	String description;
-	String date;
+	DateTime date;
 
   ClasseVivaGrade({
     @required this.subject,
@@ -165,12 +165,18 @@ class ClasseViva
       {
         final grade = nextSibling;
 
+        final String dateString = grade.querySelectorAll(".voto_data").first.text.trim();
+
         grades.add(ClasseVivaGrade(
 					subject: subject,
 					grade: grade.querySelector(".s_reg_testo").text.trim(),
 					type: grade.querySelectorAll(".voto_data").last.text.trim(),
 					description: grade.querySelector("[colspan=\"32\"] span").text.trim(),
-					date: grade.querySelectorAll(".voto_data").first.text.trim(),
+					date: DateTime(
+            int.parse(dateString.split("/").last),
+            int.parse(dateString.split("/")[1]),
+            int.parse(dateString.split("/").first),
+          ),
         ));
 
         nextSibling = nextSibling.nextElementSibling;
