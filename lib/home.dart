@@ -41,10 +41,8 @@ class Home extends StatelessWidget {
                         future: session.data.getProfile(),
                         builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
                           if (!profile.hasData)
-                            return Center(
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                              ),
+                            return CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
                             );
 
                           return Column(
