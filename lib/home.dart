@@ -90,6 +90,51 @@ class Home extends StatelessWidget {
                               onTap: () {},
                             ),
                           ),
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.view_agenda,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Agenda & Compiti",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.attachment,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Didattica",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.note,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Note",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
                         ],
                       )
                     ],
