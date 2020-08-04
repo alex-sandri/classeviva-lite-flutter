@@ -135,7 +135,20 @@ class _SignInState extends State<SignIn> {
 
                                 await ClasseViva
                                   .createSession(_uidController.text, _pwdController.text)
-                                  .catchError((errors) {
+                                  .then((session) async {
+                                    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+                                    await preferences.setString("sessionId", session.sessionId);
+
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Home(),
+                                      ),
+                                      (route) => false
+                                    );
+                                  },
+                                  onError: (errors) {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
@@ -148,19 +161,6 @@ class _SignInState extends State<SignIn> {
                                           ),
                                         );
                                       },
-                                    );
-                                  })
-                                  .then((session) async {
-                                    final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-                                    await preferences.setString("sessionId", session.sessionId);
-
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Home(),
-                                      ),
-                                      (route) => false
                                     );
                                   })
                                   .whenComplete(() {
