@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatelessWidget {
   @override
@@ -111,21 +112,28 @@ class SignIn extends StatelessWidget {
                               borderRadius: BorderRadius.all(Radius.circular(5)),
                             ),
                             onPressed: () async {
-                              await ClasseViva.createSession(_uidController.text, _pwdController.text).catchError((errors) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Errore",
-                                      ),
-                                      content: Text(
-                                        (errors as List<dynamic>).join("\n"),
-                                      ),
-                                    );
-                                  },
-                                );
-                              });
+                              await ClasseViva
+                                .createSession(_uidController.text, _pwdController.text)
+                                .catchError((errors) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          "Errore",
+                                        ),
+                                        content: Text(
+                                          (errors as List<dynamic>).join("\n"),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                })
+                                .then((session) async {
+                                  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+                                  await preferences.setString("sessionId", session.sessionId);
+                                });
                             },
                           ),
                         ),

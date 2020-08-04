@@ -122,13 +122,13 @@ class ClasseVivaDemerit
 
 class ClasseViva
 {
-  final String _sessionId;
+  final String sessionId;
 
-	ClasseViva(this._sessionId);
+	ClasseViva(this.sessionId);
 
   Map<String, String> _getSessionCookieHeader() {
     return {
-      "Cookie": "PHPSESSID=$_sessionId",
+      "Cookie": "PHPSESSID=$sessionId",
     };
   }
 
