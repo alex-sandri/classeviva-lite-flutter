@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/grades.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeleton_text/skeleton_text.dart';
@@ -81,7 +82,6 @@ class Home extends StatelessWidget {
                         height: 15,
                       ),
                       ListView(
-                        scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         children: <Widget>[
                           Card(
@@ -96,7 +96,14 @@ class Home extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Grades(),
+                                  )
+                                );
+                              },
                             ),
                           ),
                           Card(
