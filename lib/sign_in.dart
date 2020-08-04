@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/home.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -153,6 +154,14 @@ class _SignInState extends State<SignIn> {
                                     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
                                     await preferences.setString("sessionId", session.sessionId);
+
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Home(),
+                                      ),
+                                      (route) => false
+                                    );
                                   })
                                   .whenComplete(() {
                                     setState(() {
