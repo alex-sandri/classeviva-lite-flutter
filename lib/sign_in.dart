@@ -12,11 +12,11 @@ class _SignInState extends State<SignIn> {
   bool _showSpinner = false;
   bool _disableButton = true;
 
+  final _uidController = TextEditingController();
+  final _pwdController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final _uidController = TextEditingController();
-    final _pwdController = TextEditingController();
-
     OutlineInputBorder _inputDecoration() {
       return OutlineInputBorder(
         borderSide: BorderSide(
