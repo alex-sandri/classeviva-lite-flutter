@@ -2,7 +2,14 @@ import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  bool _showSpinner = false;
+
   @override
   Widget build(BuildContext context) {
     final _uidController = TextEditingController();
@@ -53,6 +60,7 @@ class SignIn extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          readOnly: _showSpinner,
                           autocorrect: false,
                           controller: _uidController,
                           style: TextStyle(
@@ -72,6 +80,7 @@ class SignIn extends StatelessWidget {
                           height: 15,
                         ),
                         TextFormField(
+                          readOnly: _showSpinner,
                           autocorrect: false,
                           controller: _pwdController,
                           style: TextStyle(
@@ -91,52 +100,68 @@ class SignIn extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).accentColor,
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                        if (_showSpinner)
+                          Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                            ),
                           ),
-                          child: OutlineButton(
-                            borderSide: BorderSide(
+                        if (!_showSpinner)
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
                               color: Theme.of(context).accentColor,
-                              width: 2,
-                            ),
-                            highlightedBorderColor: Theme.of(context).accentColor,
-                            padding: EdgeInsets.all(15),
-                            child: Icon(
-                              Icons.check,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(5)),
                             ),
-                            onPressed: () async {
-                              await ClasseViva
-                                .createSession(_uidController.text, _pwdController.text)
-                                .catchError((errors) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text(
-                                          "Errore",
-                                        ),
-                                        content: Text(
-                                          (errors as List<dynamic>).join("\n"),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                })
-                                .then((session) async {
-                                  SharedPreferences preferences = await SharedPreferences.getInstance();
-
-                                  await preferences.setString("sessionId", session.sessionId);
+                            child: OutlineButton(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).accentColor,
+                                width: 2,
+                              ),
+                              highlightedBorderColor: Theme.of(context).accentColor,
+                              padding: EdgeInsets.all(15),
+                              child: Icon(
+                                Icons.check,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                              ),
+                              onPressed: () async {
+                                setState(() {
+                                  _showSpinner = true;
                                 });
-                            },
+
+                                await ClasseViva
+                                  .createSession(_uidController.text, _pwdController.text)
+                                  .catchError((errors) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                            "Errore",
+                                          ),
+                                          content: Text(
+                                            (errors as List<dynamic>).join("\n"),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  })
+                                  .then((session) async {
+                                    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+                                    await preferences.setString("sessionId", session.sessionId);
+                                  })
+                                  .whenComplete(() {
+                                    setState(() {
+                                      _showSpinner = false;
+                                    });
+                                  });
+                              },
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   )
