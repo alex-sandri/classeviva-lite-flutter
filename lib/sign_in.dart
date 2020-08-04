@@ -110,16 +110,8 @@ class _SignInState extends State<SignIn> {
                         if (!_showSpinner)
                           Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            child: FlatButton(
                               color: Theme.of(context).accentColor,
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                            ),
-                            child: OutlineButton(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).accentColor,
-                                width: 2,
-                              ),
-                              highlightedBorderColor: Theme.of(context).accentColor,
                               padding: EdgeInsets.all(15),
                               child: Icon(
                                 Icons.check,
