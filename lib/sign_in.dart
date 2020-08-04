@@ -52,6 +52,7 @@ class SignIn extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          autocorrect: false,
                           controller: _uidController,
                           style: TextStyle(
                             color: Theme.of(context).accentColor,
@@ -70,6 +71,7 @@ class SignIn extends StatelessWidget {
                           height: 15,
                         ),
                         TextFormField(
+                          autocorrect: false,
                           controller: _pwdController,
                           style: TextStyle(
                             color: Theme.of(context).accentColor,
