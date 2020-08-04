@@ -282,9 +282,9 @@ class ClasseViva
 
 		final responseJson = jsonDecode(response.body);
 
-    if ((responseJson["errors"] as List<dynamic>).length > 0) return Future.error(responseJson["errors"]);
+    if (((responseJson["errors"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["errors"]);
 
-		if ((responseJson["error"] as List<dynamic>).length > 0) return Future.error(responseJson["error"]);
+		if (((responseJson["error"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["error"]);
 
     // Use the second PHPSESSID cookie (because for some reason ClasseViva returns two PHPSESSID cookies)
 		final cookies = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
