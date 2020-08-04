@@ -111,7 +111,21 @@ class SignIn extends StatelessWidget {
                               borderRadius: BorderRadius.all(Radius.circular(5)),
                             ),
                             onPressed: () async {
-                              await ClasseViva.createSession(_uidController.text, _pwdController.text);
+                              await ClasseViva.createSession(_uidController.text, _pwdController.text).catchError((errors) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Errore",
+                                      ),
+                                      content: Text(
+                                        (errors as List<dynamic>).join("\n"),
+                                      ),
+                                    );
+                                  },
+                                );
+                              });
                             },
                           ),
                         ),
