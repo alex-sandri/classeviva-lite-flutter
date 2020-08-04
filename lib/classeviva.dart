@@ -282,7 +282,7 @@ class ClasseViva
 
 		final responseJson = jsonDecode(response.body);
 
-		if ((responseJson.error as String).length > 0) return Future.error(responseJson.error);
+		if ((responseJson["error"] as List<dynamic>).length > 0) return Future.error(responseJson["error"]);
 
     print(response.headers["set-cookie"]);
 
