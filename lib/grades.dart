@@ -21,7 +21,7 @@ class Grades extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               title: Text(
-                'ClasseViva Lite'
+                'Valutazioni'
               ),
               elevation: 0,
             ),
