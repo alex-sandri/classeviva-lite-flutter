@@ -68,7 +68,10 @@ class _AgendaState extends State<Agenda> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  child: _items == null
+                  child: RefreshIndicator(
+                    onRefresh: _handleRefresh,
+                    color: Theme.of(context).primaryColor,
+                    child: _items == null
                     ? Center(
                         child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
@@ -113,6 +116,7 @@ class _AgendaState extends State<Agenda> {
                           );
                         },
                       ),
+                  )
                 ),
               ],
             ),
