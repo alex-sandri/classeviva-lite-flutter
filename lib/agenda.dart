@@ -57,7 +57,6 @@ class Agenda extends StatelessWidget {
                               final ClasseVivaAgendaItem item = agenda.data[index];
 
                               return ListTile(
-                                isThreeLine: true,
                                 title: Text(
                                   item.autore_desc,
                                   style: TextStyle(
