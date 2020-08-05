@@ -77,8 +77,15 @@ class Grades extends StatelessWidget {
                               return ListTile(
                                 isThreeLine: true,
                                 leading: CircleAvatar(
-                                  child: Text(grade.grade),
+                                  child: Text(
+                                    grade.grade,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                   backgroundColor: _getGradeColor(grade),
+                                  radius: 25,
                                 ),
                                 title: Text(
                                   grade.subject,
