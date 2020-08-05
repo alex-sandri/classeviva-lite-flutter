@@ -68,6 +68,7 @@ class _GradesState extends State<Grades> {
 
                           return RefreshIndicator(
                             onRefresh: _handleRefresh,
+                            color: Theme.of(context).primaryColor,
                             child: ListView.builder(
                               shrinkWrap: true,
                               itemCount: _grades.length,
