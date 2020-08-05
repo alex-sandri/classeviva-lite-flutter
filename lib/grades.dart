@@ -40,6 +40,11 @@ class _GradesState extends State<Grades> {
     if (_session == null)
       return Container(
         color: Theme.of(context).primaryColor,
+        child: Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+          ),
+        ),
       );
 
     return Material(
