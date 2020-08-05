@@ -13,14 +13,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Colors.red,
+        statusBarColor: Color(0xffcc1020),
       ),
     );
 
     return MaterialApp(
       title: 'ClasseViva Lite',
       theme: ThemeData(
-        primaryColor: Colors.red,
+        primaryColor: Color(0xffcc1020),
         accentColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
