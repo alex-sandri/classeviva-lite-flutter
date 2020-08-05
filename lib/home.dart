@@ -104,9 +104,6 @@ class Home extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
                     Expanded(
                       child: ListView(
                         padding: EdgeInsets.symmetric(horizontal: 15),
