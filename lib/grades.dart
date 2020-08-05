@@ -56,10 +56,29 @@ class Grades extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final ClasseVivaGrade grade = grades.data[index];
 
+                              Color _getGradeColor(ClasseVivaGrade grade)
+                              {
+                                Color color;
+
+                                if (grade.type != "Voto Test")
+                                {
+                                  final int parsedGrade = int.tryParse(grade.grade);
+
+                                  if (parsedGrade == null) color = Colors.blue; // Letter instead of a number, TODO: parse grade letters
+                                  else if (parsedGrade >= 6) color = Colors.green;
+                                  else if (parsedGrade >= 5) color = Colors.orange;
+                                  else color = Colors.red;
+                                }
+                                else color = Colors.blue;
+
+                                return color; 
+                              }
+
                               return ListTile(
                                 isThreeLine: true,
                                 leading: CircleAvatar(
                                   child: Text(grade.grade),
+                                  backgroundColor: _getGradeColor(grade),
                                 ),
                                 title: Text(
                                   grade.subject,
