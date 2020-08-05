@@ -70,12 +70,14 @@ class Agenda extends StatelessWidget {
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
+                                    SizedBox(height: 5,),
                                     Text(
                                       "(${item.start} - ${item.end})",
                                       style: TextStyle(
                                         color: Theme.of(context).accentColor,
                                       ),
                                     ),
+                                    SizedBox(height: 5,),
                                     Text(
                                       item.nota_2,
                                       style: TextStyle(
