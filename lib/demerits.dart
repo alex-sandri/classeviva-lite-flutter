@@ -16,6 +16,11 @@ class _DemeritsState extends State<Demerits> {
   Future<void> _handleRefresh() async {
     final List<ClasseVivaDemerit> demerits = await _session.getDemerits();
 
+    demerits.sort((a, b) {
+      // Most recent first
+      return b.date.compareTo(a.date);
+    });
+
     if (mounted)
       setState(() {
         _demerits = demerits;
