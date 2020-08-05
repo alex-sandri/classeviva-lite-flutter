@@ -166,7 +166,7 @@ class _AttachmentsState extends State<Attachments> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         SelectableText(
-                                          DateFormat.yMMMMd().add_jm().format(attachment.date),
+                                          DateFormat.yMMMMd().format(attachment.date),
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,
                                           ),
