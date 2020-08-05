@@ -321,7 +321,7 @@ class ClasseViva
 
 			attachments.add(ClasseVivaAttachment(
 				id: id,
-				teacher: attachment.querySelector(":nth-child(2)").text.trim(),
+				teacher: attachment.querySelector(":nth-child(2) div").text.trim(),
 				name: attachment.querySelector(".row_contenuto_desc").text.trim(),
 				folder: attachment.querySelector(".row_contenuto_desc").nextElementSibling.nextElementSibling.querySelector("span").text.trim(),
 				type: type,
