@@ -62,7 +62,7 @@ class Agenda extends StatelessWidget {
                                   child: Text(item.tipo),
                                 ),
                                 title: Text(
-                                  item.title,
+                                  item.autore_desc,
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                     fontWeight: FontWeight.w900,
@@ -75,7 +75,7 @@ class Agenda extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.max,
                                       children: <Widget>[
                                         Text(
-                                          item.data_inserimento,
+                                          "(${item.start} - ${item.end})",
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,
                                           ),
