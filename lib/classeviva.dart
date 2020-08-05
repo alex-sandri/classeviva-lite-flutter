@@ -135,7 +135,7 @@ class ClasseVivaAttachment
 	String name;
 	String folder;
 	ClasseVivaAttachmentType type;
-	String date;
+	DateTime date;
 	Uri url;
 
   ClasseVivaAttachment({
@@ -305,13 +305,31 @@ class ClasseViva
           break;
 			}
 
+      const List<String> months = [
+        "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+      ];
+
+      final String dateString = attachment
+        .querySelector("[colspan=\"7\"] div")
+        .text
+        .trim()
+        .split(",")
+        .last
+        .trim()
+        .replaceAll(" ", "/")
+        .replaceFirstMapped(RegExp(months.join("|")), (match) => (months.indexWhere((element) => element == match.group(0)) + 1).toString());
+
 			attachments.add(ClasseVivaAttachment(
 				id: id,
 				teacher: attachment.querySelector(":nth-child(2)").text.trim(),
 				name: attachment.querySelector(".row_contenuto_desc").text.trim(),
 				folder: attachment.querySelector(".row_contenuto_desc").nextElementSibling.nextElementSibling.querySelector("span").text.trim(),
 				type: type,
-				date: attachment.querySelector("[colspan=\"7\"] div").text.trim(),
+				date: DateTime(
+          int.parse(dateString.split("/").last),
+          int.parse(dateString.split("/")[1]),
+          int.parse(dateString.split("/").first),
+        ),
 				url: url,
       ));
 		});
