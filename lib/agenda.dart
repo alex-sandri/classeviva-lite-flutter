@@ -58,9 +58,6 @@ class Agenda extends StatelessWidget {
 
                               return ListTile(
                                 isThreeLine: true,
-                                leading: CircleAvatar(
-                                  child: Text(item.tipo),
-                                ),
                                 title: Text(
                                   item.autore_desc,
                                   style: TextStyle(
@@ -71,16 +68,11 @@ class Agenda extends StatelessWidget {
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        Text(
-                                          "(${item.start} - ${item.end})",
-                                          style: TextStyle(
-                                            color: Theme.of(context).accentColor,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      "(${item.start} - ${item.end})",
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                      ),
                                     ),
                                     Text(
                                       item.nota_2,
