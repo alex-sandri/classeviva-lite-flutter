@@ -19,7 +19,8 @@ class ClasseVivaEndpoints
 
 	static String grades() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
 
-	static String agenda() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events";
+	static String agenda(DateTime start, DateTime end) =>
+    "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events&start=${(start.millisecondsSinceEpoch / 1000).truncate()}&end=${(end.millisecondsSinceEpoch / 1000).truncate().toString()}";
 
 	static String attachments() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica_genitori_new.php";
 
@@ -215,13 +216,9 @@ class ClasseViva
 	}
 
 	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {
-		final response = await http.post(
-      ClasseVivaEndpoints.agenda(),
+		final response = await http.get(
+      ClasseVivaEndpoints.agenda(start, end),
       headers: _getSessionCookieHeader(),
-			body: Uri(queryParameters: {
-				"start": (start.millisecondsSinceEpoch / 1000).truncate(),
-				"end": (end.millisecondsSinceEpoch / 1000).truncate(),
-			}).query,
     );
 
     // TODO: Check valid session
