@@ -57,134 +57,131 @@ class Home extends StatelessWidget {
               child: Container(
                 color: Theme.of(context).primaryColor,
                 width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      FutureBuilder(
-                        future: session.data.getProfile(),
-                        builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
-                          if (!profile.hasData)
-                            return SkeletonAnimation(
-                              shimmerColor: Colors.white54,
-                              gradientColor: Color.fromARGB(0, 244, 244, 244),
-                              curve: Curves.fastOutSlowIn,
-                              child: Container(  
-                                width: double.infinity,  
-                                height: 57, // Horrible but it works (height of the column below)
-                                decoration: BoxDecoration(  
-                                  color: Theme.of(context).disabledColor,  
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FutureBuilder(
+                      future: session.data.getProfile(),
+                      builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
+                        if (!profile.hasData)
+                          return SkeletonAnimation(
+                            shimmerColor: Colors.white54,
+                            gradientColor: Color.fromARGB(0, 244, 244, 244),
+                            curve: Curves.fastOutSlowIn,
+                            child: Container(  
+                              width: double.infinity,  
+                              height: 57, // Horrible but it works (height of the column below)
+                              decoration: BoxDecoration(  
+                                color: Theme.of(context).disabledColor,  
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                            );
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                profile.data.name,
-                                style: TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w900,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                              ),
-                              Text(
-                                profile.data.school,
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
-                              ),
-                            ],
+                            ),
                           );
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ListView(
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          Card(
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.grade,
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              profile.data.name,
+                              style: TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.w900,
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                            Text(
+                              profile.data.school,
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    ListView(
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        Card(
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.grade,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            title: Text(
+                              "Valutazioni",
+                              style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                               ),
-                              title: Text(
-                                "Valutazioni",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Grades(),
-                                  )
-                                );
-                              },
                             ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Grades(),
+                                )
+                              );
+                            },
                           ),
-                          Card(
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.view_agenda,
+                        ),
+                        Card(
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.view_agenda,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            title: Text(
+                              "Agenda & Compiti",
+                              style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                               ),
-                              title: Text(
-                                "Agenda & Compiti",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Agenda(),
-                                  )
-                                );
-                              },
                             ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Agenda(),
+                                )
+                              );
+                            },
                           ),
-                          Card(
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.attachment,
+                        ),
+                        Card(
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.attachment,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            title: Text(
+                              "Didattica",
+                              style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                               ),
-                              title: Text(
-                                "Didattica",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              onTap: () {},
                             ),
+                            onTap: () {},
                           ),
-                          Card(
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.note,
+                        ),
+                        Card(
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.note,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            title: Text(
+                              "Note",
+                              style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                               ),
-                              title: Text(
-                                "Note",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              onTap: () {},
                             ),
+                            onTap: () {},
                           ),
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
