@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/agenda.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/grades.dart';
 import 'package:classeviva_lite/sign_in.dart';
@@ -140,7 +141,14 @@ class Home extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Agenda(),
+                                  )
+                                );
+                              },
                             ),
                           ),
                           Card(
