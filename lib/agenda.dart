@@ -77,7 +77,7 @@ class Agenda extends StatelessWidget {
                                   children: <Widget>[
                                     SizedBox(height: 5,),
                                     Text(
-                                      "(${item.start} - ${item.end})",
+                                      "(${DateFormat.yMMMMd().add_jm().format(item.start)} - ${DateFormat.yMMMMd().add_jm().format(item.end)})",
                                       style: TextStyle(
                                         color: Theme.of(context).accentColor,
                                       ),
