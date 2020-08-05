@@ -105,85 +105,86 @@ class Home extends StatelessWidget {
                     SizedBox(
                       height: 15,
                     ),
-                    ListView(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      shrinkWrap: true,
-                      children: <Widget>[
-                        Card(
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.grade,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            title: Text(
-                              "Valutazioni",
-                              style: TextStyle(
+                    Expanded(
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        children: <Widget>[
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.grade,
                                 color: Theme.of(context).primaryColor,
                               ),
+                              title: Text(
+                                "Valutazioni",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Grades(),
+                                  )
+                                );
+                              },
                             ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Grades(),
-                                )
-                              );
-                            },
                           ),
-                        ),
-                        Card(
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.view_agenda,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            title: Text(
-                              "Agenda & Compiti",
-                              style: TextStyle(
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.view_agenda,
                                 color: Theme.of(context).primaryColor,
                               ),
+                              title: Text(
+                                "Agenda & Compiti",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Agenda(),
+                                  )
+                                );
+                              },
                             ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Agenda(),
-                                )
-                              );
-                            },
                           ),
-                        ),
-                        Card(
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.attachment,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            title: Text(
-                              "Didattica",
-                              style: TextStyle(
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.attachment,
                                 color: Theme.of(context).primaryColor,
                               ),
+                              title: Text(
+                                "Didattica",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
                             ),
-                            onTap: () {},
                           ),
-                        ),
-                        Card(
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.note,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            title: Text(
-                              "Note",
-                              style: TextStyle(
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.note,
                                 color: Theme.of(context).primaryColor,
                               ),
+                              title: Text(
+                                "Note",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
                             ),
-                            onTap: () {},
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   ],
                 ),
