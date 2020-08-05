@@ -33,7 +33,7 @@ class _AttachmentsState extends State<Attachments> {
   Future<void> _requestPermission() async {
     PermissionStatus permission = await Permission.storage.status;
 
-    if (permission != PermissionStatus.granted) Permission.storage.request();
+    if (permission != PermissionStatus.granted) await Permission.storage.request();
   }
 
   void initState() {
