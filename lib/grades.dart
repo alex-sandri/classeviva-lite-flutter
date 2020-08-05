@@ -37,16 +37,6 @@ class _GradesState extends State<Grades> {
 
   @override
   Widget build(BuildContext context) {
-    if (_session == null)
-      return Container(
-        color: Theme.of(context).primaryColor,
-        child: Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-          ),
-        ),
-      );
-
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -62,104 +52,110 @@ class _GradesState extends State<Grades> {
           child: Container(
             color: Theme.of(context).primaryColor,
             width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: _handleRefresh,
-                    color: Theme.of(context).primaryColor,
-                    child: _grades == null
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                          ),
-                        )
-                      : ListView.builder(
-                          itemCount: _grades.length,
-                          itemBuilder: (context, index) {
-                            final ClasseVivaGrade grade = _grades[index];
+            child: _session == null
+              ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: _handleRefresh,
+                        color: Theme.of(context).primaryColor,
+                        child: _grades == null
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: _grades.length,
+                              itemBuilder: (context, index) {
+                                final ClasseVivaGrade grade = _grades[index];
 
-                            Color _getGradeColor(ClasseVivaGrade grade)
-                            {
-                              Color color;
+                                Color _getGradeColor(ClasseVivaGrade grade)
+                                {
+                                  Color color;
 
-                              if (grade.type != "Voto Test")
-                              {
-                                double parsedGrade;
+                                  if (grade.type != "Voto Test")
+                                  {
+                                    double parsedGrade;
 
-                                if (grade.grade.contains("½")) parsedGrade = double.parse(grade.grade.replaceAll("½", ".5"));
-                                else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
-                                else if (grade.grade.contains("-")) parsedGrade = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
+                                    if (grade.grade.contains("½")) parsedGrade = double.parse(grade.grade.replaceAll("½", ".5"));
+                                    else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
+                                    else if (grade.grade.contains("-")) parsedGrade = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
 
-                                if (parsedGrade == null) color = Colors.blue; // Letter instead of a number, TODO: parse grade letters
-                                else if (parsedGrade >= 6) color = Colors.green;
-                                else if (parsedGrade >= 5) color = Colors.orange;
-                                else color = Colors.red;
-                              }
-                              else color = Colors.blue;
+                                    if (parsedGrade == null) color = Colors.blue; // Letter instead of a number, TODO: parse grade letters
+                                    else if (parsedGrade >= 6) color = Colors.green;
+                                    else if (parsedGrade >= 5) color = Colors.orange;
+                                    else color = Colors.red;
+                                  }
+                                  else color = Colors.blue;
 
-                              return color; 
-                            }
+                                  return color; 
+                                }
 
-                            return ListTile(
-                              isThreeLine: true,
-                              leading: CircleAvatar(
-                                child: Text(
-                                  grade.grade,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
+                                return ListTile(
+                                  isThreeLine: true,
+                                  leading: CircleAvatar(
+                                    child: Text(
+                                      grade.grade,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    backgroundColor: _getGradeColor(grade),
+                                    radius: 25,
                                   ),
-                                ),
-                                backgroundColor: _getGradeColor(grade),
-                                radius: 25,
-                              ),
-                              title: SelectableText(
-                                grade.subject,
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
+                                  title: SelectableText(
+                                    grade.subject,
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SelectableText(
-                                        DateFormat.yMMMMd().format(grade.date),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          SelectableText(
+                                            DateFormat.yMMMMd().format(grade.date),
+                                            style: TextStyle(
+                                              color: Theme.of(context).accentColor,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: SelectableText(
+                                              " - ${grade.type}",
+                                              style: TextStyle(
+                                                color: Theme.of(context).accentColor,
+                                              ),
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        grade.description,
                                         style: TextStyle(
                                           color: Theme.of(context).accentColor,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: SelectableText(
-                                          " - ${grade.type}",
-                                          style: TextStyle(
-                                            color: Theme.of(context).accentColor,
-                                          ),
-                                          maxLines: 1,
-                                        ),
-                                      ),
                                     ],
-                                  ),
-                                  Text(
-                                    grade.description,
-                                    style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            );
-                          },
-                        ),
-                  ),
+                                  )
+                                );
+                              },
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
           ),
         ),
       ),
