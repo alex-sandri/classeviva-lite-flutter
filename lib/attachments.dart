@@ -104,7 +104,7 @@ class _AttachmentsState extends State<Attachments> {
                                       switch (attachment.type)
                                       {
                                         case ClasseVivaAttachmentType.File:
-                                          await FlutterDownloader.initialize();
+                                          await FlutterDownloader.initialize(debug: false);
 
                                           await FlutterDownloader.enqueue(
                                             url: attachment.url.toString(),
