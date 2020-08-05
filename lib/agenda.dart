@@ -83,7 +83,7 @@ class Agenda extends StatelessWidget {
                                       ],
                                     ),
                                     Text(
-                                      item.note_2,
+                                      item.nota_2,
                                       style: TextStyle(
                                         color: Theme.of(context).accentColor,
                                       ),

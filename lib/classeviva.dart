@@ -68,7 +68,7 @@ class ClasseVivaAgendaItem
 	String end;
 	bool allDay;
 	String data_inserimento;
-	String note_2;
+	String nota_2;
 	String master_id;
 	String classe_id;
 	String classe_desc;
