@@ -94,34 +94,36 @@ class _AttachmentsState extends State<Attachments> {
                               return icon; 
                             }
 
-                            return ListTile(
-                              isThreeLine: true,
-                              leading: CircleAvatar(
-                                child: Icon(
-                                  _getAttachmentIcon(attachment),
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                backgroundColor: Theme.of(context).accentColor,
-                                radius: 25,
-                              ),
-                              title: SelectableText(
-                                attachment.name,
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SelectableText(
-                                    attachment.date,
-                                    style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                    ),
+                            return Card(
+                              child: ListTile(
+                                isThreeLine: true,
+                                leading: CircleAvatar(
+                                  child: Icon(
+                                    _getAttachmentIcon(attachment),
+                                    color: Theme.of(context).primaryColor,
                                   ),
-                                ],
-                              )
+                                  backgroundColor: Theme.of(context).accentColor,
+                                  radius: 25,
+                                ),
+                                title: SelectableText(
+                                  attachment.name,
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    SelectableText(
+                                      attachment.date,
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ),
                             );
                           },
                         ),
