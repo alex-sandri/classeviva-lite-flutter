@@ -147,6 +147,7 @@ class _AttachmentsState extends State<Attachments> {
                                           break;
                                       }
                                     },
+                                    isThreeLine: true,
                                     leading: CircleAvatar(
                                       child: Icon(
                                         _getAttachmentIcon(attachment),
@@ -165,6 +166,12 @@ class _AttachmentsState extends State<Attachments> {
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
+                                        SelectableText(
+                                          attachment.teacher,
+                                          style: TextStyle(
+                                            color: Theme.of(context).accentColor,
+                                          ),
+                                        ),
                                         SelectableText(
                                           DateFormat.yMMMMd().format(attachment.date),
                                           style: TextStyle(
