@@ -108,7 +108,9 @@ class _AttachmentsState extends State<Attachments> {
 
                                           await FlutterDownloader.enqueue(
                                             url: attachment.url.toString(),
-                                            savedDir: (await getApplicationDocumentsDirectory()).path,
+                                            savedDir: (Theme.of(context).platform == TargetPlatform.android
+                                              ? await getExternalStorageDirectory()
+                                              : await getApplicationDocumentsDirectory()).path,
                                             showNotification: true,
                                             openFileFromNotification: true,
                                             headers: _session.getSessionCookieHeader(),
