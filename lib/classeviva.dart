@@ -152,7 +152,7 @@ class ClasseVivaAttachment
 class ClasseVivaDemerit
 {
 	String teacher;
-	String date;
+	DateTime date;
 	String content;
 	String type;
 
@@ -350,9 +350,15 @@ class ClasseViva
 		List<ClasseVivaDemerit> demerits = [];
 
 		document.querySelectorAll("#sort_table tbody tr").forEach((demerit) {
+      final String dateString = demerit.querySelector(":nth-child(3)").text.trim();
+
 			demerits.add(ClasseVivaDemerit(
 				teacher: demerit.querySelector(":first-child").text.trim(),
-				date: demerit.querySelector(":nth-child(3)").text.trim(),
+				date: DateTime(
+          int.parse(dateString.split("-").last),
+          int.parse(dateString.split("-")[1]),
+          int.parse(dateString.split("-").first),
+        ),
 				content: demerit.querySelector(":nth-child(5)").text.trim(),
 				type: demerit.querySelector(":last-child").text.trim(),
 			));

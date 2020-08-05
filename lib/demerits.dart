@@ -98,7 +98,7 @@ class _DemeritsState extends State<Demerits> {
                               children: <Widget>[
                                 SizedBox(height: 5,),
                                 SelectableText(
-                                  demerit.date,
+                                  DateFormat.yMMMMd().format(demerit.date),
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                   ),
