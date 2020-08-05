@@ -72,12 +72,53 @@ class ClasseVivaAgendaItem
 	String master_id;
 	String classe_id;
 	String classe_desc;
-	String gruppo;
+	int gruppo;
 	String autore_desc;
 	String autore_id;
 	String tipo;
 	String materia_desc;
 	String materia_id;
+
+  ClasseVivaAgendaItem({
+    @required this.id,
+    @required this.title,
+    @required this.start,
+    @required this.end,
+    @required this.allDay,
+    @required this.data_inserimento,
+    @required this.nota_2,
+    @required this.master_id,
+    @required this.classe_id,
+    @required this.classe_desc,
+    @required this.gruppo,
+    @required this.autore_desc,
+    @required this.autore_id,
+    @required this.tipo,
+    @required this.materia_desc,
+    @required this.materia_id,
+  });
+
+  factory ClasseVivaAgendaItem.fromJson(Map<String, dynamic> json)
+  {
+    return ClasseVivaAgendaItem(
+      id: json["id"],
+      title: json["title"],
+      start: json["start"],
+      end: json["end"],
+      allDay: json["allDay"],
+      data_inserimento: json["data_inserimento"],
+      nota_2: json["nota_2"],
+      master_id: json["master_id"],
+      classe_id: json["classe_id"],
+      classe_desc: json["classe_desc"],
+      gruppo: json["gruppo"],
+      autore_desc: json["autore_desc"],
+      autore_id: json["autore_id"],
+      tipo: json["tipo"],
+      materia_desc: json["materia_desc"],
+      materia_id: json["materia_id"]
+    );
+  }
 }
 
 enum ClasseVivaAttachmentType
@@ -223,7 +264,7 @@ class ClasseViva
 
     // TODO: Check valid session
 
-		return response.body as List<ClasseVivaAgendaItem>;
+		return (jsonDecode(response.body) as List).map((e) => ClasseVivaAgendaItem.fromJson(e)).toList();
 	}
 
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
