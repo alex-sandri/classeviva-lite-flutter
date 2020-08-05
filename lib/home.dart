@@ -60,44 +60,47 @@ class Home extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    FutureBuilder(
-                      future: session.data.getProfile(),
-                      builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
-                        if (!profile.hasData)
-                          return SkeletonAnimation(
-                            shimmerColor: Colors.white54,
-                            gradientColor: Color.fromARGB(0, 244, 244, 244),
-                            curve: Curves.fastOutSlowIn,
-                            child: Container(  
-                              width: double.infinity,  
-                              height: 57, // Horrible but it works (height of the column below)
-                              decoration: BoxDecoration(  
-                                color: Theme.of(context).disabledColor,  
-                                borderRadius: BorderRadius.circular(5),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: FutureBuilder(
+                        future: session.data.getProfile(),
+                        builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
+                          if (!profile.hasData)
+                            return SkeletonAnimation(
+                              shimmerColor: Colors.white54,
+                              gradientColor: Color.fromARGB(0, 244, 244, 244),
+                              curve: Curves.fastOutSlowIn,
+                              child: Container(  
+                                width: double.infinity,  
+                                height: 57, // Horrible but it works (height of the column below)
+                                decoration: BoxDecoration(  
+                                  color: Theme.of(context).disabledColor,  
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                               ),
-                            ),
-                          );
+                            );
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              profile.data.name,
-                              style: TextStyle(
-                                fontSize: 35,
-                                fontWeight: FontWeight.w900,
-                                color: Theme.of(context).accentColor,
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                profile.data.name,
+                                style: TextStyle(
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w900,
+                                  color: Theme.of(context).accentColor,
+                                ),
                               ),
-                            ),
-                            Text(
-                              profile.data.school,
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                              Text(
+                                profile.data.school,
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
+                            ],
+                          );
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 15,
