@@ -106,6 +106,7 @@ class Home extends StatelessWidget {
                       height: 15,
                     ),
                     ListView(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
                       shrinkWrap: true,
                       children: <Widget>[
                         Card(
