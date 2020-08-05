@@ -17,7 +17,7 @@ class _AgendaState extends State<Agenda> {
     // TODO: Make the start end end dynamic
     final List<ClasseVivaAgendaItem> items = await _session.getAgenda(DateTime(2020, 5, 1), DateTime(2020, 6, 1));
 
-    _items.sort((a, b) {
+    items.sort((a, b) {
       // Most recent first
       return b.start.compareTo(a.start);
     });
