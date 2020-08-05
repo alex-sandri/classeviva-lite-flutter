@@ -50,7 +50,49 @@ class Agenda extends StatelessWidget {
                               ),
                             );
 
-                          return Container();
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: agenda.data.length,
+                            itemBuilder: (context, index) {
+                              final ClasseVivaAgendaItem item = agenda.data[index];
+
+                              return ListTile(
+                                isThreeLine: true,
+                                leading: CircleAvatar(
+                                  child: Text(item.tipo),
+                                ),
+                                title: Text(
+                                  item.title,
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        Text(
+                                          item.data_inserimento,
+                                          style: TextStyle(
+                                            color: Theme.of(context).accentColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      item.note_2,
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              );
+                            },
+                          );
                         },
                       ),
                     ),
