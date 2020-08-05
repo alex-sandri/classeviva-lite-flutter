@@ -352,8 +352,8 @@ class ClasseViva
 		document.querySelectorAll("#sort_table tbody tr").forEach((demerit) {
 			demerits.add(ClasseVivaDemerit(
 				teacher: demerit.querySelector(":first-child").text.trim(),
-				date: demerit.querySelector(":nth-child(2)").text.trim(),
-				content: demerit.querySelector(":nth-child(3)").text.trim(),
+				date: demerit.querySelector(":nth-child(3)").text.trim(),
+				content: demerit.querySelector(":nth-child(5)").text.trim(),
 				type: demerit.querySelector(":last-child").text.trim(),
 			));
 		});
