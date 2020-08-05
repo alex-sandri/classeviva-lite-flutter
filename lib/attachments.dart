@@ -2,6 +2,9 @@ import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'package:html/parser.dart';
 
 class Attachments extends StatefulWidget {
   @override
@@ -93,7 +96,53 @@ class _AttachmentsState extends State<Attachments> {
                                 return Card(
                                   color: Theme.of(context).disabledColor,
                                   child: ListTile(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      final String url = attachment.url.toString();
+
+                                      switch (attachment.type)
+                                      {
+                                        case ClasseVivaAttachmentType.File:
+                                          if (await canLaunch(url)) await launch(url);
+                                          else
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: Text("Errore"),
+                                                  content: Text("Impossibile scaricare il file"),
+                                                );
+                                              },
+                                            );
+                                          break;
+                                        case ClasseVivaAttachmentType.Link:
+                                          if (await canLaunch(url)) await launch(url);
+                                          else
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: Text("Errore"),
+                                                  content: Text("Impossibile aprire il link"),
+                                                );
+                                              },
+                                            );
+                                          break;
+                                        case ClasseVivaAttachmentType.Text:
+                                          final response = await http.get(url);
+
+                                          final document = parse(response.body);
+
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                content: Text(document.body.text.trim()),
+                                              );
+                                            },
+                                          );
+                                          break;
+                                      }
+                                    },
                                     leading: CircleAvatar(
                                       child: Icon(
                                         _getAttachmentIcon(attachment),
