@@ -64,8 +64,8 @@ class ClasseVivaAgendaItem
 {
 	String id;
 	String title;
-	String start;
-	String end;
+	DateTime start;
+	DateTime end;
 	bool allDay;
 	String data_inserimento;
 	String nota_2;
@@ -103,8 +103,8 @@ class ClasseVivaAgendaItem
     return ClasseVivaAgendaItem(
       id: json["id"],
       title: json["title"],
-      start: json["start"],
-      end: json["end"],
+      start: DateTime.parse(json["start"]),
+      end: DateTime.parse(json["end"]),
       allDay: json["allDay"],
       data_inserimento: json["data_inserimento"],
       nota_2: json["nota_2"],
