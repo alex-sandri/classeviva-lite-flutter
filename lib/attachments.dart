@@ -41,7 +41,7 @@ class _AttachmentsState extends State<Attachments> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Valutazioni'
+            'Didattica'
           ),
           elevation: 0,
         ),
