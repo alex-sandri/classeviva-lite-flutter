@@ -50,6 +50,11 @@ class Agenda extends StatelessWidget {
                               ),
                             );
 
+                          agenda.data.sort((a, b) {
+                            // Most recent first
+                            return b.start.compareTo(a.start);
+                          });
+
                           return ListView.separated(
                             separatorBuilder: (context, index) => Divider(
                               color: Theme.of(context).accentColor,
