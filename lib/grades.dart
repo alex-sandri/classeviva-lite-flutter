@@ -68,7 +68,6 @@ class _GradesState extends State<Grades> {
                               ),
                             )
                           : ListView.builder(
-                              shrinkWrap: true,
                               itemCount: _grades.length,
                               itemBuilder: (context, index) {
                                 final ClasseVivaGrade grade = _grades[index];
