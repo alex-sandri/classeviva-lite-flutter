@@ -166,12 +166,14 @@ class _AttachmentsState extends State<Attachments> {
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
+                                        SizedBox(height: 5,),
                                         SelectableText(
                                           attachment.teacher,
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,
                                           ),
                                         ),
+                                        SizedBox(height: 5,),
                                         SelectableText(
                                           DateFormat.yMMMMd().format(attachment.date),
                                           style: TextStyle(
