@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Attachments extends StatefulWidget {
   @override
@@ -102,18 +104,13 @@ class _AttachmentsState extends State<Attachments> {
                                       switch (attachment.type)
                                       {
                                         case ClasseVivaAttachmentType.File:
-                                          // TODO: file downloads must be handled in a different way (403 Error)
-                                          if (await canLaunch(url)) await launch(url);
-                                          else
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text("Errore"),
-                                                  content: Text("Impossibile scaricare il file"),
-                                                );
-                                              },
-                                            );
+                                          await FlutterDownloader.enqueue(
+                                            url: attachment.url.toString(),
+                                            savedDir: (await getApplicationDocumentsDirectory()).path,
+                                            showNotification: true,
+                                            openFileFromNotification: true,
+                                            headers: _session.getSessionCookieHeader(),
+                                          );
                                           break;
                                         case ClasseVivaAttachmentType.Link:
                                           if (await canLaunch(url)) await launch(url);
