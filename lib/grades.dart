@@ -115,7 +115,7 @@ class _GradesState extends State<Grades> {
                                 backgroundColor: _getGradeColor(grade),
                                 radius: 25,
                               ),
-                              title: Text(
+                              title: SelectableText(
                                 grade.subject,
                                 style: TextStyle(
                                   color: Theme.of(context).accentColor,
@@ -128,20 +128,19 @@ class _GradesState extends State<Grades> {
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: <Widget>[
-                                      Text(
+                                      SelectableText(
                                         DateFormat.yMMMMd().format(grade.date),
                                         style: TextStyle(
                                           color: Theme.of(context).accentColor,
                                         ),
                                       ),
                                       Expanded(
-                                        child: Text(
-                                          " - ${grade.type}".replaceAllMapped(RegExp(".{1}"), (match) => "\u{200b}${match.group(0)}"),
+                                        child: SelectableText(
+                                          " - ${grade.type}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,
                                           ),
-                                          overflow: TextOverflow.ellipsis,
-                                          softWrap: false,
+                                          maxLines: 1,
                                         ),
                                       ),
                                     ],
