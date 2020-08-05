@@ -57,9 +57,9 @@ class _GradesState extends State<Grades> {
                   children: <Widget>[
                     Expanded(
                       child: FutureBuilder(
-                        future: session.data.getGrades(),
-                        builder: (context, AsyncSnapshot<List<ClasseVivaGrade>> grades) {
-                          if (!grades.hasData)
+                        future: _handleRefresh(),
+                        builder: (context, snap) {
+                          if (_grades == null)
                             return Center(
                               child: CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
@@ -70,9 +70,9 @@ class _GradesState extends State<Grades> {
                             onRefresh: _handleRefresh,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: grades.data.length,
+                              itemCount: _grades.length,
                               itemBuilder: (context, index) {
-                                final ClasseVivaGrade grade = grades.data[index];
+                                final ClasseVivaGrade grade = _grades[index];
 
                                 Color _getGradeColor(ClasseVivaGrade grade)
                                 {
