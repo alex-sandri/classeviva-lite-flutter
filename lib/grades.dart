@@ -62,7 +62,11 @@ class Grades extends StatelessWidget {
 
                                 if (grade.type != "Voto Test")
                                 {
-                                  final int parsedGrade = int.tryParse(grade.grade);
+                                  double parsedGrade;
+
+                                  if (grade.grade.contains("½")) parsedGrade = double.parse(grade.grade.replaceAll("½", ".5"));
+                                  else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
+                                  else if (grade.grade.contains("-")) parsedGrade = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
 
                                   if (parsedGrade == null) color = Colors.blue; // Letter instead of a number, TODO: parse grade letters
                                   else if (parsedGrade >= 6) color = Colors.green;
