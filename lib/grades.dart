@@ -136,7 +136,7 @@ class _GradesState extends State<Grades> {
                                       ),
                                       Expanded(
                                         child: SelectableText(
-                                          " - ${grade.type}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                                          " - ${grade.type}",
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,
                                           ),
