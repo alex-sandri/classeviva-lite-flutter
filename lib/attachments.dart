@@ -95,8 +95,8 @@ class _AttachmentsState extends State<Attachments> {
                             }
 
                             return Card(
+                              color: Theme.of(context).disabledColor,
                               child: ListTile(
-                                isThreeLine: true,
                                 leading: CircleAvatar(
                                   child: Icon(
                                     _getAttachmentIcon(attachment),
