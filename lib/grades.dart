@@ -37,6 +37,8 @@ class _GradesState extends State<Grades> {
           });
         }
 
+        _handleRefresh();
+
         return Material(
           child: Scaffold(
             appBar: AppBar(
