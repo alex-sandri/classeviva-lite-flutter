@@ -102,6 +102,7 @@ class _AttachmentsState extends State<Attachments> {
                                       switch (attachment.type)
                                       {
                                         case ClasseVivaAttachmentType.File:
+                                          // TODO: file downloads must be handled in a different way (403 Error)
                                           if (await canLaunch(url)) await launch(url);
                                           else
                                             showDialog(
