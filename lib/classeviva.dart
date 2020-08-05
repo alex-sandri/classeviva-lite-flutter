@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:classeviva_lite/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ClasseVivaEndpoints
 {
@@ -124,12 +126,34 @@ class ClasseViva
 {
   final String sessionId;
 
-	ClasseViva(this.sessionId);
+  final BuildContext context;
+
+	ClasseViva({
+    @required this.sessionId,
+    @required this.context,
+  });
 
   Map<String, String> _getSessionCookieHeader() {
     return {
       "Cookie": "PHPSESSID=$sessionId",
     };
+  }
+
+  Future<void> checkValidSession(dom.Document document) async {
+    if (document.querySelector(".name") == null)
+    {
+      final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+      await preferences.remove("sessionId");
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignIn(),
+        ),
+        (route) => false,
+      );
+    }
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
@@ -139,6 +163,8 @@ class ClasseViva
     );
 
     final document = parse(response.body);
+
+    checkValidSession(document);
 
 		return ClasseVivaProfile(
       name: document.querySelector(".name").text.trim(),
@@ -153,6 +179,8 @@ class ClasseViva
     );
 
 		final document = parse(response.body);
+
+    checkValidSession(document);
 
 		List<ClasseVivaGrade> grades = [];
 
@@ -196,6 +224,8 @@ class ClasseViva
 			}).query,
     );
 
+    // TODO: Check valid session
+
 		return response.body as List<ClasseVivaAgendaItem>;
 	}
 
@@ -206,6 +236,8 @@ class ClasseViva
     );
 
 		final document = parse(response.body);
+
+    checkValidSession(document);
 
 		List<ClasseVivaAttachment> attachments = [];
 
@@ -257,6 +289,8 @@ class ClasseViva
 
 		final document = parse(response.body);
 
+    checkValidSession(document);
+
 		List<ClasseVivaDemerit> demerits = [];
 
 		document.querySelectorAll("#sort_table tbody tr").forEach((demerit) {
@@ -271,7 +305,7 @@ class ClasseViva
 		return demerits;
 	}
 
-	static Future<ClasseViva> createSession(String uid, String pwd) async {
+	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {
 		final response = await http.post(
 			ClasseVivaEndpoints.auth(),
       headers: {
@@ -295,6 +329,9 @@ class ClasseViva
     // Use the second PHPSESSID cookie (because for some reason ClasseViva returns two PHPSESSID cookies)
 		final cookies = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
 
-		return ClasseViva(cookies);
+		return ClasseViva(
+      sessionId: cookies,
+      context: context,
+    );
 	}
 }

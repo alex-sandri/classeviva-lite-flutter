@@ -139,7 +139,7 @@ class _SignInState extends State<SignIn> {
                                 });
 
                                 await ClasseViva
-                                  .createSession(_uidController.text, _pwdController.text)
+                                  .createSession(_uidController.text, _pwdController.text, context)
                                   .then((session) async {
                                     final SharedPreferences preferences = await SharedPreferences.getInstance();
 

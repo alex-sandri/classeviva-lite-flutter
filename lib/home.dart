@@ -12,7 +12,10 @@ class Home extends StatelessWidget {
       future: () async {
         final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-        return ClasseViva(preferences.getString("sessionId"));
+        return ClasseViva(
+          sessionId: preferences.getString("sessionId"),
+          context: context
+        );
       }.call(),
       builder: (context, AsyncSnapshot<ClasseViva> session) {
         if (!session.hasData)
