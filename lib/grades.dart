@@ -71,11 +71,26 @@ class Grades extends StatelessWidget {
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(
-                                      DateFormat.yMMMMd().format(grade.date),
-                                      style: TextStyle(
-                                        color: Theme.of(context).accentColor,
-                                      ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        Text(
+                                          DateFormat.yMMMMd().format(grade.date),
+                                          style: TextStyle(
+                                            color: Theme.of(context).accentColor,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            " - ${grade.type}".replaceAllMapped(RegExp(".{1}"), (match) => "\u{200b}${match.group(0)}"),
+                                            style: TextStyle(
+                                              color: Theme.of(context).accentColor,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Text(
                                       grade.description,
