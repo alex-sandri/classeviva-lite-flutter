@@ -50,7 +50,10 @@ class Agenda extends StatelessWidget {
                               ),
                             );
 
-                          return ListView.builder(
+                          return ListView.separated(
+                            separatorBuilder: (context, index) => Divider(
+                              color: Theme.of(context).accentColor,
+                            ),
                             shrinkWrap: true,
                             itemCount: agenda.data.length,
                             itemBuilder: (context, index) {
