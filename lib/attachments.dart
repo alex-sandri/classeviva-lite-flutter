@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Attachments extends StatefulWidget {
   @override
@@ -25,6 +26,12 @@ class _AttachmentsState extends State<Attachments> {
       setState(() {
         _attachments = attachments;
       });
+  }
+
+  Future<void> _requestPermission() async {
+    PermissionStatus permission = await Permission.storage.status;
+
+    if (permission != PermissionStatus.granted) Permission.storage.request();
   }
 
   void initState() {
@@ -104,6 +111,8 @@ class _AttachmentsState extends State<Attachments> {
                                       switch (attachment.type)
                                       {
                                         case ClasseVivaAttachmentType.File:
+                                          await _requestPermission();
+
                                           await FlutterDownloader.initialize(debug: false);
 
                                           await FlutterDownloader.enqueue(
