@@ -32,9 +32,10 @@ class _GradesState extends State<Grades> {
         {
           final List<ClasseVivaGrade> grades = await session.data.getGrades();
 
-          setState(() {
-            _grades = grades;
-          });
+          if (mounted)
+            setState(() {
+              _grades = grades;
+            });
         }
 
         _handleRefresh();
