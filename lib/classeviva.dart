@@ -175,7 +175,7 @@ class ClasseViva
     @required this.context,
   });
 
-  Map<String, String> _getSessionCookieHeader() {
+  Map<String, String> getSessionCookieHeader() {
     return {
       "Cookie": "PHPSESSID=$sessionId",
     };
@@ -201,7 +201,7 @@ class ClasseViva
 	Future<ClasseVivaProfile> getProfile() async {
 		final response = await http.get(
       ClasseVivaEndpoints.profile(),
-      headers: _getSessionCookieHeader(),
+      headers: getSessionCookieHeader(),
     );
 
     final document = parse(response.body);
@@ -217,7 +217,7 @@ class ClasseViva
 	Future<List<ClasseVivaGrade>> getGrades() async {
 		final response = await http.get(
       ClasseVivaEndpoints.grades(),
-      headers: _getSessionCookieHeader(),
+      headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
@@ -259,7 +259,7 @@ class ClasseViva
 	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {
 		final response = await http.get(
       ClasseVivaEndpoints.agenda(start, end),
-      headers: _getSessionCookieHeader(),
+      headers: getSessionCookieHeader(),
     );
 
     // TODO: Check valid session
@@ -270,7 +270,7 @@ class ClasseViva
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
 		final response = await http.get(
       ClasseVivaEndpoints.attachments(),
-      headers: _getSessionCookieHeader(),
+      headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
@@ -322,7 +322,7 @@ class ClasseViva
 	Future<List<ClasseVivaDemerit>> getDemerits() async {
 		final response = await http.get(
 			ClasseVivaEndpoints.demerits(),
-      headers: _getSessionCookieHeader(),
+      headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);

@@ -128,7 +128,10 @@ class _AttachmentsState extends State<Attachments> {
                                             );
                                           break;
                                         case ClasseVivaAttachmentType.Text:
-                                          final response = await http.get(url);
+                                          final response = await http.get(
+                                            url,
+                                            headers: _session.getSessionCookieHeader(),
+                                          );
 
                                           final document = parse(response.body);
 
