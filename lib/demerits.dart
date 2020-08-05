@@ -81,11 +81,6 @@ class _DemeritsState extends State<Demerits> {
                           final ClasseVivaDemerit demerit = _demerits[index];
 
                           return ListTile(
-                            leading: CircleAvatar(
-                              child: Text(demerit.type),
-                              backgroundColor: Theme.of(context).accentColor,
-                              radius: 25,
-                            ),
                             title: SelectableText(
                               demerit.teacher,
                               style: TextStyle(
@@ -97,11 +92,25 @@ class _DemeritsState extends State<Demerits> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(height: 5,),
-                                SelectableText(
-                                  DateFormat.yMMMMd().format(demerit.date),
-                                  style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                  ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    SelectableText(
+                                      DateFormat.yMMMMd().format(demerit.date),
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: SelectableText(
+                                        " - ${demerit.type}",
+                                        style: TextStyle(
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(height: 5,),
                                 SelectableText(
