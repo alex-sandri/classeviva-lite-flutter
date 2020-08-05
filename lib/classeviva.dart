@@ -309,9 +309,9 @@ class ClasseViva
 				id: id,
 				teacher: attachment.querySelector(":nth-child(2)").text.trim(),
 				name: attachment.querySelector(".row_contenuto_desc").text.trim(),
-				folder: attachment.querySelector(".row_contenuto_desc + span span").text.trim(),
+				folder: attachment.querySelector(".row_contenuto_desc").nextElementSibling.nextElementSibling.querySelector("span").text.trim(),
 				type: type,
-				date: attachment.querySelector("[colspan=7] div").text.trim(),
+				date: attachment.querySelector("[colspan=\"7\"] div").text.trim(),
 				url: url,
       ));
 		});
