@@ -37,16 +37,6 @@ class _AttachmentsState extends State<Attachments> {
 
   @override
   Widget build(BuildContext context) {
-    if (_session == null)
-      return Container(
-        color: Theme.of(context).primaryColor,
-        child: Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-          ),
-        ),
-      );
-
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -62,75 +52,81 @@ class _AttachmentsState extends State<Attachments> {
           child: Container(
             color: Theme.of(context).primaryColor,
             width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: _handleRefresh,
-                    color: Theme.of(context).primaryColor,
-                    child: _attachments == null
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                          ),
-                        )
-                      : ListView.builder(
-                          itemCount: _attachments.length,
-                          itemBuilder: (context, index) {
-                            final ClasseVivaAttachment attachment = _attachments[index];
+            child: _session == null
+              ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: _handleRefresh,
+                        color: Theme.of(context).primaryColor,
+                        child: _attachments == null
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: _attachments.length,
+                              itemBuilder: (context, index) {
+                                final ClasseVivaAttachment attachment = _attachments[index];
 
-                            IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
-                            {
-                              IconData icon;
+                                IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
+                                {
+                                  IconData icon;
 
-                              switch (attachment.type)
-                              {
-                                case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
-                                case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
-                                case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
-                              }
+                                  switch (attachment.type)
+                                  {
+                                    case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
+                                    case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
+                                    case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
+                                  }
 
-                              return icon; 
-                            }
+                                  return icon; 
+                                }
 
-                            return Card(
-                              color: Theme.of(context).disabledColor,
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  child: Icon(
-                                    _getAttachmentIcon(attachment),
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  backgroundColor: Theme.of(context).accentColor,
-                                  radius: 25,
-                                ),
-                                title: SelectableText(
-                                  attachment.name,
-                                  style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    SelectableText(
-                                      attachment.date,
+                                return Card(
+                                  color: Theme.of(context).disabledColor,
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      child: Icon(
+                                        _getAttachmentIcon(attachment),
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      backgroundColor: Theme.of(context).accentColor,
+                                      radius: 25,
+                                    ),
+                                    title: SelectableText(
+                                      attachment.name,
                                       style: TextStyle(
                                         color: Theme.of(context).accentColor,
+                                        fontWeight: FontWeight.w900,
                                       ),
                                     ),
-                                  ],
-                                )
-                              ),
-                            );
-                          },
-                        ),
-                  ),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        SelectableText(
+                                          attachment.date,
+                                          style: TextStyle(
+                                            color: Theme.of(context).accentColor,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ),
+                                );
+                              },
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
           ),
         ),
       ),
