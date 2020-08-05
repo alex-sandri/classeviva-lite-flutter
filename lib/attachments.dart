@@ -19,6 +19,8 @@ class _AttachmentsState extends State<Attachments> {
 
   List<ClasseVivaAttachment> _attachments;
 
+  bool _downloaderInitialized = false;
+
   Future<void> _handleRefresh() async {
     final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
 
@@ -113,7 +115,12 @@ class _AttachmentsState extends State<Attachments> {
                                         case ClasseVivaAttachmentType.File:
                                           await _requestPermission();
 
-                                          await FlutterDownloader.initialize(debug: false);
+                                          if (!_downloaderInitialized)
+                                          {
+                                            _downloaderInitialized = true;
+
+                                            await FlutterDownloader.initialize(debug: false);
+                                          }
 
                                           await FlutterDownloader.enqueue(
                                             url: attachment.url.toString(),
