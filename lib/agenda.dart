@@ -65,7 +65,7 @@ class Agenda extends StatelessWidget {
                               final ClasseVivaAgendaItem item = agenda.data[index];
 
                               return ListTile(
-                                title: Text(
+                                title: SelectableText(
                                   item.autore_desc,
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
@@ -76,14 +76,14 @@ class Agenda extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     SizedBox(height: 5,),
-                                    Text(
+                                    SelectableText(
                                       "(${DateFormat.yMMMMd().add_jm().format(item.start)} - ${DateFormat.yMMMMd().add_jm().format(item.end)})",
                                       style: TextStyle(
                                         color: Theme.of(context).accentColor,
                                       ),
                                     ),
                                     SizedBox(height: 5,),
-                                    Text(
+                                    SelectableText(
                                       item.nota_2,
                                       style: TextStyle(
                                         color: Theme.of(context).accentColor,
