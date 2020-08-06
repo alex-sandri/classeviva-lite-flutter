@@ -245,22 +245,24 @@ class _AttachmentsState extends State<Attachments> {
                                             context: context,
                                             builder: (context) {
                                               return AlertDialog(
-                                                content: SelectableLinkify(
-                                                  text: document.body.text.trim(),
-                                                  options: LinkifyOptions(humanize: false),
-                                                  onOpen: (link) async {
-                                                    if (await canLaunch(link.url)) await launch(link.url);
-                                                    else
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return AlertDialog(
-                                                            title: Text("Errore"),
-                                                            content: Text("Impossibile aprire il link"),
-                                                          );
-                                                        },
-                                                      );
-                                                  },
+                                                content: SingleChildScrollView(
+                                                  child: SelectableLinkify(
+                                                    text: document.body.text.trim(),
+                                                    options: LinkifyOptions(humanize: false),
+                                                    onOpen: (link) async {
+                                                      if (await canLaunch(link.url)) await launch(link.url);
+                                                      else
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return AlertDialog(
+                                                              title: Text("Errore"),
+                                                              content: Text("Impossibile aprire il link"),
+                                                            );
+                                                          },
+                                                        );
+                                                    },
+                                                  ),
                                                 ),
                                               );
                                             },
