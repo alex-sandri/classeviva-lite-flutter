@@ -22,7 +22,7 @@ class ClasseVivaEndpoints
 	static String agenda(DateTime start, DateTime end) =>
     "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events&start=${(start.millisecondsSinceEpoch / 1000).truncate()}&end=${(end.millisecondsSinceEpoch / 1000).truncate().toString()}";
 
-	static String attachments() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica_genitori_new.php";
+	static String attachments(int page) => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
 
 	static String fileAttachments(String id, String checksum) =>
 		"https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
@@ -170,6 +170,8 @@ class ClasseViva
 
   final BuildContext context;
 
+  int attachmentsPage = 1;
+
 	ClasseViva({
     @required this.sessionId,
     @required this.context,
@@ -269,7 +271,7 @@ class ClasseViva
 
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
 		final response = await http.get(
-      ClasseVivaEndpoints.attachments(),
+      ClasseVivaEndpoints.attachments(attachmentsPage),
       headers: getSessionCookieHeader(),
     );
 
