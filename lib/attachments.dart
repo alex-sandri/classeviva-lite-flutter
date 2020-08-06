@@ -106,9 +106,12 @@ class _AttachmentsState extends State<Attachments> {
                                 if (index == _attachments.length)
                                 {
                                   if (_showLoadMoreSpinner)
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                                    return Padding(
+                                      padding: EdgeInsets.all(4),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                                        ),
                                       ),
                                     );
 
