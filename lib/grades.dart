@@ -72,157 +72,159 @@ class _GradesState extends State<Grades> {
                 session: _session,
                 grades: _grades,
                 refreshHandler: _handleRefresh,
-                child: ListView.builder(
-                  itemCount: _grades.length,
-                  itemBuilder: (context, index) {
-                    final ClasseVivaGrade grade = _grades[index];
+                childBuilder: () {
+                  return ListView.builder(
+                    itemCount: _grades.length,
+                    itemBuilder: (context, index) {
+                      final ClasseVivaGrade grade = _grades[index];
 
-                    Color _getGradeColor(ClasseVivaGrade grade)
-                    {
-                      Color color;
-
-                      // IMPORTANT: These are not accurate at all, I just guessed what their equivalents are (but they somehow seem reasonable)
-                      // I just incremented them by 0.25, except for the 'ns/s' which was incremented by 0.5
-                      Map<String, String> reGrades = {
-                        // Non sufficiente
-                        "ns": "5",
-                        // Non sufficiente/Sufficiente
-                        "ns/s": "5.5",
-                        // Quasi sufficiente
-                        "qs": "6-",
-                        // Sufficiente
-                        "s": "6",
-                        // Più che sufficiente
-                        "ps": "6+",
-                        // Sufficiente/Discreto
-                        "s/dc": "6.5",
-                        // Quasi discreto
-                        "qd": "7-",
-                        // Discreto
-                        "dc": "7",
-                        // Più che discreto
-                        "pdc": "7+",
-                        // Discreto/Buono
-                        "dc/b": "7.5",
-                        // Quasi buono
-                        "qb": "8-",
-                        // Buono
-                        "b": "8",
-                        // Più che buono
-                        "pb": "8+",
-                        // Buono/Distinto
-                        "b/d": "8.5",
-                        // Quasi distinto
-                        "qdn": "9-",
-                        // Molto?
-                        "m": "9",
-                        // Distinto
-                        "ds": "9",
-                        // Più che distinto
-                        "pdn": "9+",
-                        // Distinto/Ottimo
-                        "d/o": "9.5",
-                        // Quasi ottimo
-                        "qo": "10-",
-                        // Ottimo
-                        "o": "10",
-                      };
-
-                      if (grade.type != "Voto Test")
+                      Color _getGradeColor(ClasseVivaGrade grade)
                       {
-                        double parsedGrade = double.tryParse(grade.grade);
+                        Color color;
 
-                        if (grade.grade.contains("½")) parsedGrade = double.parse(grade.grade.replaceAll("½", ".5"));
-                        else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
-                        else if (grade.grade.contains("-")) parsedGrade = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
+                        // IMPORTANT: These are not accurate at all, I just guessed what their equivalents are (but they somehow seem reasonable)
+                        // I just incremented them by 0.25, except for the 'ns/s' which was incremented by 0.5
+                        Map<String, String> reGrades = {
+                          // Non sufficiente
+                          "ns": "5",
+                          // Non sufficiente/Sufficiente
+                          "ns/s": "5.5",
+                          // Quasi sufficiente
+                          "qs": "6-",
+                          // Sufficiente
+                          "s": "6",
+                          // Più che sufficiente
+                          "ps": "6+",
+                          // Sufficiente/Discreto
+                          "s/dc": "6.5",
+                          // Quasi discreto
+                          "qd": "7-",
+                          // Discreto
+                          "dc": "7",
+                          // Più che discreto
+                          "pdc": "7+",
+                          // Discreto/Buono
+                          "dc/b": "7.5",
+                          // Quasi buono
+                          "qb": "8-",
+                          // Buono
+                          "b": "8",
+                          // Più che buono
+                          "pb": "8+",
+                          // Buono/Distinto
+                          "b/d": "8.5",
+                          // Quasi distinto
+                          "qdn": "9-",
+                          // Molto?
+                          "m": "9",
+                          // Distinto
+                          "ds": "9",
+                          // Più che distinto
+                          "pdn": "9+",
+                          // Distinto/Ottimo
+                          "d/o": "9.5",
+                          // Quasi ottimo
+                          "qo": "10-",
+                          // Ottimo
+                          "o": "10",
+                        };
 
-                        if (parsedGrade == null)
+                        if (grade.type != "Voto Test")
                         {
-                          if (RegExp("^${reGrades.keys.join("|")}\$").hasMatch(grade.grade))
+                          double parsedGrade = double.tryParse(grade.grade);
+
+                          if (grade.grade.contains("½")) parsedGrade = double.parse(grade.grade.replaceAll("½", ".5"));
+                          else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
+                          else if (grade.grade.contains("-")) parsedGrade = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
+
+                          if (parsedGrade == null)
                           {
-                            grade.grade = reGrades[grade.grade];
+                            if (RegExp("^${reGrades.keys.join("|")}\$").hasMatch(grade.grade))
+                            {
+                              grade.grade = reGrades[grade.grade];
 
-                            color = _getGradeColor(grade);
+                              color = _getGradeColor(grade);
+                            }
+                            else color = Colors.blue;
                           }
-                          else color = Colors.blue;
+                          else if (parsedGrade >= 6) color = Colors.green;
+                          else if (parsedGrade >= 5) color = Colors.orange;
+                          else color = Colors.red;
                         }
-                        else if (parsedGrade >= 6) color = Colors.green;
-                        else if (parsedGrade >= 5) color = Colors.orange;
-                        else color = Colors.red;
+                        else color = Colors.blue;
+
+                        return color; 
                       }
-                      else color = Colors.blue;
 
-                      return color; 
-                    }
-
-                    return ListTile(
-                      isThreeLine: true,
-                      leading: CircleAvatar(
-                        child: Text(
-                          grade.grade,
+                      return ListTile(
+                        isThreeLine: true,
+                        leading: CircleAvatar(
+                          child: Text(
+                            grade.grade,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          backgroundColor: _getGradeColor(grade),
+                          radius: 25,
+                        ),
+                        title: SelectableText(
+                          grade.subject,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
+                            color: Theme.of(context).accentColor,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
-                        backgroundColor: _getGradeColor(grade),
-                        radius: 25,
-                      ),
-                      title: SelectableText(
-                        grade.subject,
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              SelectableText(
-                                DateFormat.yMMMMd().format(grade.date),
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
-                              ),
-                              Expanded(
-                                child: SelectableText(
-                                  " - ${grade.type}",
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                SelectableText(
+                                  DateFormat.yMMMMd().format(grade.date),
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                   ),
-                                  maxLines: 1,
                                 ),
-                              ),
-                            ],
-                          ),
-                          SelectableLinkify(
-                            text: grade.description,
-                            options: LinkifyOptions(humanize: false),
-                            style: TextStyle(
-                              color: Theme.of(context).accentColor,
+                                Expanded(
+                                  child: SelectableText(
+                                    " - ${grade.type}",
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
                             ),
-                            onOpen: (link) async {
-                              if (await canLaunch(link.url)) await launch(link.url);
-                              else
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Errore"),
-                                      content: Text("Impossibile aprire il link"),
-                                    );
-                                  },
-                                );
-                            },
-                          ),
-                        ],
-                      )
-                    );
-                  },
-                ),
+                            SelectableLinkify(
+                              text: grade.description,
+                              options: LinkifyOptions(humanize: false),
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                              onOpen: (link) async {
+                                if (await canLaunch(link.url)) await launch(link.url);
+                                else
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text("Errore"),
+                                        content: Text("Impossibile aprire il link"),
+                                      );
+                                    },
+                                  );
+                              },
+                            ),
+                          ],
+                        )
+                      );
+                    },
+                  );
+                },
               ),
               Container(
                 // TODO: Second tab
@@ -240,14 +242,14 @@ class GradesView extends StatelessWidget {
 
   final List<ClasseVivaGrade> grades;
 
-  final Widget child;
+  final Widget Function() childBuilder;
 
   final Future<void> Function() refreshHandler;
 
   GradesView({
     @required this.session,
     @required this.grades,
-    @required this.child,
+    @required this.childBuilder,
     @required this.refreshHandler,
   });
 
@@ -279,7 +281,7 @@ class GradesView extends StatelessWidget {
                             valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
                           ),
                         )
-                      : child,
+                      : childBuilder(),
                   ),
                 ),
               ],
