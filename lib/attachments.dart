@@ -23,6 +23,8 @@ class _AttachmentsState extends State<Attachments> {
 
   bool _showLoadMoreButton = true;
 
+  bool _showLoadMoreSpinner = false;
+
   Future<void> _handleRefresh() async {
     final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
 
@@ -103,6 +105,13 @@ class _AttachmentsState extends State<Attachments> {
 
                                 if (index == _attachments.length)
                                 {
+                                  if (_showLoadMoreSpinner)
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                                      ),
+                                    );
+
                                   if (!_showLoadMoreButton) return Container();
 
                                   return Padding(
@@ -121,6 +130,11 @@ class _AttachmentsState extends State<Attachments> {
                                         borderRadius: BorderRadius.all(Radius.circular(5)),
                                       ),
                                       onPressed: () async {
+                                        setState(() {
+                                          _showLoadMoreButton = false;
+                                          _showLoadMoreSpinner = true;
+                                        });
+
                                         _session.attachmentsPage++;
 
                                         final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
@@ -130,6 +144,7 @@ class _AttachmentsState extends State<Attachments> {
                                             _attachments.addAll(attachments);
 
                                             _showLoadMoreButton = attachments.isNotEmpty;
+                                            _showLoadMoreSpinner = false;
                                           });
                                       },
                                     ),
