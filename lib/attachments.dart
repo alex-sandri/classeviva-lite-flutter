@@ -101,8 +101,10 @@ class _AttachmentsState extends State<Attachments> {
                                   );
                                 }
 
-                                if (_showLoadMoreButton && index == _attachments.length)
+                                if (index == _attachments.length)
                                 {
+                                  if (!_showLoadMoreButton) return Container();
+
                                   return Padding(
                                     padding: EdgeInsets.all(4),
                                     child: FlatButton(
