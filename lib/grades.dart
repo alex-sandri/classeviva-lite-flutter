@@ -87,7 +87,7 @@ class _GradesState extends State<Grades> {
 
                                   if (grade.type != "Voto Test")
                                   {
-                                    double parsedGrade;
+                                    double parsedGrade = double.tryParse(grade.grade);
 
                                     if (grade.grade.contains("½")) parsedGrade = double.parse(grade.grade.replaceAll("½", ".5"));
                                     else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
