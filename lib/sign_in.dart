@@ -63,6 +63,7 @@ class _SignInState extends State<SignIn> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          autofillHints: [ AutofillHints.username, AutofillHints.email ],
                           readOnly: _showSpinner,
                           autocorrect: false,
                           controller: _uidController,
@@ -88,6 +89,7 @@ class _SignInState extends State<SignIn> {
                           height: 15,
                         ),
                         TextFormField(
+                          autofillHints: [ AutofillHints.password ],
                           readOnly: _showSpinner,
                           autocorrect: false,
                           controller: _pwdController,
