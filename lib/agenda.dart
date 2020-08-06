@@ -59,6 +59,7 @@ class _AgendaState extends State<Agenda> {
             IconButton(
               icon: Icon(Icons.calendar_today),
               onPressed: () async {
+                // TODO: Allow period choice
                 final DateTime selectedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
