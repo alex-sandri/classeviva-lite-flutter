@@ -56,7 +56,7 @@ class _GradesState extends State<Grades> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  icon: Icon(Icons.grade),
+                  text: "Ultime Valutazioni",
                 )
               ],
             ),
