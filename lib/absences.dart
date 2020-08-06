@@ -90,9 +90,7 @@ class _AbsencesState extends State<Absences> {
 
                           if (index == _absences.length) return Container();
 
-                          final ClasseVivaAbsence item = _absences[index];
-
-                          print(item);
+                          final ClasseVivaAbsence absence = _absences[index];
 
                           return ListTile();
                         },

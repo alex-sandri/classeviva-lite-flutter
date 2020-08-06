@@ -415,7 +415,40 @@ class ClasseViva
 		List<ClasseVivaAbsence> absences = [];
 
 		document.querySelectorAll("#skeda_eventi tr[height=\"38\"]").skip(1).forEach((element) {
-      print(element);
+      // Absence
+      element.querySelector("td[colspan=\"15\"]").querySelectorAll(".rigtab").forEach((element) {
+        final String fromDateString = element.querySelectorAll("td[colspan=\"4\"]").first.text;
+        final String toDateString = element.querySelectorAll("td[colspan=\"4\"]").last.text;
+
+        print({
+          fromDateString,
+          toDateString,
+        });
+
+        /*
+        absences.add(ClasseVivaAbsence(
+          from: DateTime(
+
+          ),
+          to: DateTime(
+            
+          ),
+          description: ,
+          type: ClasseVivaAbsenceType.Absence,
+          status: ,
+        ));
+        */
+      });
+
+      // Late
+      element.querySelectorAll("td[colspan=\"12\"]").first.querySelectorAll(".rigtab").forEach((element) {
+
+      });
+
+      // Early Exit
+      element.querySelectorAll("td[colspan=\"12\"]").last.querySelectorAll(".rigtab").forEach((element) {
+
+      });
     });
 
 		return absences;
