@@ -85,8 +85,49 @@ class _GradesState extends State<Grades> {
                                 {
                                   Color color;
 
-                                  Map<String, double> reGrades = {
-                                    "s": 6,
+                                  // IMPORTANT: These are not accurate at all, I just guessed what their equivalents are (but they somehow seem reasonable)
+                                  // I just incremented them by 0.25, except for the 'ns/s' which was incremented by 0.5
+                                  Map<String, String> reGrades = {
+                                    // Non sufficiente
+                                    "ns": "5",
+                                    // Non sufficiente/Sufficiente
+                                    "ns/s": "5.5",
+                                    // Quasi sufficiente
+                                    "qs": "6-",
+                                    // Sufficiente
+                                    "s": "6",
+                                    // Più che sufficiente
+                                    "ps": "6+",
+                                    // Sufficiente/Discreto
+                                    "s/dc": "6.5",
+                                    // Quasi discreto
+                                    "qd": "7-",
+                                    // Discreto
+                                    "dc": "7",
+                                    // Più che discreto
+                                    "pdc": "7+",
+                                    // Discreto/Buono
+                                    "dc/b": "7.5",
+                                    // Quasi buono
+                                    "qb": "8-",
+                                    // Buono
+                                    "b": "8",
+                                    // Più che buono
+                                    "pb": "8+",
+                                    // Buono/Distinto
+                                    "b/d": "8.5",
+                                    // Quasi distinto
+                                    "qdn": "9-",
+                                    // Distinto
+                                    "ds": "9",
+                                    // Più che distinto
+                                    "pdn": "9+",
+                                    // Distinto/Ottimo
+                                    "d/o": "9.5",
+                                    // Quasi ottimo
+                                    "qo": "10-",
+                                    // Ottimo
+                                    "o": "10",
                                   };
 
                                   if (grade.type != "Voto Test")
@@ -101,7 +142,7 @@ class _GradesState extends State<Grades> {
                                     {
                                       if (RegExp("^${reGrades.keys.join("|")}\$").hasMatch(grade.grade))
                                       {
-                                        grade.grade = reGrades[grade.grade].toString();
+                                        grade.grade = reGrades[grade.grade];
 
                                         color = _getGradeColor(grade);
                                       }
