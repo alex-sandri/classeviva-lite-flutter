@@ -85,6 +85,10 @@ class _GradesState extends State<Grades> {
                                 {
                                   Color color;
 
+                                  Map<String, double> reGrades = {
+                                    "s": 6,
+                                  };
+
                                   if (grade.type != "Voto Test")
                                   {
                                     double parsedGrade = double.tryParse(grade.grade);
@@ -93,7 +97,16 @@ class _GradesState extends State<Grades> {
                                     else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
                                     else if (grade.grade.contains("-")) parsedGrade = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
 
-                                    if (parsedGrade == null) color = Colors.blue; // Letter instead of a number, TODO: parse grade letters
+                                    if (parsedGrade == null)
+                                    {
+                                      if (RegExp("^${reGrades.keys.join("|")}\$").hasMatch(grade.grade))
+                                      {
+                                        grade.grade = reGrades[grade.grade].toString();
+
+                                        color = _getGradeColor(grade);
+                                      }
+                                      else color = Colors.blue;
+                                    }
                                     else if (parsedGrade >= 6) color = Colors.green;
                                     else if (parsedGrade >= 5) color = Colors.orange;
                                     else color = Colors.red;
