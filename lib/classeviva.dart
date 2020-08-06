@@ -30,6 +30,8 @@ class ClasseVivaEndpoints
 	static String textAttachments(String id) => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
 
 	static String demerits() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
+
+  static String absences() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/tic/app/default/consultasingolo.php";
 }
 
 class ClasseVivaProfile
@@ -161,6 +163,37 @@ class ClasseVivaDemerit
     @required this.date,
     @required this.content,
     @required this.type,
+  });
+}
+
+enum ClasseVivaAbsenceType
+{
+  Absence,
+  Late,
+  ShortDelay,
+  EarlyExit,
+}
+
+enum ClasseVivaAbsenceStatus
+{
+  Justified,
+  NotJustified,
+}
+
+class ClasseVivaAbsence
+{
+  DateTime from;
+  DateTime to;
+  String description;
+  ClasseVivaAbsenceType type;
+  ClasseVivaAbsenceStatus status;
+
+  ClasseVivaAbsence({
+    @required this.from,
+    @required this.to,
+    @required this.description,
+    @required this.type,
+    @required this.status,
   });
 }
 
@@ -367,6 +400,25 @@ class ClasseViva
 		});
 
 		return demerits;
+	}
+
+  Future<List<ClasseVivaAbsence>> getAbsences() async {
+		final response = await http.get(
+			ClasseVivaEndpoints.absences(),
+      headers: getSessionCookieHeader(),
+    );
+
+		final document = parse(response.body);
+
+    checkValidSession(document);
+
+		List<ClasseVivaAbsence> absences = [];
+
+		document.querySelectorAll("tr[height=\"38\"]").forEach((element) {
+      print(element);
+    });
+
+		return absences;
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {

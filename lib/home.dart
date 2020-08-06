@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/absences.dart';
 import 'package:classeviva_lite/agenda.dart';
 import 'package:classeviva_lite/attachments.dart';
 import 'package:classeviva_lite/classeviva.dart';
@@ -142,7 +143,14 @@ class Home extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Absences(),
+                                  )
+                                );
+                              },
                             ),
                           ),
                           Card(
