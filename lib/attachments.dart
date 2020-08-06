@@ -71,8 +71,7 @@ class _AttachmentsState extends State<Attachments> {
       if (status == DownloadTaskStatus.complete) FlutterDownloader.open(taskId: id);
     });
 
-    FlutterDownloader.initialize(debug: false).then((value) =>
-      FlutterDownloader.registerCallback(downloadCallback));
+    FlutterDownloader.registerCallback(downloadCallback);
   }
 
   @override
