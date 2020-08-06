@@ -46,7 +46,7 @@ class _GradesState extends State<Grades> {
   Widget build(BuildContext context) {
     return Material(
       child: DefaultTabController(
-        length: 1,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -56,8 +56,13 @@ class _GradesState extends State<Grades> {
             bottom: TabBar(
               tabs: [
                 Tab(
+                  icon: Icon(Icons.grade),
                   text: "Ultime Valutazioni",
-                )
+                ),
+                Tab(
+                  icon: Icon(Icons.assessment),
+                  text: "Riepilogo",
+                ),
               ],
             ),
           ),
