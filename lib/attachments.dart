@@ -86,8 +86,41 @@ class _AttachmentsState extends State<Attachments> {
                               ),
                             )
                           : ListView.builder(
-                              itemCount: _attachments.length,
+                              itemCount: _attachments.length + 1,
                               itemBuilder: (context, index) {
+                                if (_attachments.isEmpty)
+                                {
+                                  return SelectableText(
+                                    "Non sono presenti elementi in Didattica",
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  );
+                                }
+
+                                if (index == _attachments.length)
+                                {
+                                  return Padding(
+                                    padding: EdgeInsets.all(4),
+                                    child: FlatButton(
+                                      color: Theme.of(context).accentColor,
+                                      disabledColor: Theme.of(context).disabledColor,
+                                      padding: EdgeInsets.all(15),
+                                      child: Text(
+                                        "Carica più elementi",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                  );
+                                }
+
                                 final ClasseVivaAttachment attachment = _attachments[index];
 
                                 IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
