@@ -118,6 +118,8 @@ class _GradesState extends State<Grades> {
                                     "b/d": "8.5",
                                     // Quasi distinto
                                     "qdn": "9-",
+                                    // Molto?
+                                    "m": "9",
                                     // Distinto
                                     "ds": "9",
                                     // Più che distinto
