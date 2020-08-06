@@ -21,6 +21,8 @@ class _AttachmentsState extends State<Attachments> {
 
   bool _downloaderInitialized = false;
 
+  bool _showLoadMoreButton = true;
+
   Future<void> _handleRefresh() async {
     final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
 
@@ -99,7 +101,7 @@ class _AttachmentsState extends State<Attachments> {
                                   );
                                 }
 
-                                if (index == _attachments.length)
+                                if (_showLoadMoreButton && index == _attachments.length)
                                 {
                                   return Padding(
                                     padding: EdgeInsets.all(4),
@@ -124,6 +126,8 @@ class _AttachmentsState extends State<Attachments> {
                                         if (mounted)
                                           setState(() {
                                             _attachments.addAll(attachments);
+
+                                            _showLoadMoreButton = attachments.isNotEmpty;
                                           });
                                       },
                                     ),
