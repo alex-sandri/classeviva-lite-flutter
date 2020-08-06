@@ -414,7 +414,7 @@ class ClasseViva
 
 		List<ClasseVivaAbsence> absences = [];
 
-		document.querySelectorAll("tr[height=\"38\"]").forEach((element) {
+		document.querySelectorAll("#skeda_eventi tr[height=\"38\"]").forEach((element) {
       print(element);
     });
 
