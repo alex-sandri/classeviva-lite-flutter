@@ -16,6 +16,11 @@ class _GradesState extends State<Grades> {
   Future<void> _handleRefresh() async {
     final List<ClasseVivaGrade> grades = await _session.getGrades();
 
+    grades.sort((a, b) {
+      // Most recent first
+      return b.date.compareTo(a.date);
+    });
+
     if (mounted)
       setState(() {
         _grades = grades;
