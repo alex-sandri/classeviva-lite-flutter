@@ -78,6 +78,7 @@ class _AttachmentsState extends State<Attachments> {
   @override
   void dispose() {
     IsolateNameServer.removePortNameMapping('downloader_send_port');
+
     super.dispose();
   }
 
