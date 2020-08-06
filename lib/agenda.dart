@@ -67,10 +67,13 @@ class _AgendaState extends State<Agenda> {
                   lastDate: DateTime(2099),
                 );
 
-                _start = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
-                _end = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59);
+                if (selectedDate != null)
+                {
+                  _start = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+                  _end = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59);
 
-                _handleRefresh();
+                  _handleRefresh();
+                }
               },
             ),
           ],
