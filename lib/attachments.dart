@@ -9,6 +9,11 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+void _downloaderCallback(String id, DownloadTaskStatus status, int progress) async {
+  if (status == DownloadTaskStatus.complete)
+    await FlutterDownloader.open(taskId: id);
+}
+
 class Attachments extends StatefulWidget {
   @override
   _AttachmentsState createState() => _AttachmentsState();
@@ -197,6 +202,8 @@ class _AttachmentsState extends State<Attachments> {
                                             openFileFromNotification: true,
                                             headers: _session.getSessionCookieHeader(),
                                           );
+
+                                          FlutterDownloader.registerCallback(_downloaderCallback);
                                           break;
                                         case ClasseVivaAttachmentType.Link:
                                           if (await canLaunch(url)) await launch(url);
