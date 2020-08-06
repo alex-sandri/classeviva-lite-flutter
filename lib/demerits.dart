@@ -82,8 +82,19 @@ class _DemeritsState extends State<Demerits> {
                         separatorBuilder: (context, index) => Divider(
                           color: Theme.of(context).accentColor,
                         ),
-                        itemCount: _demerits.length,
+                        itemCount: _demerits.length + 1,
                         itemBuilder: (context, index) {
+                          if (_demerits.isEmpty)
+                            return SelectableText(
+                              "Non sono presenti note",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                              textAlign: TextAlign.center,
+                            );
+
+                          if (index == _demerits.length) return Container();
+
                           final ClasseVivaDemerit demerit = _demerits[index];
 
                           return ListTile(
