@@ -226,9 +226,14 @@ class _GradesState extends State<Grades> {
                   );
                 },
               ),
-              Container(
-                // TODO: Second tab
-              ),
+              GradesView(
+                session: _session,
+                grades: _grades,
+                refreshHandler: _handleRefresh,
+                childBuilder: () {
+                  return Container();
+                },
+              )
             ]
           ),
         ),
