@@ -1,7 +1,9 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Grades extends StatefulWidget {
   @override
@@ -202,11 +204,25 @@ class _GradesState extends State<Grades> {
                                           ),
                                         ],
                                       ),
-                                      Text(
-                                        grade.description,
+                                      SelectableLinkify(
+                                        text: grade.description,
+                                        options: LinkifyOptions(humanize: false),
                                         style: TextStyle(
                                           color: Theme.of(context).accentColor,
                                         ),
+                                        onOpen: (link) async {
+                                          if (await canLaunch(link.url)) await launch(link.url);
+                                          else
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: Text("Errore"),
+                                                  content: Text("Impossibile aprire il link"),
+                                                );
+                                              },
+                                            );
+                                        },
                                       ),
                                     ],
                                   )
