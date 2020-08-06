@@ -105,7 +105,6 @@ class _AgendaState extends State<Agenda> {
                         separatorBuilder: (context, index) => Divider(
                           color: Theme.of(context).accentColor,
                         ),
-                        shrinkWrap: true,
                         itemCount: _items.length,
                         itemBuilder: (context, index) {
                           final ClasseVivaAgendaItem item = _items[index];
