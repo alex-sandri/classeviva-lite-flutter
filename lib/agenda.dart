@@ -110,8 +110,19 @@ class _AgendaState extends State<Agenda> {
                         separatorBuilder: (context, index) => Divider(
                           color: Theme.of(context).accentColor,
                         ),
-                        itemCount: _items.length,
+                        itemCount: _items.length + 1,
                         itemBuilder: (context, index) {
+                          if (_items.isEmpty)
+                            return SelectableText(
+                              "Non sono presenti elementi in agenda nel periodo selezionato",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                              textAlign: TextAlign.center,
+                            );
+
+                          if (index == _items.length) return Container();
+
                           final ClasseVivaAgendaItem item = _items[index];
 
                           return ListTile(
