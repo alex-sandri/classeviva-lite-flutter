@@ -11,11 +11,16 @@ class Agenda extends StatefulWidget {
 class _AgendaState extends State<Agenda> {
   ClasseViva _session;
 
+  // Today at 00:00:00
+  DateTime _start = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+  // Today at 23:59:59
+  DateTime _end = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);
+
   List<ClasseVivaAgendaItem> _items;
 
   Future<void> _handleRefresh() async {
-    // TODO: Make the start end end dynamic
-    final List<ClasseVivaAgendaItem> items = await _session.getAgenda(DateTime(2020, 5, 1), DateTime(2020, 6, 1));
+    final List<ClasseVivaAgendaItem> items = await _session.getAgenda(_start, _end);
 
     items.sort((a, b) {
       // Most recent first
@@ -50,6 +55,24 @@ class _AgendaState extends State<Agenda> {
             'Agenda & Compiti'
           ),
           elevation: 0,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: () async {
+                final DateTime selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1970),
+                  lastDate: DateTime(2099),
+                );
+
+                _start = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+                _end = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59);
+
+                _handleRefresh();
+              },
+            ),
+          ],
         ),
         body: GestureDetector(
           onTap: () {

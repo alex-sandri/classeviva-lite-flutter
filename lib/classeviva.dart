@@ -264,7 +264,7 @@ class ClasseViva
 
     // TODO: Check valid session
 
-		return (jsonDecode(response.body) as List).map((e) => ClasseVivaAgendaItem.fromJson(e)).toList();
+		return ((jsonDecode(response.body) ?? []) as List).map((e) => ClasseVivaAgendaItem.fromJson(e)).toList();
 	}
 
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
