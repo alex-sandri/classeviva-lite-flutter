@@ -74,8 +74,19 @@ class _GradesState extends State<Grades> {
                 refreshHandler: _handleRefresh,
                 childBuilder: () {
                   return ListView.builder(
-                    itemCount: _grades.length,
+                    itemCount: _grades.length + 1,
                     itemBuilder: (context, index) {
+                      if (_grades.isEmpty)
+                        return SelectableText(
+                          "Non sono presenti valutazioni",
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
+                          textAlign: TextAlign.center,
+                        );
+
+                      if (index == _grades.length) return Container();
+
                       final ClasseVivaGrade grade = _grades[index];
 
                       Color _getGradeColor(ClasseVivaGrade grade)
@@ -235,7 +246,7 @@ class _GradesState extends State<Grades> {
                     itemCount: _grades.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        
+
                       );
                     },
                   );
