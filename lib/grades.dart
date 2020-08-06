@@ -231,7 +231,14 @@ class _GradesState extends State<Grades> {
                 grades: _grades,
                 refreshHandler: _handleRefresh,
                 childBuilder: () {
-                  return Container();
+                  return ListView.builder(
+                    itemCount: _grades.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+
+                      );
+                    },
+                  );
                 },
               )
             ]
