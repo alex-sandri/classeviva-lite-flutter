@@ -116,7 +116,16 @@ class _AttachmentsState extends State<Attachments> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(5)),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        _session.attachmentsPage++;
+
+                                        final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
+
+                                        if (mounted)
+                                          setState(() {
+                                            _attachments.addAll(attachments);
+                                          });
+                                      },
                                     ),
                                   );
                                 }
