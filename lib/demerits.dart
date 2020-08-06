@@ -80,7 +80,6 @@ class _DemeritsState extends State<Demerits> {
                         separatorBuilder: (context, index) => Divider(
                           color: Theme.of(context).accentColor,
                         ),
-                        shrinkWrap: true,
                         itemCount: _demerits.length,
                         itemBuilder: (context, index) {
                           final ClasseVivaDemerit demerit = _demerits[index];
