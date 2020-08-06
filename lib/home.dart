@@ -133,6 +133,51 @@ class Home extends StatelessWidget {
                           Card(
                             child: ListTile(
                               leading: Icon(
+                                Icons.watch_later,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Assenze / Ritardi",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.bookmark_border,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Bacheca",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.book,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Lezioni",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
                                 Icons.view_agenda,
                                 color: Theme.of(context).primaryColor,
                               ),
