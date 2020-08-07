@@ -94,72 +94,7 @@ class _GradesState extends State<Grades> {
 
                       final ClasseVivaGrade grade = _grades[index];
 
-                      return ListTile(
-                        isThreeLine: true,
-                        leading: CircleAvatar(
-                          child: Text(
-                            grade.grade,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                          backgroundColor: ClasseViva.getGradeColor(grade),
-                          radius: 25,
-                        ),
-                        title: SelectableText(
-                          grade.subject,
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                SelectableText(
-                                  DateFormat.yMMMMd().format(grade.date),
-                                  style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SelectableText(
-                                    " - ${grade.type}",
-                                    style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                    maxLines: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SelectableLinkify(
-                              text: grade.description,
-                              options: LinkifyOptions(humanize: false),
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                              ),
-                              onOpen: (link) async {
-                                if (await canLaunch(link.url)) await launch(link.url);
-                                else
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text("Errore"),
-                                        content: Text("Impossibile aprire il link"),
-                                      );
-                                    },
-                                  );
-                              },
-                            ),
-                          ],
-                        )
-                      );
+                      return GradeTile(grade);
                     },
                   );
                 },
@@ -232,76 +167,7 @@ class _GradesState extends State<Grades> {
                               fontWeight: FontWeight.w900,
                             ),
                           ),
-                          children: [
-                            ...grades.map((grade) {
-                              return ListTile(
-                                isThreeLine: true,
-                                leading: CircleAvatar(
-                                  child: Text(
-                                    grade.grade,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  backgroundColor: ClasseViva.getGradeColor(grade),
-                                  radius: 25,
-                                ),
-                                title: SelectableText(
-                                  grade.subject,
-                                  style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        SelectableText(
-                                          DateFormat.yMMMMd().format(grade.date),
-                                          style: TextStyle(
-                                            color: Theme.of(context).accentColor,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: SelectableText(
-                                            " - ${grade.type}",
-                                            style: TextStyle(
-                                              color: Theme.of(context).accentColor,
-                                            ),
-                                            maxLines: 1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SelectableLinkify(
-                                      text: grade.description,
-                                      options: LinkifyOptions(humanize: false),
-                                      style: TextStyle(
-                                        color: Theme.of(context).accentColor,
-                                      ),
-                                      onOpen: (link) async {
-                                        if (await canLaunch(link.url)) await launch(link.url);
-                                        else
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                title: Text("Errore"),
-                                                content: Text("Impossibile aprire il link"),
-                                              );
-                                            },
-                                          );
-                                      },
-                                    ),
-                                  ],
-                                )
-                              );
-                            }).toList(),
-                          ],
+                          children: grades.map((grade) => GradeTile(grade)).toList(),
                         ),
                       );
                     },
@@ -366,6 +232,82 @@ class GradesView extends StatelessWidget {
               ],
             ),
       ),
+    );
+  }
+}
+
+class GradeTile extends StatelessWidget {
+  final ClasseVivaGrade grade;
+
+  GradeTile(this.grade);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      isThreeLine: true,
+      leading: CircleAvatar(
+        child: Text(
+          grade.grade,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: ClasseViva.getGradeColor(grade),
+        radius: 25,
+      ),
+      title: SelectableText(
+        grade.subject,
+        style: TextStyle(
+          color: Theme.of(context).accentColor,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              SelectableText(
+                DateFormat.yMMMMd().format(grade.date),
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              Expanded(
+                child: SelectableText(
+                  " - ${grade.type}",
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
+          SelectableLinkify(
+            text: grade.description,
+            options: LinkifyOptions(humanize: false),
+            style: TextStyle(
+              color: Theme.of(context).accentColor,
+            ),
+            onOpen: (link) async {
+              if (await canLaunch(link.url)) await launch(link.url);
+              else
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Errore"),
+                      content: Text("Impossibile aprire il link"),
+                    );
+                  },
+                );
+            },
+          ),
+        ],
+      )
     );
   }
 }
