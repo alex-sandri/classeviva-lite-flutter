@@ -92,9 +92,19 @@ class _AbsencesState extends State<Absences> {
 
                           final ClasseVivaAbsence absence = _absences[index];
 
+                          String type;
+
+                          switch (absence.type)
+                          {
+                            case ClasseVivaAbsenceType.Absence: type = "Assenza"; break;
+                            case ClasseVivaAbsenceType.Late: type = "Ritardo"; break;
+                            case ClasseVivaAbsenceType.ShortDelay: type = "Ritardo Breve"; break;
+                            case ClasseVivaAbsenceType.EarlyExit: type = "Uscita Anticipata"; break;
+                          }
+
                           return ListTile(
                             title: SelectableText(
-                              absence.type.toString(),
+                              type,
                               style: TextStyle(
                                 color: Theme.of(context).accentColor,
                                 fontWeight: FontWeight.w900,
