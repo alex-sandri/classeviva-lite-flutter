@@ -627,8 +627,8 @@ class ClasseViva
 
         value = getGradeValue(grade);
       }
-
-      // TODO: Parse n/n grades
+      else if (RegExp("^([0-9])/([1-9]|10)\$").hasMatch(grade))
+        value = double.parse(grade.split("/").first + ".9");
     }
 
     return value;
