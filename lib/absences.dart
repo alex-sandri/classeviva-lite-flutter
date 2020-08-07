@@ -102,6 +102,14 @@ class _AbsencesState extends State<Absences> {
                             case ClasseVivaAbsenceType.EarlyExit: type = "Uscita Anticipata"; break;
                           }
 
+                          String status;
+
+                          switch (absence.status)
+                          {
+                            case ClasseVivaAbsenceStatus.Justified: status = "Giustificata"; break;
+                            case ClasseVivaAbsenceStatus.NotJustified: status = "Non Giustificata"; break;
+                          }
+
                           return ListTile(
                             title: SelectableText(
                               type,
@@ -116,6 +124,13 @@ class _AbsencesState extends State<Absences> {
                                 SizedBox(height: 5,),
                                 SelectableText(
                                   "(${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)})",
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ),
+                                SizedBox(height: 5,),
+                                SelectableText(
+                                  status,
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                   ),
