@@ -16,6 +16,11 @@ class _AbsencesState extends State<Absences> {
   Future<void> _handleRefresh() async {
     final List<ClasseVivaAbsence> absences = await _session.getAbsences();
 
+    absences.sort((a, b) {
+      // Most recent first
+      return b.from.compareTo(a.from);
+    });
+
     if (mounted)
       setState(() {
         _absences = absences;
