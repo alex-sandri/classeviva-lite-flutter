@@ -170,7 +170,7 @@ class _GradesState extends State<Grades> {
                 refreshHandler: _handleRefresh,
                 childBuilder: () {
                   return ListView.builder(
-                    itemCount: _subjects.length,
+                    itemCount: _subjects.length + 1,
                     itemBuilder: (context, index) {
                       if (_subjects.isEmpty)
                         return SelectableText(
