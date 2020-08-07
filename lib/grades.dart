@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +16,12 @@ class _GradesState extends State<Grades> {
 
   List<ClasseVivaGrade> _grades;
 
+  Map<String, List<ClasseVivaGrade>> _subjects;
+
   Future<void> _handleRefresh() async {
     final List<ClasseVivaGrade> grades = await _session.getGrades();
+
+    _subjects = groupBy(grades, (ClasseVivaGrade grade) => grade.subject);
 
     grades.sort((a, b) {
       // Most recent first
@@ -89,84 +94,6 @@ class _GradesState extends State<Grades> {
 
                       final ClasseVivaGrade grade = _grades[index];
 
-                      Color _getGradeColor(ClasseVivaGrade grade)
-                      {
-                        Color color;
-
-                        // IMPORTANT: These are not accurate at all, I just guessed what their equivalents are (but they somehow seem reasonable)
-                        // I just incremented them by 0.25, except for the 'ns/s' which was incremented by 0.5
-                        Map<String, String> reGrades = {
-                          // Non sufficiente
-                          "ns": "5",
-                          // Non sufficiente/Sufficiente
-                          "ns/s": "5.5",
-                          // Quasi sufficiente
-                          "qs": "6-",
-                          // Sufficiente
-                          "s": "6",
-                          // Più che sufficiente
-                          "ps": "6+",
-                          // Sufficiente/Discreto
-                          "s/dc": "6.5",
-                          // Quasi discreto
-                          "qd": "7-",
-                          // Discreto
-                          "dc": "7",
-                          // Più che discreto
-                          "pdc": "7+",
-                          // Discreto/Buono
-                          "dc/b": "7.5",
-                          // Quasi buono
-                          "qb": "8-",
-                          // Buono
-                          "b": "8",
-                          // Più che buono
-                          "pb": "8+",
-                          // Buono/Distinto
-                          "b/d": "8.5",
-                          // Quasi distinto
-                          "qdn": "9-",
-                          // Molto?
-                          "m": "9",
-                          // Distinto
-                          "ds": "9",
-                          // Più che distinto
-                          "pdn": "9+",
-                          // Distinto/Ottimo
-                          "d/o": "9.5",
-                          // Quasi ottimo
-                          "qo": "10-",
-                          // Ottimo
-                          "o": "10",
-                        };
-
-                        if (grade.type != "Voto Test")
-                        {
-                          double parsedGrade = double.tryParse(grade.grade);
-
-                          if (grade.grade.contains("½")) parsedGrade = double.parse(grade.grade.replaceAll("½", ".5"));
-                          else if (grade.grade.contains("+")) parsedGrade = double.parse(grade.grade.replaceAll("+", ".25"));
-                          else if (grade.grade.contains("-")) parsedGrade = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
-
-                          if (parsedGrade == null)
-                          {
-                            if (RegExp("^${reGrades.keys.join("|")}\$").hasMatch(grade.grade))
-                            {
-                              grade.grade = reGrades[grade.grade];
-
-                              color = _getGradeColor(grade);
-                            }
-                            else color = Colors.blue;
-                          }
-                          else if (parsedGrade >= 6) color = Colors.green;
-                          else if (parsedGrade >= 5) color = Colors.orange;
-                          else color = Colors.red;
-                        }
-                        else color = Colors.blue;
-
-                        return color; 
-                      }
-
                       return ListTile(
                         isThreeLine: true,
                         leading: CircleAvatar(
@@ -177,7 +104,7 @@ class _GradesState extends State<Grades> {
                               fontSize: 20,
                             ),
                           ),
-                          backgroundColor: _getGradeColor(grade),
+                          backgroundColor: ClasseViva.getGradeColor(grade),
                           radius: 25,
                         ),
                         title: SelectableText(
@@ -243,10 +170,41 @@ class _GradesState extends State<Grades> {
                 refreshHandler: _handleRefresh,
                 childBuilder: () {
                   return ListView.builder(
-                    itemCount: _grades.length,
+                    itemCount: _subjects.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
+                      if (_subjects.isEmpty)
+                        return SelectableText(
+                          "Non sono presenti valutazioni",
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
+                          textAlign: TextAlign.center,
+                        );
 
+                      if (index == _subjects.length) return Container();
+
+                      final String subject = _subjects.keys.elementAt(index);
+                      final List<ClasseVivaGrade> grades = _subjects[index];
+
+                      return ListTile(
+                        leading: CircleAvatar(
+                          child: Text(
+                            "TODO",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          backgroundColor: Colors.blue,
+                          radius: 25,
+                        ),
+                        title: SelectableText(
+                          subject,
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
                       );
                     },
                   );
