@@ -484,7 +484,7 @@ class ClasseViva
         absences.add(ClasseVivaAbsence(
           from: date,
           to: date,
-          description: description,
+          description: description == "breve" ? "" : description,
           type: description == "breve"
             ? ClasseVivaAbsenceType.ShortDelay
             : ClasseVivaAbsenceType.Late,

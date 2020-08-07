@@ -137,7 +137,7 @@ class _AbsencesState extends State<Absences> {
                                 ),
                                 SizedBox(height: 5,),
 
-                                if (absence.description.isNotEmpty && absence.type != ClasseVivaAbsenceType.ShortDelay)
+                                if (absence.description.isNotEmpty)
                                   SelectableText(
                                     absence.description,
                                     style: TextStyle(
