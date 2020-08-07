@@ -219,7 +219,15 @@ class ClasseVivaSubject
 
 class ClasseVivaLesson
 {
-  ClasseVivaLesson();
+  final String teacher;
+  final DateTime date;
+  final String description;
+
+  ClasseVivaLesson({
+    @required this.teacher,
+    @required this.date,
+    @required this.description,
+  });
 }
 
 class ClasseViva
@@ -599,13 +607,19 @@ class ClasseViva
 
 		final document = parse(response.body);
 
-    checkValidSession(document);
-
 		List<ClasseVivaLesson> lessons = [];
 
-		document.querySelectorAll("").forEach((subject) {
+		document.querySelectorAll("tr").forEach((lesson) {
+      final String dateString = lesson.querySelector("td:nth-child(2)").text.trim();
+
 			lessons.add(ClasseVivaLesson(
-        // TODO
+        teacher: lesson.querySelector("td:first-child").text.trim(),
+        date: DateTime(
+          int.parse(dateString.split("-").last),
+          int.parse(dateString.split("-")[1]),
+          int.parse(dateString.split("-").first),
+        ),
+        description: lesson.querySelector("td:last-child").text.trim(),
       ));
 		});
 

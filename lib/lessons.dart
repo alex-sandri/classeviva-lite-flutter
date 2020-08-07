@@ -121,14 +121,14 @@ class _LessonsState extends State<Lessons> {
 
                                         return ListTile(
                                           title: SelectableText(
-                                            "TODO",
+                                            lesson.description,
                                             style: TextStyle(
                                               color: Theme.of(context).accentColor,
                                               fontWeight: FontWeight.w900,
                                             ),
                                           ),
                                           subtitle: SelectableText(
-                                            "TODO",
+                                            lesson.date.toString(),
                                             style: TextStyle(
                                               color: Theme.of(context).accentColor,
                                             ),
