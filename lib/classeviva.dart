@@ -417,8 +417,8 @@ class ClasseViva
 		document.querySelectorAll("#skeda_eventi tr[height=\"38\"]").skip(1).forEach((element) {
       // Absence
       element.querySelector("td[colspan=\"15\"]").querySelectorAll(".rigtab").forEach((element) {
-        final String fromDateString = element.querySelectorAll("td[colspan=\"4\"]").first.text;
-        final String toDateString = element.querySelectorAll("td[colspan=\"4\"]").last.text;
+        final String fromDateString = element.querySelectorAll("td[colspan=\"4\"]").first.querySelector("p:last-child").text;
+        final String toDateString = element.querySelectorAll("td[colspan=\"4\"]").last.querySelector("p:last-child").text;
 
         print({
           fromDateString,
