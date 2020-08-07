@@ -414,30 +414,46 @@ class ClasseViva
 
 		List<ClasseVivaAbsence> absences = [];
 
+    const List<String> months = [
+      "gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"
+    ];
+
+    int rowIndex = 0;
+
 		document.querySelectorAll("#skeda_eventi tr[height=\"38\"]").skip(1).forEach((element) {
+      final ClasseVivaAbsenceStatus absenceStatus = rowIndex == 0
+        ? ClasseVivaAbsenceStatus.NotJustified
+        : ClasseVivaAbsenceStatus.Justified;
+
       // Absence
       element.querySelector("td[colspan=\"15\"]").querySelectorAll(".rigtab").forEach((element) {
-        final String fromDateString = element.querySelectorAll("td[colspan=\"4\"]").first.querySelector("p:last-child").text;
-        final String toDateString = element.querySelectorAll("td[colspan=\"4\"]").last.querySelector("p:last-child").text;
+        if (element.querySelectorAll("td[colspan=\"4\"]").isEmpty) return;
 
-        print({
-          fromDateString,
-          toDateString,
-        });
+        final String fromDateString = element.querySelectorAll("td[colspan=\"4\"]").first.querySelector("p:last-child").text.trim();
+        final String toDateString = element.querySelectorAll("td[colspan=\"4\"]").last.querySelector("p:last-child").text.trim();
 
-        /*
+        final int fromMonthIndex = months.indexOf(fromDateString.split(" ").last);
+        final int toMonthIndex = months.indexOf(toDateString.split(" ").last);
+
         absences.add(ClasseVivaAbsence(
           from: DateTime(
-
+            // 7 -> ago
+            int.parse("20${ClasseVivaEndpoints._year + (fromMonthIndex <= 7 ? 1 : 0).toString()}"),
+            fromMonthIndex + 1,
+            // Remove leading zeros
+            // Source: https://stackoverflow.com/a/61507499
+            int.parse(fromDateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
           ),
           to: DateTime(
-            
+            // 7 -> ago
+            int.parse("20${ClasseVivaEndpoints._year + (toMonthIndex <= 7 ? 1 : 0).toString()}"),
+            toMonthIndex + 1,
+            int.parse(toDateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
           ),
-          description: ,
+          description: "TODO",
           type: ClasseVivaAbsenceType.Absence,
-          status: ,
+          status: absenceStatus,
         ));
-        */
       });
 
       // Late
@@ -449,6 +465,8 @@ class ClasseViva
       element.querySelectorAll("td[colspan=\"12\"]").last.querySelectorAll(".rigtab").forEach((element) {
 
       });
+
+      rowIndex++;
     });
 
 		return absences;
