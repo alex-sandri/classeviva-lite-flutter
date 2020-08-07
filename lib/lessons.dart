@@ -102,8 +102,8 @@ class _LessonsState extends State<Lessons> {
                               ),
                               children: [
                                 FutureBuilder(
-                                  future: Future.delayed(Duration(seconds: 2)),
-                                  builder: (context, AsyncSnapshot<dynamic> lessons) {
+                                  future: _session.getLessons(subject),
+                                  builder: (context, AsyncSnapshot<List<ClasseVivaLesson>> lessons) {
                                     if (!lessons.hasData)
                                       return Padding(
                                         padding: EdgeInsets.all(8),
@@ -115,7 +115,7 @@ class _LessonsState extends State<Lessons> {
                                       );
 
                                     return ListView.builder(
-                                      itemCount: lessons.data,
+                                      itemCount: lessons.data.length,
                                       itemBuilder: (context, index) {
                                         final ClasseVivaLesson lesson = lessons.data[index];
 
