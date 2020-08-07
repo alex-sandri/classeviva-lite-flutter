@@ -578,9 +578,11 @@ class ClasseViva
 
 		List<ClasseVivaSubject> subjects = [];
 
-		document.querySelectorAll("#data_table td[colspan=\"48\"] > div").forEach((subject) {
+		document.querySelectorAll("#data_table .materia").forEach((subject) {
 			subjects.add(ClasseVivaSubject(
-				
+				id: subject.attributes["materia_id"],
+        name: subject.attributes["title"],
+        teacherIds: subject.attributes["autori_id"].split(","),
 			));
 		});
 
