@@ -17,6 +17,7 @@ class ClasseVivaEndpoints
 
 	static String profile() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
 
+  // TODO: Use this URL (https://web19.spaggiari.eu/cvv/app/default/genitori_voti.php)
 	static String grades() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
 
 	static String agenda(DateTime start, DateTime end) =>
