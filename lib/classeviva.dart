@@ -499,7 +499,33 @@ class ClasseViva
 
       // Early Exit
       element.querySelectorAll("td[colspan=\"12\"]").last.querySelectorAll(".rigtab").forEach((element) {
+        if (element.querySelector("td[colspan=\"6\"] p:last-child") == null) return;
 
+        final String dateString = element.querySelector("td[colspan=\"6\"] p:last-child").text.trim();
+
+        final int monthIndex = months.indexOf(dateString.split(" ").last);
+
+        // 7 -> ago
+        final int year = int.parse("20${int.parse(ClasseVivaEndpoints._year) + (monthIndex <= 7 ? 1 : 0)}");
+
+        final DateTime date = DateTime(
+          year,
+          monthIndex + 1,
+          int.parse(dateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
+        );
+
+        String description;
+
+        if (element.nextElementSibling.querySelector("td[colspan=\"13\"]") != null)
+          description = element.nextElementSibling.querySelector("td[colspan=\"13\"]").text.trim();
+
+        absences.add(ClasseVivaAbsence(
+          from: date,
+          to: date,
+          description: description,
+          type: ClasseVivaAbsenceType.EarlyExit,
+          status: absenceStatus,
+        ));
       });
 
       rowIndex++;
