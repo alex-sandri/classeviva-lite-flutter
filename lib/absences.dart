@@ -123,7 +123,7 @@ class _AbsencesState extends State<Absences> {
                                 SelectableText(
                                   absence.from == absence.to
                                     ? DateFormat.yMMMMd().format(absence.from)
-                                    : "(${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)})",
+                                    : "${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)}",
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                   ),
