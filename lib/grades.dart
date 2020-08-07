@@ -184,7 +184,7 @@ class _GradesState extends State<Grades> {
                       if (index == _subjects.length) return Container();
 
                       final String subject = _subjects.keys.elementAt(index);
-                      final List<ClasseVivaGrade> grades = _subjects[index];
+                      final List<ClasseVivaGrade> grades = _subjects.values.elementAt(index);
 
                       double _getAverageGrade(List<ClasseVivaGrade> grades)
                       {
