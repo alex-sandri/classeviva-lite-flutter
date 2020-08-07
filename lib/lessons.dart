@@ -115,6 +115,7 @@ class _LessonsState extends State<Lessons> {
                                       );
 
                                     return ListView.builder(
+                                      shrinkWrap: true,
                                       itemCount: lessons.data.length,
                                       itemBuilder: (context, index) {
                                         final ClasseVivaLesson lesson = lessons.data[index];
