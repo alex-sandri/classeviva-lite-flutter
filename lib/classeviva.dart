@@ -632,7 +632,7 @@ class ClasseViva
           int.parse(dateString.split("-")[1]),
           int.parse(dateString.split("-").first),
         ),
-        description: lesson.querySelector("td:last-child").text.trim(),
+        description: lesson.querySelector("td:nth-child(5)").text.trim(),
       ));
 		});
 
