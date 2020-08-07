@@ -464,7 +464,32 @@ class ClasseViva
 
       // Late
       element.querySelectorAll("td[colspan=\"12\"]").first.querySelectorAll(".rigtab").forEach((element) {
+        if (element.querySelector("td[colspan=\"6\"] p:last-child") == null) return;
 
+        final String dateString = element.querySelector("td[colspan=\"6\"] p:last-child").text.trim();
+
+        final int monthIndex = months.indexOf(dateString.split(" ").last);
+
+        // 7 -> ago
+        final int year = int.parse("20${int.parse(ClasseVivaEndpoints._year) + (monthIndex <= 7 ? 1 : 0)}");
+
+        final DateTime date = DateTime(
+          year,
+          monthIndex + 1,
+          int.parse(dateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
+        );
+
+        String description = element.querySelector("td:nth-child(5) p:last-child").text.trim();
+
+        absences.add(ClasseVivaAbsence(
+          from: date,
+          to: date,
+          description: description,
+          type: description == "breve"
+            ? ClasseVivaAbsenceType.ShortDelay
+            : ClasseVivaAbsenceType.Late,
+          status: absenceStatus,
+        ));
       });
 
       // Early Exit
