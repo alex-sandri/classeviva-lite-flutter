@@ -566,7 +566,7 @@ class ClasseViva
 
   static double getGradeValue(String grade)
   {
-    double value;
+    double value = double.tryParse(grade.replaceFirst(",", "."));
 
     // IMPORTANT: These are not accurate at all, I just guessed what their equivalents are (but they somehow seem reasonable)
     // I just incremented them by 0.25, except for the 'ns/s' which was incremented by 0.5
@@ -614,8 +614,6 @@ class ClasseViva
       // Ottimo
       "o": "10",
     };
-
-    value = double.tryParse(grade);
 
     if (grade.contains("½")) value = double.parse(grade.replaceAll("½", ".5"));
     else if (grade.contains("+")) value = double.parse(grade.replaceAll("+", ".25"));
