@@ -188,7 +188,12 @@ class _GradesState extends State<Grades> {
 
                       double _getAverageGrade(List<ClasseVivaGrade> grades)
                       {
-                        return grades.map((grade) => ClasseViva.getGradeValue(grade.grade)).reduce((a, b) => a + b) / grades.length;
+                        // Grades with "Voto Test" type can't be included in the average
+                        final List<ClasseVivaGrade> gradesValidForAverageCount = grades.where((grade) => grade.type != "Voto Test").toList();
+
+                        return gradesValidForAverageCount
+                          .map((grade) => ClasseViva.getGradeValue(grade.grade))
+                          .reduce((a, b) => a + b) / gradesValidForAverageCount.length;
                       }
 
                       return ListTile(
