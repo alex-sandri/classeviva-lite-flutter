@@ -200,7 +200,7 @@ class _AttachmentsState extends State<Attachments> {
                                 }
 
                                 return Card(
-                                  color: Theme.of(context).disabledColor,
+                                  color: Colors.transparent,
                                   child: ListTile(
                                     onTap: () async {
                                       final String url = attachment.url.toString();
