@@ -196,39 +196,45 @@ class _GradesState extends State<Grades> {
                           .reduce((a, b) => a + b) / gradesValidForAverageCount.length;
                       }
 
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Center(
-                                child: CircularProgressIndicator(
-                                  value: _getAverageGrade(grades) / 10,
-                                  valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
-                                    subject: "",
-                                    grade: _getAverageGrade(grades).toStringAsFixed(1),
-                                    type: "",
-                                    description: "",
-                                    date: DateTime.now(),
-                                  ))),
+                      return Card(
+                        color: Colors.transparent,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    value: _getAverageGrade(grades) / 10,
+                                    valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
+                                      subject: "",
+                                      grade: _getAverageGrade(grades).toStringAsFixed(1),
+                                      type: "",
+                                      description: "",
+                                      date: DateTime.now(),
+                                    ))),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                _getAverageGrade(grades).toStringAsFixed(1),
-                                style: TextStyle(
-                                  color: Colors.white,
+                                Text(
+                                  _getAverageGrade(grades).toStringAsFixed(1),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        title: SelectableText(
-                          subject,
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontWeight: FontWeight.w900,
+                          title: SelectableText(
+                            subject,
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
+                          onTap: () {
+                            // TODO
+                          },
                         ),
                       );
                     },
