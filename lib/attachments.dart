@@ -279,7 +279,7 @@ class _AttachmentsState extends State<Attachments> {
                                       backgroundColor: Theme.of(context).accentColor,
                                       radius: 25,
                                     ),
-                                    title: SelectableText(
+                                    title: Text(
                                       attachment.name,
                                       style: TextStyle(
                                         color: Theme.of(context).accentColor,
@@ -290,14 +290,14 @@ class _AttachmentsState extends State<Attachments> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         SizedBox(height: 5,),
-                                        SelectableText(
+                                        Text(
                                           attachment.teacher,
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,
                                           ),
                                         ),
                                         SizedBox(height: 5,),
-                                        SelectableText(
+                                        Text(
                                           DateFormat.yMMMMd().format(attachment.date),
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,

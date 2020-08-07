@@ -225,7 +225,7 @@ class _GradesState extends State<Grades> {
                               ],
                             ),
                           ),
-                          title: SelectableText(
+                          title: Text(
                             subject,
                             style: TextStyle(
                               color: Theme.of(context).accentColor,
