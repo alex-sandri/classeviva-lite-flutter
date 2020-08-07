@@ -38,7 +38,7 @@ class ClasseVivaEndpoints
 
   static String subjects() => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php";
 
-  static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=$teacherIds";
+  static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 }
 
 class ClasseVivaProfile
@@ -605,12 +605,25 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
-		final document = parse(response.body);
+		final document = parse('''
+      <!DOCTYPE html>
+      <html>
+        <head>
+        </head>
+        <body>
+          <table>
+            <tbody>
+            ${response.body}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    ''');
 
 		List<ClasseVivaLesson> lessons = [];
 
 		document.querySelectorAll("tr").forEach((lesson) {
-      final String dateString = lesson.querySelector("td:nth-child(2)").text.trim();
+      final String dateString = lesson.querySelector("td:nth-child(3)").text.trim();
 
 			lessons.add(ClasseVivaLesson(
         teacher: lesson.querySelector("td:first-child").text.trim(),
