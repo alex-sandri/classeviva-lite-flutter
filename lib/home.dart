@@ -86,7 +86,7 @@ class Home extends StatelessWidget {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
+                              SelectableText(
                                 profile.data.name,
                                 style: TextStyle(
                                   fontSize: 35,
@@ -94,7 +94,7 @@ class Home extends StatelessWidget {
                                   color: Theme.of(context).accentColor,
                                 ),
                               ),
-                              Text(
+                              SelectableText(
                                 profile.data.school,
                                 style: TextStyle(
                                   color: Theme.of(context).accentColor,
