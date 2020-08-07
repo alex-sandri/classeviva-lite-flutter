@@ -10,34 +10,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ClasseVivaEndpoints
 {
-  // TODO: Allow changing the year
-	static String _year = "19";
+  static String auth() => "https://web${ClasseViva.year}.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
 
-  static String auth() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
-
-	static String profile() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
+	static String profile() => "https://web${ClasseViva.year}.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
 
   // TODO: Use this URL (https://web19.spaggiari.eu/cvv/app/default/genitori_voti.php)
-	static String grades() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
+	static String grades() => "https://web${ClasseViva.year}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
 
   // Add timeZoneOffset hours to be in the UTC+0 TimeZone
 	static String agenda(DateTime start, DateTime end) =>
-    "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
+    "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
     + "&start="
     + (start.toUtc().add(start.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString()
     + "&end="
     + (end.toUtc().add(end.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString();
 
-	static String attachments(int page) => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
+	static String attachments(int page) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
 
 	static String fileAttachments(String id, String checksum) =>
-		"https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
+		"https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
   
-	static String textAttachments(String id) => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
+	static String textAttachments(String id) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
 
-	static String demerits() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
+	static String demerits() => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
 
-  static String absences() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/tic/app/default/consultasingolo.php";
+  static String absences() => "https://web${ClasseViva.year}.spaggiari.eu/tic/app/default/consultasingolo.php";
 }
 
 class ClasseVivaProfile
@@ -205,6 +202,9 @@ class ClasseVivaAbsence
 
 class ClasseViva
 {
+  // TODO: Allow changing the year
+	static String year = "19";
+
   final String sessionId;
 
   final BuildContext context;
@@ -442,7 +442,7 @@ class ClasseViva
         final int toMonthIndex = months.indexOf(toDateString.split(" ").last);
 
         // 7 -> ago
-        final int year = int.parse("20${int.parse(ClasseVivaEndpoints._year) + (fromMonthIndex <= 7 ? 1 : 0)}");
+        final int year = int.parse("20${int.parse(ClasseViva.year) + (fromMonthIndex <= 7 ? 1 : 0)}");
 
         String description = "";
 
@@ -477,7 +477,7 @@ class ClasseViva
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
         // 7 -> ago
-        final int year = int.parse("20${int.parse(ClasseVivaEndpoints._year) + (monthIndex <= 7 ? 1 : 0)}");
+        final int year = int.parse("20${int.parse(ClasseViva.year) + (monthIndex <= 7 ? 1 : 0)}");
 
         final DateTime date = DateTime(
           year,
@@ -512,7 +512,7 @@ class ClasseViva
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
         // 7 -> ago
-        final int year = int.parse("20${int.parse(ClasseVivaEndpoints._year) + (monthIndex <= 7 ? 1 : 0)}");
+        final int year = int.parse("20${int.parse(ClasseViva.year) + (monthIndex <= 7 ? 1 : 0)}");
 
         final DateTime date = DateTime(
           year,
