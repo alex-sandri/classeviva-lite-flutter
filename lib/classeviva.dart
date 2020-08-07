@@ -205,6 +205,12 @@ class ClasseViva
   // TODO: Allow changing the year
 	static String year = "19";
 
+  // 1st of August 20(year)
+  static DateTime yearBeginsAt = DateTime(int.parse("20$year"), 7, 1);
+
+  // 31st of July 20(year)
+  static DateTime yearEndsAt = DateTime(int.parse("20${int.parse(year) + 1}"), 6, 31);
+
   final String sessionId;
 
   final BuildContext context;

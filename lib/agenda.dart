@@ -13,11 +13,9 @@ class Agenda extends StatefulWidget {
 class _AgendaState extends State<Agenda> {
   ClasseViva _session;
 
-  // Today at 00:00:00
-  DateTime _start = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime _start = ClasseViva.yearBeginsAt;
 
-  // Today at 23:59:59
-  DateTime _end = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);
+  DateTime _end = ClasseViva.yearEndsAt;
 
   List<ClasseVivaAgendaItem> _items;
 
