@@ -435,18 +435,19 @@ class ClasseViva
         final int fromMonthIndex = months.indexOf(fromDateString.split(" ").last);
         final int toMonthIndex = months.indexOf(toDateString.split(" ").last);
 
+        // 7 -> ago
+        final int year = int.parse("20${int.parse(ClasseVivaEndpoints._year) + (fromMonthIndex <= 7 ? 1 : 0)}");
+
         absences.add(ClasseVivaAbsence(
           from: DateTime(
-            // 7 -> ago
-            int.parse("20${ClasseVivaEndpoints._year + (fromMonthIndex <= 7 ? 1 : 0).toString()}"),
+            year,
             fromMonthIndex + 1,
             // Remove leading zeros
             // Source: https://stackoverflow.com/a/61507499
             int.parse(fromDateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
           ),
           to: DateTime(
-            // 7 -> ago
-            int.parse("20${ClasseVivaEndpoints._year + (toMonthIndex <= 7 ? 1 : 0).toString()}"),
+            year,
             toMonthIndex + 1,
             int.parse(toDateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
           ),
