@@ -218,7 +218,6 @@ class _GradesState extends State<Grades> {
                                 _getAverageGrade(grades).toStringAsFixed(1),
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20,
                                 ),
                               ),
                             ],
