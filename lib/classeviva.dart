@@ -615,9 +615,9 @@ class ClasseViva
       "o": "10",
     };
 
-    if (grade.contains("½")) value = double.parse(grade.replaceAll("½", ".5"));
-    else if (grade.contains("+")) value = double.parse(grade.replaceAll("+", ".25"));
-    else if (grade.contains("-")) value = double.parse(grade.replaceAll("-", ".75")) - 1;
+    if (grade.contains("½")) value = double.parse(grade.replaceFirst("½", ".5"));
+    else if (grade.contains("+")) value = double.parse(grade.replaceFirst("+", ".25"));
+    else if (grade.contains("-")) value = double.parse(grade.replaceFirst("-", ".75")) - 1;
 
     if (value == null)
     {
