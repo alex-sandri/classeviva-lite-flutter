@@ -208,7 +208,11 @@ class ClasseVivaSubject
   String name;
   List<String> teacherIds;
 
-  ClasseVivaSubject();
+  ClasseVivaSubject({
+    @required this.id,
+    @required this.name,
+    @required this.teacherIds,
+  });
 }
 
 class ClasseVivaLesson
@@ -574,7 +578,7 @@ class ClasseViva
 
 		List<ClasseVivaSubject> subjects = [];
 
-		document.querySelectorAll("").forEach((demerit) {
+		document.querySelectorAll("#data_table td[colspan=\"48\"] > div").forEach((subject) {
 			subjects.add(ClasseVivaSubject(
 				
 			));
