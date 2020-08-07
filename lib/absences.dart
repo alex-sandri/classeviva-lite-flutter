@@ -1,7 +1,9 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Absences extends StatefulWidget {
   @override
@@ -90,7 +92,48 @@ class _AbsencesState extends State<Absences> {
 
                           final ClasseVivaAbsence absence = _absences[index];
 
-                          return ListTile();
+                          return ListTile(
+                            title: SelectableText(
+                              absence.type.toString(),
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(height: 5,),
+                                SelectableText(
+                                  "(${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)})",
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ),
+                                SizedBox(height: 5,),
+                                SelectableLinkify(
+                                  text: absence.description,
+                                  options: LinkifyOptions(humanize: false),
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                  onOpen: (link) async {
+                                    if (await canLaunch(link.url)) await launch(link.url);
+                                    else
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text("Errore"),
+                                            content: Text("Impossibile aprire il link"),
+                                          );
+                                        },
+                                      );
+                                  },
+                                ),
+                              ],
+                            )
+                          );
                         },
                       ),
                   )
