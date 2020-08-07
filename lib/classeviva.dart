@@ -41,8 +41,8 @@ class ClasseVivaEndpoints
 
 class ClasseVivaProfile
 {
-  String name;
-  String school;
+  final String name;
+  final String school;
 
   ClasseVivaProfile({
     @required this.name,
@@ -52,11 +52,11 @@ class ClasseVivaProfile
 
 class ClasseVivaGrade
 {
-	String subject;
-	String grade;
-	String type;
-	String description;
-	DateTime date;
+	final String subject;
+	final String grade;
+	final String type;
+	final String description;
+	final DateTime date;
 
   ClasseVivaGrade({
     @required this.subject,
@@ -69,22 +69,22 @@ class ClasseVivaGrade
 
 class ClasseVivaAgendaItem
 {
-	String id;
-	String title;
-	DateTime start;
-	DateTime end;
-	bool allDay;
-	String data_inserimento;
-	String nota_2;
-	String master_id;
-	String classe_id;
-	String classe_desc;
-	int gruppo;
-	String autore_desc;
-	String autore_id;
-	String tipo;
-	String materia_desc;
-	String materia_id;
+	final String id;
+	final String title;
+	final DateTime start;
+	final DateTime end;
+	final bool allDay;
+	final String data_inserimento;
+	final String nota_2;
+	final String master_id;
+	final String classe_id;
+	final String classe_desc;
+	final int gruppo;
+	final String autore_desc;
+	final String autore_id;
+	final String tipo;
+	final String materia_desc;
+	final String materia_id;
 
   ClasseVivaAgendaItem({
     @required this.id,
@@ -137,13 +137,13 @@ enum ClasseVivaAttachmentType
 
 class ClasseVivaAttachment
 {
-	String id;
-	String teacher;
-	String name;
-	String folder;
-	ClasseVivaAttachmentType type;
-	DateTime date;
-	Uri url;
+	final String id;
+	final String teacher;
+	final String name;
+	final String folder;
+	final ClasseVivaAttachmentType type;
+	final DateTime date;
+	final Uri url;
 
   ClasseVivaAttachment({
     @required this.id,
@@ -158,10 +158,10 @@ class ClasseVivaAttachment
 
 class ClasseVivaDemerit
 {
-	String teacher;
-	DateTime date;
-	String content;
-	String type;
+	final String teacher;
+	final DateTime date;
+	final String content;
+	final String type;
 
   ClasseVivaDemerit({
     @required this.teacher,
@@ -187,11 +187,11 @@ enum ClasseVivaAbsenceStatus
 
 class ClasseVivaAbsence
 {
-  DateTime from;
-  DateTime to;
-  String description;
-  ClasseVivaAbsenceType type;
-  ClasseVivaAbsenceStatus status;
+  final DateTime from;
+  final DateTime to;
+  final String description;
+  final ClasseVivaAbsenceType type;
+  final ClasseVivaAbsenceStatus status;
 
   ClasseVivaAbsence({
     @required this.from,
@@ -204,9 +204,9 @@ class ClasseVivaAbsence
 
 class ClasseVivaSubject
 {
-  String id;
-  String name;
-  List<String> teacherIds;
+  final String id;
+  final String name;
+  final List<String> teacherIds;
 
   ClasseVivaSubject({
     @required this.id,
