@@ -192,29 +192,32 @@ class _GradesState extends State<Grades> {
                       }
 
                       return ListTile(
-                        leading: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Center(
-                              child: CircularProgressIndicator(
-                                value: _getAverageGrade(grades),
-                                valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
-                                  subject: "",
-                                  grade: _getAverageGrade(grades).toStringAsFixed(1),
-                                  type: "",
-                                  description: "",
-                                  date: DateTime.now(),
-                                ))),
+                        leading: SizedBox(
+                          width: 50,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Center(
+                                child: CircularProgressIndicator(
+                                  value: _getAverageGrade(grades) / 10,
+                                  valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
+                                    subject: "",
+                                    grade: _getAverageGrade(grades).toStringAsFixed(1),
+                                    type: "",
+                                    description: "",
+                                    date: DateTime.now(),
+                                  ))),
+                                ),
                               ),
-                            ),
-                            Text(
-                              _getAverageGrade(grades).toStringAsFixed(1),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+                              Text(
+                                _getAverageGrade(grades).toStringAsFixed(1),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         title: SelectableText(
                           subject,
