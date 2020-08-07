@@ -114,12 +114,8 @@ class _LessonsState extends State<Lessons> {
                                         ),
                                       );
 
-                                    return ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: lessons.data.length,
-                                      itemBuilder: (context, index) {
-                                        final ClasseVivaLesson lesson = lessons.data[index];
-
+                                    return Column(
+                                      children: lessons.data.map((lesson) {
                                         return ListTile(
                                           title: SelectableText(
                                             lesson.description,
@@ -135,7 +131,7 @@ class _LessonsState extends State<Lessons> {
                                             ),
                                           ),
                                         );
-                                      },
+                                      }).toList(),
                                     );
                                   },
                                 )
