@@ -440,6 +440,9 @@ class ClasseViva
 
         String description = "";
 
+        if (element.nextElementSibling.attributes["height"] == "19")
+          description = element.nextElementSibling.text.trim();
+
         absences.add(ClasseVivaAbsence(
           from: DateTime(
             year,
