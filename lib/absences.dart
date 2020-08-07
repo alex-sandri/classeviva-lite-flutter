@@ -134,12 +134,14 @@ class _AbsencesState extends State<Absences> {
                                   ),
                                 ),
                                 SizedBox(height: 5,),
-                                SelectableText(
-                                  absence.description,
-                                  style: TextStyle(
-                                    color: Theme.of(context).accentColor,
+
+                                if (absence.description.isNotEmpty)
+                                  SelectableText(
+                                    absence.description,
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                    ),
                                   ),
-                                ),
                               ],
                             )
                           );

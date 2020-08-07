@@ -438,6 +438,8 @@ class ClasseViva
         // 7 -> ago
         final int year = int.parse("20${int.parse(ClasseVivaEndpoints._year) + (fromMonthIndex <= 7 ? 1 : 0)}");
 
+        String description = "";
+
         absences.add(ClasseVivaAbsence(
           from: DateTime(
             year,
@@ -451,7 +453,7 @@ class ClasseViva
             toMonthIndex + 1,
             int.parse(toDateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
           ),
-          description: "TODO",
+          description: description,
           type: ClasseVivaAbsenceType.Absence,
           status: absenceStatus,
         ));
