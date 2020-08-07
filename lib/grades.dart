@@ -186,17 +186,35 @@ class _GradesState extends State<Grades> {
                       final String subject = _subjects.keys.elementAt(index);
                       final List<ClasseVivaGrade> grades = _subjects[index];
 
+                      double _getAverageGrade(List<ClasseVivaGrade> grades)
+                      {
+                        return grades.map((grade) => ClasseViva.getGradeValue(grade.grade)).reduce((a, b) => a + b) / grades.length;
+                      }
+
                       return ListTile(
-                        leading: CircleAvatar(
-                          child: Text(
-                            "TODO",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                        leading: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Center(
+                              child: CircularProgressIndicator(
+                                value: _getAverageGrade(grades),
+                                valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
+                                  subject: "",
+                                  grade: _getAverageGrade(grades).toStringAsFixed(1),
+                                  type: "",
+                                  description: "",
+                                  date: DateTime.now(),
+                                ))),
+                              ),
                             ),
-                          ),
-                          backgroundColor: Colors.blue,
-                          radius: 25,
+                            Text(
+                              _getAverageGrade(grades).toStringAsFixed(1),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
                         ),
                         title: SelectableText(
                           subject,

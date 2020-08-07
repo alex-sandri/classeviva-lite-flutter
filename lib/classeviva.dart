@@ -564,7 +564,7 @@ class ClasseViva
     );
 	}
 
-  static double getGradeValue(ClasseVivaGrade grade)
+  static double getGradeValue(String grade)
   {
     double value;
 
@@ -615,17 +615,17 @@ class ClasseViva
       "o": "10",
     };
 
-    value = double.tryParse(grade.grade);
+    value = double.tryParse(grade);
 
-    if (grade.grade.contains("½")) value = double.parse(grade.grade.replaceAll("½", ".5"));
-    else if (grade.grade.contains("+")) value = double.parse(grade.grade.replaceAll("+", ".25"));
-    else if (grade.grade.contains("-")) value = double.parse(grade.grade.replaceAll("-", ".75")) - 1;
+    if (grade.contains("½")) value = double.parse(grade.replaceAll("½", ".5"));
+    else if (grade.contains("+")) value = double.parse(grade.replaceAll("+", ".25"));
+    else if (grade.contains("-")) value = double.parse(grade.replaceAll("-", ".75")) - 1;
 
     if (value == null)
     {
-      if (RegExp("^${reGrades.keys.join("|")}\$").hasMatch(grade.grade))
+      if (RegExp("^${reGrades.keys.join("|")}\$").hasMatch(grade))
       {
-        grade.grade = reGrades[grade.grade];
+        grade = reGrades[grade];
 
         value = getGradeValue(grade);
       }
@@ -640,7 +640,7 @@ class ClasseViva
   {
     Color color;
 
-    double value = getGradeValue(grade);
+    double value = getGradeValue(grade.grade);
 
     if (grade.type != "Voto Test")
     {
