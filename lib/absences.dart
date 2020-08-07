@@ -121,7 +121,9 @@ class _AbsencesState extends State<Absences> {
                               children: <Widget>[
                                 SizedBox(height: 5,),
                                 SelectableText(
-                                  "(${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)})",
+                                  absence.from == absence.to
+                                    ? DateFormat.yMMMMd().format(absence.from)
+                                    : "(${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)})",
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                   ),
