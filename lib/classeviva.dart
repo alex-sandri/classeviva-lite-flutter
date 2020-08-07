@@ -20,8 +20,13 @@ class ClasseVivaEndpoints
   // TODO: Use this URL (https://web19.spaggiari.eu/cvv/app/default/genitori_voti.php)
 	static String grades() => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
 
+  // Add timeZoneOffset hours to be in the UTC+0 TimeZone
 	static String agenda(DateTime start, DateTime end) =>
-    "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events&start=${(start.millisecondsSinceEpoch / 1000).truncate()}&end=${(end.millisecondsSinceEpoch / 1000).truncate()}";
+    "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
+    + "&start="
+    + (start.toUtc().add(start.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString()
+    + "&end="
+    + (end.toUtc().add(end.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString();
 
 	static String attachments(int page) => "https://web${ClasseVivaEndpoints._year}.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
 
