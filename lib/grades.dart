@@ -197,8 +197,8 @@ class _GradesState extends State<Grades> {
                       }
 
                       return ListTile(
-                        leading: SizedBox(
-                          width: 50,
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
