@@ -479,13 +479,18 @@ class ClasseViva
           int.parse(dateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
         );
 
-        String description = element.querySelector("td:nth-child(5) p:last-child").text.trim();
+        final bool isShortDelay = element.querySelector("td:nth-child(5) p:last-child").text.trim() == "breve";
+
+        String description;
+
+        if (element.nextElementSibling.querySelector("td[colspan=\"13\"]") != null)
+          description = element.nextElementSibling.querySelector("td[colspan=\"13\"]").text.trim();
 
         absences.add(ClasseVivaAbsence(
           from: date,
           to: date,
-          description: description == "breve" ? "" : description,
-          type: description == "breve"
+          description: description,
+          type: isShortDelay
             ? ClasseVivaAbsenceType.ShortDelay
             : ClasseVivaAbsenceType.Late,
           status: absenceStatus,
