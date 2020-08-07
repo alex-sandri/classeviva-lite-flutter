@@ -37,6 +37,8 @@ class ClasseVivaEndpoints
   static String absences() => "https://web${ClasseViva.year}.spaggiari.eu/tic/app/default/consultasingolo.php";
 
   static String subjects() => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php";
+
+  static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=$teacherIds";
 }
 
 class ClasseVivaProfile
@@ -587,6 +589,27 @@ class ClasseViva
 		});
 
 		return subjects;
+	}
+
+  Future<List<ClasseVivaLesson>> getLessons(ClasseVivaSubject subject) async {
+		final response = await http.get(
+			ClasseVivaEndpoints.lessons(subject.id, subject.teacherIds),
+      headers: getSessionCookieHeader(),
+    );
+
+		final document = parse(response.body);
+
+    checkValidSession(document);
+
+		List<ClasseVivaLesson> lessons = [];
+
+		document.querySelectorAll("").forEach((subject) {
+			lessons.add(ClasseVivaLesson(
+        // TODO
+      ));
+		});
+
+		return lessons;
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {
