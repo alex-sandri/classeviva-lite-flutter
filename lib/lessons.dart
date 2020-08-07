@@ -90,9 +90,55 @@ class _LessonsState extends State<Lessons> {
 
                           final ClasseVivaSubject subject = _subjects[index];
 
-                          return ExpansionTile(
-                            title: Text(
-                              subject.name
+                          return Card(
+                            color: Colors.transparent,
+                            child: ExpansionTile(
+                              title: Text(
+                                subject.name,
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              children: [
+                                FutureBuilder(
+                                  future: Future.delayed(Duration(seconds: 2)),
+                                  builder: (context, AsyncSnapshot<dynamic> lessons) {
+                                    if (!lessons.hasData)
+                                      return Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                                          ),
+                                        ),
+                                      );
+
+                                    return ListView.builder(
+                                      itemCount: lessons.data,
+                                      itemBuilder: (context, index) {
+                                        final ClasseVivaLesson lesson = lessons.data[index];
+
+                                        return ListTile(
+                                          title: SelectableText(
+                                            "TODO",
+                                            style: TextStyle(
+                                              color: Theme.of(context).accentColor,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          subtitle: SelectableText(
+                                            "TODO",
+                                            style: TextStyle(
+                                              color: Theme.of(context).accentColor,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
                             ),
                           );
                         },
