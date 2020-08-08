@@ -77,10 +77,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
                           valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
                         ),
                       )
-                    : ListView.separated(
-                        separatorBuilder: (context, index) => Divider(
-                          color: Theme.of(context).accentColor,
-                        ),
+                    : ListView.builder(
                         itemCount: _items.length + 1,
                         itemBuilder: (context, index) {
                           if (_items.isEmpty)
@@ -96,7 +93,41 @@ class _BulletinBoardState extends State<BulletinBoard> {
 
                           final ClasseVivaBulletinBoardItem item = _items[index];
 
-                          return ListTile();
+                          return Card(
+                            color: Colors.transparent,
+                            child: ListTile(
+                              onTap: () {
+                                // TODO
+                              },
+                              isThreeLine: true,
+                              title: Text(
+                                item.titolo,
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    DateFormat.yMMMMd().format(item.evento_data),
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    item.tipo_com_desc,
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ),
+                          );
                         },
                       ),
                   )
