@@ -244,7 +244,7 @@ class ClasseVivaBulletinBoardItem
   final String nome_file;
   final String richieste;
   final String id_relazione;
-  final String conf_lettura;
+  final bool conf_lettura;
   final bool flag_risp;
   final String testo_risp;
   final String file_risp;
@@ -295,7 +295,7 @@ class ClasseVivaBulletinBoardItem
       nome_file: json["nome_file"],
       richieste: json["richieste"],
       id_relazione: json["id_relazione"],
-      conf_lettura: json["conf_lettura"],
+      conf_lettura: json["conf_lettura"] == "letto",
       flag_risp: json["flag_risp"] == "1",
       testo_risp: json["testo_risp"],
       file_risp: json["file_risp"],
