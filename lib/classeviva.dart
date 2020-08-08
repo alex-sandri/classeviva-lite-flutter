@@ -800,7 +800,7 @@ class ClasseViva
       attachments: document.querySelectorAll("[allegato_id]").map((attachment) => ClasseVivaBulletinBoardItemDetailsAttachment(
         id: attachment.attributes["allegato_id"],
         name: attachment.text.trim(),
-      )),
+      )).toList(),
     );
 	}
 
