@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/absences.dart';
 import 'package:classeviva_lite/agenda.dart';
 import 'package:classeviva_lite/attachments.dart';
+import 'package:classeviva_lite/bulletin_board.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/demerits.dart';
 import 'package:classeviva_lite/grades.dart';
@@ -166,7 +167,14 @@ class Home extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BulletinBoard(),
+                                  )
+                                );
+                              },
                             ),
                           ),
                           Card(
