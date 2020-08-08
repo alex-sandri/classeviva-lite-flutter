@@ -311,13 +311,26 @@ class ClasseVivaBulletinBoardItem
   }
 }
 
+class ClasseVivaBulletinBoardItemDetailsAttachment
+{
+  final String id;
+  final String name;
+
+  ClasseVivaBulletinBoardItemDetailsAttachment({
+    @required this.id,
+    @required this.name,
+  });
+}
+
 class ClasseVivaBulletinBoardItemDetails
 {
   final String title;
-  final List<String> attachments;
+  final String description;
+  final List<ClasseVivaBulletinBoardItemDetailsAttachment> attachments;
 
   ClasseVivaBulletinBoardItemDetails({
     @required this.title,
+    @required this.description,
     @required this.attachments,
   });
 }
@@ -697,6 +710,8 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
+    // TODO: Check valid session
+
 		final document = parse('''
       <!DOCTYPE html>
       <html>
@@ -764,6 +779,26 @@ class ClasseViva
     );
 
 		// TODO: Check valid session
+
+    final document = parse('''
+      <!DOCTYPE html>
+      <html>
+        <head>
+        </head>
+        <body>
+          ${response.body}
+        </body>
+      </html>
+    ''');
+
+    return ClasseVivaBulletinBoardItemDetails(
+      title: document.querySelector("div:first-child").text.trim(),
+      description: document.querySelector(".comunicazione_testo").text.trim(),
+      attachments: document.querySelectorAll("[allegato_id=*]").map((attachment) => ClasseVivaBulletinBoardItemDetailsAttachment(
+        id: attachment.attributes["allegato_id"],
+        name: attachment.text.trim(),
+      )),
+    );
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {
