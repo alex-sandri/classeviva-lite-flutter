@@ -719,9 +719,13 @@ class ClasseViva
 	}
 
   Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard() async {
-		final response = await http.get(
+		final response = await http.post(
 			ClasseVivaEndpoints.bulletinBoard(),
       headers: getSessionCookieHeader(),
+      body: Uri(queryParameters: {
+        "action": "get_comunicazioni",
+        "ncna": "0" // Nascondi Comunicazioni Non Attive
+      }).queryParameters,
     );
 
 		// TODO: Check valid session
