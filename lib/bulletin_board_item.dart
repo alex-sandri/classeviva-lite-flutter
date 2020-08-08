@@ -1,8 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BulletinBoardItem extends StatefulWidget {
   final ClasseVivaBulletinBoardItem _item;
