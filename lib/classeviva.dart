@@ -324,11 +324,13 @@ class ClasseVivaBulletinBoardItemDetailsAttachment
 
 class ClasseVivaBulletinBoardItemDetails
 {
+  final String id;
   final String title;
   final String description;
   final List<ClasseVivaBulletinBoardItemDetailsAttachment> attachments;
 
   ClasseVivaBulletinBoardItemDetails({
+    @required this.id,
     @required this.title,
     @required this.description,
     @required this.attachments,
@@ -792,6 +794,7 @@ class ClasseViva
     ''');
 
     return ClasseVivaBulletinBoardItemDetails(
+      id: document.querySelector("[comunicazione_id]").attributes["comunicazione_id"],
       title: document.querySelector("div:first-child").text.trim(),
       description: document.querySelector(".comunicazione_testo").text.trim(),
       attachments: document.querySelectorAll("[allegato_id=*]").map((attachment) => ClasseVivaBulletinBoardItemDetailsAttachment(

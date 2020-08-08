@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/bulletin_board_item.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -97,7 +98,12 @@ class _BulletinBoardState extends State<BulletinBoard> {
                             color: Colors.transparent,
                             child: ListTile(
                               onTap: () {
-                                // TODO
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BulletinBoardItem(item),
+                                  )
+                                );
                               },
                               isThreeLine: true,
                               title: Text(
