@@ -41,6 +41,8 @@ class ClasseVivaEndpoints
   static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 
   static String bulletinBoard() => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_personale.php";
+
+  static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=risposta_com&com_id=$id";
 }
 
 class ClasseVivaProfile
@@ -307,6 +309,17 @@ class ClasseVivaBulletinBoardItem
       ),
     );
   }
+}
+
+class ClasseVivaBulletinBoardItemDetails
+{
+  final String title;
+  final List<String> attachments;
+
+  ClasseVivaBulletinBoardItemDetails({
+    @required this.title,
+    @required this.attachments,
+  });
 }
 
 class ClasseViva
@@ -742,6 +755,15 @@ class ClasseViva
     }
 
 		return responseItems.map((item) => ClasseVivaBulletinBoardItem.fromJson(item)).toList();
+	}
+
+  Future<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async {
+		final response = await http.get(
+			ClasseVivaEndpoints.bulletinBoardItemDetails(id),
+      headers: getSessionCookieHeader(),
+    );
+
+		// TODO: Check valid session
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {
