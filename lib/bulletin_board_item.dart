@@ -76,8 +76,62 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
                           valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
                         ),
                       )
-                    : Container(
-                      
+                    : ListView.builder(
+                      itemCount: _item.attachments.length + 2,
+                      itemBuilder: (context, index) {
+                        if (index == 0)
+                          return Padding(
+                            padding: EdgeInsets.all(4),
+                            child: SelectableText(
+                              _item.description,
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          );
+                        
+                        if (index == 1)
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+                            child: SelectableText(
+                              "Allegati",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 25,
+                              ),
+                            ),
+                          );
+
+                        if (_item.attachments.isEmpty)
+                          return Padding(
+                            padding: EdgeInsets.all(4),
+                            child: SelectableText(
+                              "Non sono presenti allegati",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          );
+
+                        final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index - 2];
+
+                        return Card(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            onTap: () {
+                              print(attachment.id);
+                            },
+                            title: Text(
+                              attachment.name,
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   )
                 ),
