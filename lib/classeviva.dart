@@ -797,7 +797,7 @@ class ClasseViva
       id: document.querySelector("[comunicazione_id]").attributes["comunicazione_id"],
       title: document.querySelector("div:first-child").text.trim(),
       description: document.querySelector(".comunicazione_testo").text.trim(),
-      attachments: document.querySelectorAll("[allegato_id=*]").map((attachment) => ClasseVivaBulletinBoardItemDetailsAttachment(
+      attachments: document.querySelectorAll("[allegato_id]").map((attachment) => ClasseVivaBulletinBoardItemDetailsAttachment(
         id: attachment.attributes["allegato_id"],
         name: attachment.text.trim(),
       )),
