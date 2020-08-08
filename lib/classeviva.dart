@@ -42,7 +42,7 @@ class ClasseVivaEndpoints
 
   static String bulletinBoard() => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_personale.php";
 
-  static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=risposta_com&com_id=$id";
+  static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 }
 
 class ClasseVivaProfile
