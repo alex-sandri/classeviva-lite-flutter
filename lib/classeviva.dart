@@ -730,7 +730,18 @@ class ClasseViva
 
 		// TODO: Check valid session
 
-		return ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaBulletinBoardItem.fromJson(item)).toList();
+    final jsonResponse = jsonDecode("${response.body}");
+
+    List responseItems = [];
+
+    if (jsonResponse != null)
+    {
+      if (jsonResponse["msg_new"] != null) responseItems.addAll(jsonResponse["msg_new"]);
+
+      if (jsonResponse["read"] != null) responseItems.addAll(jsonResponse["read"]);
+    }
+
+		return responseItems.map((item) => ClasseVivaBulletinBoardItem.fromJson(item)).toList();
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {
