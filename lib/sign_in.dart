@@ -14,6 +14,16 @@ class _SignInState extends State<SignIn> {
   final _uidController = TextEditingController();
   final _pwdController = TextEditingController();
 
+  void _redirectToHomePage() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Home(),
+      ),
+      (route) => false
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     OutlineInputBorder _inputDecoration() {
@@ -141,15 +151,7 @@ class _SignInState extends State<SignIn> {
 
                                 await ClasseViva
                                   .createSession(_uidController.text, _pwdController.text, context)
-                                  .then((session) async {
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Home(),
-                                      ),
-                                      (route) => false
-                                    );
-                                  },
+                                  .then((session) => _redirectToHomePage(),
                                   onError: (errors) {
                                     showDialog(
                                       context: context,
@@ -229,7 +231,9 @@ class _SignInState extends State<SignIn> {
                                         ),
                                       ),
                                       onTap: () {
-                                        // TODO
+                                        ClasseViva.setCurrentSession(sessions.data[index]);
+
+                                        _redirectToHomePage();
                                       },
                                     ),
                                   );
