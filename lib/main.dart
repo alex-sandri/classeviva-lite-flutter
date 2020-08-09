@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: FutureBuilder(
-        future: ClasseViva.getCurrentSession(),
-        builder: (context, AsyncSnapshot<String> session) {
-          if (!session.hasData)
+        future: ClasseViva.isSignedIn(),
+        builder: (context, AsyncSnapshot<bool> isSignedIn) {
+          if (!isSignedIn.hasData)
             return Container(
               color: Theme.of(context).primaryColor,
             );
 
-          return session.data != null ? Home() : SignIn();
+          return isSignedIn.data ? Home() : SignIn();
         },
       ),
       debugShowCheckedModeBanner: false,

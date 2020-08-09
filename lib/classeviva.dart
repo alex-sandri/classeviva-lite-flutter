@@ -830,6 +830,10 @@ class ClasseViva
     );
 	}
 
+  static Future<bool> isSignedIn() async {
+    return await ClasseViva.getCurrentSession() != null;
+  }
+
   static Future<String> getCurrentSession() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
