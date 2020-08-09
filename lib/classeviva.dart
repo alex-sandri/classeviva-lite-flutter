@@ -412,7 +412,7 @@ class ClasseViva
 
     final document = parse(response.body);
 
-    checkValidSession(document);
+    await checkValidSession(document);
 
 		return ClasseVivaProfile(
       name: document.querySelector(".name").text.trim(),
@@ -428,7 +428,7 @@ class ClasseViva
 
 		final document = parse(response.body);
 
-    checkValidSession(document);
+    await checkValidSession(document);
 
 		List<ClasseVivaGrade> grades = [];
 
@@ -481,7 +481,7 @@ class ClasseViva
 
 		final document = parse(response.body);
 
-    checkValidSession(document);
+    await checkValidSession(document);
 
 		List<ClasseVivaAttachment> attachments = [];
 
@@ -551,7 +551,7 @@ class ClasseViva
 
 		final document = parse(response.body);
 
-    checkValidSession(document);
+    await checkValidSession(document);
 
 		List<ClasseVivaDemerit> demerits = [];
 
@@ -581,7 +581,7 @@ class ClasseViva
 
 		final document = parse(response.body);
 
-    checkValidSession(document);
+    await checkValidSession(document);
 
 		List<ClasseVivaAbsence> absences = [];
 
@@ -711,7 +711,7 @@ class ClasseViva
 
 		final document = parse(response.body);
 
-    checkValidSession(document);
+    await checkValidSession(document);
 
 		List<ClasseVivaSubject> subjects = [];
 
