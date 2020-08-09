@@ -909,6 +909,8 @@ class ClasseViva
 
     final String session = preferences.getString("currentSession");
 
+    if (session == null) return null;
+
     return ClasseVivaSession(
       id: session.split(";").first,
       year: session.split(";").last,
