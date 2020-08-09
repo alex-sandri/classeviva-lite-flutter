@@ -125,7 +125,7 @@ class _LessonsState extends State<Lessons> {
                                             ),
                                           ),
                                           subtitle: SelectableText(
-                                            lesson.date.toString(),
+                                            DateFormat.yMMMMd().format(lesson.date),
                                             style: TextStyle(
                                               color: Theme.of(context).accentColor,
                                             ),
