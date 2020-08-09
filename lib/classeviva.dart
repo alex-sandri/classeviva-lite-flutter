@@ -43,6 +43,8 @@ class ClasseVivaEndpoints
   static String bulletinBoard() => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_personale.php";
 
   static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
+
+  static String previousYear() => "https://web${ClasseViva.year}.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${int.parse(ClasseViva.year) - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 }
 
 class ClasseVivaProfile
@@ -788,6 +790,31 @@ class ClasseViva
         name: attachment.text.trim(),
       )).toList(),
     );
+	}
+
+  Future<void> goToPreviousYear() async {
+    final HttpClient client = HttpClient();
+
+    final response = await client
+      .getUrl(Uri.parse(ClasseVivaEndpoints.previousYear()))
+      .then((request) {
+        request.headers.set("Cookie", getSessionCookieHeader()["Cookie"]);
+
+        request.followRedirects = false;
+
+        return request.close();
+      })
+      .then((response) {
+        final String redirectLocation = response.headers.value("location");
+
+        return response.redirect("GET", Uri.parse(redirectLocation), false);
+      });
+
+    final String sessionId = Cookie.fromSetCookieValue(response.headers.value("set-cookie")).value;
+
+    print(sessionId);
+
+    // year = (int.parse(year) - 1).toString();
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {

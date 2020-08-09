@@ -271,7 +271,7 @@ class Home extends StatelessWidget {
                                 ),
                               ),
                               onTap: () {
-                                // TODO
+                                session.data.goToPreviousYear();
                               },
                             ),
                           ),
