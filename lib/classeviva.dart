@@ -831,7 +831,7 @@ class ClasseViva
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     await preferences.setStringList("sessions", [
-      ...await ClasseViva.getAllSessions(context),
+      ...await ClasseViva.getAllSessions(),
       sessionId,
     ]);
 
@@ -849,13 +849,25 @@ class ClasseViva
     await preferences.setString("sessionId", id);
   }
 
-  static Future<List<String>> getAllSessions(BuildContext context) async {
+  static Future<List<String>> getAllSessions() async {
 		final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     final List<String> sessionIds = preferences.getStringList("sessions");
 
     return sessionIds;
 	}
+
+  static Future<void> signOut() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    final String currentSessionId = preferences.getString("sessionId");
+
+    final List<String> sessions = (await ClasseViva.getAllSessions());
+
+    sessions.removeWhere((sessionId) => sessionId == currentSessionId);
+
+    await preferences.setStringList("sessions", sessions);
+  }
 
   static double getGradeValue(String grade)
   {
