@@ -371,7 +371,7 @@ class ClasseViva
   /// 1st of August of the session year
   DateTime yearBeginsAt;
 
-  /// 31st of July of the session year
+  /// 31st of July of the year after the session year
   DateTime yearEndsAt;
 
   final ClasseVivaSession session;
