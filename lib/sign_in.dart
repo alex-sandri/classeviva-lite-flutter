@@ -1,7 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/home.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -143,10 +142,6 @@ class _SignInState extends State<SignIn> {
                                 await ClasseViva
                                   .createSession(_uidController.text, _pwdController.text, context)
                                   .then((session) async {
-                                    final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-                                    await preferences.setString("sessionId", session.sessionId);
-
                                     Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
