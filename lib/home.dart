@@ -40,17 +40,7 @@ class Home extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () async {
-                    final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-                    await preferences.remove("sessionId");
-
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignIn(),
-                      ),
-                      (route) => false,
-                    );
+                    await ClasseViva.signOut(context);
                   },
                 ),
               ],
