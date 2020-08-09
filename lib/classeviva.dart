@@ -40,7 +40,7 @@ class ClasseVivaEndpoints
 
   static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 
-  static String bulletinBoard() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php";
+  static String bulletinBoard() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=get_comunicazioni&ncna=0";
 
   static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
@@ -745,13 +745,9 @@ class ClasseViva
 	}
 
   Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard() async {
-		final response = await http.post(
+		final response = await http.get(
 			ClasseVivaEndpoints.bulletinBoard(),
       headers: getSessionCookieHeader(),
-      body: Uri(queryParameters: {
-        "action": "get_comunicazioni",
-        "ncna": "0" // Nascondi Comunicazioni Non Attive
-      }).queryParameters,
     );
 
 		// TODO: Check valid session
