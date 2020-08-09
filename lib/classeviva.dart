@@ -44,7 +44,7 @@ class ClasseVivaEndpoints
 
   static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
-  static String previousYear() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${ClasseViva.getShortYear() - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
+  static String previousYear() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${int.parse(ClasseViva.getShortYear(false)) - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 }
 
 class ClasseVivaProfile
@@ -341,12 +341,17 @@ class ClasseVivaBulletinBoardItemDetails
 
 class ClasseViva
 {
-	static String _year = DateTime.now().year.toString().substring(2, 4);
+	static String _year = "19";
 
   static int getYear() => _year == "" ? DateTime.now().year : int.parse("20$_year");
 
-  /// Use this for previous years websites
-  static int getShortYear() => int.parse(getYear().toString().substring(2, 4));
+  /// Use this for previous years websites.
+  ///
+  /// If we are in the current year and `ignoreCurrentYear` is `true`, an empty string is returned
+  static String getShortYear([ bool ignoreCurrentYear = true ]) =>
+    _year == "" && ignoreCurrentYear
+      ? ""
+      : getYear().toString().substring(2, 4);
 
   /// 1st of August (getYear)
   static DateTime yearBeginsAt = DateTime(getYear(), 7, 1);
