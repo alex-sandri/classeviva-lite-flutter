@@ -834,6 +834,23 @@ class ClasseViva
     );
 	}
 
+  static Future<List<ClasseViva>> getAllSessions(BuildContext context) async {
+		final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    final List<String> sessionIds = preferences.getStringList("sessions");
+
+		List<ClasseViva> sessions;
+
+    sessionIds.forEach((sessionId) {
+      sessions.add(ClasseViva(
+        sessionId: sessionId,
+        context: context,
+      ));
+    });
+
+    return sessions;
+	}
+
   static double getGradeValue(String grade)
   {
     double value = double.tryParse(grade.replaceFirst(",", "."));
