@@ -830,6 +830,12 @@ class ClasseViva
     );
 	}
 
+  static Future<String> getCurrentSession() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    return preferences.getString("currentSession");
+  }
+
   static Future<void> setCurrentSession(String id) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
