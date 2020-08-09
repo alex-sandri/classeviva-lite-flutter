@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
         final SharedPreferences preferences = await SharedPreferences.getInstance();
 
         return ClasseViva(
-          sessionId: preferences.getString("sessionId"),
+          sessionId: await ClasseViva.getCurrentSession(),
           context: context
         );
       }.call(),

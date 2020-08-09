@@ -30,9 +30,9 @@ class _AbsencesState extends State<Absences> {
   void initState() {
     super.initState();
 
-    SharedPreferences.getInstance().then((preferences) {
+    SharedPreferences.getInstance().then((preferences) async {
       _session = ClasseViva(
-        sessionId: preferences.getString("sessionId"),
+        sessionId: await ClasseViva.getCurrentSession(),
         context: context
       );
 
