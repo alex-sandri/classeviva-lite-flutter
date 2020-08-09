@@ -937,15 +937,15 @@ class ClasseViva
   static Future<void> signOut(BuildContext context) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    final String currentSessionId = preferences.getString("currentSession");
+    final ClasseVivaSession currentSession = await getCurrentSession();
 
     await preferences.remove("currentSession");
 
     final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
 
-    sessions.removeWhere((session) => session.id == currentSessionId);
+    sessions.removeWhere((session) => session.id == currentSession.id);
 
-    await preferences.setStringList("sessions", sessions.map((session) => "${session.id};${session.year}"));
+    await preferences.setStringList("sessions", sessions.map((session) => "${session.id};${session.year}").toList());
 
     Navigator.pushAndRemoveUntil(
       context,
