@@ -89,6 +89,14 @@ class Home extends StatelessWidget {
                                   color: Theme.of(context).accentColor,
                                 ),
                               ),
+                              
+                              if (ClasseViva.getShortYear() != "")
+                                SelectableText(
+                                  "20${ClasseViva.getShortYear()}/20${int.parse(ClasseViva.getShortYear()) + 1}",
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ),
                             ],
                           );
                         },
