@@ -179,7 +179,7 @@ class _SignInState extends State<SignIn> {
                   FutureBuilder(
                     future: ClasseViva.getAllSessions(),
                     builder: (context, AsyncSnapshot<List<String>> sessions) {
-                      if (!sessions.hasData) return Container();
+                      if (!sessions.hasData || sessions.data.isEmpty) return Container();
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
