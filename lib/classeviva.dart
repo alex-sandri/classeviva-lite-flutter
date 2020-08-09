@@ -842,21 +842,12 @@ class ClasseViva
     await preferences.setString("sessionId", id);
   }
 
-  static Future<List<ClasseViva>> getAllSessions(BuildContext context) async {
+  static Future<List<String>> getAllSessions(BuildContext context) async {
 		final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     final List<String> sessionIds = preferences.getStringList("sessions");
 
-		List<ClasseViva> sessions;
-
-    sessionIds.forEach((sessionId) {
-      sessions.add(ClasseViva(
-        sessionId: sessionId,
-        context: context,
-      ));
-    });
-
-    return sessions;
+    return sessionIds;
 	}
 
   static double getGradeValue(String grade)
