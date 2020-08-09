@@ -1,8 +1,8 @@
+import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/home.dart';
 import 'package:classeviva_lite/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 
@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: FutureBuilder(
-        future: SharedPreferences.getInstance(),
-        builder: (context, AsyncSnapshot<SharedPreferences> preferences) {
-          if (!preferences.hasData)
+        future: ClasseViva.getCurrentSession(),
+        builder: (context, AsyncSnapshot<String> session) {
+          if (!session.hasData)
             return Container(
               color: Theme.of(context).primaryColor,
             );
 
-          return preferences.data.getString("sessionId") != null ? Home() : SignIn();
+          return session.data != null ? Home() : SignIn();
         },
       ),
       debugShowCheckedModeBanner: false,
