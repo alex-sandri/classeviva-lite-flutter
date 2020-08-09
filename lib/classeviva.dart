@@ -828,15 +828,19 @@ class ClasseViva
     // Use the second PHPSESSID cookie (because for some reason ClasseViva returns two PHPSESSID cookies)
 		final String sessionId = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
 
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    await preferences.setString("sessionId", sessionId);
+    await ClasseViva.setCurrentSession(sessionId);
 
 		return ClasseViva(
       sessionId: sessionId,
       context: context,
     );
 	}
+
+  static Future<void> setCurrentSession(String id) async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    await preferences.setString("sessionId", id);
+  }
 
   static Future<List<ClasseViva>> getAllSessions(BuildContext context) async {
 		final SharedPreferences preferences = await SharedPreferences.getInstance();
