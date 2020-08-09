@@ -899,7 +899,7 @@ class ClasseViva
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     await preferences.setStringList("sessions", [
-      ...(await ClasseViva.getAllSessions() ?? []),
+      ...((await ClasseViva.getAllSessions())?.map((session) => "$sessionId;$year") ?? []),
       "$sessionId;$year", // Format: "SESSION_ID;SESSION_YEAR", where sessionYear is either the short version of the year or an empty string if the current one
     ]);
   }
@@ -928,7 +928,7 @@ class ClasseViva
 
     final List<String> sessions = preferences.getStringList("sessions");
 
-    return sessions.map((session) => ClasseVivaSession(
+    return sessions?.map((session) => ClasseVivaSession(
       id: session.split(";").first,
       year: session.split(";").last,
     ));
