@@ -844,8 +844,6 @@ class ClasseViva
 
     final String sessionId = Cookie.fromSetCookieValue(response.headers.value("set-cookie")).value;
 
-    print({sessionId, previousYear});
-
     await ClasseViva.addSession(sessionId, previousYear);
 
     final ClasseVivaSession session = ClasseVivaSession(
