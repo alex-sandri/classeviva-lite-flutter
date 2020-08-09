@@ -252,6 +252,29 @@ class Home extends StatelessWidget {
                               },
                             ),
                           ),
+                          Divider(
+                            color: Theme.of(context).accentColor,
+                            thickness: 2,
+                            indent: 4,
+                            endIndent: 4,
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.skip_previous,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                "Anno Precedente",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              onTap: () {
+                                // TODO
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     )
