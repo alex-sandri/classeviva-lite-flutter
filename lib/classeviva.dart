@@ -931,7 +931,7 @@ class ClasseViva
     return sessions?.map((session) => ClasseVivaSession(
       id: session.split(";").first,
       year: session.split(";").last,
-    ));
+    ))?.toList();
 	}
 
   static Future<void> signOut(BuildContext context) async {
