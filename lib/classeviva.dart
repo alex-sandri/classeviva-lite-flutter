@@ -823,8 +823,10 @@ class ClasseViva
   Future<void> goToPreviousYear() async {
     final HttpClient client = HttpClient();
 
+    final String previousYear = (int.parse(getShortYear(false)) - 1).toString();
+
     final response = await client
-      .getUrl(Uri.parse(_endpoints.previousYear((int.parse(getShortYear(false)) - 1).toString())))
+      .getUrl(Uri.parse(_endpoints.previousYear(previousYear)))
       .then((request) {
         request.headers.set("Cookie", getSessionCookieHeader()["Cookie"]);
 
@@ -842,11 +844,13 @@ class ClasseViva
 
     final String sessionId = Cookie.fromSetCookieValue(response.headers.value("set-cookie")).value;
 
-    await ClasseViva.addSession(sessionId, getShortYear());
+    print({sessionId, previousYear});
+
+    await ClasseViva.addSession(sessionId, previousYear);
 
     final ClasseVivaSession session = ClasseVivaSession(
       id: sessionId,
-      year: (int.parse(getShortYear(false)) - 1).toString(),
+      year: previousYear,
     );
 
     await ClasseViva.setCurrentSession(session);
