@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/home.dart';
 import 'package:flutter/material.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -210,7 +211,23 @@ class _SignInState extends State<SignIn> {
                                   context: context,
                                 ).getProfile(),
                                 builder: (context, snapshot) {
-                                  if (!snapshot.hasData) return Container();
+                                  if (!snapshot.hasData)
+                                    return Padding(
+                                      padding: EdgeInsets.all(4),
+                                      child: SkeletonAnimation(
+                                        shimmerColor: Colors.white54,
+                                        gradientColor: Color.fromARGB(0, 244, 244, 244),
+                                        curve: Curves.fastOutSlowIn,
+                                        child: Container(  
+                                          width: double.infinity,  
+                                          height: 50,
+                                          decoration: BoxDecoration(  
+                                            color: Theme.of(context).disabledColor,  
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ),
+                                      ),
+                                    );
 
                                   return Card(
                                     color: Colors.transparent,
