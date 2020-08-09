@@ -51,6 +51,17 @@ class ClasseVivaEndpoints
   String previousYear() => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${int.parse(year) - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 }
 
+class ClasseVivaSession
+{
+  final String id;
+  final String year;
+
+  ClasseVivaSession({
+    @required this.id,
+    @required this.year,
+  });
+}
+
 class ClasseVivaProfile
 {
   final String name;
@@ -345,15 +356,15 @@ class ClasseVivaBulletinBoardItemDetails
 
 class ClasseViva
 {
-  int getYear() => year == ""
+  int getYear() => session.year == ""
     ? DateTime.now().year
-    : int.parse("20$year");
+    : int.parse("20${session.year}");
 
   /// Use this for previous years websites.
   ///
   /// If we are in the current year and `ignoreCurrentYear` is `true`, an empty string is returned
   String getShortYear([ bool ignoreCurrentYear = true ]) =>
-    year == "" && ignoreCurrentYear
+    session.year == "" && ignoreCurrentYear
       ? ""
       : getYear().toString().substring(2, 4);
 
@@ -363,9 +374,7 @@ class ClasseViva
   /// 31st of July of the session year
   DateTime yearEndsAt;
 
-  final String sessionId;
-
-  final String year;
+  final ClasseVivaSession session;
 
   final BuildContext context;
 
@@ -374,8 +383,7 @@ class ClasseViva
   int attachmentsPage = 1;
 
 	ClasseViva({
-    @required this.sessionId,
-    @required this.year,
+    @required this.session,
     @required this.context,
   })
   {
@@ -383,12 +391,12 @@ class ClasseViva
 
     yearEndsAt = DateTime(getYear() + 1, 6, 31);
 
-    _endpoints = ClasseVivaEndpoints(year);
+    _endpoints = ClasseVivaEndpoints(session.year);
   }
 
   Map<String, String> getSessionCookieHeader() {
     return {
-      "Cookie": "PHPSESSID=$sessionId",
+      "Cookie": "PHPSESSID=${session.id}",
     };
   }
 
@@ -868,8 +876,10 @@ class ClasseViva
     await ClasseViva.setCurrentSession(sessionId);
 
 		return ClasseViva(
-      sessionId: sessionId,
-      year: "",
+      session: ClasseVivaSession(
+        id: sessionId,
+        year: year,
+      ),
       context: context,
     );
 	}
