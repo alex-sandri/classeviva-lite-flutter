@@ -341,7 +341,7 @@ class ClasseVivaBulletinBoardItemDetails
 
 class ClasseViva
 {
-	static String _year = "19";
+	static String _year = "";
 
   static int getYear() => _year == "" ? DateTime.now().year : int.parse("20$_year");
 
