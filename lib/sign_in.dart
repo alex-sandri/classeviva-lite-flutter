@@ -179,9 +179,9 @@ class _SignInState extends State<SignIn> {
                       ],
                     ),
                   ),
-                  FutureBuilder(
+                  FutureBuilder<List<ClasseVivaSession>>(
                     future: ClasseViva.getAllSessions(),
-                    builder: (context, AsyncSnapshot<List<String>> sessions) {
+                    builder: (context, sessions) {
                       if (!sessions.hasData || sessions.data.isEmpty) return Container();
 
                       return Column(
@@ -207,7 +207,7 @@ class _SignInState extends State<SignIn> {
                             itemBuilder: (context, index) {
                               return FutureBuilder<ClasseVivaProfile>(
                                 future: ClasseViva(
-                                  sessionId: sessions.data[index],
+                                  session: sessions.data[index],
                                   context: context,
                                 ).getProfile(),
                                 builder: (context, snapshot) {

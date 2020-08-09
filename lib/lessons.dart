@@ -27,7 +27,7 @@ class _LessonsState extends State<Lessons> {
 
     SharedPreferences.getInstance().then((preferences) async {
       _session = ClasseViva(
-        sessionId: await ClasseViva.getCurrentSession(),
+        session: await ClasseViva.getCurrentSession(),
         context: context
       );
 

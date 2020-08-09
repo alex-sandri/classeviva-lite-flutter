@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
     return FutureBuilder(
       future: () async {
         return ClasseViva(
-          sessionId: await ClasseViva.getCurrentSession(),
+          session: await ClasseViva.getCurrentSession(),
           context: context
         );
       }.call(),
@@ -90,9 +90,9 @@ class Home extends StatelessWidget {
                                 ),
                               ),
                               
-                              if (ClasseViva.getShortYear() != "")
+                              if (session.data.getShortYear() != "")
                                 SelectableText(
-                                  "20${ClasseViva.getShortYear()}/20${int.parse(ClasseViva.getShortYear()) + 1}",
+                                  "20${session.data.getShortYear()}/20${int.parse(session.data.getShortYear()) + 1}",
                                   style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                   ),

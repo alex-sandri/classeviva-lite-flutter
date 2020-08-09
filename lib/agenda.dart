@@ -13,9 +13,9 @@ class Agenda extends StatefulWidget {
 class _AgendaState extends State<Agenda> {
   ClasseViva _session;
 
-  DateTime _start = ClasseViva.yearBeginsAt;
+  DateTime _start;
 
-  DateTime _end = ClasseViva.yearEndsAt;
+  DateTime _end;
 
   List<ClasseVivaAgendaItem> _items;
 
@@ -38,9 +38,13 @@ class _AgendaState extends State<Agenda> {
 
     SharedPreferences.getInstance().then((preferences) async {
       _session = ClasseViva(
-        sessionId: await ClasseViva.getCurrentSession(),
+        session: await ClasseViva.getCurrentSession(),
         context: context
       );
+
+      _start = _session.yearBeginsAt;
+
+      _end = _session.yearEndsAt;
 
       _handleRefresh();
     });

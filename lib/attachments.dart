@@ -56,7 +56,7 @@ class _AttachmentsState extends State<Attachments> {
 
     SharedPreferences.getInstance().then((preferences) async {
       _session = ClasseViva(
-        sessionId: await ClasseViva.getCurrentSession(),
+        session: await ClasseViva.getCurrentSession(),
         context: context
       );
 

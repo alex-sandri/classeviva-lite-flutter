@@ -33,7 +33,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
 
     SharedPreferences.getInstance().then((preferences) async {
       _session = ClasseViva(
-        sessionId: await ClasseViva.getCurrentSession(),
+        session: await ClasseViva.getCurrentSession(),
         context: context
       );
 

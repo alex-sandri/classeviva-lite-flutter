@@ -844,7 +844,12 @@ class ClasseViva
 
     await ClasseViva.addSession(sessionId, getShortYear());
 
-    await ClasseViva.setCurrentSession(sessionId);
+    final ClasseVivaSession session = ClasseVivaSession(
+      id: sessionId,
+      year: (int.parse(getShortYear()) - 1).toString(),
+    );
+
+    await ClasseViva.setCurrentSession(session);
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context, [ String year = "" ]) async {
@@ -873,13 +878,15 @@ class ClasseViva
 
     await ClasseViva.addSession(sessionId);
 
-    await ClasseViva.setCurrentSession(sessionId);
+    final ClasseVivaSession session = ClasseVivaSession(
+      id: sessionId,
+      year: year,
+    );
+
+    await ClasseViva.setCurrentSession(session);
 
 		return ClasseViva(
-      session: ClasseVivaSession(
-        id: sessionId,
-        year: year,
-      ),
+      session: session,
       context: context,
     );
 	}
@@ -897,24 +904,32 @@ class ClasseViva
     ]);
   }
 
-  static Future<String> getCurrentSession() async {
+  static Future<ClasseVivaSession> getCurrentSession() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    return preferences.getString("currentSession");
+    final String session = preferences.getString("currentSession");
+
+    return ClasseVivaSession(
+      id: session.split(";").first,
+      year: session.split(";").last,
+    );
   }
 
-  static Future<void> setCurrentSession(String id) async {
+  static Future<void> setCurrentSession(ClasseVivaSession session) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    await preferences.setString("currentSession", id);
+    await preferences.setString("currentSession", "${session.id};${session.year}");
   }
 
-  static Future<List<String>> getAllSessions() async {
+  static Future<List<ClasseVivaSession>> getAllSessions() async {
 		final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    final List<String> sessionIds = preferences.getStringList("sessions");
+    final List<String> sessions = preferences.getStringList("sessions");
 
-    return sessionIds;
+    return sessions.map((session) => ClasseVivaSession(
+      id: session.split(";").first,
+      year: session.split(";").last,
+    ));
 	}
 
   static Future<void> signOut(BuildContext context) async {
@@ -924,11 +939,11 @@ class ClasseViva
 
     await preferences.remove("currentSession");
 
-    final List<String> sessions = await ClasseViva.getAllSessions();
+    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
 
-    sessions.removeWhere((sessionId) => sessionId == currentSessionId);
+    sessions.removeWhere((session) => session.id == currentSessionId);
 
-    await preferences.setStringList("sessions", sessions);
+    await preferences.setStringList("sessions", sessions.map((session) => "${session.id};${session.year}"));
 
     Navigator.pushAndRemoveUntil(
       context,
