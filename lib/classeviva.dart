@@ -822,7 +822,7 @@ class ClasseViva
 
     final String sessionId = Cookie.fromSetCookieValue(response.headers.value("set-cookie")).value;
 
-    print(sessionId);
+    await ClasseViva.setCurrentSession(sessionId);
 
     _year = (int.parse(getShortYear(false)) - 1).toString();
 	}
