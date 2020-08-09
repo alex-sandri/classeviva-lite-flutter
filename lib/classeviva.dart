@@ -800,6 +800,8 @@ class ClasseViva
       .then((request) {
         request.headers.set("Cookie", getSessionCookieHeader()["Cookie"]);
 
+        // The necessary PHPSESSID cookie to access the previous year data is sent to the client with the first (but not last) redirect
+        // So we need to handle all of the redirects manually
         request.followRedirects = false;
 
         return request.close();
