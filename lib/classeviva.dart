@@ -348,10 +348,10 @@ class ClasseViva
   /// Use this for previous years webistes
   static int getShortYear() => int.parse(getYear().toString().substring(2, 4));
 
-  // 1st of August 20(year)
+  /// 1st of August (getYear)
   static DateTime yearBeginsAt = DateTime(getYear(), 7, 1);
 
-  // 31st of July 20(year)
+  /// 31st of July (getYear)
   static DateTime yearEndsAt = DateTime(getYear() + 1, 6, 31);
 
   final String sessionId;
