@@ -10,41 +10,45 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ClasseVivaEndpoints
 {
-  static String auth() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
+  final String year;
 
-	static String profile() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
+  ClasseVivaEndpoints(this.year);
+
+  String auth() => "https://web$year.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
+
+	String profile() => "https://web$year.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
 
   // TODO: Use this URL (https://web19.spaggiari.eu/cvv/app/default/genitori_voti.php)
-	static String grades() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
+	String grades() => "https://web$year.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
 
   // Add timeZoneOffset hours to be in the UTC+0 TimeZone
-	static String agenda(DateTime start, DateTime end) =>
-    "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
+	String agenda(DateTime start, DateTime end) =>
+    "https://web$year.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
     + "&start="
     + (start.toUtc().add(start.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString()
     + "&end="
     + (end.toUtc().add(end.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString();
 
-	static String attachments(int page) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
+	String attachments(int page) => "https://web$year.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
 
-	static String fileAttachments(String id, String checksum) =>
-		"https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
+	String fileAttachments(String id, String checksum) =>
+		"https://web$year.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
   
-	static String textAttachments(String id) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
+	String textAttachments(String id) => "https://web$year.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
 
-	static String demerits() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
+	String demerits() => "https://web$year.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
 
-  static String absences() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/tic/app/default/consultasingolo.php";
+  String absences() => "https://web$year.spaggiari.eu/tic/app/default/consultasingolo.php";
 
-  static String subjects() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php";
+  String subjects() => "https://web$year.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php";
 
-  static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
+  String lessons(String subjectId, List<String> teacherIds) => "https://web$year.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 
-  static String bulletinBoard() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=get_comunicazioni&ncna=0";
+  String bulletinBoard() => "https://web$year.spaggiari.eu/sif/app/default/bacheca_personale.php?action=get_comunicazioni&ncna=0";
 
-  static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
+  String bulletinBoardItemDetails(String id) => "https://web$year.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
-  static String previousYear() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${int.parse(ClasseViva.getShortYear(false)) - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
+  String previousYear() => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${int.parse(year) - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 }
 
 class ClasseVivaProfile
@@ -341,34 +345,46 @@ class ClasseVivaBulletinBoardItemDetails
 
 class ClasseViva
 {
-	static String _year = "";
-
-  static int getYear() => _year == "" ? DateTime.now().year : int.parse("20$_year");
+  int getYear() => year == ""
+    ? DateTime.now().year
+    : int.parse("20$year");
 
   /// Use this for previous years websites.
   ///
   /// If we are in the current year and `ignoreCurrentYear` is `true`, an empty string is returned
-  static String getShortYear([ bool ignoreCurrentYear = true ]) =>
-    _year == "" && ignoreCurrentYear
+  String getShortYear([ bool ignoreCurrentYear = true ]) =>
+    year == "" && ignoreCurrentYear
       ? ""
       : getYear().toString().substring(2, 4);
 
-  /// 1st of August (getYear)
-  static DateTime yearBeginsAt = DateTime(getYear(), 7, 1);
+  /// 1st of August of the session year
+  DateTime yearBeginsAt;
 
-  /// 31st of July (getYear)
-  static DateTime yearEndsAt = DateTime(getYear() + 1, 6, 31);
+  /// 31st of July of the session year
+  DateTime yearEndsAt;
 
   final String sessionId;
 
+  final String year;
+
   final BuildContext context;
+
+  ClasseVivaEndpoints _endpoints;
 
   int attachmentsPage = 1;
 
 	ClasseViva({
     @required this.sessionId,
+    @required this.year,
     @required this.context,
-  });
+  })
+  {
+    yearBeginsAt = DateTime(getYear(), 7, 1);
+
+    yearEndsAt = DateTime(getYear() + 1, 6, 31);
+
+    _endpoints = ClasseVivaEndpoints(year);
+  }
 
   Map<String, String> getSessionCookieHeader() {
     return {
@@ -382,7 +398,7 @@ class ClasseViva
 
 	Future<ClasseVivaProfile> getProfile() async {
 		final response = await http.get(
-      ClasseVivaEndpoints.profile(),
+      _endpoints.profile(),
       headers: getSessionCookieHeader(),
     );
 
@@ -398,7 +414,7 @@ class ClasseViva
 
 	Future<List<ClasseVivaGrade>> getGrades() async {
 		final response = await http.get(
-      ClasseVivaEndpoints.grades(),
+      _endpoints.grades(),
       headers: getSessionCookieHeader(),
     );
 
@@ -440,7 +456,7 @@ class ClasseViva
 
 	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {
 		final response = await http.get(
-      ClasseVivaEndpoints.agenda(start, end),
+      _endpoints.agenda(start, end),
       headers: getSessionCookieHeader(),
     );
 
@@ -451,7 +467,7 @@ class ClasseViva
 
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
 		final response = await http.get(
-      ClasseVivaEndpoints.attachments(attachmentsPage),
+      _endpoints.attachments(attachmentsPage),
       headers: getSessionCookieHeader(),
     );
 
@@ -477,13 +493,13 @@ class ClasseViva
 			switch (type)
 			{
 				case ClasseVivaAttachmentType.File:
-          url = Uri.parse(ClasseVivaEndpoints.fileAttachments(id, attachment.querySelector(".button_action").attributes["cksum"]));
+          url = Uri.parse(_endpoints.fileAttachments(id, attachment.querySelector(".button_action").attributes["cksum"]));
           break;
 				case ClasseVivaAttachmentType.Link:
           url = Uri.parse(attachment.querySelector(".button_action").attributes["ref"]);
           break;
 				case ClasseVivaAttachmentType.Text:
-          url = Uri.parse(ClasseVivaEndpoints.textAttachments(id));
+          url = Uri.parse(_endpoints.textAttachments(id));
           break;
 			}
 
@@ -521,7 +537,7 @@ class ClasseViva
 
 	Future<List<ClasseVivaDemerit>> getDemerits() async {
 		final response = await http.get(
-			ClasseVivaEndpoints.demerits(),
+			_endpoints.demerits(),
       headers: getSessionCookieHeader(),
     );
 
@@ -551,7 +567,7 @@ class ClasseViva
 
   Future<List<ClasseVivaAbsence>> getAbsences() async {
 		final response = await http.get(
-			ClasseVivaEndpoints.absences(),
+			_endpoints.absences(),
       headers: getSessionCookieHeader(),
     );
 
@@ -583,7 +599,7 @@ class ClasseViva
         final int toMonthIndex = months.indexOf(toDateString.split(" ").last);
 
         // 7 -> ago
-        final int year = ClasseViva.getYear() + (fromMonthIndex <= 7 ? 1 : 0);
+        final int year = getYear() + (fromMonthIndex <= 7 ? 1 : 0);
 
         String description = "";
 
@@ -617,7 +633,7 @@ class ClasseViva
 
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
-        final int year = ClasseViva.getYear() + (monthIndex <= 7 ? 1 : 0);
+        final int year = getYear() + (monthIndex <= 7 ? 1 : 0);
 
         final DateTime date = DateTime(
           year,
@@ -651,7 +667,7 @@ class ClasseViva
 
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
-        final int year = ClasseViva.getYear() + (monthIndex <= 7 ? 1 : 0);
+        final int year = getYear() + (monthIndex <= 7 ? 1 : 0);
 
         final DateTime date = DateTime(
           year,
@@ -681,7 +697,7 @@ class ClasseViva
 
   Future<List<ClasseVivaSubject>> getSubjects() async {
 		final response = await http.get(
-			ClasseVivaEndpoints.subjects(),
+			_endpoints.subjects(),
       headers: getSessionCookieHeader(),
     );
 
@@ -704,7 +720,7 @@ class ClasseViva
 
   Future<List<ClasseVivaLesson>> getLessons(ClasseVivaSubject subject) async {
 		final response = await http.get(
-			ClasseVivaEndpoints.lessons(subject.id, subject.teacherIds),
+			_endpoints.lessons(subject.id, subject.teacherIds),
       headers: getSessionCookieHeader(),
     );
 
@@ -746,7 +762,7 @@ class ClasseViva
 
   Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard() async {
 		final response = await http.get(
-			ClasseVivaEndpoints.bulletinBoard(),
+			_endpoints.bulletinBoard(),
       headers: getSessionCookieHeader(),
     );
 
@@ -768,7 +784,7 @@ class ClasseViva
 
   Future<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async {
 		final response = await http.get(
-			ClasseVivaEndpoints.bulletinBoardItemDetails(id),
+			_endpoints.bulletinBoardItemDetails(id),
       headers: getSessionCookieHeader(),
     );
 
@@ -800,7 +816,7 @@ class ClasseViva
     final HttpClient client = HttpClient();
 
     final response = await client
-      .getUrl(Uri.parse(ClasseVivaEndpoints.previousYear()))
+      .getUrl(Uri.parse(_endpoints.previousYear()))
       .then((request) {
         request.headers.set("Cookie", getSessionCookieHeader()["Cookie"]);
 
@@ -818,14 +834,14 @@ class ClasseViva
 
     final String sessionId = Cookie.fromSetCookieValue(response.headers.value("set-cookie")).value;
 
-    await ClasseViva.setCurrentSession(sessionId);
+    await ClasseViva.addSession(sessionId, getShortYear());
 
-    _year = (int.parse(getShortYear(false)) - 1).toString();
+    await ClasseViva.setCurrentSession(sessionId);
 	}
 
-	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {
+	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context, [ String year = "" ]) async {
 		final response = await http.post(
-			ClasseVivaEndpoints.auth(),
+			ClasseVivaEndpoints(year).auth(),
       headers: {
 				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
 			},
@@ -847,23 +863,28 @@ class ClasseViva
     // Use the second PHPSESSID cookie (because for some reason ClasseViva returns two PHPSESSID cookies)
 		final String sessionId = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
 
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    await preferences.setStringList("sessions", [
-      ...(await ClasseViva.getAllSessions() ?? []),
-      sessionId,
-    ]);
+    await ClasseViva.addSession(sessionId);
 
     await ClasseViva.setCurrentSession(sessionId);
 
 		return ClasseViva(
       sessionId: sessionId,
+      year: "",
       context: context,
     );
 	}
 
   static Future<bool> isSignedIn() async {
     return await ClasseViva.getCurrentSession() != null;
+  }
+
+  static Future<void> addSession(String sessionId, [ String year = "" ]) async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    await preferences.setStringList("sessions", [
+      ...(await ClasseViva.getAllSessions() ?? []),
+      "$sessionId;$year", // Format: "SESSION_ID;SESSION_YEAR", where sessionYear is either the short version of the year or an empty string if the current one
+    ]);
   }
 
   static Future<String> getCurrentSession() async {
