@@ -366,20 +366,7 @@ class ClasseViva
   }
 
   Future<void> checkValidSession(dom.Document document) async {
-    if (document.querySelector(".name") == null)
-    {
-      final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-      await preferences.remove("sessionId");
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SignIn(),
-        ),
-        (route) => false,
-      );
-    }
+    if (document.querySelector(".name") == null) await ClasseViva.signOut(context);
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
@@ -857,7 +844,7 @@ class ClasseViva
     return sessionIds;
 	}
 
-  static Future<void> signOut() async {
+  static Future<void> signOut(BuildContext context) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     final String currentSessionId = preferences.getString("sessionId");
@@ -869,6 +856,14 @@ class ClasseViva
     sessions.removeWhere((sessionId) => sessionId == currentSessionId);
 
     await preferences.setStringList("sessions", sessions);
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SignIn(),
+      ),
+      (route) => false,
+    );
   }
 
   static double getGradeValue(String grade)
