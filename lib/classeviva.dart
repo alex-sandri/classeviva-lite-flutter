@@ -839,7 +839,7 @@ class ClasseViva
   static Future<void> setCurrentSession(String id) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    await preferences.setString("sessionId", id);
+    await preferences.setString("currentSession", id);
   }
 
   static Future<List<String>> getAllSessions() async {
@@ -853,9 +853,9 @@ class ClasseViva
   static Future<void> signOut(BuildContext context) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    final String currentSessionId = preferences.getString("sessionId");
+    final String currentSessionId = preferences.getString("currentSession");
 
-    await preferences.remove("sessionId");
+    await preferences.remove("currentSession");
 
     final List<String> sessions = await ClasseViva.getAllSessions();
 
