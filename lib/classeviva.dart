@@ -846,7 +846,7 @@ class ClasseViva
 
     final ClasseVivaSession session = ClasseVivaSession(
       id: sessionId,
-      year: (int.parse(getShortYear()) - 1).toString(),
+      year: (int.parse(getShortYear(false)) - 1).toString(),
     );
 
     await ClasseViva.setCurrentSession(session);
