@@ -339,7 +339,6 @@ class ClasseVivaBulletinBoardItemDetails
 
 class ClasseViva
 {
-  // TODO: Allow changing the year
 	static String year = "19";
 
   // 1st of August 20(year)
