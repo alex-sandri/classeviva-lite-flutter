@@ -826,14 +826,14 @@ class ClasseViva
 		if (((responseJson["error"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["error"]);
 
     // Use the second PHPSESSID cookie (because for some reason ClasseViva returns two PHPSESSID cookies)
-		final cookies = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
+		final String sessionId = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
 
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    await preferences.setString("sessionId", cookies);
+    await preferences.setString("sessionId", sessionId);
 
 		return ClasseViva(
-      sessionId: cookies,
+      sessionId: sessionId,
       context: context,
     );
 	}
