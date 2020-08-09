@@ -824,7 +824,7 @@ class ClasseViva
 
     print(sessionId);
 
-    // year = (int.parse(year) - 1).toString();
+    _year = (int.parse(getShortYear(false)) - 1).toString();
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context) async {
