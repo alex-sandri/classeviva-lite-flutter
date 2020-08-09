@@ -343,6 +343,10 @@ class ClasseViva
 {
 	static String year = "19";
 
+  static int getYear() => year == "" ? DateTime.now().year : int.parse("20$year");
+
+  static int getShortYear() => int.parse(getYear().toString().substring(0, 2));
+
   // 1st of August 20(year)
   static DateTime yearBeginsAt = DateTime(int.parse("20$year"), 7, 1);
 
