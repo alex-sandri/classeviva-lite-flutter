@@ -272,6 +272,32 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
+            drawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  FutureBuilder(
+                    future: session.data.getProfile(),
+                    builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
+                      if (!profile.hasData)
+                        return Container();
+
+                      return DrawerHeader(
+                        child: Text(
+                          profile.data.name,
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
           ),
         );
       },
