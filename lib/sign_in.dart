@@ -202,16 +202,38 @@ class _SignInState extends State<SignIn> {
                             shrinkWrap: true,
                             itemCount: sessions.data.length,
                             itemBuilder: (context, index) {
-                              return Card(
-                                color: Colors.transparent,
-                                child: ListTile(
-                                  title: Text(
-                                    sessions.data[index]
-                                  ),
-                                  onTap: () {
-                                    // TODO
-                                  },
-                                ),
+                              return FutureBuilder<ClasseVivaProfile>(
+                                future: ClasseViva(
+                                  sessionId: sessions.data[index],
+                                  context: context,
+                                ).getProfile(),
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) return Container();
+
+                                  return Card(
+                                    color: Colors.transparent,
+                                    child: ListTile(
+                                      title: Text(
+                                        snapshot.data.name,
+                                        style: TextStyle(
+                                          color: Theme.of(context).accentColor,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        snapshot.data.school,
+                                        style: TextStyle(
+                                          color: Theme.of(context).accentColor,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        // TODO
+                                      },
+                                    ),
+                                  );
+                                }
                               );
                             },
                           ),
