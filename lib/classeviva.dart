@@ -818,7 +818,7 @@ class ClasseViva
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     await preferences.setStringList("sessions", [
-      ...await ClasseViva.getAllSessions(),
+      ...(await ClasseViva.getAllSessions() ?? []),
       sessionId,
     ]);
 
