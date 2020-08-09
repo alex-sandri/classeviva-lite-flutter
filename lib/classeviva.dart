@@ -10,41 +10,41 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ClasseVivaEndpoints
 {
-  static String auth() => "https://web${ClasseViva.year}.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
+  static String auth() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
 
-	static String profile() => "https://web${ClasseViva.year}.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
+	static String profile() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
 
   // TODO: Use this URL (https://web19.spaggiari.eu/cvv/app/default/genitori_voti.php)
-	static String grades() => "https://web${ClasseViva.year}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
+	static String grades() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
 
   // Add timeZoneOffset hours to be in the UTC+0 TimeZone
 	static String agenda(DateTime start, DateTime end) =>
-    "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
+    "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
     + "&start="
     + (start.toUtc().add(start.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString()
     + "&end="
     + (end.toUtc().add(end.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString();
 
-	static String attachments(int page) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
+	static String attachments(int page) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
 
 	static String fileAttachments(String id, String checksum) =>
-		"https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
+		"https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
   
-	static String textAttachments(String id) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
+	static String textAttachments(String id) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
 
-	static String demerits() => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
+	static String demerits() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
 
-  static String absences() => "https://web${ClasseViva.year}.spaggiari.eu/tic/app/default/consultasingolo.php";
+  static String absences() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/tic/app/default/consultasingolo.php";
 
-  static String subjects() => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php";
+  static String subjects() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php";
 
-  static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.year}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
+  static String lessons(String subjectId, List<String> teacherIds) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 
-  static String bulletinBoard() => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_personale.php";
+  static String bulletinBoard() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php";
 
-  static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
+  static String bulletinBoardItemDetails(String id) => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
-  static String previousYear() => "https://web${ClasseViva.year}.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${int.parse(ClasseViva.year) - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
+  static String previousYear() => "https://web${ClasseViva.getShortYear()}.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${ClasseViva.getShortYear() - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 }
 
 class ClasseVivaProfile
@@ -343,15 +343,15 @@ class ClasseViva
 {
 	static String _year = "19";
 
-  static int getYear() => _year == "" ? DateTime.now().year : int.parse("20$year");
+  static int getYear() => _year == "" ? DateTime.now().year : int.parse("20$_year");
 
   static int getShortYear() => int.parse(getYear().toString().substring(0, 2));
 
   // 1st of August 20(year)
-  static DateTime yearBeginsAt = DateTime(int.parse("20$year"), 7, 1);
+  static DateTime yearBeginsAt = DateTime(getYear(), 7, 1);
 
   // 31st of July 20(year)
-  static DateTime yearEndsAt = DateTime(int.parse("20${int.parse(year) + 1}"), 6, 31);
+  static DateTime yearEndsAt = DateTime(getYear() + 1, 6, 31);
 
   final String sessionId;
 
@@ -577,7 +577,7 @@ class ClasseViva
         final int toMonthIndex = months.indexOf(toDateString.split(" ").last);
 
         // 7 -> ago
-        final int year = int.parse("20${int.parse(ClasseViva.year) + (fromMonthIndex <= 7 ? 1 : 0)}");
+        final int year = ClasseViva.getYear() + (fromMonthIndex <= 7 ? 1 : 0);
 
         String description = "";
 
@@ -611,8 +611,7 @@ class ClasseViva
 
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
-        // 7 -> ago
-        final int year = int.parse("20${int.parse(ClasseViva.year) + (monthIndex <= 7 ? 1 : 0)}");
+        final int year = ClasseViva.getYear() + (monthIndex <= 7 ? 1 : 0);
 
         final DateTime date = DateTime(
           year,
@@ -646,8 +645,7 @@ class ClasseViva
 
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
-        // 7 -> ago
-        final int year = int.parse("20${int.parse(ClasseViva.year) + (monthIndex <= 7 ? 1 : 0)}");
+        final int year = ClasseViva.getYear() + (monthIndex <= 7 ? 1 : 0);
 
         final DateTime date = DateTime(
           year,

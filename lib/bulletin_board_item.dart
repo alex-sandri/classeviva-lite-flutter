@@ -160,7 +160,7 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
                               await _requestPermission();
 
                               await FlutterDownloader.enqueue(
-                                url: "https://web${ClasseViva.year}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
+                                url: "https://web${ClasseViva.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
                                 savedDir: (Theme.of(context).platform == TargetPlatform.android
                                   ? await getExternalStorageDirectory()
                                   : await getApplicationDocumentsDirectory()).path,
