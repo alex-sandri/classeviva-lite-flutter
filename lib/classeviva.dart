@@ -345,7 +345,8 @@ class ClasseViva
 
   static int getYear() => _year == "" ? DateTime.now().year : int.parse("20$_year");
 
-  static int getShortYear() => int.parse(getYear().toString().substring(0, 2));
+  /// Use this for previous years webistes
+  static int getShortYear() => int.parse(getYear().toString().substring(2, 4));
 
   // 1st of August 20(year)
   static DateTime yearBeginsAt = DateTime(getYear(), 7, 1);
