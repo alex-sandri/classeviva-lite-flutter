@@ -175,7 +175,50 @@ class _SignInState extends State<SignIn> {
                           ),
                       ],
                     ),
-                  )
+                  ),
+                  FutureBuilder(
+                    future: ClasseViva.getAllSessions(),
+                    builder: (context, AsyncSnapshot<List<String>> sessions) {
+                      if (!sessions.hasData) return Container();
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Scegli un account',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).accentColor,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: sessions.data.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                color: Colors.transparent,
+                                child: ListTile(
+                                  title: Text(
+                                    sessions.data[index]
+                                  ),
+                                  onTap: () {
+                                    // TODO
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
