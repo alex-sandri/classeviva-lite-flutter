@@ -48,7 +48,7 @@ class ClasseVivaEndpoints
 
   String bulletinBoardItemDetails(String id) => "https://web$year.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
-  String previousYear() => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web${int.parse(year) - 1}.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
+  String previousYear(String previousYear) => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web$previousYear.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 }
 
 class ClasseVivaSession
@@ -824,7 +824,7 @@ class ClasseViva
     final HttpClient client = HttpClient();
 
     final response = await client
-      .getUrl(Uri.parse(_endpoints.previousYear()))
+      .getUrl(Uri.parse(_endpoints.previousYear((int.parse(getShortYear(false)) - 1).toString())))
       .then((request) {
         request.headers.set("Cookie", getSessionCookieHeader()["Cookie"]);
 
