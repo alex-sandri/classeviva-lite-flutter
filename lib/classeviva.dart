@@ -851,7 +851,7 @@ class ClasseViva
 
     await preferences.remove("sessionId");
 
-    final List<String> sessions = (await ClasseViva.getAllSessions());
+    final List<String> sessions = await ClasseViva.getAllSessions();
 
     sessions.removeWhere((sessionId) => sessionId == currentSessionId);
 
