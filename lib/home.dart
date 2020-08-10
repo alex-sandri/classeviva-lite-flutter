@@ -278,15 +278,12 @@ class Home extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              onTap: () async {
-                                await session.data.goToPreviousYear();
-
-                                Navigator.pushAndRemoveUntil(
+                              onTap: () {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Home(),
-                                  ),
-                                  (route) => false,
+                                    builder: (context) => SignIn((int.parse(session.data.getShortYear(false)) - 1).toString()),
+                                  )
                                 );
                               },
                             ),

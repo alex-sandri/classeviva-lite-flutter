@@ -823,40 +823,6 @@ class ClasseViva
     );
 	}
 
-  Future<void> goToPreviousYear() async {
-    final HttpClient client = HttpClient();
-
-    final String previousYear = (int.parse(getShortYear(false)) - 1).toString();
-
-    final response = await client
-      .getUrl(Uri.parse(_endpoints.previousYear(previousYear)))
-      .then((request) {
-        request.headers.set("Cookie", getSessionCookieHeader()["Cookie"]);
-
-        // The necessary PHPSESSID cookie to access the previous year data is sent to the client with the first (but not last) redirect
-        // So we need to handle all of the redirects manually
-        request.followRedirects = false;
-
-        return request.close();
-      })
-      .then((response) {
-        final String redirectLocation = response.headers.value("location");
-
-        return response.redirect("GET", Uri.parse(redirectLocation), false);
-      });
-
-    final String sessionId = Cookie.fromSetCookieValue(response.headers.value("set-cookie")).value;
-
-    await ClasseViva.addSession(sessionId, previousYear);
-
-    final ClasseVivaSession session = ClasseVivaSession(
-      id: sessionId,
-      year: previousYear,
-    );
-
-    await ClasseViva.setCurrentSession(session);
-	}
-
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context, [ String year = "" ]) async {
 		final response = await http.post(
 			ClasseVivaEndpoints(year).auth(),

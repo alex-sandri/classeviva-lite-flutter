@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class SignIn extends StatefulWidget {
+  final String _year;
+
   @override
   _SignInState createState() => _SignInState();
+
+  SignIn([ this._year = "" ]);
 }
 
 class _SignInState extends State<SignIn> {
@@ -153,9 +157,9 @@ class _SignInState extends State<SignIn> {
                                   });
 
                                   await ClasseViva
-                                    .createSession(_uidController.text, _pwdController.text, context)
+                                    .createSession(_uidController.text, _pwdController.text, context, widget._year)
                                     .then((session) => _redirectToHomePage(),
-                                    onError: (errors) {
+                                    onError: (error) {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
@@ -164,7 +168,9 @@ class _SignInState extends State<SignIn> {
                                               "Errore",
                                             ),
                                             content: Text(
-                                              (errors as List<dynamic>).join("\n"),
+                                              (error is List)
+                                                ? error.join("\n")
+                                                : error.toString(),
                                             ),
                                           );
                                         },
