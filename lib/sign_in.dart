@@ -53,216 +53,219 @@ class _SignInState extends State<SignIn> {
           child: Container(
             color: Theme.of(context).primaryColor,
             width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Accedi',
-                    style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.w900,
-                      color: Theme.of(context).accentColor,
+            height: double.infinity,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Accedi',
+                      style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.w900,
+                        color: Theme.of(context).accentColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Form(
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          autofillHints: [ AutofillHints.username, AutofillHints.email ],
-                          readOnly: _showSpinner,
-                          autocorrect: false,
-                          controller: _uidController,
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                          ),
-                          decoration: InputDecoration(
-                            enabledBorder: _inputDecoration(),
-                            focusedBorder: _inputDecoration(),
-                            labelText: 'Codice personale / Email / Badge',
-                            labelStyle: TextStyle(
-                              color: Theme.of(context).accentColor,
-                            ),
-                          ),
-                          cursorColor: Theme.of(context).accentColor,
-                          onChanged: (value) {
-                            setState(() {
-                              _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          autofillHints: [ AutofillHints.password ],
-                          readOnly: _showSpinner,
-                          autocorrect: false,
-                          controller: _pwdController,
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                          ),
-                          decoration: InputDecoration(
-                            enabledBorder: _inputDecoration(),
-                            focusedBorder: _inputDecoration(),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                              color: Theme.of(context).accentColor,
-                            ),
-                          ),
-                          cursorColor: Theme.of(context).accentColor,
-                          obscureText: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        if (_showSpinner)
-                          Center(
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                            ),
-                          ),
-                        if (!_showSpinner)
-                          Container(
-                            width: double.infinity,
-                            child: FlatButton(
-                              color: Theme.of(context).accentColor,
-                              disabledColor: Theme.of(context).disabledColor,
-                              padding: EdgeInsets.all(15),
-                              child: Icon(
-                                Icons.check,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(5)),
-                              ),
-                              onPressed: _disableButton ? null : () async {
-                                setState(() {
-                                  _showSpinner = true;
-                                });
-
-                                await ClasseViva
-                                  .createSession(_uidController.text, _pwdController.text, context)
-                                  .then((session) => _redirectToHomePage(),
-                                  onError: (errors) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: Text(
-                                            "Errore",
-                                          ),
-                                          content: Text(
-                                            (errors as List<dynamic>).join("\n"),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  })
-                                  .whenComplete(() {
-                                    setState(() {
-                                      _showSpinner = false;
-                                    });
-                                  });
-                              },
-                            ),
-                          ),
-                      ],
+                    SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  FutureBuilder<List<ClasseVivaSession>>(
-                    future: ClasseViva.getAllSessions(),
-                    builder: (context, sessions) {
-                      if (!sessions.hasData || sessions.data.isEmpty) return Container();
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Scegli un account',
+                    Form(
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            autofillHints: [ AutofillHints.username, AutofillHints.email ],
+                            readOnly: _showSpinner,
+                            autocorrect: false,
+                            controller: _uidController,
                             style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w400,
                               color: Theme.of(context).accentColor,
                             ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: sessions.data.length,
-                            itemBuilder: (context, index) {
-                              return FutureBuilder<ClasseVivaProfile>(
-                                future: ClasseViva(
-                                  session: sessions.data[index],
-                                  context: context,
-                                ).getProfile(),
-                                builder: (context, snapshot) {
-                                  if (!snapshot.hasData)
-                                    return Padding(
-                                      padding: EdgeInsets.all(4),
-                                      child: SkeletonAnimation(
-                                        shimmerColor: Colors.white54,
-                                        gradientColor: Color.fromARGB(0, 244, 244, 244),
-                                        curve: Curves.fastOutSlowIn,
-                                        child: Container(  
-                                          width: double.infinity,  
-                                          height: 50,
-                                          decoration: BoxDecoration(  
-                                            color: Theme.of(context).disabledColor,  
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-
-                                  return Card(
-                                    color: Colors.transparent,
-                                    child: ListTile(
-                                      title: Text(
-                                        snapshot.data.name,
-                                        style: TextStyle(
-                                          color: Theme.of(context).accentColor,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        snapshot.data.school,
-                                        style: TextStyle(
-                                          color: Theme.of(context).accentColor,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        ClasseViva.setCurrentSession(sessions.data[index]);
-
-                                        _redirectToHomePage();
-                                      },
-                                    ),
-                                  );
-                                }
-                              );
+                            decoration: InputDecoration(
+                              enabledBorder: _inputDecoration(),
+                              focusedBorder: _inputDecoration(),
+                              labelText: 'Codice personale / Email / Badge',
+                              labelStyle: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                            cursorColor: Theme.of(context).accentColor,
+                            onChanged: (value) {
+                              setState(() {
+                                _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                              });
                             },
                           ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
+                            autofillHints: [ AutofillHints.password ],
+                            readOnly: _showSpinner,
+                            autocorrect: false,
+                            controller: _pwdController,
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
+                            decoration: InputDecoration(
+                              enabledBorder: _inputDecoration(),
+                              focusedBorder: _inputDecoration(),
+                              labelText: 'Password',
+                              labelStyle: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                            cursorColor: Theme.of(context).accentColor,
+                            obscureText: true,
+                            onChanged: (value) {
+                              setState(() {
+                                _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          if (_showSpinner)
+                            Center(
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                              ),
+                            ),
+                          if (!_showSpinner)
+                            Container(
+                              width: double.infinity,
+                              child: FlatButton(
+                                color: Theme.of(context).accentColor,
+                                disabledColor: Theme.of(context).disabledColor,
+                                padding: EdgeInsets.all(15),
+                                child: Icon(
+                                  Icons.check,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                ),
+                                onPressed: _disableButton ? null : () async {
+                                  setState(() {
+                                    _showSpinner = true;
+                                  });
+
+                                  await ClasseViva
+                                    .createSession(_uidController.text, _pwdController.text, context)
+                                    .then((session) => _redirectToHomePage(),
+                                    onError: (errors) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              "Errore",
+                                            ),
+                                            content: Text(
+                                              (errors as List<dynamic>).join("\n"),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    })
+                                    .whenComplete(() {
+                                      setState(() {
+                                        _showSpinner = false;
+                                      });
+                                    });
+                                },
+                              ),
+                            ),
                         ],
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                    ),
+                    FutureBuilder<List<ClasseVivaSession>>(
+                      future: ClasseViva.getAllSessions(),
+                      builder: (context, sessions) {
+                        if (!sessions.hasData || sessions.data.isEmpty) return Container();
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              'Scegli un account',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: sessions.data.length,
+                              itemBuilder: (context, index) {
+                                return FutureBuilder<ClasseVivaProfile>(
+                                  future: ClasseViva(
+                                    session: sessions.data[index],
+                                    context: context,
+                                  ).getProfile(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData)
+                                      return Padding(
+                                        padding: EdgeInsets.all(4),
+                                        child: SkeletonAnimation(
+                                          shimmerColor: Colors.white54,
+                                          gradientColor: Color.fromARGB(0, 244, 244, 244),
+                                          curve: Curves.fastOutSlowIn,
+                                          child: Container(  
+                                            width: double.infinity,  
+                                            height: 50,
+                                            decoration: BoxDecoration(  
+                                              color: Theme.of(context).disabledColor,  
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+
+                                    return Card(
+                                      color: Colors.transparent,
+                                      child: ListTile(
+                                        title: Text(
+                                          snapshot.data.name,
+                                          style: TextStyle(
+                                            color: Theme.of(context).accentColor,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          snapshot.data.school,
+                                          style: TextStyle(
+                                            color: Theme.of(context).accentColor,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          ClasseViva.setCurrentSession(sessions.data[index]);
+
+                                          _redirectToHomePage();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
