@@ -222,11 +222,13 @@ class _SignInState extends State<SignIn> {
                               shrinkWrap: true,
                               itemCount: sessions.data.length,
                               itemBuilder: (context, index) {
+                                final ClasseViva session = ClasseViva(
+                                  session: sessions.data[index],
+                                  context: context,
+                                );
+
                                 return FutureBuilder<ClasseVivaProfile>(
-                                  future: ClasseViva(
-                                    session: sessions.data[index],
-                                    context: context,
-                                  ).getProfile(),
+                                  future: session.getProfile(),
                                   builder: (context, snapshot) {
                                     if (!snapshot.hasData)
                                       return Padding(
@@ -258,7 +260,7 @@ class _SignInState extends State<SignIn> {
                                           ),
                                         ),
                                         subtitle: Text(
-                                          snapshot.data.school,
+                                          "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
                                           style: TextStyle(
                                             color: Theme.of(context).accentColor,
                                             fontSize: 12,
