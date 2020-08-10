@@ -404,7 +404,9 @@ class ClasseViva
   }
 
   Future<void> checkValidSession(dom.Document document) async {
-    if (document.querySelector(".name") == null) await signOut();
+    if (document.querySelector(".name") == null)
+    {print("SIGNING_OUT: " + this.session.toString());
+    await signOut();}
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
@@ -783,7 +785,7 @@ class ClasseViva
 
     List responseItems = [];
 
-    if (jsonResponse != null)
+    if (jsonResponse != null && !(jsonResponse is List))
     {
       if (jsonResponse["msg_new"] != null) responseItems.addAll(jsonResponse["msg_new"]);
 
