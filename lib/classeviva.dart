@@ -847,12 +847,12 @@ class ClasseViva
     // Use the second PHPSESSID cookie (because for some reason ClasseViva returns two PHPSESSID cookies)
 		final String sessionId = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
 
-    await ClasseViva.addSession(sessionId);
-
     final ClasseVivaSession session = ClasseVivaSession(
       id: sessionId,
       year: year,
     );
+
+    await ClasseViva.addSession(session);
 
     await ClasseViva.setCurrentSession(session);
 
@@ -866,12 +866,12 @@ class ClasseViva
     return await ClasseViva.getCurrentSession() != null;
   }
 
-  static Future<void> addSession(String sessionId, [ String year = "" ]) async {
+  static Future<void> addSession(ClasseVivaSession session) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     await preferences.setStringList("sessions", [
       ...((await ClasseViva.getAllSessions())?.map((session) => session.toString()) ?? []),
-      "$sessionId;$year", // Format: "SESSION_ID;SESSION_YEAR", where sessionYear is either the short version of the year or an empty string if the current one
+      session.toString(),
     ]);
   }
 

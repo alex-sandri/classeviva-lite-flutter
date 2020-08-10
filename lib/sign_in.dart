@@ -227,6 +227,8 @@ class _SignInState extends State<SignIn> {
                                   context: context,
                                 );
 
+                                print(session.session.year);
+
                                 return FutureBuilder<ClasseVivaProfile>(
                                   future: session.getProfile(),
                                   builder: (context, snapshot) {
