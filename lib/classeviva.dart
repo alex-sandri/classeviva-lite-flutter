@@ -404,9 +404,7 @@ class ClasseViva
   }
 
   Future<void> checkValidSession(dom.Document document) async {
-    if (document.querySelector(".name") == null)
-    {print("SIGNING_OUT: " + this.session.toString());
-    await signOut();}
+    if (document.querySelector(".name") == null) await signOut();
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
