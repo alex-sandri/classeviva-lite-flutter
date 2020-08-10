@@ -37,7 +37,7 @@ class Home extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () async {
-                    await ClasseViva.signOut(context);
+                    await session.data.signOut();
                   },
                 ),
               ],
