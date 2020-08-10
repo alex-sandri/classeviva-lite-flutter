@@ -6,6 +6,7 @@ import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/demerits.dart';
 import 'package:classeviva_lite/grades.dart';
 import 'package:classeviva_lite/lessons.dart';
+import 'package:classeviva_lite/settings.dart';
 import 'package:classeviva_lite/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
@@ -330,6 +331,22 @@ class Home extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => SignIn(),
+                        )
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.settings,
+                    ),
+                    title: Text(
+                      "Impostazioni"
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Settings(),
                         )
                       );
                     },
