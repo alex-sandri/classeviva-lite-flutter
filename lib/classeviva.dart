@@ -60,6 +60,9 @@ class ClasseVivaSession
     @required this.id,
     @required this.year,
   });
+
+  @override
+  String toString() => "$id;$year";
 }
 
 class ClasseVivaProfile
@@ -901,7 +904,7 @@ class ClasseViva
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     await preferences.setStringList("sessions", [
-      ...((await ClasseViva.getAllSessions())?.map((session) => "$sessionId;$year") ?? []),
+      ...((await ClasseViva.getAllSessions())?.map((session) => session.toString()) ?? []),
       "$sessionId;$year", // Format: "SESSION_ID;SESSION_YEAR", where sessionYear is either the short version of the year or an empty string if the current one
     ]);
   }
@@ -922,7 +925,7 @@ class ClasseViva
   static Future<void> setCurrentSession(ClasseVivaSession session) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    await preferences.setString("currentSession", "${session.id};${session.year}");
+    await preferences.setString("currentSession", session.toString());
   }
 
   static Future<List<ClasseVivaSession>> getAllSessions() async {
@@ -947,7 +950,7 @@ class ClasseViva
 
     sessions.removeWhere((session) => session.id == currentSession.id);
 
-    await preferences.setStringList("sessions", sessions.map((session) => "${session.id};${session.year}").toList());
+    await preferences.setStringList("sessions", sessions.map((session) => session.toString()).toList());
 
     Navigator.pushAndRemoveUntil(
       context,
