@@ -72,6 +72,15 @@ class _SignInState extends State<SignIn> {
                         color: Theme.of(context).accentColor,
                       ),
                     ),
+
+                    if (widget._year != "")
+                      Text(
+                        'all\'anno 20${widget._year}',
+                        style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                        ),
+                      ),
+
                     SizedBox(
                       height: 15,
                     ),
