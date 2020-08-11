@@ -199,7 +199,92 @@ class _GradesState extends State<Grades> {
                 },
               ),
               ..._periods.map((period) {
-                return Container();
+                return GradesView(
+                  session: _session,
+                  grades: period.grades,
+                  refreshHandler: _handleRefresh,
+                  childBuilder: () {
+                    final Map<String, List<ClasseVivaGrade>> subjects = groupBy(period.grades, (ClasseVivaGrade grade) => grade.subject);
+
+                    return ListView.builder(
+                      itemCount: subjects.length + 1,
+                      itemBuilder: (context, index) {
+                        if (subjects.isEmpty)
+                          return SelectableText(
+                            "Non sono presenti valutazioni",
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
+                            textAlign: TextAlign.center,
+                          );
+
+                        if (index == subjects.length) return Container();
+
+                        final String subject = subjects.keys.elementAt(index);
+                        final List<ClasseVivaGrade> grades = subjects.values.elementAt(index);
+
+                        double _getAverageGrade(List<ClasseVivaGrade> grades)
+                        {
+                          // Grades with "Voto Test" type can't be included in the average
+                          final List<ClasseVivaGrade> gradesValidForAverageCount = grades.where((grade) => grade.type != "Voto Test").toList();
+
+                          int unsupportedGradesCount = 0;
+
+                          return gradesValidForAverageCount
+                            .map((grade) => ClasseViva.getGradeValue(grade.grade))
+                            .where((grade) {
+                              final bool isSupported = grade != -1;
+
+                              if (!isSupported) unsupportedGradesCount++;
+
+                              return isSupported;
+                            })
+                            .reduce((a, b) => a + b) / (gradesValidForAverageCount.length - unsupportedGradesCount);
+                        }
+
+                        return Card(
+                          color: Colors.transparent,
+                          child: ExpansionTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      value: _getAverageGrade(grades) / 10,
+                                      valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
+                                        subject: "",
+                                        grade: _getAverageGrade(grades).toStringAsFixed(1),
+                                        type: "",
+                                        description: "",
+                                        date: DateTime.now(),
+                                      ))),
+                                    ),
+                                  ),
+                                  Text(
+                                    _getAverageGrade(grades).toStringAsFixed(1),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            title: Text(
+                              subject,
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            children: grades.map((grade) => GradeTile(grade)).toList(),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
               }),
             ]
           ),
