@@ -18,8 +18,9 @@ class ClasseVivaEndpoints
 
 	String profile() => "https://web$year.spaggiari.eu/home/app/default/menu_webinfoschool_genitori.php";
 
-  // TODO: Use this URL (https://web19.spaggiari.eu/cvv/app/default/genitori_voti.php)
 	String grades() => "https://web$year.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
+
+  String gradesWithPeriods() => "https://web$year.spaggiari.eu/cvv/app/default/genitori_voti.php";
 
   // Add timeZoneOffset hours to be in the UTC+0 TimeZone
 	String agenda(DateTime start, DateTime end) =>
@@ -73,6 +74,26 @@ class ClasseVivaProfile
   ClasseVivaProfile({
     @required this.name,
     @required this.school,
+  });
+}
+
+class ClasseVivaGradesResponse
+{
+	final List<ClasseVivaGradesResponsePeriod> periods;
+
+  ClasseVivaGradesResponse({
+    @required this.periods,
+  });
+}
+
+class ClasseVivaGradesResponsePeriod
+{
+	final String name;
+  final List<ClasseVivaGrade> grades;
+
+  ClasseVivaGradesResponsePeriod({
+    @required this.name,
+    @required this.grades,
   });
 }
 
@@ -423,7 +444,7 @@ class ClasseViva
     );
 	}
 
-	Future<List<ClasseVivaGrade>> getGrades() async {
+  Future<List<ClasseVivaGrade>> getGrades() async {
 		final response = await http.get(
       _endpoints.grades(),
       headers: getSessionCookieHeader(),
@@ -463,6 +484,60 @@ class ClasseViva
 		});
 
 		return grades;
+	}
+
+	Future<ClasseVivaGradesResponse> getGradesWithPeriods() async {
+		final response = await http.get(
+      _endpoints.gradesWithPeriods(),
+      headers: getSessionCookieHeader(),
+    );
+
+		final document = parse(response.body);
+
+    await checkValidSession(document);
+
+		List<ClasseVivaGradesResponsePeriod> periods = [];
+
+		document.querySelectorAll("#tabs a").forEach((tab) {
+      final String periodId = tab.attributes["href"];
+
+      final String periodName = tab.text.trim();
+
+      List<ClasseVivaGrade> grades = [];
+
+      document.querySelector(periodId).querySelectorAll(".riga_materia_componente").forEach((subject) {
+        final String subjectName = subject.querySelector(".materia_desc").text.trim().toUpperCase();
+
+        subject.querySelectorAll(".cella_voto").forEach((grade) {
+          final String dateString = grade.querySelector(".voto_data").text.trim();
+
+          final int year = int.parse(dateString.split("/").last.replaceAll(RegExp(r'^0+(?=.)'), "")) <= 8
+            ? getYear() + 1
+            : getYear();
+
+          grades.add(ClasseVivaGrade(
+            subject: subjectName,
+            grade: grade.querySelector(".s_reg_testo").text.trim(),
+            type: grade.querySelector(".s_reg_testo").parent.attributes["title"],
+            description: "", // Not available with this method of retrieving them
+            date: DateTime(
+              year,
+              int.parse(dateString.split("/").last),
+              int.parse(dateString.split("/").first),
+            ),
+          ));
+        });
+      });
+
+      periods.add(ClasseVivaGradesResponsePeriod(
+        name: periodName,
+        grades: grades,
+      ));
+    });
+
+		return ClasseVivaGradesResponse(
+      periods: periods
+    );
 	}
 
 	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {
