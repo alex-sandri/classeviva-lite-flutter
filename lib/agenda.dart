@@ -65,7 +65,7 @@ class _AgendaState extends State<Agenda> {
               onPressed: () async {
                 final DateTimeRange selectedDate = await showDateRangePicker(
                   context: context,
-                  initialDateRange: DateTimeRange(start: DateTime.now(), end: DateTime.now()),
+                  initialDateRange: DateTimeRange(start: _start, end: _end),
                   firstDate: DateTime(1970),
                   lastDate: DateTime(2099),
                 );
