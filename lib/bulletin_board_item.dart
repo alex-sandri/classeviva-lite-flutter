@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -49,9 +48,9 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
   void initState() {
     super.initState();
 
-    SharedPreferences.getInstance().then((preferences) async {
+    ClasseViva.getCurrentSession().then((session) {
       _session = ClasseViva(
-        session: await ClasseViva.getCurrentSession(),
+        session: session,
         context: context
       );
 

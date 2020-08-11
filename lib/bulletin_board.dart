@@ -1,7 +1,6 @@
 import 'package:classeviva_lite/bulletin_board_item.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 class BulletinBoard extends StatefulWidget {
@@ -31,9 +30,9 @@ class _BulletinBoardState extends State<BulletinBoard> {
   void initState() {
     super.initState();
 
-    SharedPreferences.getInstance().then((preferences) async {
+    ClasseViva.getCurrentSession().then((session) {
       _session = ClasseViva(
-        session: await ClasseViva.getCurrentSession(),
+        session: session,
         context: context
       );
 

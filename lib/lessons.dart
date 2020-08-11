@@ -1,6 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 class Lessons extends StatefulWidget {
@@ -25,9 +24,9 @@ class _LessonsState extends State<Lessons> {
   void initState() {
     super.initState();
 
-    SharedPreferences.getInstance().then((preferences) async {
+    ClasseViva.getCurrentSession().then((session) {
       _session = ClasseViva(
-        session: await ClasseViva.getCurrentSession(),
+        session: session,
         context: context
       );
 

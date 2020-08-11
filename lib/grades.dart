@@ -2,7 +2,6 @@ import 'package:classeviva_lite/classeviva.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,9 +36,9 @@ class _GradesState extends State<Grades> {
   void initState() {
     super.initState();
 
-    SharedPreferences.getInstance().then((preferences) async {
+    ClasseViva.getCurrentSession().then((session) {
       _session = ClasseViva(
-        session: await ClasseViva.getCurrentSession(),
+        session: session,
         context: context
       );
 
