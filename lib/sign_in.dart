@@ -14,7 +14,10 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool _showSpinner = false;
+
   bool _disableButton = true;
+
+  bool _showPassword = false;
 
   final _uidController = TextEditingController();
   final _pwdController = TextEditingController();
@@ -128,9 +131,22 @@ class _SignInState extends State<SignIn> {
                               labelStyle: TextStyle(
                                 color: Theme.of(context).accentColor,
                               ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _showPassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                ),
+                                color: Theme.of(context).accentColor,
+                                onPressed: () {
+                                  setState(() {
+                                    _showPassword = !_showPassword;
+                                  });
+                                },
+                              )
                             ),
                             cursorColor: Theme.of(context).accentColor,
-                            obscureText: true,
+                            obscureText: !_showPassword,
                             onChanged: (value) {
                               setState(() {
                                 _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
