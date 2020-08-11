@@ -17,6 +17,8 @@ class _GradesState extends State<Grades> {
 
   Map<String, List<ClasseVivaGrade>> _subjects;
 
+  List<ClasseVivaGradesResponsePeriod> _periods = [];
+
   Future<void> _handleRefresh() async {
     final List<ClasseVivaGrade> grades = await _session.getGrades();
 
@@ -30,6 +32,13 @@ class _GradesState extends State<Grades> {
     if (mounted)
       setState(() {
         _grades = grades;
+      });
+
+    final List<ClasseVivaGradesResponsePeriod> periods = (await _session.getGradesWithPeriods()).periods;
+
+    if (mounted)
+      setState(() {
+        _periods = periods;
       });
   }
 
@@ -50,7 +59,7 @@ class _GradesState extends State<Grades> {
   Widget build(BuildContext context) {
     return Material(
       child: DefaultTabController(
-        length: 2,
+        length: 2 + _periods.length,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -58,6 +67,7 @@ class _GradesState extends State<Grades> {
             ),
             elevation: 0,
             bottom: TabBar(
+              isScrollable: true,
               tabs: [
                 Tab(
                   icon: Icon(Icons.grade),
@@ -67,6 +77,12 @@ class _GradesState extends State<Grades> {
                   icon: Icon(Icons.assessment),
                   text: "Riepilogo",
                 ),
+                ..._periods.map((period) {
+                  return Tab(
+                    icon: Icon(Icons.calendar_today),
+                    text: period.name,
+                  );
+                }),
               ],
             ),
           ),
@@ -181,7 +197,10 @@ class _GradesState extends State<Grades> {
                     },
                   );
                 },
-              )
+              ),
+              ..._periods.map((period) {
+                return Container();
+              }),
             ]
           ),
         ),
