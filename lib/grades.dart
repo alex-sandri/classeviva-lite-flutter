@@ -130,11 +130,13 @@ class _GradesState extends State<Grades> {
                           ),
                           textAlign: TextAlign.center,
                         );
+                      else if (index == 0)
+                        return Text(
+                          ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                        );
 
-                      if (index == _subjects.length) return Container();
-
-                      final String subject = _subjects.keys.elementAt(index);
-                      final List<ClasseVivaGrade> grades = _subjects.values.elementAt(index);
+                      final String subject = _subjects.keys.elementAt(index - 1);
+                      final List<ClasseVivaGrade> grades = _subjects.values.elementAt(index - 1);
 
                       final double averageGrade = ClasseViva.getAverageGrade(grades);
 
@@ -200,11 +202,13 @@ class _GradesState extends State<Grades> {
                             ),
                             textAlign: TextAlign.center,
                           );
+                        else if (index == 0)
+                          return Text(
+                            ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                          );
 
-                        if (index == subjects.length) return Container();
-
-                        final String subject = subjects.keys.elementAt(index);
-                        final List<ClasseVivaGrade> grades = subjects.values.elementAt(index);
+                        final String subject = subjects.keys.elementAt(index - 1);
+                        final List<ClasseVivaGrade> grades = subjects.values.elementAt(index - 1);
 
                         final double averageGrade = ClasseViva.getAverageGrade(grades);
 
