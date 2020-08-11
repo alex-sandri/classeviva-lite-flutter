@@ -22,6 +22,8 @@ class _SignInState extends State<SignIn> {
   final _uidController = TextEditingController();
   final _pwdController = TextEditingController();
 
+  final FocusNode _pwdFocusNode = FocusNode();
+
   void _redirectToHomePage() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -91,6 +93,8 @@ class _SignInState extends State<SignIn> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (value) => _pwdFocusNode.requestFocus(),
                             autofillHints: [ AutofillHints.username, AutofillHints.email ],
                             readOnly: _showSpinner,
                             autocorrect: false,
@@ -117,6 +121,8 @@ class _SignInState extends State<SignIn> {
                             height: 15,
                           ),
                           TextFormField(
+                            textInputAction: TextInputAction.done,
+                            focusNode: _pwdFocusNode,
                             autofillHints: [ AutofillHints.password ],
                             readOnly: _showSpinner,
                             autocorrect: false,
