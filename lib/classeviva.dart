@@ -1097,4 +1097,23 @@ class ClasseViva
 
     return color;
   }
+
+  static double getAverageGrade(List<ClasseVivaGrade> grades)
+  {
+    // Grades with "Voto Test" type can't be included in the average
+    final List<ClasseVivaGrade> gradesValidForAverageCount = grades.where((grade) => grade.type != "Voto Test").toList();
+
+    int unsupportedGradesCount = 0;
+
+    return gradesValidForAverageCount
+      .map((grade) => ClasseViva.getGradeValue(grade.grade))
+      .where((grade) {
+        final bool isSupported = grade != -1;
+
+        if (!isSupported) unsupportedGradesCount++;
+
+        return isSupported;
+      })
+      .reduce((a, b) => a + b) / (gradesValidForAverageCount.length - unsupportedGradesCount);
+  }
 }

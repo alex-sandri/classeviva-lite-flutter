@@ -136,24 +136,7 @@ class _GradesState extends State<Grades> {
                       final String subject = _subjects.keys.elementAt(index);
                       final List<ClasseVivaGrade> grades = _subjects.values.elementAt(index);
 
-                      double _getAverageGrade(List<ClasseVivaGrade> grades)
-                      {
-                        // Grades with "Voto Test" type can't be included in the average
-                        final List<ClasseVivaGrade> gradesValidForAverageCount = grades.where((grade) => grade.type != "Voto Test").toList();
-
-                        int unsupportedGradesCount = 0;
-
-                        return gradesValidForAverageCount
-                          .map((grade) => ClasseViva.getGradeValue(grade.grade))
-                          .where((grade) {
-                            final bool isSupported = grade != -1;
-
-                            if (!isSupported) unsupportedGradesCount++;
-
-                            return isSupported;
-                          })
-                          .reduce((a, b) => a + b) / (gradesValidForAverageCount.length - unsupportedGradesCount);
-                      }
+                      final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                       return Card(
                         color: Colors.transparent,
@@ -165,10 +148,10 @@ class _GradesState extends State<Grades> {
                               children: [
                                 Center(
                                   child: CircularProgressIndicator(
-                                    value: _getAverageGrade(grades) / 10,
+                                    value: averageGrade / 10,
                                     valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
                                       subject: "",
-                                      grade: _getAverageGrade(grades).toStringAsFixed(1),
+                                      grade: averageGrade.toStringAsFixed(1),
                                       type: "",
                                       description: "",
                                       date: DateTime.now(),
@@ -176,7 +159,7 @@ class _GradesState extends State<Grades> {
                                   ),
                                 ),
                                 Text(
-                                  _getAverageGrade(grades).toStringAsFixed(1),
+                                  averageGrade.toStringAsFixed(1),
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -223,24 +206,7 @@ class _GradesState extends State<Grades> {
                         final String subject = subjects.keys.elementAt(index);
                         final List<ClasseVivaGrade> grades = subjects.values.elementAt(index);
 
-                        double _getAverageGrade(List<ClasseVivaGrade> grades)
-                        {
-                          // Grades with "Voto Test" type can't be included in the average
-                          final List<ClasseVivaGrade> gradesValidForAverageCount = grades.where((grade) => grade.type != "Voto Test").toList();
-
-                          int unsupportedGradesCount = 0;
-
-                          return gradesValidForAverageCount
-                            .map((grade) => ClasseViva.getGradeValue(grade.grade))
-                            .where((grade) {
-                              final bool isSupported = grade != -1;
-
-                              if (!isSupported) unsupportedGradesCount++;
-
-                              return isSupported;
-                            })
-                            .reduce((a, b) => a + b) / (gradesValidForAverageCount.length - unsupportedGradesCount);
-                        }
+                        final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                         return Card(
                           color: Colors.transparent,
@@ -252,10 +218,10 @@ class _GradesState extends State<Grades> {
                                 children: [
                                   Center(
                                     child: CircularProgressIndicator(
-                                      value: _getAverageGrade(grades) / 10,
+                                      value: averageGrade / 10,
                                       valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
                                         subject: "",
-                                        grade: _getAverageGrade(grades).toStringAsFixed(1),
+                                        grade: averageGrade.toStringAsFixed(1),
                                         type: "",
                                         description: "",
                                         date: DateTime.now(),
@@ -263,7 +229,7 @@ class _GradesState extends State<Grades> {
                                     ),
                                   ),
                                   Text(
-                                    _getAverageGrade(grades).toStringAsFixed(1),
+                                    averageGrade.toStringAsFixed(1),
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
