@@ -131,9 +131,49 @@ class _GradesState extends State<Grades> {
                           textAlign: TextAlign.center,
                         );
                       else if (index == 0)
-                        return Text(
-                          ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
-                        );
+                        return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Media Totale",
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                SizedBox(height: 8,),
+                                Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 50,
+                                      width: 50,
+                                      child: CircularProgressIndicator(
+                                        value: ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()) / 10,
+                                        valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
+                                          subject: "",
+                                          grade: ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                                          type: "",
+                                          description: "",
+                                          date: DateTime.now(),
+                                        ))),
+                                      ),
+                                    ),
+                                    Text(
+                                      ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
 
                       final String subject = _subjects.keys.elementAt(index - 1);
                       final List<ClasseVivaGrade> grades = _subjects.values.elementAt(index - 1);
@@ -203,8 +243,48 @@ class _GradesState extends State<Grades> {
                             textAlign: TextAlign.center,
                           );
                         else if (index == 0)
-                          return Text(
-                            ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Media ${period.name}",
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                SizedBox(height: 8,),
+                                Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 50,
+                                      width: 50,
+                                      child: CircularProgressIndicator(
+                                        value: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()) / 10,
+                                        valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
+                                          subject: "",
+                                          grade: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                                          type: "",
+                                          description: "",
+                                          date: DateTime.now(),
+                                        ))),
+                                      ),
+                                    ),
+                                    Text(
+                                      ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           );
 
                         final String subject = subjects.keys.elementAt(index - 1);
