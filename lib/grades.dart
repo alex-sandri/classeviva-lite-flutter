@@ -128,6 +128,7 @@ class _GradesState extends State<Grades> {
 
                         return gradesValidForAverageCount
                           .map((grade) => ClasseViva.getGradeValue(grade.grade))
+                          .where((grade) => grade != -1)
                           .reduce((a, b) => a + b) / gradesValidForAverageCount.length;
                       }
 

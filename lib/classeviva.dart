@@ -999,6 +999,7 @@ class ClasseViva
       }
       else if (RegExp("^([0-9])/([1-9]|10)\$").hasMatch(grade))
         value = double.parse(grade.split("/").first + ".9");
+      else value = -1; // Grade value not yet supported
     }
 
     return value;
