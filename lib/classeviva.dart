@@ -16,7 +16,7 @@ class ClasseVivaEndpoints
 
   String auth() => "https://web$year.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
 
-	String profile() => "https://web$year.spaggiari.eu/home/app/default/menu_webinfoschool_studenti.php";
+	String profile() => "https://web$year.spaggiari.eu/home/app/default/menu_webinfoschool_genitori.php";
 
   // TODO: Use this URL (https://web19.spaggiari.eu/cvv/app/default/genitori_voti.php)
 	String grades() => "https://web$year.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
