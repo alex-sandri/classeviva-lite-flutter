@@ -939,6 +939,8 @@ class ClasseViva
     Map<String, String> reGrades = {
       // Non sufficiente
       "ns": "5",
+      // Insufficiente
+      "i": "5",
       // Non sufficiente/Sufficiente
       "ns/s": "5.5",
       // Quasi sufficiente
@@ -973,6 +975,8 @@ class ClasseViva
       "ds": "9",
       // Più che distinto
       "pdn": "9+",
+      // Moltissimo?
+      "ms": "9.5",
       // Distinto/Ottimo
       "d/o": "9.5",
       // Quasi ottimo
