@@ -80,7 +80,7 @@ class _SignInState extends State<SignIn> {
 
                     if (widget._year != "")
                       Text(
-                        'all\'anno 20${widget._year}',
+                        'all\'anno 20${widget._year}/20${int.parse(widget._year) + 1}',
                         style: TextStyle(
                           color: Theme.of(context).accentColor,
                         ),
