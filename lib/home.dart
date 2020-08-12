@@ -297,84 +297,105 @@ class Home extends StatelessWidget {
               ),
             ),
             drawer: Drawer(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  FutureBuilder(
-                    future: session.data.getProfile(),
-                    builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
-                      if (!profile.hasData)
-                        return Container();
+              child: Container(
+                color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                  ? Colors.grey.shade900
+                  : null,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    FutureBuilder(
+                      future: session.data.getProfile(),
+                      builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
+                        if (!profile.hasData)
+                          return Container();
 
-                      return DrawerHeader(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              profile.data.name,
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 25,
-                              ),
-                            ),
-                            Text(
-                              profile.data.school,
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-
-                            if (session.data.getShortYear() != "")
+                        return DrawerHeader(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               Text(
-                                "20${session.data.getShortYear()}/20${int.parse(session.data.getShortYear()) + 1}",
+                                profile.data.name,
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 25,
+                                ),
+                              ),
+                              Text(
+                                profile.data.school,
                                 style: TextStyle(
                                   color: Theme.of(context).accentColor,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                          ],
+
+                              if (session.data.getShortYear() != "")
+                                Text(
+                                  "20${session.data.getShortYear()}/20${int.parse(session.data.getShortYear()) + 1}",
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).appBarTheme.color,
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.add,
+                        color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                          ? Theme.of(context).accentColor
+                          : null,
+                      ),
+                      title: Text(
+                        "Aggiungi Account",
+                        style: TextStyle(
+                          color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                            ? Theme.of(context).accentColor
+                            : null,
                         ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).appBarTheme.color,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignIn(),
+                          )
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.settings,
+                        color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                          ? Theme.of(context).accentColor
+                          : null,
+                      ),
+                      title: Text(
+                        "Impostazioni",
+                        style: TextStyle(
+                          color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                            ? Theme.of(context).accentColor
+                            : null,
                         ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.add,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Settings(),
+                          )
+                        );
+                      },
                     ),
-                    title: Text(
-                      "Aggiungi Account"
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignIn(),
-                        )
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.settings,
-                    ),
-                    title: Text(
-                      "Impostazioni"
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Settings(),
-                        )
-                      );
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
