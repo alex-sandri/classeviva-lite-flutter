@@ -77,21 +77,12 @@ class ClasseVivaProfile
   });
 }
 
-class ClasseVivaGradesResponse
-{
-	final List<ClasseVivaGradesResponsePeriod> periods;
-
-  ClasseVivaGradesResponse({
-    @required this.periods,
-  });
-}
-
-class ClasseVivaGradesResponsePeriod
+class ClasseVivaGradesPeriod
 {
 	final String name;
   final List<ClasseVivaGrade> grades;
 
-  ClasseVivaGradesResponsePeriod({
+  ClasseVivaGradesPeriod({
     @required this.name,
     @required this.grades,
   });
@@ -486,7 +477,7 @@ class ClasseViva
 		return grades;
 	}
 
-	Future<ClasseVivaGradesResponse> getGradesWithPeriods() async {
+	Future<List<ClasseVivaGradesPeriod>> getPeriods() async {
 		final response = await http.get(
       _endpoints.gradesWithPeriods(),
       headers: getSessionCookieHeader(),
@@ -496,7 +487,7 @@ class ClasseViva
 
     await checkValidSession(document);
 
-		List<ClasseVivaGradesResponsePeriod> periods = [];
+		List<ClasseVivaGradesPeriod> periods = [];
 
 		document.querySelectorAll("#tabs a").forEach((tab) {
       final String periodId = tab.attributes["href"];
@@ -529,15 +520,13 @@ class ClasseViva
         });
       });
 
-      periods.add(ClasseVivaGradesResponsePeriod(
+      periods.add(ClasseVivaGradesPeriod(
         name: periodName,
         grades: grades,
       ));
     });
 
-		return ClasseVivaGradesResponse(
-      periods: periods
-    );
+		return periods;
 	}
 
 	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {

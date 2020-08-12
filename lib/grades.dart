@@ -17,7 +17,7 @@ class _GradesState extends State<Grades> {
 
   Map<String, List<ClasseVivaGrade>> _subjects;
 
-  List<ClasseVivaGradesResponsePeriod> _periods = [];
+  List<ClasseVivaGradesPeriod> _periods = [];
 
   Future<void> _handleRefresh() async {
     final List<ClasseVivaGrade> grades = await _session.getGrades();
@@ -34,7 +34,7 @@ class _GradesState extends State<Grades> {
         _grades = grades;
       });
 
-    final List<ClasseVivaGradesResponsePeriod> periods = (await _session.getGradesWithPeriods()).periods;
+    final List<ClasseVivaGradesPeriod> periods = await _session.getPeriods();
 
     if (mounted)
       setState(() {
