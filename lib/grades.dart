@@ -290,6 +290,11 @@ class _GradesState extends State<Grades> {
                         final String subject = subjects.keys.elementAt(index - 1);
                         final List<ClasseVivaGrade> grades = subjects.values.elementAt(index - 1);
 
+                        grades.sort((a, b) {
+                          // Most recent first
+                          return b.date.compareTo(a.date);
+                        });
+
                         final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                         return Card(
