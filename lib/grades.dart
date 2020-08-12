@@ -295,9 +295,11 @@ class _GradesState extends State<Grades> {
                           return b.date.compareTo(a.date);
                         });
 
-                        final ClasseVivaGrade lastGrade = grades.first;
+                        final List<ClasseVivaGrade> gradesValidForAverageCount = ClasseViva.getGradesValidForAverageCount(grades);
 
-                        final double previousAverageGrade = ClasseViva.getAverageGrade(grades.where((grade) => grade != lastGrade).toList());
+                        final ClasseVivaGrade lastGrade = gradesValidForAverageCount.first;
+
+                        final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
                         final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                         Text _getAverageGradeChangeTextWidget(double previous, double current) {
