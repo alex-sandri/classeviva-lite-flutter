@@ -153,7 +153,6 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
                         final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index - 2];
 
                         return Card(
-                          color: Colors.transparent,
                           child: ListTile(
                             onTap: () async {
                               await _requestPermission();

@@ -93,7 +93,6 @@ class _BulletinBoardState extends State<BulletinBoard> {
                           final ClasseVivaBulletinBoardItem item = _items[index];
 
                           return Card(
-                            color: Colors.transparent,
                             child: ListTile(
                               onTap: () {
                                 Navigator.push(

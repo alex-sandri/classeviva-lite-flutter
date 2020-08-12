@@ -271,7 +271,6 @@ class _SignInState extends State<SignIn> {
                                       );
 
                                     return Card(
-                                      color: Colors.transparent,
                                       child: ListTile(
                                         title: Text(
                                           snapshot.data.name,

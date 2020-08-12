@@ -90,7 +90,6 @@ class _LessonsState extends State<Lessons> {
                           final ClasseVivaSubject subject = _subjects[index];
 
                           return Card(
-                            color: Colors.transparent,
                             child: ExpansionTile(
                               title: Text(
                                 subject.name,

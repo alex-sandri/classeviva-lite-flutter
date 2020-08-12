@@ -210,7 +210,6 @@ class _GradesState extends State<Grades> {
                       final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                       return Card(
-                        color: Colors.transparent,
                         child: ExpansionTile(
                           leading: CircleAvatar(
                             backgroundColor: Colors.transparent,
@@ -343,7 +342,6 @@ class _GradesState extends State<Grades> {
                         final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                         return Card(
-                          color: Colors.transparent,
                           child: ExpansionTile(
                             leading: CircleAvatar(
                               backgroundColor: Colors.transparent,
