@@ -304,7 +304,7 @@ class _GradesState extends State<Grades> {
 
                         Text _getAverageGradeChangeTextWidget(double previous, double current) {
                           bool changed = previous != current;
-                          bool increased = previous > current;
+                          bool increased = current > previous;
 
                           return Text(
                             changed
