@@ -53,7 +53,6 @@ class _SignInState extends State<SignIn> {
           title: Text(
             'ClasseViva Lite'
           ),
-          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {

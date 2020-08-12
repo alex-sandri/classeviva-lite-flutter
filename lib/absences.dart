@@ -47,7 +47,6 @@ class _AbsencesState extends State<Absences> {
           title: Text(
             'Assenze / Ritardi'
           ),
-          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {

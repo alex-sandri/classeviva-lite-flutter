@@ -10,7 +10,6 @@ class Settings extends StatelessWidget {
           title: Text(
             'Impostazioni'
           ),
-          elevation: 0,
         ),
         body: Container(
           

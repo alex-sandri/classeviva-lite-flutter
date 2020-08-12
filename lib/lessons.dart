@@ -42,7 +42,6 @@ class _LessonsState extends State<Lessons> {
           title: Text(
             'Lezioni'
           ),
-          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {

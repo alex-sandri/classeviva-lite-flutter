@@ -84,7 +84,6 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
           title: Text(
             widget._item.titolo,
           ),
-          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {

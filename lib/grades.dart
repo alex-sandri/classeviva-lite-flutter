@@ -89,7 +89,6 @@ class _GradesState extends State<Grades> {
             title: Text(
               'Valutazioni'
             ),
-            elevation: 0,
             bottom: TabBar(
               isScrollable: true,
               tabs: [

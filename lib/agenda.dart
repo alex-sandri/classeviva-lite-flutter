@@ -61,7 +61,6 @@ class _AgendaState extends State<Agenda> {
           title: Text(
             'Agenda & Compiti'
           ),
-          elevation: 0,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.calendar_today),

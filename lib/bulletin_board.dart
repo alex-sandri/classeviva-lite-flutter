@@ -48,7 +48,6 @@ class _BulletinBoardState extends State<BulletinBoard> {
           title: Text(
             'Bacheca'
           ),
-          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {

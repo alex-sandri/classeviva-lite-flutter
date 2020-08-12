@@ -89,7 +89,6 @@ class _AttachmentsState extends State<Attachments> {
           title: Text(
             'Didattica'
           ),
-          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {

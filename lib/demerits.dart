@@ -49,7 +49,6 @@ class _DemeritsState extends State<Demerits> {
           title: Text(
             'Note'
           ),
-          elevation: 0,
         ),
         body: GestureDetector(
           onTap: () {
