@@ -307,11 +307,34 @@ class Home extends StatelessWidget {
                         return Container();
 
                       return DrawerHeader(
-                        child: Text(
-                          profile.data.name,
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              profile.data.name,
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 25,
+                              ),
+                            ),
+                            Text(
+                              profile.data.school,
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+
+                            if (session.data.getShortYear() != "")
+                              Text(
+                                "20${session.data.getShortYear()}/20${int.parse(session.data.getShortYear()) + 1}",
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                          ],
                         ),
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
