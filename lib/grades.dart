@@ -295,6 +295,9 @@ class _GradesState extends State<Grades> {
                           return b.date.compareTo(a.date);
                         });
 
+                        final ClasseVivaGrade lastGrade = grades.first;
+
+                        final double previousAverageGrade = ClasseViva.getAverageGrade(grades.where((grade) => grade != lastGrade).toList());
                         final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                         return Card(

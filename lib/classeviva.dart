@@ -1105,7 +1105,7 @@ class ClasseViva
 
     int unsupportedGradesCount = 0;
 
-    return gradesValidForAverageCount
+    final List<double> a = gradesValidForAverageCount
       .map((grade) => ClasseViva.getGradeValue(grade.grade))
       .where((grade) {
         final bool isSupported = grade != -1;
@@ -1113,7 +1113,10 @@ class ClasseViva
         if (!isSupported) unsupportedGradesCount++;
 
         return isSupported;
-      })
-      .reduce((a, b) => a + b) / (gradesValidForAverageCount.length - unsupportedGradesCount);
+      }).toList();
+
+    if (a.length == 0) return -1;
+
+    return (a.reduce((a, b) => a + b) / (gradesValidForAverageCount.length - unsupportedGradesCount));
   }
 }
