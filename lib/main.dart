@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      themeMode: ThemeMode.system,
       home: FutureBuilder(
         future: ClasseViva.isSignedIn(),
         builder: (context, AsyncSnapshot<bool> isSignedIn) {
