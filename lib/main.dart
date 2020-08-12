@@ -27,6 +27,19 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xffcc1020),
         accentColor: Colors.white,
         appBarTheme: AppBarTheme(
+          color: Color(0xffcc1020),
+          elevation: 0,
+        ),
+        cardTheme: CardTheme(
+          color: Colors.transparent,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData(
+        primaryColor: Colors.black87,
+        accentColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: Color(0xffcc1020),
           elevation: 0,
         ),
         cardTheme: CardTheme(
