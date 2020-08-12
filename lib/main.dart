@@ -26,6 +26,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xffcc1020),
         accentColor: Colors.white,
+        cardTheme: CardTheme(
+          color: Colors.transparent,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: FutureBuilder(
