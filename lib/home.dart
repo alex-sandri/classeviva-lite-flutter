@@ -337,7 +337,7 @@ class Home extends StatelessWidget {
                           ],
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).appBarTheme.color,
                         ),
                       );
                     },
