@@ -74,8 +74,6 @@ class _AgendaState extends State<Agenda> {
                   _start = DateTime(selectedDate.start.year, selectedDate.start.month, selectedDate.start.day);
                   _end = DateTime(selectedDate.end.year, selectedDate.end.month, selectedDate.end.day, 23, 59, 59);
 
-                  print({_start, _end});
-
                   _handleRefresh();
                 }
               },
