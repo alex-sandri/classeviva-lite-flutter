@@ -19,6 +19,10 @@ class _AgendaState extends State<Agenda> {
   List<ClasseVivaAgendaItem> _items;
 
   Future<void> _handleRefresh() async {
+    setState(() {
+      _items = null;
+    });
+
     final List<ClasseVivaAgendaItem> items = await _session.getAgenda(_start, _end);
 
     items.sort((a, b) {
