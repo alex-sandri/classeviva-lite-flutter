@@ -42,6 +42,30 @@ class _GradesState extends State<Grades> {
       });
   }
 
+  Text _getAverageGradeChangeTextWidget(double previous, double current) {
+    bool changed = previous != current;
+    bool increased = current > previous;
+
+    return Text(
+      changed
+        ? (increased
+            ? "↑"
+            : "↓"
+          )
+        : "=",
+      style: TextStyle(
+        color: changed
+          ? (increased
+              ? Colors.green
+              : Colors.red
+            )
+          : Colors.orange,
+        fontSize: 30,
+        fontWeight: FontWeight.w900,
+      ),
+    );
+  }
+
   void initState() {
     super.initState();
 
@@ -178,6 +202,11 @@ class _GradesState extends State<Grades> {
                       final String subject = _subjects.keys.elementAt(index - 1);
                       final List<ClasseVivaGrade> grades = _subjects.values.elementAt(index - 1);
 
+                      final List<ClasseVivaGrade> gradesValidForAverageCount = ClasseViva.getGradesValidForAverageCount(grades);
+
+                      final ClasseVivaGrade lastGrade = gradesValidForAverageCount.first;
+
+                      final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
                       final double averageGrade = ClasseViva.getAverageGrade(grades);
 
                       return Card(
@@ -216,6 +245,9 @@ class _GradesState extends State<Grades> {
                               fontWeight: FontWeight.w900,
                             ),
                           ),
+                          subtitle: previousAverageGrade != -1
+                            ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
+                            : null,
                           children: grades.map((grade) => GradeTile(grade)).toList(),
                         ),
                       );
@@ -301,30 +333,6 @@ class _GradesState extends State<Grades> {
 
                         final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
                         final double averageGrade = ClasseViva.getAverageGrade(grades);
-
-                        Text _getAverageGradeChangeTextWidget(double previous, double current) {
-                          bool changed = previous != current;
-                          bool increased = current > previous;
-
-                          return Text(
-                            changed
-                              ? (increased
-                                  ? "↑"
-                                  : "↓"
-                                )
-                              : "=",
-                            style: TextStyle(
-                              color: changed
-                                ? (increased
-                                    ? Colors.green
-                                    : Colors.red
-                                  )
-                                : Colors.orange,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          );
-                        }
 
                         return Card(
                           color: Colors.transparent,
