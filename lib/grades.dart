@@ -219,18 +219,26 @@ class _GradesState extends State<Grades> {
                               children: [
                                 Center(
                                   child: CircularProgressIndicator(
-                                    value: averageGrade / 10,
-                                    valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
-                                      subject: "",
-                                      grade: averageGrade.toStringAsFixed(1),
-                                      type: "",
-                                      description: "",
-                                      date: DateTime.now(),
-                                    ))),
+                                    value: averageGrade != -1
+                                      ? averageGrade / 10
+                                      : 1,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      averageGrade != -1
+                                        ? ClasseViva.getGradeColor(ClasseVivaGrade(
+                                            subject: "",
+                                            grade: averageGrade.toStringAsFixed(1),
+                                            type: "",
+                                            description: "",
+                                            date: DateTime.now(),
+                                          ))
+                                        : Colors.blue,
+                                    ),
                                   ),
                                 ),
                                 Text(
-                                  averageGrade.toStringAsFixed(1),
+                                  averageGrade != -1
+                                    ? averageGrade.toStringAsFixed(1)
+                                    : "N/A",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -344,18 +352,26 @@ class _GradesState extends State<Grades> {
                                 children: [
                                   Center(
                                     child: CircularProgressIndicator(
-                                      value: averageGrade / 10,
-                                      valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
-                                        subject: "",
-                                        grade: averageGrade.toStringAsFixed(1),
-                                        type: "",
-                                        description: "",
-                                        date: DateTime.now(),
-                                      ))),
+                                      value: averageGrade != -1
+                                        ? averageGrade / 10
+                                        : 1,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        averageGrade != -1
+                                          ? ClasseViva.getGradeColor(ClasseVivaGrade(
+                                              subject: "",
+                                              grade: averageGrade.toStringAsFixed(1),
+                                              type: "",
+                                              description: "",
+                                              date: DateTime.now(),
+                                            ))
+                                          : Colors.blue,
+                                      ),
                                     ),
                                   ),
                                   Text(
-                                    averageGrade.toStringAsFixed(1),
+                                    averageGrade != -1
+                                      ? averageGrade.toStringAsFixed(1)
+                                      : "N/A",
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
