@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData(
+        brightness: Brightness.dark,
         primaryColor: Colors.black87,
         accentColor: Colors.white,
         appBarTheme: AppBarTheme(
