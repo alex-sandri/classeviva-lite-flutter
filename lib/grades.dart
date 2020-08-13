@@ -433,36 +433,30 @@ class GradesView extends StatelessWidget {
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      child: Container(
-        color: Theme.of(context).brightness == Brightness.light
-          ? Theme.of(context).primaryColor
-          : null,
-        width: double.infinity,
-        child: session == null
-          ? Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-              ),
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: refreshHandler,
-                    color: Theme.of(context).primaryColor,
-                    child: grades == null
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                          ),
-                        )
-                      : childBuilder(),
-                  ),
-                ),
-              ],
+      child: session == null
+        ? Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
             ),
-      ),
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: refreshHandler,
+                  color: Theme.of(context).primaryColor,
+                  child: grades == null
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                        ),
+                      )
+                    : childBuilder(),
+                ),
+              ),
+            ],
+          ),
     );
   }
 }
