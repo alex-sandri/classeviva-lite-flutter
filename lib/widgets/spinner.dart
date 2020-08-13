@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 class Spinner extends StatelessWidget {
@@ -5,7 +6,7 @@ class Spinner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).brightness == Brightness.light
+        valueColor: AlwaysStoppedAnimation<Color>(ThemeManager.isLightTheme(context)
           ? Theme.of(context).primaryColor
           : Theme.of(context).accentColor),
       ),
