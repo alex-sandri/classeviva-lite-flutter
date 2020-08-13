@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/bulletin_board_item.dart';
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -53,91 +54,67 @@ class _BulletinBoardState extends State<BulletinBoard> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: Container(
-            color: Theme.of(context).brightness == Brightness.light
-              ? Theme.of(context).primaryColor
-              : null,
-            width: double.infinity,
-            child: _session == null
-              ? Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                  ),
-                )
-              : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: _handleRefresh,
-                    color: Theme.of(context).primaryColor,
-                    child: _items == null
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: _items.length + 1,
-                        itemBuilder: (context, index) {
-                          if (_items.isEmpty)
-                            return SelectableText(
-                              "Non sono presenti elementi in bacheca",
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                              ),
-                              textAlign: TextAlign.center,
-                            );
-
-                          if (index == _items.length) return Container();
-
-                          final ClasseVivaBulletinBoardItem item = _items[index];
-
-                          return Card(
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => BulletinBoardItem(item),
-                                  )
-                                );
-                              },
-                              isThreeLine: true,
-                              title: Text(
-                                item.titolo,
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(height: 5,),
-                                  Text(
-                                    DateFormat.yMMMMd().format(item.evento_data),
-                                    style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5,),
-                                  Text(
-                                    item.tipo_com_desc,
-                                    style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ),
+          child: _session == null
+            ? Spinner()
+            : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  color: Theme.of(context).primaryColor,
+                  child: _items == null
+                  ? Spinner()
+                  : ListView.builder(
+                      itemCount: _items.length + 1,
+                      itemBuilder: (context, index) {
+                        if (_items.isEmpty)
+                          return SelectableText(
+                            "Non sono presenti elementi in bacheca",
+                            textAlign: TextAlign.center,
                           );
-                        },
-                      ),
-                  )
-                ),
-              ],
-            ),
+
+                        if (index == _items.length) return Container();
+
+                        final ClasseVivaBulletinBoardItem item = _items[index];
+
+                        return Card(
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BulletinBoardItem(item),
+                                )
+                              );
+                            },
+                            isThreeLine: true,
+                            title: Text(
+                              item.titolo,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(height: 5,),
+                                Text(
+                                  DateFormat.yMMMMd().format(item.evento_data),
+                                ),
+                                SizedBox(height: 5,),
+                                Text(
+                                  item.tipo_com_desc,
+                                ),
+                              ],
+                            )
+                          ),
+                        );
+                      },
+                    ),
+                )
+              ),
+            ],
           ),
         ),
       ),
