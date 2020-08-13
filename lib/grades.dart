@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/theme_manager.dart';
+import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -124,9 +125,6 @@ class _GradesState extends State<Grades> {
                       if (_grades.isEmpty)
                         return SelectableText(
                           "Non sono presenti valutazioni",
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                          ),
                           textAlign: TextAlign.center,
                         );
 
@@ -426,11 +424,7 @@ class GradesView extends StatelessWidget {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: session == null
-        ? Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-            ),
-          )
+        ? Spinner()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -439,11 +433,7 @@ class GradesView extends StatelessWidget {
                   onRefresh: refreshHandler,
                   color: Theme.of(context).primaryColor,
                   child: grades == null
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                        ),
-                      )
+                    ? Spinner()
                     : childBuilder(),
                 ),
               ),
