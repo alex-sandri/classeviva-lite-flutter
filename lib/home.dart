@@ -8,9 +8,7 @@ import 'package:classeviva_lite/grades.dart';
 import 'package:classeviva_lite/lessons.dart';
 import 'package:classeviva_lite/settings.dart';
 import 'package:classeviva_lite/sign_in.dart';
-import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class Home extends StatelessWidget {
