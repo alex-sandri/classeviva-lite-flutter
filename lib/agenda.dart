@@ -100,9 +100,7 @@ class _AgendaState extends State<Agenda> {
                   child: _items == null
                   ? Spinner()
                   : ListView.separated(
-                      separatorBuilder: (context, index) => Divider(
-                        color: Theme.of(context).accentColor,
-                      ),
+                      separatorBuilder: (context, index) => Divider(),
                       itemCount: _items.length + 1,
                       itemBuilder: (context, index) {
                         if (_items.isEmpty)
