@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ClasseViva Lite',
       theme: ThemeData(
+        brightness: Brightness.light,
         primaryColor: Color(0xffcc1020),
         accentColor: Colors.white,
         appBarTheme: AppBarTheme(
