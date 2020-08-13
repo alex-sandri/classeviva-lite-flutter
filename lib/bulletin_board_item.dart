@@ -90,7 +90,9 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
             FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Container(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).brightness == Brightness.light
+              ? Theme.of(context).primaryColor
+              : null,
             width: double.infinity,
             child: _session == null
               ? Center(

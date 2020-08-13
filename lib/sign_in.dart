@@ -59,7 +59,9 @@ class _SignInState extends State<SignIn> {
             FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Container(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).brightness == Brightness.light
+              ? Theme.of(context).primaryColor
+              : null,
             width: double.infinity,
             height: double.infinity,
             child: SingleChildScrollView(

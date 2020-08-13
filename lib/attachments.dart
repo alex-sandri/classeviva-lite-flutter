@@ -95,7 +95,9 @@ class _AttachmentsState extends State<Attachments> {
             FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Container(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).brightness == Brightness.light
+              ? Theme.of(context).primaryColor
+              : null,
             width: double.infinity,
             child: _session == null
               ? Center(

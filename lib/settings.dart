@@ -13,7 +13,9 @@ class Settings extends StatelessWidget {
           ),
         ),
         body: Container(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).brightness == Brightness.light
+            ? Theme.of(context).primaryColor
+            : null,
           child: ListView(
             children: [
               ListTile(
