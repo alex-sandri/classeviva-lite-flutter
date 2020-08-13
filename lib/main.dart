@@ -41,9 +41,6 @@ class MyApp extends StatelessWidget {
           color: Color(0xffcc1020),
           elevation: 0,
         ),
-        cardTheme: CardTheme(
-          color: Colors.transparent,
-        ),
         dividerTheme: DividerThemeData(
           color: Colors.black,
         ),
@@ -56,9 +53,6 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Color(0xffcc1020),
           elevation: 0,
-        ),
-        cardTheme: CardTheme(
-          color: Colors.transparent,
         ),
         dividerTheme: DividerThemeData(
           color: Colors.white,
