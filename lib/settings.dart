@@ -1,27 +1,8 @@
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
-class Settings extends StatefulWidget {
-  @override
-  _SettingsState createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
-  String _theme;
-
-  @override
-  void initState() {
-    super.initState();
-
-    SharedPreferences.getInstance().then((preferences) {
-      final String theme = preferences.getString("theme") ?? "system";
-
-      setState(() {
-        _theme = theme;
-      });
-    });
-  }
-
+class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -31,40 +12,37 @@ class _SettingsState extends State<Settings> {
             'Impostazioni'
           ),
         ),
-        body: ListView(
-          children: [
-            ListTile(
-              title: Text(
-                "Tema",
-              ),
-              trailing: DropdownButton(
-                value: _theme,
-                items: [
-                  DropdownMenuItem(
-                    value: "system",
-                    child: Text("Predefinito"),
-                  ),
-                  DropdownMenuItem(
-                    value: "light",
-                    child: Text("Chiaro"),
-                  ),
-                  DropdownMenuItem(
-                    value: "dark",
-                    child: Text("Scuro"),
-                  ),
-                ],
-                onChanged: (value) async {
-                  final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-                  await preferences.setString("theme", value);
-
-                  setState(() {
-                    _theme = value;
-                  });
-                },
-              ),
-            )
-          ],
+        body: Container(
+          color: Theme.of(context).primaryColor,
+          child: ListView(
+            children: [
+              ListTile(
+                title: Text(
+                  "Tema",
+                ),
+                trailing: DropdownButton(
+                  value: Provider.of<ThemeManager>(context).themeMode.toString().split(".").last,
+                  items: [
+                    DropdownMenuItem(
+                      value: "system",
+                      child: Text("Predefinito"),
+                    ),
+                    DropdownMenuItem(
+                      value: "light",
+                      child: Text("Chiaro"),
+                    ),
+                    DropdownMenuItem(
+                      value: "dark",
+                      child: Text("Scuro"),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    Provider.of<ThemeManager>(context, listen: false).setTheme(value);
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
