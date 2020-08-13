@@ -478,9 +478,7 @@ class GradeTile extends StatelessWidget {
           ),
         ),
         backgroundColor: ClasseViva.getGradeColor(grade),
-        foregroundColor: ThemeManager.isLightTheme(context)
-          ? Colors.black
-          : Colors.white,
+        foregroundColor: Colors.white,
         radius: 25,
       ),
       title: SelectableText(
