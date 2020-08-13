@@ -41,9 +41,6 @@ class MyApp extends StatelessWidget {
           color: Color(0xffcc1020),
           elevation: 0,
         ),
-        dividerTheme: DividerThemeData(
-          color: Colors.grey,
-        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData(
@@ -53,9 +50,6 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Color(0xffcc1020),
           elevation: 0,
-        ),
-        dividerTheme: DividerThemeData(
-          color: Colors.white,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
