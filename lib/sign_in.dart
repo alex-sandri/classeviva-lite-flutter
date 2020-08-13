@@ -276,7 +276,6 @@ class _SignInState extends State<SignIn> {
                                         title: Text(
                                           snapshot.data.name,
                                           style: TextStyle(
-                                            color: Theme.of(context).accentColor,
                                             fontSize: 20,
                                             fontWeight: FontWeight.w900,
                                           ),
@@ -284,7 +283,6 @@ class _SignInState extends State<SignIn> {
                                         subtitle: Text(
                                           "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
                                           style: TextStyle(
-                                            color: Theme.of(context).accentColor,
                                             fontSize: 12,
                                           ),
                                         ),
