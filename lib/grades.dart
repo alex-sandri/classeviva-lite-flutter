@@ -150,9 +150,6 @@ class _GradesState extends State<Grades> {
                       if (_subjects.isEmpty)
                         return SelectableText(
                           "Non sono presenti valutazioni",
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                          ),
                           textAlign: TextAlign.center,
                         );
                       else if (index == 0)
@@ -164,7 +161,6 @@ class _GradesState extends State<Grades> {
                                 Text(
                                   "Media Totale",
                                   style: TextStyle(
-                                    color: Theme.of(context).accentColor,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 20,
                                   ),
@@ -190,7 +186,6 @@ class _GradesState extends State<Grades> {
                                     Text(
                                       ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
                                       style: TextStyle(
-                                        color: Theme.of(context).accentColor,
                                         fontSize: 20,
                                       ),
                                     ),
@@ -279,9 +274,6 @@ class _GradesState extends State<Grades> {
                         if (subjects.isEmpty)
                           return SelectableText(
                             "Non sono presenti valutazioni",
-                            style: TextStyle(
-                              color: Theme.of(context).accentColor,
-                            ),
                             textAlign: TextAlign.center,
                           );
                         else if (index == 0)
@@ -293,7 +285,6 @@ class _GradesState extends State<Grades> {
                                 Text(
                                   "Media ${period.name}",
                                   style: TextStyle(
-                                    color: Theme.of(context).accentColor,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 20,
                                   ),
@@ -319,7 +310,6 @@ class _GradesState extends State<Grades> {
                                     Text(
                                       ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
                                       style: TextStyle(
-                                        color: Theme.of(context).accentColor,
                                         fontSize: 20,
                                       ),
                                     ),
@@ -388,7 +378,9 @@ class _GradesState extends State<Grades> {
                             title: Text(
                               subject,
                               style: TextStyle(
-                                color: Theme.of(context).accentColor,
+                                color: ThemeManager.isLightTheme(context)
+                                  ? Colors.black
+                                  : Colors.white,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
