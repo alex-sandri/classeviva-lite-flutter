@@ -115,13 +115,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.grade,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Valutazioni",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -137,13 +133,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.watch_later,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Assenze / Ritardi",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -159,13 +151,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.bookmark_border,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Bacheca",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -181,13 +169,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.book,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Lezioni",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -203,13 +187,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.view_agenda,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Agenda & Compiti",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -225,13 +205,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.attachment,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Didattica",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -247,13 +223,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.note,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Note",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -275,13 +247,9 @@ class Home extends StatelessWidget {
                             child: ListTile(
                               leading: Icon(
                                 Icons.skip_previous,
-                                color: Theme.of(context).accentColor,
                               ),
                               title: Text(
                                 "Anno Precedente",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                ),
                               ),
                               onTap: () {
                                 Navigator.push(
