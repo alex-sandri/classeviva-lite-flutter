@@ -12,39 +12,34 @@ class Settings extends StatelessWidget {
             'Impostazioni'
           ),
         ),
-        body: Container(
-          color: Theme.of(context).brightness == Brightness.light
-            ? Theme.of(context).primaryColor
-            : null,
-          child: ListView(
-            children: [
-              ListTile(
-                title: Text(
-                  "Tema",
-                ),
-                trailing: DropdownButton(
-                  value: Provider.of<ThemeManager>(context).themeMode.toString().split(".").last,
-                  items: [
-                    DropdownMenuItem(
-                      value: "system",
-                      child: Text("Predefinito"),
-                    ),
-                    DropdownMenuItem(
-                      value: "light",
-                      child: Text("Chiaro"),
-                    ),
-                    DropdownMenuItem(
-                      value: "dark",
-                      child: Text("Scuro"),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    Provider.of<ThemeManager>(context, listen: false).setTheme(value);
-                  },
-                ),
-              )
-            ],
-          ),
+        body: ListView(
+          children: [
+            ListTile(
+              title: Text(
+                "Tema",
+              ),
+              trailing: DropdownButton(
+                value: Provider.of<ThemeManager>(context).themeMode.toString().split(".").last,
+                items: [
+                  DropdownMenuItem(
+                    value: "system",
+                    child: Text("Predefinito"),
+                  ),
+                  DropdownMenuItem(
+                    value: "light",
+                    child: Text("Chiaro"),
+                  ),
+                  DropdownMenuItem(
+                    value: "dark",
+                    child: Text("Scuro"),
+                  ),
+                ],
+                onChanged: (value) {
+                  Provider.of<ThemeManager>(context, listen: false).setTheme(value);
+                },
+              ),
+            )
+          ],
         ),
       ),
     );
