@@ -2,6 +2,7 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
@@ -89,100 +90,78 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: Container(
-            color: Theme.of(context).brightness == Brightness.light
-              ? Theme.of(context).primaryColor
-              : null,
-            width: double.infinity,
-            child: _session == null
-              ? Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                  ),
-                )
-              : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: _handleRefresh,
-                    color: Theme.of(context).primaryColor,
-                    child: _item == null
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                        ),
-                      )
-                    : ListView.builder(
-                      itemCount: _item.attachments.length + 2,
-                      itemBuilder: (context, index) {
-                        if (index == 0)
-                          return Padding(
-                            padding: EdgeInsets.all(4),
-                            child: SelectableText(
-                              _item.description,
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                              ),
-                            ),
-                          );
-                        
-                        if (index == 1)
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-                            child: SelectableText(
-                              "Allegati",
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 25,
-                              ),
-                            ),
-                          );
-
-                        if (_item.attachments.isEmpty)
-                          return Padding(
-                            padding: EdgeInsets.all(4),
-                            child: SelectableText(
-                              "Non sono presenti allegati",
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                              ),
-                            ),
-                          );
-
-                        final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index - 2];
-
-                        return Card(
-                          child: ListTile(
-                            onTap: () async {
-                              await _requestPermission();
-
-                              await FlutterDownloader.enqueue(
-                                url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
-                                savedDir: (Theme.of(context).platform == TargetPlatform.android
-                                  ? await getExternalStorageDirectory()
-                                  : await getApplicationDocumentsDirectory()).path,
-                                showNotification: true,
-                                openFileFromNotification: true,
-                                headers: _session.getSessionCookieHeader(),
-                              );
-                            },
-                            title: Text(
-                              attachment.name,
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontWeight: FontWeight.w900,
-                              ),
+          child: _session == null
+            ? Spinner()
+            : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  color: Theme.of(context).primaryColor,
+                  child: _item == null
+                  ? Spinner()
+                  : ListView.builder(
+                    itemCount: _item.attachments.length + 2,
+                    itemBuilder: (context, index) {
+                      if (index == 0)
+                        return Padding(
+                          padding: EdgeInsets.all(4),
+                          child: SelectableText(
+                            _item.description,
+                          ),
+                        );
+                      
+                      if (index == 1)
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+                          child: SelectableText(
+                            "Allegati",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 25,
                             ),
                           ),
                         );
-                      },
-                    ),
-                  )
-                ),
-              ],
-            ),
+
+                      if (_item.attachments.isEmpty)
+                        return Padding(
+                          padding: EdgeInsets.all(4),
+                          child: SelectableText(
+                            "Non sono presenti allegati",
+                          ),
+                        );
+
+                      final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index - 2];
+
+                      return Card(
+                        child: ListTile(
+                          onTap: () async {
+                            await _requestPermission();
+
+                            await FlutterDownloader.enqueue(
+                              url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
+                              savedDir: (Theme.of(context).platform == TargetPlatform.android
+                                ? await getExternalStorageDirectory()
+                                : await getApplicationDocumentsDirectory()).path,
+                              showNotification: true,
+                              openFileFromNotification: true,
+                              headers: _session.getSessionCookieHeader(),
+                            );
+                          },
+                          title: Text(
+                            attachment.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ),
+            ],
           ),
         ),
       ),
