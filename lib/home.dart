@@ -8,7 +8,9 @@ import 'package:classeviva_lite/grades.dart';
 import 'package:classeviva_lite/lessons.dart';
 import 'package:classeviva_lite/settings.dart';
 import 'package:classeviva_lite/sign_in.dart';
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class Home extends StatelessWidget {
@@ -298,7 +300,8 @@ class Home extends StatelessWidget {
             ),
             drawer: Drawer(
               child: Container(
-                color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                color: Provider.of<ThemeManager>(context).themeMode == ThemeMode.dark
+                  || (Provider.of<ThemeManager>(context).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.dark)
                   ? Colors.grey.shade900
                   : null,
                 child: ListView(
@@ -349,14 +352,16 @@ class Home extends StatelessWidget {
                     ListTile(
                       leading: Icon(
                         Icons.add,
-                        color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                        color: Provider.of<ThemeManager>(context).themeMode == ThemeMode.dark
+                          || (Provider.of<ThemeManager>(context).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.dark)
                           ? Theme.of(context).accentColor
                           : null,
                       ),
                       title: Text(
                         "Aggiungi Account",
                         style: TextStyle(
-                          color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                          color: Provider.of<ThemeManager>(context).themeMode == ThemeMode.dark
+                            || (Provider.of<ThemeManager>(context).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.dark)
                             ? Theme.of(context).accentColor
                             : null,
                         ),
@@ -373,14 +378,16 @@ class Home extends StatelessWidget {
                     ListTile(
                       leading: Icon(
                         Icons.settings,
-                        color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                        color: Provider.of<ThemeManager>(context).themeMode == ThemeMode.dark
+                          || (Provider.of<ThemeManager>(context).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.dark)
                           ? Theme.of(context).accentColor
                           : null,
                       ),
                       title: Text(
                         "Impostazioni",
                         style: TextStyle(
-                          color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                          color: Provider.of<ThemeManager>(context).themeMode == ThemeMode.dark
+                            || (Provider.of<ThemeManager>(context).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.dark)
                             ? Theme.of(context).accentColor
                             : null,
                         ),
