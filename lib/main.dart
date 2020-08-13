@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
         dividerTheme: DividerThemeData(
-          color: Colors.black,
+          color: Colors.grey,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
