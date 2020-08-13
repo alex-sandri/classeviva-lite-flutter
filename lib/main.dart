@@ -44,6 +44,9 @@ class MyApp extends StatelessWidget {
         cardTheme: CardTheme(
           color: Colors.transparent,
         ),
+        dividerTheme: DividerThemeData(
+          color: Colors.black,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData(
@@ -56,6 +59,9 @@ class MyApp extends StatelessWidget {
         ),
         cardTheme: CardTheme(
           color: Colors.transparent,
+        ),
+        dividerTheme: DividerThemeData(
+          color: Colors.white,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
