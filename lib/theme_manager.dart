@@ -10,7 +10,7 @@ class ThemeManager with ChangeNotifier
     return _themeMode;
   }
 
-  setTheme(String theme) async {
+  void setTheme(String theme) async {
     switch (theme)
     {
       case "system": _themeMode = ThemeMode.system; break;
@@ -20,4 +20,6 @@ class ThemeManager with ChangeNotifier
 
     notifyListeners();
   }
+
+  static bool isLightTheme(BuildContext context) => Theme.of(context).brightness == Brightness.light;
 }

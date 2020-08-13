@@ -1,8 +1,10 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Grades extends StatefulWidget {
@@ -212,6 +214,9 @@ class _GradesState extends State<Grades> {
                         child: ExpansionTile(
                           leading: CircleAvatar(
                             backgroundColor: Colors.transparent,
+                            foregroundColor: ThemeManager.isLightTheme(context)
+                              ? Colors.black
+                              : Colors.white,
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
@@ -237,9 +242,6 @@ class _GradesState extends State<Grades> {
                                   averageGrade != -1
                                     ? averageGrade.toStringAsFixed(1)
                                     : "N/A",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
                                 ),
                               ],
                             ),
@@ -247,7 +249,9 @@ class _GradesState extends State<Grades> {
                           title: Text(
                             subject,
                             style: TextStyle(
-                              color: Theme.of(context).accentColor,
+                              color: ThemeManager.isLightTheme(context)
+                                ? Colors.black
+                                : Colors.white,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
@@ -344,6 +348,9 @@ class _GradesState extends State<Grades> {
                           child: ExpansionTile(
                             leading: CircleAvatar(
                               backgroundColor: Colors.transparent,
+                              foregroundColor: ThemeManager.isLightTheme(context)
+                                ? Colors.black
+                                : Colors.white,
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
@@ -370,7 +377,9 @@ class _GradesState extends State<Grades> {
                                       ? averageGrade.toStringAsFixed(1)
                                       : "N/A",
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: ThemeManager.isLightTheme(context)
+                                        ? Colors.black
+                                        : Colors.white,
                                     ),
                                   ),
                                 ],
@@ -471,17 +480,18 @@ class GradeTile extends StatelessWidget {
         child: Text(
           grade.grade,
           style: TextStyle(
-            color: Colors.white,
             fontSize: 20,
           ),
         ),
         backgroundColor: ClasseViva.getGradeColor(grade),
+        foregroundColor: ThemeManager.isLightTheme(context)
+          ? Colors.black
+          : Colors.white,
         radius: 25,
       ),
       title: SelectableText(
         grade.subject,
         style: TextStyle(
-          color: Theme.of(context).accentColor,
           fontWeight: FontWeight.w900,
         ),
       ),
@@ -493,16 +503,10 @@ class GradeTile extends StatelessWidget {
             children: <Widget>[
               SelectableText(
                 DateFormat.yMMMMd().format(grade.date),
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                ),
               ),
               Expanded(
                 child: SelectableText(
                   " - ${grade.type}",
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                  ),
                   maxLines: 1,
                 ),
               ),
@@ -511,9 +515,6 @@ class GradeTile extends StatelessWidget {
           SelectableLinkify(
             text: grade.description,
             options: LinkifyOptions(humanize: false),
-            style: TextStyle(
-              color: Theme.of(context).accentColor,
-            ),
             onOpen: (link) async {
               if (await canLaunch(link.url)) await launch(link.url);
               else
