@@ -106,6 +106,9 @@ class _CalendarState extends State<Calendar> {
                               ),
                               SelectableText(
                                 "${lesson.duration.inHours}hh",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
                               ),
                             ],
                           ),
