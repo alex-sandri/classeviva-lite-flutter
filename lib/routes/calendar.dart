@@ -62,8 +62,16 @@ class _CalendarState extends State<Calendar> {
                   ? Spinner()
                   : ListView.separated(
                       separatorBuilder: (context, index) => Divider(),
-                      itemCount: _calendar.lessons.length,
+                      itemCount: _calendar.lessons.length + 1,
                       itemBuilder: (context, index) {
+                        if (_calendar.lessons.isEmpty)
+                          return SelectableText(
+                            "Nessun evento",
+                            textAlign: TextAlign.center,
+                          );
+
+                        if (index == _calendar.lessons.length) return Container();
+
                         final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
 
                         return ListTile(
