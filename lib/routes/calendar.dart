@@ -89,14 +89,14 @@ class _CalendarState extends State<Calendar> {
                   : SingleChildScrollView(
                       child: Column(
                         children: [
-                          if (_calendar.grades.length > 0)
+                          if (_calendar.grades.isNotEmpty)
                             ListTile(
                               title: Text(
                                 "Voti",
                               ),
                             ),
                           
-                          if (_calendar.grades.length > 0)
+                          if (_calendar.grades.isNotEmpty)
                             ListView.separated(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -168,14 +168,14 @@ class _CalendarState extends State<Calendar> {
                             },
                           ),
 
-                          if (_calendar.agenda.length > 0)
+                          if (_calendar.agenda.isNotEmpty)
                             ListTile(
                               title: Text(
                                 "Agenda",
                               ),
                             ),
 
-                          if (_calendar.agenda.length > 0)
+                          if (_calendar.agenda.isNotEmpty)
                             ListView.separated(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
