@@ -66,17 +66,17 @@ class _AgendaState extends State<Agenda> {
             IconButton(
               icon: Icon(Icons.calendar_today),
               onPressed: () async {
-                final DateTimeRange selectedDate = await showDateRangePicker(
+                final DateTimeRange selectedDateRange = await showDateRangePicker(
                   context: context,
                   initialDateRange: DateTimeRange(start: _start, end: _end),
                   firstDate: DateTime(1970),
                   lastDate: DateTime(2099),
                 );
 
-                if (selectedDate != null)
+                if (selectedDateRange != null)
                 {
-                  _start = DateTime(selectedDate.start.year, selectedDate.start.month, selectedDate.start.day);
-                  _end = DateTime(selectedDate.end.year, selectedDate.end.month, selectedDate.end.day, 23, 59, 59);
+                  _start = DateTime(selectedDateRange.start.year, selectedDateRange.start.month, selectedDateRange.start.day);
+                  _end = DateTime(selectedDateRange.end.year, selectedDateRange.end.month, selectedDateRange.end.day, 23, 59, 59);
 
                   _handleRefresh();
                 }
