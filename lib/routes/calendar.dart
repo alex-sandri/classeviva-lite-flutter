@@ -12,8 +12,10 @@ class _CalendarState extends State<Calendar> {
 
   ClasseVivaCalendar _calendar;
 
+  DateTime _date = DateTime.now();
+
   Future<void> _handleRefresh() async {
-    final ClasseVivaCalendar calendar = await _session.getCalendar(DateTime(2020, 6, 3));
+    final ClasseVivaCalendar calendar = await _session.getCalendar(_date);
 
     if (mounted)
       setState(() {
