@@ -1,7 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
   @override
