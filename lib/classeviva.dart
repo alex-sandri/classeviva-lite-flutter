@@ -925,7 +925,41 @@ class ClasseViva
 
     await checkValidSession(document);
 
-    // TODO
+    List<ClasseVivaCalendarLesson> lessons = [];
+
+    document.querySelectorAll("#data_table").last.querySelectorAll(".rigtab").forEach((lesson) {
+      if (lesson.querySelector(".registro_firma_dett_docente") == null
+        || lesson.id != "") return;
+
+      lessons.add(ClasseVivaCalendarLesson(
+        teacher: lesson.querySelector(".registro_firma_dett_docente").text.trim(),
+        subject: lesson.querySelector(".registro_firma_dett_materia").attributes["title"],
+        description: lesson.querySelector(".registro_firma_dett_argomento_nota").text.trim(),
+        hour: int.parse(
+          lesson
+            .querySelector(".registro_firma_dett_ora")
+            .text
+            .split(" ")
+            .first
+            .replaceFirst("^", "")
+        ),
+        duration: Duration(
+          hours: int.parse(
+            lesson
+              .querySelector(".registro_firma_dett_ora")
+              .text
+              .split(" ")
+              .last
+              .replaceFirst("(", "")
+              .replaceFirst(")", "")
+          ),
+        ),
+      ));
+    });
+
+    return ClasseVivaCalendar(
+      lessons: lessons
+    );
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context, [ String year = "" ]) async {
