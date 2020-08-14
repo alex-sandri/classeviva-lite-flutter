@@ -5,8 +5,17 @@ class ThemeManager with ChangeNotifier
 {
   ThemeMode _themeMode;
 
-  ThemeMode get themeMode {
-    if (_themeMode == null) _themeMode = ThemeMode.system;
+  Future<ThemeMode> get themeMode async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    final String theme = preferences.getString("theme");
+
+    switch (theme)
+    {
+      case "light": _themeMode = ThemeMode.light; break;
+      case "dark": _themeMode = ThemeMode.dark; break;
+      default: _themeMode = ThemeMode.system; break;
+    }
 
     return _themeMode;
   }

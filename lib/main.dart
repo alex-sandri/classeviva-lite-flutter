@@ -30,49 +30,56 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
-      title: 'ClasseViva Lite',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Color(0xffcc1020),
-        accentColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          color: Color(0xffcc1020),
-          elevation: 0,
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.black87,
-        accentColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          color: Color(0xffcc1020),
-          elevation: 0,
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      themeMode: Provider.of<ThemeManager>(context).themeMode,
-      home: FutureBuilder(
-        future: ClasseViva.isSignedIn(),
-        builder: (context, AsyncSnapshot<bool> isSignedIn) {
-          if (!isSignedIn.hasData)
-            return Container(
-              color: Theme.of(context).primaryColor,
-            );
+    return FutureBuilder(
+      future: Provider.of<ThemeManager>(context).themeMode,
+      builder: (context, themeMode) {
+        if (!themeMode.hasData) return Container();
 
-          return isSignedIn.data ? Home() : SignIn();
-        },
-      ),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale("it", "IT"),
-      ],
+        return MaterialApp(
+          title: 'ClasseViva Lite',
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: Color(0xffcc1020),
+            accentColor: Colors.white,
+            appBarTheme: AppBarTheme(
+              color: Color(0xffcc1020),
+              elevation: 0,
+            ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            primaryColor: Colors.black87,
+            accentColor: Colors.white,
+            appBarTheme: AppBarTheme(
+              color: Color(0xffcc1020),
+              elevation: 0,
+            ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          themeMode: themeMode.data,
+          home: FutureBuilder(
+            future: ClasseViva.isSignedIn(),
+            builder: (context, AsyncSnapshot<bool> isSignedIn) {
+              if (!isSignedIn.hasData)
+                return Container(
+                  color: Theme.of(context).primaryColor,
+                );
+
+              return isSignedIn.data ? Home() : SignIn();
+            },
+          ),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale("it", "IT"),
+          ],
+        );
+      },
     );
   }
 }
