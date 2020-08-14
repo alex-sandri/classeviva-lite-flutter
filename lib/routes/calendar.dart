@@ -44,6 +44,26 @@ class _CalendarState extends State<Calendar> {
           title: Text(
             'Registro'
           ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: () async {
+                final DateTime selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: _date,
+                  firstDate: DateTime(1970),
+                  lastDate: DateTime(2099),
+                );
+
+                if (selectedDate != null)
+                {
+                  _date = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+
+                  _handleRefresh();
+                }
+              },
+            ),
+          ],
         ),
         body: GestureDetector(
           onTap: () {
