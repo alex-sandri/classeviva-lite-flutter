@@ -102,11 +102,7 @@ class _CalendarState extends State<Calendar> {
                               shrinkWrap: true,
                               separatorBuilder: (context, index) => Divider(),
                               itemCount: _calendar.grades.length,
-                              itemBuilder: (context, index) {
-                                final ClasseVivaGrade grade = _calendar.grades[index];
-
-                                return GradeTile(grade);
-                              },
+                              itemBuilder: (context, index) => GradeTile(_calendar.grades[index]),
                             ),
 
                           ListTile(
@@ -181,11 +177,7 @@ class _CalendarState extends State<Calendar> {
                               shrinkWrap: true,
                               separatorBuilder: (context, index) => Divider(),
                               itemCount: _calendar.agenda.length,
-                              itemBuilder: (context, index) {
-                                final ClasseVivaAgendaItem item = _calendar.agenda[index];
-
-                                return AgendaItemTile(item);
-                              },
+                              itemBuilder: (context, index) => AgendaItemTile(_calendar.agenda[index]),
                             ),
                       ],
                     ),
