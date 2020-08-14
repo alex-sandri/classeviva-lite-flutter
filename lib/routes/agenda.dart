@@ -113,41 +113,7 @@ class _AgendaState extends State<Agenda> {
 
                         final ClasseVivaAgendaItem item = _items[index];
 
-                        return ListTile(
-                          title: SelectableText(
-                            item.autore_desc,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(height: 5,),
-                              SelectableText(
-                                "(${DateFormat.yMMMMd().add_jm().format(item.start)} - ${DateFormat.yMMMMd().add_jm().format(item.end)})",
-                              ),
-                              SizedBox(height: 5,),
-                              SelectableLinkify(
-                                text: item.nota_2,
-                                options: LinkifyOptions(humanize: false),
-                                onOpen: (link) async {
-                                  if (await canLaunch(link.url)) await launch(link.url);
-                                  else
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: Text("Errore"),
-                                          content: Text("Impossibile aprire il link"),
-                                        );
-                                      },
-                                    );
-                                },
-                              ),
-                            ],
-                          )
-                        );
+                        return AgendaItemTile(item);
                       },
                     ),
                 )
@@ -156,6 +122,51 @@ class _AgendaState extends State<Agenda> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AgendaItemTile extends StatelessWidget {
+  final ClasseVivaAgendaItem _item;
+
+  AgendaItemTile(this._item);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: SelectableText(
+        _item.autore_desc,
+        style: TextStyle(
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 5,),
+          SelectableText(
+            "(${DateFormat.yMMMMd().add_jm().format(_item.start)} - ${DateFormat.yMMMMd().add_jm().format(_item.end)})",
+          ),
+          SizedBox(height: 5,),
+          SelectableLinkify(
+            text: _item.nota_2,
+            options: LinkifyOptions(humanize: false),
+            onOpen: (link) async {
+              if (await canLaunch(link.url)) await launch(link.url);
+              else
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Errore"),
+                      content: Text("Impossibile aprire il link"),
+                    );
+                  },
+                );
+            },
+          ),
+        ],
+      )
     );
   }
 }
