@@ -89,30 +89,26 @@ class _CalendarState extends State<Calendar> {
                   : SingleChildScrollView(
                       child: Column(
                         children: [
-                          ListTile(
-                            title: Text(
-                              "Voti",
+                          if (_calendar.grades.length > 0)
+                            ListTile(
+                              title: Text(
+                                "Voti",
+                              ),
                             ),
-                          ),
-                          ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) => Divider(),
-                            itemCount: _calendar.grades.length + 1,
-                            itemBuilder: (context, index) {
-                              if (_calendar.grades.isEmpty)
-                                return SelectableText(
-                                  "Nessun voto",
-                                  textAlign: TextAlign.center,
-                                );
+                          
+                          if (_calendar.grades.length > 0)
+                            ListView.separated(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) => Divider(),
+                              itemCount: _calendar.grades.length,
+                              itemBuilder: (context, index) {
+                                final ClasseVivaGrade grade = _calendar.grades[index];
 
-                              if (index == _calendar.grades.length) return Container();
+                                return GradeTile(grade);
+                              },
+                            ),
 
-                              final ClasseVivaGrade grade = _calendar.grades[index];
-
-                              return GradeTile(grade);
-                            },
-                          ),
                           ListTile(
                             title: Text(
                               "Lezioni",
@@ -171,30 +167,26 @@ class _CalendarState extends State<Calendar> {
                               );
                             },
                           ),
-                          ListTile(
-                            title: Text(
-                              "Agenda",
+
+                          if (_calendar.agenda.length > 0)
+                            ListTile(
+                              title: Text(
+                                "Agenda",
+                              ),
                             ),
-                          ),
-                          ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) => Divider(),
-                            itemCount: _calendar.agenda.length + 1,
-                            itemBuilder: (context, index) {
-                              if (_calendar.agenda.isEmpty)
-                                return SelectableText(
-                                  "Non sono presenti elementi in agenda nel periodo selezionato",
-                                  textAlign: TextAlign.center,
-                                );
 
-                              if (index == _calendar.agenda.length) return Container();
+                          if (_calendar.agenda.length > 0)
+                            ListView.separated(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) => Divider(),
+                              itemCount: _calendar.agenda.length,
+                              itemBuilder: (context, index) {
+                                final ClasseVivaAgendaItem item = _calendar.agenda[index];
 
-                              final ClasseVivaAgendaItem item = _calendar.agenda[index];
-
-                              return AgendaItemTile(item);
-                            },
-                          ),
+                                return AgendaItemTile(item);
+                              },
+                            ),
                       ],
                     ),
                   ),
