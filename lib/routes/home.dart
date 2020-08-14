@@ -3,6 +3,7 @@ import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/attachments.dart';
 import 'package:classeviva_lite/routes/bulletin_board.dart';
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/routes/calendar.dart';
 import 'package:classeviva_lite/routes/demerits.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/routes/lessons.dart';
@@ -109,6 +110,24 @@ class Home extends StatelessWidget {
                       child: ListView(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         children: <Widget>[
+                          Card(
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.today,
+                              ),
+                              title: Text(
+                                "Registro",
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Calendar(),
+                                  )
+                                );
+                              },
+                            ),
+                          ),
                           Card(
                             child: ListTile(
                               leading: Icon(

@@ -50,6 +50,8 @@ class ClasseVivaEndpoints
   String bulletinBoardItemDetails(String id) => "https://web$year.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
   String previousYear(String previousYear) => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web$previousYear.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
+
+  String calendar(DateTime date) => "https://web$year.spaggiari.eu/cvv/app/default/regclasse.php?data_start=${date.year}-${date.month}-${date.day}";
 }
 
 class ClasseVivaSession
@@ -885,6 +887,19 @@ class ClasseViva
         name: attachment.text.trim(),
       )).toList(),
     );
+	}
+
+  Future<ClasseVivaCalendar> getCalendar(DateTime date) async {
+		final response = await http.get(
+			_endpoints.calendar(date),
+      headers: getSessionCookieHeader(),
+    );
+
+    final document = parse(response.body);
+
+    await checkValidSession(document);
+
+    // TODO
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context, [ String year = "" ]) async {
