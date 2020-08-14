@@ -84,57 +84,67 @@ class _CalendarState extends State<Calendar> {
                   color: Theme.of(context).primaryColor,
                   child: _calendar == null
                   ? Spinner()
-                  : ListView.separated(
-                      separatorBuilder: (context, index) => Divider(),
-                      itemCount: _calendar.lessons.length + 1,
-                      itemBuilder: (context, index) {
-                        if (_calendar.lessons.isEmpty)
-                          return SelectableText(
-                            "Nessun evento",
-                            textAlign: TextAlign.center,
-                          );
-
-                        if (index == _calendar.lessons.length) return Container();
-
-                        final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
-
-                        return ListTile(
-                          leading: Column(
-                            children: [
-                              SelectableText(
-                                "${lesson.hour}^ ora",
-                              ),
-                              SelectableText(
-                                "${lesson.duration.inHours}hh",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
+                  : Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            "Lezioni",
                           ),
-                          title: SelectableText(
-                            lesson.subject,
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SelectableText(
-                                lesson.teacher,
+                        ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => Divider(),
+                          itemCount: _calendar.lessons.length + 1,
+                          itemBuilder: (context, index) {
+                            if (_calendar.lessons.isEmpty)
+                              return SelectableText(
+                                "Nessun evento",
+                                textAlign: TextAlign.center,
+                              );
+
+                            if (index == _calendar.lessons.length) return Container();
+
+                            final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
+
+                            return ListTile(
+                              leading: Column(
+                                children: [
+                                  SelectableText(
+                                    "${lesson.hour}^ ora",
+                                  ),
+                                  SelectableText(
+                                    "${lesson.duration.inHours}hh",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SelectableText(
-                                lesson.type,
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
+                              title: SelectableText(
+                                lesson.subject,
                               ),
-                              SelectableText(
-                                lesson.description,
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SelectableText(
+                                    lesson.teacher,
+                                  ),
+                                  SelectableText(
+                                    lesson.type,
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  SelectableText(
+                                    lesson.description,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+                            );
+                          },
+                        ),
+                    ],
+                  ),
                 )
               ),
             ],
