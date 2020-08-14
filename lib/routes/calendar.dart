@@ -103,7 +103,7 @@ class _CalendarState extends State<Calendar> {
                               shrinkWrap: true,
                               separatorBuilder: (context, index) => Divider(),
                               itemCount: _calendar.grades.length,
-                              itemBuilder: (context, index) => GradeTile(_calendar.grades[index]),
+                              itemBuilder: (context, index) => GradeTile(_calendar.grades[index], showDay: false),
                             ),
 
                           ListTile(

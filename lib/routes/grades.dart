@@ -445,7 +445,9 @@ class GradesView extends StatelessWidget {
 class GradeTile extends StatelessWidget {
   final ClasseVivaGrade grade;
 
-  GradeTile(this.grade);
+  final bool showDay;
+
+  GradeTile(this.grade, { this.showDay = true, });
 
   @override
   Widget build(BuildContext context) {
@@ -474,12 +476,14 @@ class GradeTile extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              SelectableText(
-                DateFormat.yMMMMd().format(grade.date),
-              ),
+              if (showDay)
+                SelectableText(
+                  DateFormat.yMMMMd().format(grade.date),
+                ),
+
               Expanded(
                 child: SelectableText(
-                  " - ${grade.type}",
+                  showDay ? " - ${grade.type}" : grade.type,
                   maxLines: 1,
                 ),
               ),
