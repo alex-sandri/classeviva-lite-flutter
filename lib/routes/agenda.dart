@@ -129,10 +129,16 @@ class _AgendaState extends State<Agenda> {
 class AgendaItemTile extends StatelessWidget {
   final ClasseVivaAgendaItem _item;
 
-  AgendaItemTile(this._item);
+  final bool showDay;
+
+  AgendaItemTile(this._item, { this.showDay = true, });
 
   @override
   Widget build(BuildContext context) {
+    DateFormat dateFormat = DateFormat.jm();
+
+    if (showDay) dateFormat = dateFormat.add_yMMMMd();
+
     return ListTile(
       title: SelectableText(
         _item.autore_desc,
@@ -145,7 +151,7 @@ class AgendaItemTile extends StatelessWidget {
         children: <Widget>[
           SizedBox(height: 5,),
           SelectableText(
-            "(${DateFormat.yMMMMd().add_jm().format(_item.start)} - ${DateFormat.yMMMMd().add_jm().format(_item.end)})",
+            "(${dateFormat.format(_item.start)} - ${dateFormat.format(_item.end)})",
           ),
           SizedBox(height: 5,),
           SelectableLinkify(

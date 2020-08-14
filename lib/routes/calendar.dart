@@ -3,6 +3,7 @@ import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -177,7 +178,7 @@ class _CalendarState extends State<Calendar> {
                               shrinkWrap: true,
                               separatorBuilder: (context, index) => Divider(),
                               itemCount: _calendar.agenda.length,
-                              itemBuilder: (context, index) => AgendaItemTile(_calendar.agenda[index]),
+                              itemBuilder: (context, index) => AgendaItemTile(_calendar.agenda[index], showDay: false),
                             ),
                       ],
                     ),
