@@ -59,7 +59,40 @@ class _CalendarState extends State<Calendar> {
                   color: Theme.of(context).primaryColor,
                   child: _calendar == null
                   ? Spinner()
-                  : ListView(),
+                  : ListView.separated(
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: _calendar.lessons.length,
+                      itemBuilder: (context, index) {
+                        final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
+
+                        return ListTile(
+                          leading: Column(
+                            children: [
+                              SelectableText(
+                                "${lesson.hour}^ ora",
+                              ),
+                              SelectableText(
+                                "${lesson.duration.inHours}hh",
+                              ),
+                            ],
+                          ),
+                          title: SelectableText(
+                            lesson.subject,
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SelectableText(
+                                lesson.teacher,
+                              ),
+                              SelectableText(
+                                lesson.description,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                 )
               ),
             ],
