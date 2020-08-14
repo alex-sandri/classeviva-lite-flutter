@@ -98,7 +98,7 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).appBarTheme.color,
                   child: _item == null
                   ? Spinner()
                   : ListView.builder(

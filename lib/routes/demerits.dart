@@ -63,7 +63,7 @@ class _DemeritsState extends State<Demerits> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).appBarTheme.color,
                   child: _demerits == null
                   ? Spinner()
                   : ListView.separated(

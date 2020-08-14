@@ -430,7 +430,7 @@ class GradesView extends StatelessWidget {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: refreshHandler,
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).appBarTheme.color,
                   child: grades == null
                     ? Spinner()
                     : childBuilder(),
