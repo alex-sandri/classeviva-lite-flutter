@@ -1,4 +1,4 @@
-import 'package:classeviva_lite/bulletin_board_item.dart';
+import 'package:classeviva_lite/routes/bulletin_board_item.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
-import 'package:classeviva_lite/home.dart';
-import 'package:classeviva_lite/sign_in.dart';
+import 'package:classeviva_lite/routes/home.dart';
+import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,5 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
-import 'package:classeviva_lite/home.dart';
+import 'package:classeviva_lite/routes/home.dart';
 import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 

@@ -1,13 +1,13 @@
-import 'package:classeviva_lite/absences.dart';
-import 'package:classeviva_lite/agenda.dart';
-import 'package:classeviva_lite/attachments.dart';
-import 'package:classeviva_lite/bulletin_board.dart';
+import 'package:classeviva_lite/routes/absences.dart';
+import 'package:classeviva_lite/routes/agenda.dart';
+import 'package:classeviva_lite/routes/attachments.dart';
+import 'package:classeviva_lite/routes/bulletin_board.dart';
 import 'package:classeviva_lite/classeviva.dart';
-import 'package:classeviva_lite/demerits.dart';
-import 'package:classeviva_lite/grades.dart';
-import 'package:classeviva_lite/lessons.dart';
-import 'package:classeviva_lite/settings.dart';
-import 'package:classeviva_lite/sign_in.dart';
+import 'package:classeviva_lite/routes/demerits.dart';
+import 'package:classeviva_lite/routes/grades.dart';
+import 'package:classeviva_lite/routes/lessons.dart';
+import 'package:classeviva_lite/routes/settings.dart';
+import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
