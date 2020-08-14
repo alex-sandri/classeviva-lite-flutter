@@ -934,7 +934,7 @@ class ClasseViva
         || lesson.id != "") return;
 
       lessons.add(ClasseVivaCalendarLesson(
-        teacher: lesson.querySelector(".registro_firma_dett_docente").text.trim(),
+        teacher: lesson.querySelector(".registro_firma_dett_docente div:first-child").text.trim(),
         subject: lesson.querySelector(".registro_firma_dett_materia").attributes["title"],
         type: lesson.querySelector(".registro_firma_dett_argomento_nota").previousElementSibling.text.trim(),
         description: lesson.querySelector(".registro_firma_dett_argomento_nota").text.trim(),
