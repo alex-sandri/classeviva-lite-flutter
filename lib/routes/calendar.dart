@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
@@ -191,8 +192,7 @@ class _CalendarState extends State<Calendar> {
 
                               final ClasseVivaAgendaItem item = _calendar.agenda[index];
 
-                              return ListTile(
-                              );
+                              return AgendaItemTile(item);
                             },
                           ),
                       ],
