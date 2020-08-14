@@ -85,89 +85,91 @@ class _CalendarState extends State<Calendar> {
                   color: Theme.of(context).primaryColor,
                   child: _calendar == null
                   ? Spinner()
-                  : Column(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            "Voti",
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              "Voti",
+                            ),
                           ),
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.grades.length + 1,
-                          itemBuilder: (context, index) {
-                            if (_calendar.grades.isEmpty)
-                              return SelectableText(
-                                "Nessun voto",
-                                textAlign: TextAlign.center,
-                              );
+                          ListView.separated(
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) => Divider(),
+                            itemCount: _calendar.grades.length + 1,
+                            itemBuilder: (context, index) {
+                              if (_calendar.grades.isEmpty)
+                                return SelectableText(
+                                  "Nessun voto",
+                                  textAlign: TextAlign.center,
+                                );
 
-                            if (index == _calendar.grades.length) return Container();
+                              if (index == _calendar.grades.length) return Container();
 
-                            final ClasseVivaGrade grade = _calendar.grades[index];
+                              final ClasseVivaGrade grade = _calendar.grades[index];
 
-                            return GradeTile(grade);
-                          },
-                        ),
-                        ListTile(
-                          title: Text(
-                            "Lezioni",
+                              return GradeTile(grade);
+                            },
                           ),
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.lessons.length + 1,
-                          itemBuilder: (context, index) {
-                            if (_calendar.lessons.isEmpty)
-                              return SelectableText(
-                                "Nessun evento",
-                                textAlign: TextAlign.center,
+                          ListTile(
+                            title: Text(
+                              "Lezioni",
+                            ),
+                          ),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) => Divider(),
+                            itemCount: _calendar.lessons.length + 1,
+                            itemBuilder: (context, index) {
+                              if (_calendar.lessons.isEmpty)
+                                return SelectableText(
+                                  "Nessun evento",
+                                  textAlign: TextAlign.center,
+                                );
+
+                              if (index == _calendar.lessons.length) return Container();
+
+                              final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
+
+                              return ListTile(
+                                leading: Column(
+                                  children: [
+                                    SelectableText(
+                                      "${lesson.hour}^ ora",
+                                    ),
+                                    SelectableText(
+                                      "${lesson.duration.inHours}hh",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                title: SelectableText(
+                                  lesson.subject,
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SelectableText(
+                                      lesson.teacher,
+                                    ),
+                                    SelectableText(
+                                      lesson.type,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                    SelectableText(
+                                      lesson.description,
+                                    ),
+                                  ],
+                                ),
                               );
-
-                            if (index == _calendar.lessons.length) return Container();
-
-                            final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
-
-                            return ListTile(
-                              leading: Column(
-                                children: [
-                                  SelectableText(
-                                    "${lesson.hour}^ ora",
-                                  ),
-                                  SelectableText(
-                                    "${lesson.duration.inHours}hh",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              title: SelectableText(
-                                lesson.subject,
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SelectableText(
-                                    lesson.teacher,
-                                  ),
-                                  SelectableText(
-                                    lesson.type,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                  SelectableText(
-                                    lesson.description,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                    ],
+                            },
+                          ),
+                      ],
+                    ),
                   ),
                 )
               ),
