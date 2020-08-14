@@ -170,6 +170,31 @@ class _CalendarState extends State<Calendar> {
                               );
                             },
                           ),
+                          ListTile(
+                            title: Text(
+                              "Agenda",
+                            ),
+                          ),
+                          ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) => Divider(),
+                            itemCount: _calendar.agenda.length + 1,
+                            itemBuilder: (context, index) {
+                              if (_calendar.agenda.isEmpty)
+                                return SelectableText(
+                                  "Non sono presenti elementi in agenda nel periodo selezionato",
+                                  textAlign: TextAlign.center,
+                                );
+
+                              if (index == _calendar.agenda.length) return Container();
+
+                              final ClasseVivaAgendaItem item = _calendar.agenda[index];
+
+                              return ListTile(
+                              );
+                            },
+                          ),
                       ],
                     ),
                   ),

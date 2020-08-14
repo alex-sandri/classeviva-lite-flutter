@@ -394,10 +394,12 @@ class ClasseVivaCalendar
 {
   final List<ClasseVivaGrade> grades;
   final List<ClasseVivaCalendarLesson> lessons;
+  final List<ClasseVivaAgendaItem> agenda;
 
   ClasseVivaCalendar({
     @required this.grades,
     @required this.lessons,
+    @required this.agenda,
   });
 }
 
@@ -964,7 +966,13 @@ class ClasseViva
 
     return ClasseVivaCalendar(
       grades: (await getGrades()).where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
-      lessons: lessons
+      lessons: lessons,
+      agenda: (await getAgenda(date, DateTime(
+        date.year,
+        date.month,
+        date.day,
+        23, 59, 59,
+      ))),
     );
 	}
 
