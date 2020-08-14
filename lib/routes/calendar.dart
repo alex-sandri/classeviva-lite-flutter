@@ -94,6 +94,7 @@ class _CalendarState extends State<Calendar> {
                             ),
                           ),
                           ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             separatorBuilder: (context, index) => Divider(),
                             itemCount: _calendar.grades.length + 1,
@@ -117,6 +118,7 @@ class _CalendarState extends State<Calendar> {
                             ),
                           ),
                           ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             separatorBuilder: (context, index) => Divider(),
                             itemCount: _calendar.lessons.length + 1,
