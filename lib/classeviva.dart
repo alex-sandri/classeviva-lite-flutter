@@ -375,6 +375,7 @@ class ClasseVivaCalendarLesson
 {
   final String teacher;
   final String subject;
+  final String type;
   final String description;
   final int hour;
   final Duration duration;
@@ -382,6 +383,7 @@ class ClasseVivaCalendarLesson
   ClasseVivaCalendarLesson({
     @required this.teacher,
     @required this.subject,
+    @required this.type,
     @required this.description,
     @required this.hour,
     @required this.duration,
@@ -934,6 +936,7 @@ class ClasseViva
       lessons.add(ClasseVivaCalendarLesson(
         teacher: lesson.querySelector(".registro_firma_dett_docente").text.trim(),
         subject: lesson.querySelector(".registro_firma_dett_materia").attributes["title"],
+        type: lesson.querySelector(".registro_firma_dett_argomento_nota").previousElementSibling.text.trim(),
         description: lesson.querySelector(".registro_firma_dett_argomento_nota").text.trim(),
         hour: int.parse(
           lesson
