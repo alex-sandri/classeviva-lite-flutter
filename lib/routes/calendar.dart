@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 
@@ -86,6 +87,29 @@ class _CalendarState extends State<Calendar> {
                   ? Spinner()
                   : Column(
                       children: [
+                        ListTile(
+                          title: Text(
+                            "Voti",
+                          ),
+                        ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => Divider(),
+                          itemCount: _calendar.grades.length + 1,
+                          itemBuilder: (context, index) {
+                            if (_calendar.grades.isEmpty)
+                              return SelectableText(
+                                "Nessun voto",
+                                textAlign: TextAlign.center,
+                              );
+
+                            if (index == _calendar.grades.length) return Container();
+
+                            final ClasseVivaGrade grade = _calendar.grades[index];
+
+                            return GradeTile(grade);
+                          },
+                        ),
                         ListTile(
                           title: Text(
                             "Lezioni",
