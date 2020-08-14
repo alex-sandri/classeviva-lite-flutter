@@ -51,7 +51,7 @@ class ClasseVivaEndpoints
 
   String previousYear(String previousYear) => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web$previousYear.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 
-  String calendar(DateTime date) => "https://web$year.spaggiari.eu/cvv/app/default/regclasse.php?data_start=${date.year}-${date.month}-${date.day}";
+  String calendar(DateTime date) => "https://web$year.spaggiari.eu/cvv/app/default/regclasse.php?data_start=${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}";
 }
 
 class ClasseVivaSession
