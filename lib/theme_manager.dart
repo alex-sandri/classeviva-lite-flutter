@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeManager with ChangeNotifier
 {
@@ -17,6 +18,10 @@ class ThemeManager with ChangeNotifier
       case "light": _themeMode = ThemeMode.light; break;
       case "dark": _themeMode = ThemeMode.dark; break;
     }
+
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    await preferences.setString("theme", theme);
 
     notifyListeners();
   }
