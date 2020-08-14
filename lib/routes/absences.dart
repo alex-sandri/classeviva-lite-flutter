@@ -61,7 +61,7 @@ class _AbsencesState extends State<Absences> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  color: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                   child: _absences == null
                   ? Spinner()
                   : ListView.separated(

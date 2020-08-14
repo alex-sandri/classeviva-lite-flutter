@@ -57,7 +57,7 @@ class _LessonsState extends State<Lessons> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  color: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                   child: _subjects == null
                   ? Spinner()
                   : ListView.separated(

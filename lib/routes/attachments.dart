@@ -103,7 +103,7 @@ class _AttachmentsState extends State<Attachments> {
                   Expanded(
                     child: RefreshIndicator(
                       onRefresh: _handleRefresh,
-                      color: Theme.of(context).primaryColor,
+                      backgroundColor: Theme.of(context).primaryColor,
                       child: _attachments == null
                         ? Spinner()
                         : ListView.builder(

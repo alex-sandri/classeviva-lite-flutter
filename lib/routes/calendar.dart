@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -84,7 +85,7 @@ class _CalendarState extends State<Calendar> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  color: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                   child: _calendar == null
                   ? Spinner()
                   : SingleChildScrollView(
