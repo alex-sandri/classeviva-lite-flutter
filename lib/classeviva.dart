@@ -371,6 +371,32 @@ class ClasseVivaBulletinBoardItemDetails
   });
 }
 
+class ClasseVivaCalendarLesson
+{
+  final String teacher;
+  final String subject;
+  final String description;
+  final int hour;
+  final Duration duration;
+
+  ClasseVivaCalendarLesson({
+    @required this.teacher,
+    @required this.subject,
+    @required this.description,
+    @required this.hour,
+    @required this.duration,
+  });
+}
+
+class ClasseVivaCalendar
+{
+  final List<ClasseVivaCalendarLesson> lessons;
+
+  ClasseVivaCalendar({
+    @required this.lessons,
+  });
+}
+
 class ClasseViva
 {
   int getYear() => session.year == ""
