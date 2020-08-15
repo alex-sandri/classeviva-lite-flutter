@@ -110,7 +110,7 @@ class _CalendarState extends State<Calendar> {
                               Icons.chevron_right,
                             ),
                             onPressed: () {
-                              _date = _date.subtract(Duration(days: 1));
+                              _date = _date.add(Duration(days: 1));
 
                               _handleRefresh();
                             },
