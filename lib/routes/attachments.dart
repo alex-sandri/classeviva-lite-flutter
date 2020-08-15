@@ -130,7 +130,7 @@ class _AttachmentsState extends State<Attachments> {
                                 return Padding(
                                   padding: EdgeInsets.all(4),
                                   child: FlatButton(
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme.of(context).appBarTheme.color,
                                     padding: EdgeInsets.all(15),
                                     child: Text(
                                       "Carica più elementi",
