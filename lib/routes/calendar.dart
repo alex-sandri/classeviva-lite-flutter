@@ -95,7 +95,9 @@ class _CalendarState extends State<Calendar> {
                               Icons.chevron_left,
                             ),
                             onPressed: () {
-                              print("DAY: -1");
+                              _date = _date.subtract(Duration(days: 1));
+
+                              _handleRefresh();
                             },
                           ),
                           title: Center(
