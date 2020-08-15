@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="icon.svg">
+   sodipodi:docname="foreground.svg"
+   inkscape:export-filename="C:\Users\Alex Sandri\Documents\Flutter Projects\classeviva_lite\assets\icon\icon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -26,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="1549.952"
-     inkscape:cy="902.85714"
+     inkscape:cx="1352.8349"
+     inkscape:cy="1002.6085"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -54,32 +57,31 @@
      id="layer2"
      inkscape:label="Text">
     <text
-       transform="translate(0,203)"
        xml:space="preserve"
-       style="display:inline;font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro Heavy';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="247.19655"
-       y="91.94558"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro Heavy';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="246.39557"
+       y="266.23569"
        id="text4554"><tspan
          sodipodi:role="line"
          id="tspan4552"
-         x="247.19656"
-         y="91.94558"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:123.47222137px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">CVV</tspan><tspan
+         x="246.39557"
+         y="266.23569"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:158.75px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">CVV</tspan><tspan
          sodipodi:role="line"
-         x="247.19655"
-         y="146.30229"
+         x="246.39557"
+         y="333.47705"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:123.47222137px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;stroke-width:0.26458332"
          id="tspan4556" /></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro Heavy';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="106.27882"
-       y="357.125"
+       x="64.57222"
+       y="350.33774"
        id="text4568"><tspan
          sodipodi:role="line"
          id="tspan4566"
-         x="106.27882"
-         y="357.125"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:63.5px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">Lite</tspan></text>
+         x="64.57222"
+         y="350.33774"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:88.19444275px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">Lite</tspan></text>
   </g>
 </svg>
