@@ -33,7 +33,10 @@ class MyApp extends StatelessWidget {
     return FutureBuilder(
       future: Provider.of<ThemeManager>(context).themeMode,
       builder: (context, themeMode) {
-        if (!themeMode.hasData) return Container();
+        if (!themeMode.hasData)
+          return Container(
+            color: Color(0xffcc1020),
+          );
 
         return MaterialApp(
           title: 'ClasseViva Lite',
