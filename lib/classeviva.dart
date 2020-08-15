@@ -405,6 +405,8 @@ class ClasseVivaCalendar
 
 class ClasseViva
 {
+  static const Color PRIMARY_LIGHT = Color(0xffcc1020);
+
   int getYear() => session.year == ""
     ? DateTime.now().year
     : int.parse("20${session.year}");

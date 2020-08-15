@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Color(0xffcc1020),
+        statusBarColor: ClasseViva.PRIMARY_LIGHT,
       ),
     );
 
@@ -35,17 +35,17 @@ class MyApp extends StatelessWidget {
       builder: (context, themeMode) {
         if (!themeMode.hasData)
           return Container(
-            color: Color(0xffcc1020),
+            color: ClasseViva.PRIMARY_LIGHT,
           );
 
         return MaterialApp(
           title: 'ClasseViva Lite',
           theme: ThemeData(
             brightness: Brightness.light,
-            primaryColor: Color(0xffcc1020),
+            primaryColor: ClasseViva.PRIMARY_LIGHT,
             accentColor: Colors.white,
             appBarTheme: AppBarTheme(
-              color: Color(0xffcc1020),
+              color: ClasseViva.PRIMARY_LIGHT,
               elevation: 0,
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.black87,
             accentColor: Colors.white,
             appBarTheme: AppBarTheme(
-              color: Color(0xffcc1020),
+              color: ClasseViva.PRIMARY_LIGHT,
               elevation: 0,
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
