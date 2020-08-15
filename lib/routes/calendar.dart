@@ -3,6 +3,7 @@ import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -88,6 +89,30 @@ class _CalendarState extends State<Calendar> {
                   ? Spinner()
                   : ListView(
                       children: [
+                        ListTile(
+                          leading: IconButton(
+                            icon: Icon(
+                              Icons.chevron_left,
+                            ),
+                            onPressed: () {
+                              print("DAY: -1");
+                            },
+                          ),
+                          title: Center(
+                            child: Text(
+                              DateFormat.yMMMMEEEEd().format(_date),
+                            ),
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.chevron_right,
+                            ),
+                            onPressed: () {
+                              print("DAY: +1");
+                            },
+                          ),
+                        ),
+
                         if (_calendar.grades.isNotEmpty)
                           ListTile(
                             title: Text(
