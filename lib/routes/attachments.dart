@@ -255,7 +255,7 @@ class _AttachmentsState extends State<Attachments> {
                                       _getAttachmentIcon(attachment),
                                       color: Theme.of(context).accentColor,
                                     ),
-                                    backgroundColor: Theme.of(context).primaryColor,
+                                    backgroundColor: Theme.of(context).appBarTheme.color,
                                     radius: 25,
                                   ),
                                   title: Text(
