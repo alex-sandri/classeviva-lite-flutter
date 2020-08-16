@@ -30,6 +30,8 @@ class _AttachmentsState extends State<Attachments> {
   ReceivePort _port = ReceivePort();
 
   Future<void> _handleRefresh() async {
+    _session.attachmentsPage = 1;
+
     final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
 
     if (mounted)
