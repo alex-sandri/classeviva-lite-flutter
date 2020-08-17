@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -114,6 +115,14 @@ class _CalendarState extends State<Calendar> {
                           },
                         ),
                       ),
+
+                      if (_calendar == null)
+                        LinearProgressIndicator(
+                          backgroundColor: Colors.transparent,
+                          valueColor: AlwaysStoppedAnimation<Color>(ThemeManager.isLightTheme(context)
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).accentColor),
+                        ),
 
                       if (_calendar != null && _calendar.grades.isNotEmpty)
                         ListTile(
