@@ -25,7 +25,7 @@ class _CalendarState extends State<Calendar> {
 
     final ClasseVivaCalendar calendar = await _session.getCalendar(_date);
 
-    if (mounted)
+    if (mounted && _date.isAtSameMomentAs(calendar.date))
       setState(() {
         _calendar = calendar;
       });
