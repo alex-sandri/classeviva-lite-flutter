@@ -85,128 +85,126 @@ class _CalendarState extends State<Calendar> {
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _calendar == null
-                  ? Spinner()
-                  : ListView(
-                      children: [
-                        ListTile(
-                          leading: IconButton(
-                            icon: Icon(
-                              Icons.chevron_left,
-                            ),
-                            onPressed: () {
-                              _date = _date.subtract(Duration(days: 1));
-
-                              _handleRefresh();
-                            },
+                  child: ListView(
+                    children: [
+                      ListTile(
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.chevron_left,
                           ),
-                          title: Center(
-                            child: Text(
-                              DateFormat.yMMMMEEEEd().format(_date),
-                            ),
-                          ),
-                          trailing: IconButton(
-                            icon: Icon(
-                              Icons.chevron_right,
-                            ),
-                            onPressed: () {
-                              _date = _date.add(Duration(days: 1));
+                          onPressed: () {
+                            _date = _date.subtract(Duration(days: 1));
 
-                              _handleRefresh();
-                            },
+                            _handleRefresh();
+                          },
+                        ),
+                        title: Center(
+                          child: Text(
+                            DateFormat.yMMMMEEEEd().format(_date),
                           ),
                         ),
-
-                        if (_calendar.grades.isNotEmpty)
-                          ListTile(
-                            title: Text(
-                              "Voti",
-                            ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.chevron_right,
                           ),
-                        
-                        if (_calendar.grades.isNotEmpty)
-                          ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) => Divider(),
-                            itemCount: _calendar.grades.length,
-                            itemBuilder: (context, index) => GradeTile(_calendar.grades[index], showDay: false),
-                          ),
+                          onPressed: () {
+                            _date = _date.add(Duration(days: 1));
 
+                            _handleRefresh();
+                          },
+                        ),
+                      ),
+
+                      if (_calendar.grades.isNotEmpty)
                         ListTile(
                           title: Text(
-                            "Lezioni",
+                            "Voti",
                           ),
                         ),
+
+                      if (_calendar.grades.isNotEmpty)
                         ListView.separated(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.lessons.length + 1,
-                          itemBuilder: (context, index) {
-                            if (_calendar.lessons.isEmpty)
-                              return SelectableText(
-                                "Nessun evento",
-                                textAlign: TextAlign.center,
-                              );
-
-                            if (index == _calendar.lessons.length) return Container();
-
-                            final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
-
-                            return ListTile(
-                              leading: Column(
-                                children: [
-                                  SelectableText(
-                                    "${lesson.hour}^ ora",
-                                  ),
-                                  SelectableText(
-                                    "${lesson.duration.inHours}hh",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              title: SelectableText(
-                                lesson.subject,
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SelectableText(
-                                    lesson.teacher,
-                                  ),
-                                  SelectableText(
-                                    lesson.type,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                  SelectableText(
-                                    lesson.description,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                          itemCount: _calendar.grades.length,
+                          itemBuilder: (context, index) => GradeTile(_calendar.grades[index], showDay: false),
                         ),
 
-                        if (_calendar.agenda.isNotEmpty)
-                          ListTile(
-                            title: Text(
-                              "Agenda",
-                            ),
-                          ),
+                      ListTile(
+                        title: Text(
+                          "Lezioni",
+                        ),
+                      ),
+                      ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) => Divider(),
+                        itemCount: _calendar.lessons.length + 1,
+                        itemBuilder: (context, index) {
+                          if (_calendar.lessons.isEmpty)
+                            return SelectableText(
+                              "Nessun evento",
+                              textAlign: TextAlign.center,
+                            );
 
-                        if (_calendar.agenda.isNotEmpty)
-                          ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) => Divider(),
-                            itemCount: _calendar.agenda.length,
-                            itemBuilder: (context, index) => AgendaItemTile(_calendar.agenda[index], showDay: false),
+                          if (index == _calendar.lessons.length) return Container();
+
+                          final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
+
+                          return ListTile(
+                            leading: Column(
+                              children: [
+                                SelectableText(
+                                  "${lesson.hour}^ ora",
+                                ),
+                                SelectableText(
+                                  "${lesson.duration.inHours}hh",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            title: SelectableText(
+                              lesson.subject,
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SelectableText(
+                                  lesson.teacher,
+                                ),
+                                SelectableText(
+                                  lesson.type,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                SelectableText(
+                                  lesson.description,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+
+                      if (_calendar.agenda.isNotEmpty)
+                        ListTile(
+                          title: Text(
+                            "Agenda",
                           ),
+                        ),
+
+                      if (_calendar.agenda.isNotEmpty)
+                        ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => Divider(),
+                          itemCount: _calendar.agenda.length,
+                          itemBuilder: (context, index) => AgendaItemTile(_calendar.agenda[index], showDay: false),
+                        ),
                     ],
                   ),
                 )
