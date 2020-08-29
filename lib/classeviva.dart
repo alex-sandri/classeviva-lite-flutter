@@ -58,10 +58,14 @@ class ClasseVivaSession
 {
   final String id;
   final String year;
+  final String uid;
+  final String pwd;
 
   ClasseVivaSession({
     @required this.id,
     @required this.year,
+    @required this.uid,
+    @required this.pwd,
   });
 
   @override
