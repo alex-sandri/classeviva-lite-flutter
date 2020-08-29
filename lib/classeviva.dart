@@ -1053,12 +1053,7 @@ class ClasseViva
 
     if (session == null) return null;
 
-    return ClasseVivaSession(
-      id: session.split(";").first,
-      year: session.split(";").last,
-      uid: session.split(";")[1],
-      pwd: session.split(";")[2],
-    );
+    return ClasseVivaSession.fromString(session);
   }
 
   static Future<void> setCurrentSession(ClasseVivaSession session) async {
@@ -1072,12 +1067,7 @@ class ClasseViva
 
     final List<String> sessions = preferences.getStringList("sessions");
 
-    return sessions?.map((session) => ClasseVivaSession(
-      id: session.split(";").first,
-      year: session.split(";").last,
-      uid: session.split(";")[1],
-      pwd: session.split(";")[2],
-    ))?.toList();
+    return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList();
 	}
 
   Future<void> signOut() async {
