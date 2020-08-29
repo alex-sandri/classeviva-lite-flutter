@@ -69,7 +69,7 @@ class ClasseVivaSession
   });
 
   @override
-  String toString() => "$id;$year";
+  String toString() => "$id;$uid;$pwd;$year";
 }
 
 class ClasseVivaProfile
