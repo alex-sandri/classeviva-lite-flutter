@@ -70,6 +70,13 @@ class ClasseVivaSession
 
   @override
   String toString() => "$id;$uid;$pwd;$year";
+
+  static ClasseVivaSession fromString(String session) => ClasseVivaSession(
+    id: session.split(";").first,
+    year: session.split(";").last,
+    uid: session.split(";")[1],
+    pwd: session.split(";")[2],
+  );
 }
 
 class ClasseVivaProfile
