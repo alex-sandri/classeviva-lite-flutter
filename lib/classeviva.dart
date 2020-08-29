@@ -1012,6 +1012,8 @@ class ClasseViva
     final ClasseVivaSession session = ClasseVivaSession(
       id: sessionId,
       year: year,
+      uid: uid,
+      pwd: pwd,
     );
 
     await ClasseViva.addSession(session);
@@ -1047,6 +1049,8 @@ class ClasseViva
     return ClasseVivaSession(
       id: session.split(";").first,
       year: session.split(";").last,
+      uid: session.split(";")[1],
+      pwd: session.split(";")[2],
     );
   }
 
@@ -1064,6 +1068,8 @@ class ClasseViva
     return sessions?.map((session) => ClasseVivaSession(
       id: session.split(";").first,
       year: session.split(";").last,
+      uid: session.split(";")[1],
+      pwd: session.split(";")[2],
     ))?.toList();
 	}
 
