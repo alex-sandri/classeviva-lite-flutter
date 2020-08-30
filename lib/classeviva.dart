@@ -468,9 +468,14 @@ class ClasseViva
   }
 
   Future<void> checkValidSession() async {
-    final ClasseVivaProfile profile = await getProfile();
+    final response = await http.get(
+      _endpoints.profile(),
+      headers: getSessionCookieHeader(),
+    );
 
-    if (profile.name == null) await session.refresh();
+    final document = parse(response.body);
+
+    if (document.querySelector(".name") == null) await session.refresh();
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
