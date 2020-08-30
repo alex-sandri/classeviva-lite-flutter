@@ -73,6 +73,8 @@ class ClasseVivaSession
 
   String get id => _id;
 
+  Future<void> refresh() async => _id = (await ClasseViva.createSession(uid, pwd, context, year)).session.id;
+
   @override
   String toString() => "$id;$uid;$pwd;$year";
 
