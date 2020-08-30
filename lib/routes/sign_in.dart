@@ -4,12 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class SignIn extends StatefulWidget {
-  final String _year;
-
   @override
   _SignInState createState() => _SignInState();
-
-  SignIn([ this._year = "" ]);
 }
 
 class _SignInState extends State<SignIn> {
@@ -78,15 +74,6 @@ class _SignInState extends State<SignIn> {
                         color: Theme.of(context).accentColor,
                       ),
                     ),
-
-                    if (widget._year != "")
-                      Text(
-                        'all\'anno 20${widget._year}/20${int.parse(widget._year) + 1}',
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                        ),
-                      ),
-
                     SizedBox(
                       height: 15,
                     ),
@@ -189,7 +176,7 @@ class _SignInState extends State<SignIn> {
                                   });
 
                                   await ClasseViva
-                                    .createSession(_uidController.text, _pwdController.text, widget._year)
+                                    .createSession(_uidController.text, _pwdController.text)
                                     .then((session) => _redirectToHomePage(),
                                     onError: (error) {
                                       showDialog(
