@@ -191,6 +191,36 @@ class _SignInState extends State<SignIn> {
                           SizedBox(
                             height: 15,
                           ),
+                          Container(
+                            width: double.infinity,
+                            child: FlatButton(
+                              color: ThemeManager.isLightTheme(context)
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).accentColor,
+                              colorBrightness: ThemeManager.isLightTheme(context)
+                                ? Brightness.dark
+                                : Brightness.light,
+                              padding: EdgeInsets.all(15),
+                              child: Text(
+                                "Esci da tutte le sessioni"
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                              ),
+                              onPressed: () async {
+                                await ClasseViva
+                                  .getAllSessions()
+                                  .then((sessions) =>
+                                    sessions.forEach((session) => ClasseViva(session).signOut())
+                                  );
+
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
                           ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
