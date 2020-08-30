@@ -26,7 +26,8 @@ class _HomeState extends State<Home> {
     return FutureBuilder<ClasseViva>(
       future: ClasseViva.getCurrentSession().then((session) => ClasseViva(session)),
       builder: (context, session) {
-        if (!session.hasData) return Container();
+        if (!session.hasData)
+          return Material();
 
         return Material(
           child: Scaffold(
