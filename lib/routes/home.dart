@@ -38,6 +38,7 @@ class _HomeState extends State<Home> {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
+                  tooltip: "Esci",
                   onPressed: () async {
                     await session.data.session.signOut();
 
