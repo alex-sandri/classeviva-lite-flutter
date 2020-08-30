@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/home.dart';
+import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
@@ -118,12 +119,10 @@ class _SignInState extends State<SignIn> {
                         SizedBox(
                           height: 15,
                         ),
+
                         if (_showSpinner)
-                          Center(
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
-                            ),
-                          ),
+                          Spinner(),
+
                         if (!_showSpinner)
                           Container(
                             width: double.infinity,
