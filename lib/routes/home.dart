@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () async {
-                    await session.data.signOut();
+                    await session.data.session.signOut();
                   },
                 ),
               ],

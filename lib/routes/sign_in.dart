@@ -211,7 +211,7 @@ class _SignInState extends State<SignIn> {
                                 await ClasseViva
                                   .getAllSessions()
                                   .then((sessions) =>
-                                    sessions.forEach((session) => ClasseViva(session).signOut())
+                                    sessions.forEach((session) => session.signOut())
                                   );
 
                                 setState(() {});

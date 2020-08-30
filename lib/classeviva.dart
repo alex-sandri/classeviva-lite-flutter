@@ -76,6 +76,25 @@ class ClasseVivaSession
 
   Future<void> refresh() async => _id = (await ClasseViva.createSession(uid, pwd, year: year)).session.id;
 
+  Future<void> signOut() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    final ClasseVivaSession currentSession = await ClasseViva.getCurrentSession();
+
+    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
+
+    sessions.removeWhere((session) => session.id == this.id);
+
+    await preferences.setStringList("sessions", sessions.map((session) => session.toString()).toList());
+
+    if (currentSession?.id == this.id)
+    {
+      await preferences.remove("currentSession");
+
+      Get.offAll(SignIn());
+    }
+  }
+
   @override
   String toString() => "$id;$uid;$pwd;$year";
 
@@ -1076,25 +1095,6 @@ class ClasseViva
 
     return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList();
 	}
-
-  Future<void> signOut() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    final ClasseVivaSession currentSession = await getCurrentSession();
-
-    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
-
-    sessions.removeWhere((session) => session.id == this.session.id);
-
-    await preferences.setStringList("sessions", sessions.map((session) => session.toString()).toList());
-
-    if (currentSession?.id == this.session.id)
-    {
-      await preferences.remove("currentSession");
-
-      Get.offAll(SignIn());
-    }
-  }
 
   static double getGradeValue(String grade)
   {
