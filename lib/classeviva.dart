@@ -73,7 +73,7 @@ class ClasseVivaSession
 
   String get id => _id;
 
-  Future<void> refresh() async => _id = (await ClasseViva.createSession(uid, pwd, context, year)).session.id;
+  Future<void> refresh() async => _id = (await ClasseViva.createSession(uid, pwd, year)).session.id;
 
   @override
   String toString() => "$id;$uid;$pwd;$year";
@@ -447,16 +447,11 @@ class ClasseViva
 
   final ClasseVivaSession session;
 
-  final BuildContext context;
-
   ClasseVivaEndpoints _endpoints;
 
   int attachmentsPage = 1;
 
-	ClasseViva({
-    @required this.session,
-    @required this.context,
-  })
+	ClasseViva(this.session)
   {
     yearBeginsAt = DateTime(getYear(), 7, 1);
 
@@ -999,7 +994,7 @@ class ClasseViva
     );
 	}
 
-	static Future<ClasseViva> createSession(String uid, String pwd, BuildContext context, [ String year = "" ]) async {
+	static Future<ClasseViva> createSession(String uid, String pwd, [ String year = "" ]) async {
 		final response = await http.post(
 			ClasseVivaEndpoints(year).auth(),
       headers: {
@@ -1034,10 +1029,7 @@ class ClasseViva
 
     await ClasseViva.setCurrentSession(session);
 
-		return ClasseViva(
-      session: session,
-      context: context,
-    );
+		return ClasseViva(session);
 	}
 
   static Future<bool> isSignedIn() async {
