@@ -1069,7 +1069,7 @@ class ClasseViva
     return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList();
 	}
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     final ClasseVivaSession currentSession = await getCurrentSession();
