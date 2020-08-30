@@ -215,6 +215,8 @@ class _SignInState extends State<SignIn> {
                                   );
 
                                 setState(() {});
+
+                                Get.offAll(SignIn());
                               },
                             ),
                           ),
