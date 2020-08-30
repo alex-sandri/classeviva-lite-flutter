@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/home.dart';
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -119,7 +120,12 @@ class _SignInState extends State<SignIn> {
                           Container(
                             width: double.infinity,
                             child: FlatButton(
-                              color: Theme.of(context).accentColor,
+                              color: ThemeManager.isLightTheme(context)
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).accentColor,
+                              colorBrightness: ThemeManager.isLightTheme(context)
+                                ? Brightness.dark
+                                : Brightness.light,
                               disabledColor: Theme.of(context).disabledColor,
                               padding: EdgeInsets.all(15),
                               child: Icon(
