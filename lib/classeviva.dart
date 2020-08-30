@@ -7,6 +7,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 class ClasseVivaEndpoints
 {
@@ -1069,7 +1070,7 @@ class ClasseViva
     return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList();
 	}
 
-  Future<void> signOut(BuildContext context) async {
+  Future<void> signOut() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
     final ClasseVivaSession currentSession = await getCurrentSession();
@@ -1084,12 +1085,7 @@ class ClasseViva
     {
       await preferences.remove("currentSession");
 
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => SignIn(),
-        ),
-        (route) => false,
-      );
+      Get.offAll(SignIn());
     }
   }
 
