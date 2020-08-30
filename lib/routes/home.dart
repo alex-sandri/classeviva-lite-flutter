@@ -10,6 +10,7 @@ import 'package:classeviva_lite/routes/lessons.dart';
 import 'package:classeviva_lite/routes/settings.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class Home extends StatelessWidget {
@@ -263,13 +264,14 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Anno Precedente",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignIn((int.parse(session.data.getShortYear(false)) - 1).toString()),
-                                  )
-                                );
+                              onTap: () async {
+                                ClasseViva.setCurrentSession((await ClasseViva.createSession(
+                                  session.data.session.uid,
+                                  session.data.session.pwd,
+                                  (int.parse(session.data.getShortYear(false)) - 1).toString(),
+                                )).session);
+
+                                Get.offAll(Home());
                               },
                             ),
                           ),
