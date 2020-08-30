@@ -74,7 +74,11 @@ class ClasseVivaSession
 
   String get id => _id;
 
-  Future<void> refresh() async => _id = (await ClasseViva.createSession(uid, pwd, year: year)).session.id;
+  Future<void> refresh() async {
+    signOut();
+
+    _id = (await ClasseViva.createSession(uid, pwd, year: year)).session.id;
+  }
 
   Future<void> signOut() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
