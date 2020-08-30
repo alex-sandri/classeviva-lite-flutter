@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class SignIn extends StatefulWidget {
@@ -20,15 +21,7 @@ class _SignInState extends State<SignIn> {
 
   final FocusNode _pwdFocusNode = FocusNode();
 
-  void _redirectToHomePage() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Home(),
-      ),
-      (route) => false
-    );
-  }
+  void _redirectToHomePage() => Get.offAll(Home());
 
   @override
   Widget build(BuildContext context) {

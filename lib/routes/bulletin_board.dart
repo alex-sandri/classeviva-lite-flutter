@@ -2,6 +2,7 @@ import 'package:classeviva_lite/routes/bulletin_board_item.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class BulletinBoard extends StatefulWidget {
@@ -77,14 +78,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
 
                         return Card(
                           child: ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BulletinBoardItem(item),
-                                )
-                              );
-                            },
+                            onTap: () => Get.to(BulletinBoardItem(item)),
                             isThreeLine: true,
                             title: Text(
                               item.titolo,

@@ -114,14 +114,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Registro",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Calendar(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(Calendar()),
                             ),
                           ),
                           Card(
@@ -132,14 +125,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Valutazioni",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Grades(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(Grades()),
                             ),
                           ),
                           Card(
@@ -150,14 +136,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Assenze / Ritardi",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Absences(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(Absences()),
                             ),
                           ),
                           Card(
@@ -168,14 +147,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Bacheca",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => BulletinBoard(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(BulletinBoard()),
                             ),
                           ),
                           Card(
@@ -186,14 +158,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Lezioni",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Lessons(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(Lessons()),
                             ),
                           ),
                           Card(
@@ -204,14 +169,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Agenda & Compiti",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Agenda(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(Agenda()),
                             ),
                           ),
                           Card(
@@ -222,14 +180,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Didattica",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Attachments(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(Attachments()),
                             ),
                           ),
                           Card(
@@ -240,14 +191,7 @@ class Home extends StatelessWidget {
                               title: Text(
                                 "Note",
                               ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Demerits(),
-                                  )
-                                );
-                              },
+                              onTap: () => Get.to(Demerits()),
                             ),
                           ),
                           Divider(
@@ -335,14 +279,7 @@ class Home extends StatelessWidget {
                     title: Text(
                       "Aggiungi Account",
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignIn(),
-                        )
-                      );
-                    },
+                    onTap: () => Get.to(SignIn()),
                   ),
                   ListTile(
                     leading: Icon(
@@ -351,14 +288,7 @@ class Home extends StatelessWidget {
                     title: Text(
                       "Impostazioni",
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Settings(),
-                        )
-                      );
-                    },
+                    onTap: () => Get.to(Settings()),
                   ),
                 ],
               ),
