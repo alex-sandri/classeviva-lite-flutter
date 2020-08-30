@@ -591,8 +591,6 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
-    // TODO: Check valid session
-
 		return ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
 	}
 
@@ -857,8 +855,6 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
-    // TODO: Check valid session
-
 		final document = parse('''
       <!DOCTYPE html>
       <html>
@@ -901,8 +897,6 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
-		// TODO: Check valid session
-
     final jsonResponse = jsonDecode("${response.body}");
 
     List responseItems = [];
@@ -924,8 +918,6 @@ class ClasseViva
 			_endpoints.bulletinBoardItemDetails(id),
       headers: getSessionCookieHeader(),
     );
-
-		// TODO: Check valid session
 
     final document = parse('''
       <!DOCTYPE html>
