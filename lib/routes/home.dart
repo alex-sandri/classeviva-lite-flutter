@@ -218,7 +218,7 @@ class _HomeState extends State<Home> {
                                   ClasseViva.setCurrentSession((await ClasseViva.createSession(
                                     session.data.session.uid,
                                     session.data.session.pwd,
-                                    (int.parse(session.data.getShortYear(false)) - 1).toString(),
+                                    year: (int.parse(session.data.getShortYear(false)) - 1).toString(),
                                   )).session);
 
                                   Get.offAll(Home());

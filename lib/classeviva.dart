@@ -74,7 +74,7 @@ class ClasseVivaSession
 
   String get id => _id;
 
-  Future<void> refresh() async => _id = (await ClasseViva.createSession(uid, pwd, year)).session.id;
+  Future<void> refresh() async => _id = (await ClasseViva.createSession(uid, pwd, year: year)).session.id;
 
   @override
   String toString() => "$id;$uid;$pwd;$year";
@@ -1002,7 +1002,7 @@ class ClasseViva
     );
 	}
 
-	static Future<ClasseViva> createSession(String uid, String pwd, [ String year = "" ]) async {
+	static Future<ClasseViva> createSession(String uid, String pwd, { String year = "" }) async {
 		final response = await http.post(
 			ClasseVivaEndpoints(year).auth(),
       headers: {
