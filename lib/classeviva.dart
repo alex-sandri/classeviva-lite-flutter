@@ -474,14 +474,14 @@ class ClasseViva
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
+    await checkValidSession();
+
 		final response = await http.get(
       _endpoints.profile(),
       headers: getSessionCookieHeader(),
     );
 
     final document = parse(response.body);
-
-    await checkValidSession(document);
 
 		return ClasseVivaProfile(
       name: document.querySelector(".name").text.trim(),
@@ -490,14 +490,14 @@ class ClasseViva
 	}
 
   Future<List<ClasseVivaGrade>> getGrades() async {
+    await checkValidSession();
+
 		final response = await http.get(
       _endpoints.grades(),
       headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
-
-    await checkValidSession(document);
 
 		List<ClasseVivaGrade> grades = [];
 
@@ -532,14 +532,14 @@ class ClasseViva
 	}
 
 	Future<List<ClasseVivaGradesPeriod>> getPeriods() async {
+    await checkValidSession();
+
 		final response = await http.get(
       _endpoints.gradesWithPeriods(),
       headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
-
-    await checkValidSession(document);
 
 		List<ClasseVivaGradesPeriod> periods = [];
 
@@ -584,6 +584,8 @@ class ClasseViva
 	}
 
 	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {
+    await checkValidSession();
+
 		final response = await http.get(
       _endpoints.agenda(start, end),
       headers: getSessionCookieHeader(),
@@ -595,14 +597,14 @@ class ClasseViva
 	}
 
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
+    await checkValidSession();
+
 		final response = await http.get(
       _endpoints.attachments(attachmentsPage),
       headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
-
-    await checkValidSession(document);
 
 		List<ClasseVivaAttachment> attachments = [];
 
@@ -665,14 +667,14 @@ class ClasseViva
 	}
 
 	Future<List<ClasseVivaDemerit>> getDemerits() async {
+    await checkValidSession();
+
 		final response = await http.get(
 			_endpoints.demerits(),
       headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
-
-    await checkValidSession(document);
 
 		List<ClasseVivaDemerit> demerits = [];
 
@@ -695,14 +697,14 @@ class ClasseViva
 	}
 
   Future<List<ClasseVivaAbsence>> getAbsences() async {
+    await checkValidSession();
+
 		final response = await http.get(
 			_endpoints.absences(),
       headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
-
-    await checkValidSession(document);
 
 		List<ClasseVivaAbsence> absences = [];
 
@@ -825,14 +827,14 @@ class ClasseViva
 	}
 
   Future<List<ClasseVivaSubject>> getSubjects() async {
+    await checkValidSession();
+
 		final response = await http.get(
 			_endpoints.subjects(),
       headers: getSessionCookieHeader(),
     );
 
 		final document = parse(response.body);
-
-    await checkValidSession(document);
 
 		List<ClasseVivaSubject> subjects = [];
 
@@ -848,6 +850,8 @@ class ClasseViva
 	}
 
   Future<List<ClasseVivaLesson>> getLessons(ClasseVivaSubject subject) async {
+    await checkValidSession();
+
 		final response = await http.get(
 			_endpoints.lessons(subject.id, subject.teacherIds),
       headers: getSessionCookieHeader(),
@@ -890,6 +894,8 @@ class ClasseViva
 	}
 
   Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard() async {
+    await checkValidSession();
+
 		final response = await http.get(
 			_endpoints.bulletinBoard(),
       headers: getSessionCookieHeader(),
@@ -912,6 +918,8 @@ class ClasseViva
 	}
 
   Future<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async {
+    await checkValidSession();
+
 		final response = await http.get(
 			_endpoints.bulletinBoardItemDetails(id),
       headers: getSessionCookieHeader(),
@@ -942,14 +950,14 @@ class ClasseViva
 	}
 
   Future<ClasseVivaCalendar> getCalendar(DateTime date) async {
+    await checkValidSession();
+
 		final response = await http.get(
 			_endpoints.calendar(date),
       headers: getSessionCookieHeader(),
     );
 
     final document = parse(response.body);
-
-    await checkValidSession(document);
 
     List<ClasseVivaCalendarLesson> lessons = [];
 
