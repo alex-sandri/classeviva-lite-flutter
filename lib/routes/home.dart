@@ -13,7 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool _showLoadingSpinner = false;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ClasseViva>(
@@ -209,6 +216,10 @@ class Home extends StatelessWidget {
                                 "Anno Precedente",
                               ),
                               onTap: () async {
+                                setState(() {
+                                  _showLoadingSpinner = true;
+                                });
+
                                 ClasseViva.setCurrentSession((await ClasseViva.createSession(
                                   session.data.session.uid,
                                   session.data.session.pwd,
