@@ -1084,8 +1084,7 @@ class ClasseViva
     {
       await preferences.remove("currentSession");
 
-      Navigator.pushAndRemoveUntil(
-        context,
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => SignIn(),
         ),
