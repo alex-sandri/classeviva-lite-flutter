@@ -126,7 +126,7 @@ class _SignInState extends State<SignIn> {
                                 Icons.check,
                               ),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                borderRadius: BorderRadius.all(Radius.circular(4)),
                               ),
                               onPressed: _disableButton ? null : () async {
                                 setState(() {
