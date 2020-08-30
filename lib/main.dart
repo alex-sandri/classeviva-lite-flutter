@@ -65,10 +65,7 @@ class MyApp extends StatelessWidget {
           home: FutureBuilder(
             future: ClasseViva.isSignedIn(),
             builder: (context, AsyncSnapshot<bool> isSignedIn) {
-              if (!isSignedIn.hasData)
-                return Container(
-                  color: Theme.of(context).primaryColor,
-                );
+              if (!isSignedIn.hasData) return Material();
 
               return isSignedIn.data ? Home() : SignIn();
             },
