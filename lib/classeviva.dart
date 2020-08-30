@@ -467,8 +467,10 @@ class ClasseViva
     };
   }
 
-  Future<void> checkValidSession(dom.Document document) async {
-    if (document.querySelector(".name") == null) await signOut();
+  Future<void> checkValidSession() async {
+    final ClasseVivaProfile profile = await getProfile();
+
+    if (profile.name == null) await session.refresh();
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
