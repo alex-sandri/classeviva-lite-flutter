@@ -195,6 +195,7 @@ class _SignInState extends State<SignIn> {
                             height: 15,
                           ),
                           ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: sessions.data.length,
                             itemBuilder: (context, index) {
