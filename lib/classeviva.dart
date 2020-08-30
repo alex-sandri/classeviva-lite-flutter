@@ -56,17 +56,22 @@ class ClasseVivaEndpoints
 
 class ClasseVivaSession
 {
-  final String id;
+  String _id;
   final String year;
   final String uid;
   final String pwd;
 
   ClasseVivaSession({
-    @required this.id,
+    @required id,
     @required this.year,
     @required this.uid,
     @required this.pwd,
-  });
+  })
+  {
+    _id = id;
+  }
+
+  String get id => _id;
 
   @override
   String toString() => "$id;$uid;$pwd;$year";
