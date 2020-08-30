@@ -15,11 +15,9 @@ import 'package:skeleton_text/skeleton_text.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: () async {
-        return ClasseViva(await ClasseViva.getCurrentSession());
-      }.call(),
-      builder: (context, AsyncSnapshot<ClasseViva> session) {
+    return FutureBuilder<ClasseViva>(
+      future: ClasseViva.getCurrentSession().then((session) => ClasseViva(session)),
+      builder: (context, session) {
         if (!session.hasData)
           return Container(
             color: Theme.of(context).primaryColor,
