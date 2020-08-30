@@ -17,10 +17,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: () async {
-        return ClasseViva(
-          session: await ClasseViva.getCurrentSession(),
-          context: context
-        );
+        return ClasseViva(await ClasseViva.getCurrentSession());
       }.call(),
       builder: (context, AsyncSnapshot<ClasseViva> session) {
         if (!session.hasData)

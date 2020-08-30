@@ -189,7 +189,7 @@ class _SignInState extends State<SignIn> {
                                   });
 
                                   await ClasseViva
-                                    .createSession(_uidController.text, _pwdController.text, context, widget._year)
+                                    .createSession(_uidController.text, _pwdController.text, widget._year)
                                     .then((session) => _redirectToHomePage(),
                                     onError: (error) {
                                       showDialog(
@@ -245,10 +245,7 @@ class _SignInState extends State<SignIn> {
                               shrinkWrap: true,
                               itemCount: sessions.data.length,
                               itemBuilder: (context, index) {
-                                final ClasseViva session = ClasseViva(
-                                  session: sessions.data[index],
-                                  context: context,
-                                );
+                                final ClasseViva session = ClasseViva(sessions.data[index]);
 
                                 return FutureBuilder<ClasseVivaProfile>(
                                   future: session.getProfile(),

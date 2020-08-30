@@ -41,10 +41,7 @@ class _AgendaState extends State<Agenda> {
     super.initState();
 
     ClasseViva.getCurrentSession().then((session) {
-      _session = ClasseViva(
-        session: session,
-        context: context
-      );
+      _session = ClasseViva(session);
 
       _start = _session.yearBeginsAt;
 

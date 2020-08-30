@@ -57,10 +57,7 @@ class _AttachmentsState extends State<Attachments> {
     super.initState();
 
     ClasseViva.getCurrentSession().then((session) {
-      _session = ClasseViva(
-        session: session,
-        context: context
-      );
+      _session = ClasseViva(session);
 
       _handleRefresh();
     });

@@ -27,10 +27,7 @@ class _LessonsState extends State<Lessons> {
     super.initState();
 
     ClasseViva.getCurrentSession().then((session) {
-      _session = ClasseViva(
-        session: session,
-        context: context
-      );
+      _session = ClasseViva(session);
 
       _handleRefresh();
     });
