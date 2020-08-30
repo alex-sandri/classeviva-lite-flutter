@@ -26,14 +26,6 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    OutlineInputBorder _inputDecoration() {
-      return OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-      );
-    }
-
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -72,8 +64,8 @@ class _SignInState extends State<SignIn> {
                           autocorrect: false,
                           controller: _uidController,
                           decoration: InputDecoration(
-                            enabledBorder: _inputDecoration(),
-                            focusedBorder: _inputDecoration(),
+                            enabledBorder: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(),
                             labelText: 'Codice personale / Email / Badge',
                           ),
                           onChanged: (value) {
@@ -93,8 +85,8 @@ class _SignInState extends State<SignIn> {
                           autocorrect: false,
                           controller: _pwdController,
                           decoration: InputDecoration(
-                            enabledBorder: _inputDecoration(),
-                            focusedBorder: _inputDecoration(),
+                            enabledBorder: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(),
                             labelText: 'Password',
                             suffixIcon: IconButton(
                               icon: Icon(
