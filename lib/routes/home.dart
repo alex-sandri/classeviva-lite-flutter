@@ -40,6 +40,8 @@ class _HomeState extends State<Home> {
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () async {
                     await session.data.session.signOut();
+
+                    Get.offAll(SignIn());
                   },
                 ),
               ],

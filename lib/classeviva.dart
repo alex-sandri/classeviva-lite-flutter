@@ -88,11 +88,7 @@ class ClasseVivaSession
     await preferences.setStringList("sessions", sessions.map((session) => session.toString()).toList());
 
     if (currentSession?.id == this.id)
-    {
       await preferences.remove("currentSession");
-
-      Get.offAll(SignIn());
-    }
   }
 
   @override
