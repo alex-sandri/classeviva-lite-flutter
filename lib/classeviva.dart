@@ -73,7 +73,7 @@ class ClasseVivaSession
   String get id => _id;
 
   Future<void> refresh() async {
-    signOut();
+    await signOut();
 
     _id = (await ClasseViva.createSession(uid, pwd, year: year)).session.id;
   }
