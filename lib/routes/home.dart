@@ -264,14 +264,13 @@ class _HomeState extends State<Home> {
                               ),
                             ),
 
-                            if (session.data.getShortYear() != "")
-                              Text(
-                                "20${session.data.getShortYear()}/20${int.parse(session.data.getShortYear()) + 1}",
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                            Text(
+                              "${session.data.getYear()}/${session.data.getYear() + 1}",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.w400,
                               ),
+                            ),
                           ],
                         );
                       },
