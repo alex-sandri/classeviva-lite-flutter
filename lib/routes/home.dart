@@ -218,11 +218,11 @@ class _HomeState extends State<Home> {
                                     _showLoadingSpinner = true;
                                   });
 
-                                  ClasseViva.setCurrentSession((await ClasseViva.createSession(
+                                  await ClasseViva.createSession(
                                     session.data.session.uid,
                                     session.data.session.pwd,
                                     year: (int.parse(session.data.getShortYear(false)) - 1).toString(),
-                                  )).session);
+                                  );
 
                                   Get.offAll(Home());
                                 },
