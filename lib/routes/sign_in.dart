@@ -251,26 +251,47 @@ class _SignInState extends State<SignIn> {
                                       ),
                                     );
 
-                                  return Card(
-                                    child: ListTile(
-                                      title: Text(
-                                        snapshot.data.name,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        ClasseViva.setCurrentSession(sessions.data[index]);
+                                  return Dismissible(
+                                    key: ValueKey(sessions.data[index]),
+                                    onDismissed: (direction) async {
+                                      await sessions.data[index].signOut();
 
-                                        _redirectToHomePage();
-                                      },
+                                      sessions.data.removeAt(index);
+
+                                      Scaffold
+                                        .of(context)
+                                        .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
+
+                                      setState(() {});
+                                    },
+                                    background: Container(
+                                      color: Colors.red,
+                                      child: Icon(
+                                        Icons.exit_to_app,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    child: Card(
+                                      child: ListTile(
+                                        title: Text(
+                                          snapshot.data.name,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          ClasseViva.setCurrentSession(sessions.data[index]);
+
+                                          _redirectToHomePage();
+                                        },
+                                      ),
                                     ),
                                   );
                                 }
