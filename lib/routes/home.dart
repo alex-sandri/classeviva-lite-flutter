@@ -238,14 +238,14 @@ class _HomeState extends State<Home> {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: <Widget>[
-                  FutureBuilder(
-                    future: session.data.getProfile(),
-                    builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
-                      if (!profile.hasData)
-                        return Container();
+                  DrawerHeader(
+                    child: FutureBuilder(
+                      future: session.data.getProfile(),
+                      builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
+                        if (!profile.hasData)
+                          return Container();
 
-                      return DrawerHeader(
-                        child: Column(
+                        return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -273,12 +273,12 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                           ],
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).appBarTheme.color,
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).appBarTheme.color,
+                    ),
                   ),
                   ListTile(
                     leading: Icon(
