@@ -254,6 +254,8 @@ class _SignInState extends State<SignIn> {
                                   return Dismissible(
                                     key: ValueKey(sessions.data[index]),
                                     onDismissed: (direction) async {
+                                      final bool isCurrentSession = (await ClasseViva.getCurrentSession()).id == sessions.data[index].id;
+
                                       await sessions.data[index].signOut();
 
                                       sessions.data.removeAt(index);
@@ -262,7 +264,8 @@ class _SignInState extends State<SignIn> {
                                         .of(context)
                                         .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
 
-                                      setState(() {});
+                                      if (isCurrentSession) Get.offAll(SignIn());
+                                      else setState(() {});
                                     },
                                     background: Container(
                                       color: Colors.red,
