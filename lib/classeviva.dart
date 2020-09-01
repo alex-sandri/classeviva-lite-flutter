@@ -11,48 +11,52 @@ class ClasseVivaEndpoints
 {
   final String year;
 
-  ClasseVivaEndpoints(this.year);
+  String baseUrl;
 
-  String auth() => "https://web$year.spaggiari.eu/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
+  ClasseVivaEndpoints(this.year) {
+    baseUrl = "https://web$year.spaggiari.eu";
+  }
 
-	String profile() => "https://web$year.spaggiari.eu/home/app/default/menu_webinfoschool_genitori.php";
+  String auth() => "$baseUrl/auth-p7/app/default/AuthApi4.php?a=aLoginPwd";
 
-	String grades() => "https://web$year.spaggiari.eu/cvv/app/default/genitori_note.php?filtro=tutto";
+	String profile() => "$baseUrl/home/app/default/menu_webinfoschool_genitori.php";
 
-  String gradesWithPeriods() => "https://web$year.spaggiari.eu/cvv/app/default/genitori_voti.php";
+	String grades() => "$baseUrl/cvv/app/default/genitori_note.php?filtro=tutto";
+
+  String gradesWithPeriods() => "$baseUrl/cvv/app/default/genitori_voti.php";
 
   // Add timeZoneOffset hours to be in the UTC+0 TimeZone
 	String agenda(DateTime start, DateTime end) =>
-    "https://web$year.spaggiari.eu/fml/app/default/agenda_studenti.php?ope=get_events"
+    "$baseUrl/fml/app/default/agenda_studenti.php?ope=get_events"
     + "&start="
     + (start.toUtc().add(start.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString()
     + "&end="
     + (end.toUtc().add(end.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString();
 
-	String attachments(int page) => "https://web$year.spaggiari.eu/fml/app/default/didattica_genitori_new.php?p=$page";
+	String attachments(int page) => "$baseUrl/fml/app/default/didattica_genitori_new.php?p=$page";
 
 	String fileAttachments(String id, String checksum) =>
-		"https://web$year.spaggiari.eu/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
+		"$baseUrl/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
   
-	String textAttachments(String id) => "https://web$year.spaggiari.eu/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
+	String textAttachments(String id) => "$baseUrl/fml/app/default/didattica.php?a=getContentText&contenuto_id=$id";
 
-	String demerits() => "https://web$year.spaggiari.eu/fml/app/default/gioprof_note_studente.php";
+	String demerits() => "$baseUrl/fml/app/default/gioprof_note_studente.php";
 
-  String absences() => "https://web$year.spaggiari.eu/tic/app/default/consultasingolo.php";
+  String absences() => "$baseUrl/tic/app/default/consultasingolo.php";
 
-  String subjects() => "https://web$year.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php";
+  String subjects() => "$baseUrl/fml/app/default/regclasse_lezioni_xstudenti.php";
 
-  String lessons(String subjectId, List<String> teacherIds) => "https://web$year.spaggiari.eu/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
+  String lessons(String subjectId, List<String> teacherIds) => "$baseUrl/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 
-  String bulletinBoard() => "https://web$year.spaggiari.eu/sif/app/default/bacheca_personale.php?action=get_comunicazioni&ncna=0";
+  String bulletinBoard() => "$baseUrl/sif/app/default/bacheca_personale.php?action=get_comunicazioni&ncna=0";
 
-  String bulletinBoardItemDetails(String id) => "https://web$year.spaggiari.eu/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
+  String bulletinBoardItemDetails(String id) => "$baseUrl/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
-  String previousYear(String previousYear) => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web$previousYear.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
+  String previousYear(String previousYear) => "$baseUrl/home/app/default/xasapi.php?a=lap&bu=https://web$previousYear.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 
-  String calendar(DateTime date) => "https://web$year.spaggiari.eu/cvv/app/default/regclasse.php?data_start=${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}";
+  String calendar(DateTime date) => "$baseUrl/cvv/app/default/regclasse.php?data_start=${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}";
 
-  String finalGrades() => "https://web$year.spaggiari.eu/sol/app/default/documenti_sol.php";
+  String finalGrades() => "$baseUrl/sol/app/default/documenti_sol.php";
 }
 
 class ClasseVivaSession
