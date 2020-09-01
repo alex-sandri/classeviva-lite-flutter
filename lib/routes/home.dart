@@ -7,6 +7,7 @@ import 'package:classeviva_lite/routes/calendar.dart';
 import 'package:classeviva_lite/routes/demerits.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/routes/lessons.dart';
+import 'package:classeviva_lite/routes/manage_accounts.dart';
 import 'package:classeviva_lite/routes/settings.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
@@ -282,7 +283,7 @@ class _HomeState extends State<Home> {
                     title: Text(
                       "Gestisci account",
                     ),
-                    onTap: () => Get.to(SignIn()),
+                    onTap: () => Get.to(ManageAccounts()),
                   ),
                   ListTile(
                     leading: Icon(
