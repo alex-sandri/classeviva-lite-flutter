@@ -84,7 +84,7 @@ class ClasseVivaSession
     print("SIGN IN: " + id);
   }
 
-  Future<ClasseVivaSession> create({ String uid, String pwd, String year = "" }) async {
+  static Future<ClasseVivaSession> create({ String uid, String pwd, String year = "" }) async {
     final response = await http.post(
 			ClasseVivaEndpoints(year).auth(),
       headers: {
