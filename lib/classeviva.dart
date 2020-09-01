@@ -492,6 +492,17 @@ class ClasseVivaCalendar
   });
 }
 
+class ClasseVivaFinalGrade
+{
+  final String type;
+  final Uri url;
+
+  ClasseVivaFinalGrade({
+    @required this.type,
+    @required this.url,
+  });
+}
+
 class ClasseViva
 {
   static const Color PRIMARY_LIGHT = Color(0xffcc1020);
