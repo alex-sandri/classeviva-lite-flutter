@@ -208,13 +208,8 @@ class _SignInState extends State<SignIn> {
                                 borderRadius: BorderRadius.all(Radius.circular(4)),
                               ),
                               onPressed: () async {
-                                await ClasseViva
-                                  .getAllSessions()
-                                  .then((sessions) =>
-                                    sessions.forEach((session) => session.signOut())
-                                  );
-
-                                setState(() {});
+                                for (int i = 0; i < sessions.data.length; i++)
+                                  await sessions.data[i].signOut();
 
                                 Get.offAll(SignIn());
                               },

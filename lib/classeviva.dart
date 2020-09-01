@@ -73,9 +73,15 @@ class ClasseVivaSession
   String get id => _id;
 
   Future<void> refresh() async {
+    print("REFRESHING: " + id);
+
     await signOut();
 
+    print("SIGN OUT: " + id);
+
     _id = (await ClasseViva.createSession(uid, pwd, year: year)).session.id;
+
+    print("SIGN IN: " + id);
   }
 
   Future<void> signOut() async {
@@ -496,7 +502,8 @@ class ClasseViva
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
-    await checkValidSession();
+    print("----------------");
+    await session.refresh();
 
 		final response = await http.get(
       _endpoints.profile(),
