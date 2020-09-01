@@ -251,7 +251,7 @@ class _SignInState extends State<SignIn> {
                                   return Dismissible(
                                     key: ValueKey(sessions.data[index]),
                                     onDismissed: (direction) async {
-                                      final bool isCurrentSession = (await ClasseViva.getCurrentSession()).id == sessions.data[index].id;
+                                      final bool isCurrentSession = await ClasseViva.isSignedIn() && (await ClasseViva.getCurrentSession()).id == sessions.data[index].id;
 
                                       await sessions.data[index].signOut();
 
