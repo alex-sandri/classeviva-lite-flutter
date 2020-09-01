@@ -38,272 +38,267 @@ class _SignInState extends State<SignIn> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Accedi',
-                    style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.w900,
+          child: ListView(
+            padding: const EdgeInsets.all(15),
+            children: <Widget>[
+              Text(
+                'Accedi',
+                style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Form(
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (value) => _pwdFocusNode.requestFocus(),
+                      autofillHints: [ AutofillHints.username, AutofillHints.email ],
+                      readOnly: _showSpinner,
+                      autocorrect: false,
+                      controller: _uidController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(),
+                        labelText: 'Codice personale / Email / Badge',
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                        });
+                      },
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Form(
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (value) => _pwdFocusNode.requestFocus(),
-                          autofillHints: [ AutofillHints.username, AutofillHints.email ],
-                          readOnly: _showSpinner,
-                          autocorrect: false,
-                          controller: _uidController,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(),
-                            labelText: 'Codice personale / Email / Badge',
+                    SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      textInputAction: TextInputAction.done,
+                      focusNode: _pwdFocusNode,
+                      autofillHints: [ AutofillHints.password ],
+                      readOnly: _showSpinner,
+                      autocorrect: false,
+                      controller: _pwdController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(),
+                        labelText: 'Password',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _showPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           ),
-                          onChanged: (value) {
+                          onPressed: () {
                             setState(() {
-                              _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                              _showPassword = !_showPassword;
                             });
                           },
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          textInputAction: TextInputAction.done,
-                          focusNode: _pwdFocusNode,
-                          autofillHints: [ AutofillHints.password ],
-                          readOnly: _showSpinner,
-                          autocorrect: false,
-                          controller: _pwdController,
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(),
-                            labelText: 'Password',
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _showPassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _showPassword = !_showPassword;
-                                });
-                              },
-                            )
+                        )
+                      ),
+                      obscureText: !_showPassword,
+                      onChanged: (value) {
+                        setState(() {
+                          _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+
+                    if (_showSpinner)
+                      Spinner(),
+
+                    if (!_showSpinner)
+                      Container(
+                        width: double.infinity,
+                        child: FlatButton(
+                          color: ThemeManager.isLightTheme(context)
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).accentColor,
+                          colorBrightness: ThemeManager.isLightTheme(context)
+                            ? Brightness.dark
+                            : Brightness.light,
+                          disabledColor: Theme.of(context).disabledColor,
+                          padding: EdgeInsets.all(15),
+                          child: Icon(
+                            Icons.check,
                           ),
-                          obscureText: !_showPassword,
-                          onChanged: (value) {
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          onPressed: _disableButton ? null : () async {
                             setState(() {
-                              _disableButton = _uidController.text.isEmpty || _pwdController.text.isEmpty;
+                              _showSpinner = true;
                             });
+
+                            await ClasseViva
+                              .createSession(_uidController.text, _pwdController.text)
+                              .then((session) => _redirectToHomePage(),
+                              onError: (error) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Errore",
+                                      ),
+                                      content: Text(
+                                        (error is List)
+                                          ? error.join("\n")
+                                          : error.toString(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              })
+                              .whenComplete(() {
+                                setState(() {
+                                  _showSpinner = false;
+                                });
+                              });
                           },
                         ),
-                        SizedBox(
-                          height: 15,
+                      ),
+                  ],
+                ),
+              ),
+              FutureBuilder<List<ClasseVivaSession>>(
+                future: ClasseViva.getAllSessions(),
+                builder: (context, sessions) {
+                  if (!sessions.hasData || sessions.data.isEmpty) return Container();
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        'Scegli un account',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
                         ),
-
-                        if (_showSpinner)
-                          Spinner(),
-
-                        if (!_showSpinner)
-                          Container(
-                            width: double.infinity,
-                            child: FlatButton(
-                              color: ThemeManager.isLightTheme(context)
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).accentColor,
-                              colorBrightness: ThemeManager.isLightTheme(context)
-                                ? Brightness.dark
-                                : Brightness.light,
-                              disabledColor: Theme.of(context).disabledColor,
-                              padding: EdgeInsets.all(15),
-                              child: Icon(
-                                Icons.check,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(4)),
-                              ),
-                              onPressed: _disableButton ? null : () async {
-                                setState(() {
-                                  _showSpinner = true;
-                                });
-
-                                await ClasseViva
-                                  .createSession(_uidController.text, _pwdController.text)
-                                  .then((session) => _redirectToHomePage(),
-                                  onError: (error) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: Text(
-                                            "Errore",
-                                          ),
-                                          content: Text(
-                                            (error is List)
-                                              ? error.join("\n")
-                                              : error.toString(),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  })
-                                  .whenComplete(() {
-                                    setState(() {
-                                      _showSpinner = false;
-                                    });
-                                  });
-                              },
-                            ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: FlatButton(
+                          color: ThemeManager.isLightTheme(context)
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).accentColor,
+                          colorBrightness: ThemeManager.isLightTheme(context)
+                            ? Brightness.dark
+                            : Brightness.light,
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            "Esci da tutte le sessioni"
                           ),
-                      ],
-                    ),
-                  ),
-                  FutureBuilder<List<ClasseVivaSession>>(
-                    future: ClasseViva.getAllSessions(),
-                    builder: (context, sessions) {
-                      if (!sessions.hasData || sessions.data.isEmpty) return Container();
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 15,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
                           ),
-                          Text(
-                            'Scegli un account',
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            child: FlatButton(
-                              color: ThemeManager.isLightTheme(context)
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).accentColor,
-                              colorBrightness: ThemeManager.isLightTheme(context)
-                                ? Brightness.dark
-                                : Brightness.light,
-                              padding: EdgeInsets.all(15),
-                              child: Text(
-                                "Esci da tutte le sessioni"
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(4)),
-                              ),
-                              onPressed: () async {
-                                for (int i = 0; i < sessions.data.length; i++)
-                                  await sessions.data[i].signOut();
+                          onPressed: () async {
+                            for (int i = 0; i < sessions.data.length; i++)
+                              await sessions.data[i].signOut();
 
-                                Get.offAll(SignIn());
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: sessions.data.length,
-                            itemBuilder: (context, index) {
-                              final ClasseViva session = ClasseViva(sessions.data[index]);
+                            Get.offAll(SignIn());
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: sessions.data.length,
+                        itemBuilder: (context, index) {
+                          final ClasseViva session = ClasseViva(sessions.data[index]);
 
-                              return FutureBuilder<ClasseVivaProfile>(
-                                future: session.getProfile(),
-                                builder: (context, snapshot) {
-                                  if (!snapshot.hasData)
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 4),
-                                      child: SkeletonAnimation(
-                                        shimmerColor: Colors.white54,
-                                        gradientColor: Color.fromARGB(0, 244, 244, 244),
-                                        curve: Curves.fastOutSlowIn,
-                                        child: Container(  
-                                          width: double.infinity,  
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context).disabledColor,
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-
-                                  return Card(
-                                    margin: EdgeInsets.symmetric(vertical: 4),
-                                    child: Dismissible(
-                                      key: ValueKey(sessions.data[index]),
-                                      onDismissed: (direction) async {
-                                        final bool isCurrentSession = await ClasseViva.isSignedIn() && (await ClasseViva.getCurrentSession()).id == sessions.data[index].id;
-
-                                        await sessions.data[index].signOut();
-
-                                        sessions.data.removeAt(index);
-
-                                        Scaffold
-                                          .of(context)
-                                          .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
-
-                                        if (isCurrentSession) Get.offAll(SignIn());
-                                        else setState(() {});
-                                      },
-                                      background: Container(
-                                        color: Colors.red,
-                                        child: Icon(
-                                          Icons.exit_to_app,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      child: ListTile(
-                                        title: Text(
-                                          snapshot.data.name,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                        subtitle: Text(
-                                          "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          ClasseViva.setCurrentSession(sessions.data[index]);
-
-                                          _redirectToHomePage();
-                                        },
+                          return FutureBuilder<ClasseVivaProfile>(
+                            future: session.getProfile(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData)
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 4),
+                                  child: SkeletonAnimation(
+                                    shimmerColor: Colors.white54,
+                                    gradientColor: Color.fromARGB(0, 244, 244, 244),
+                                    curve: Curves.fastOutSlowIn,
+                                    child: Container(  
+                                      width: double.infinity,  
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).disabledColor,
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
                                     ),
-                                  );
-                                }
+                                  ),
+                                );
+
+                              return Card(
+                                margin: EdgeInsets.symmetric(vertical: 4),
+                                child: Dismissible(
+                                  key: ValueKey(sessions.data[index]),
+                                  onDismissed: (direction) async {
+                                    final bool isCurrentSession = await ClasseViva.isSignedIn() && (await ClasseViva.getCurrentSession()).id == sessions.data[index].id;
+
+                                    await sessions.data[index].signOut();
+
+                                    sessions.data.removeAt(index);
+
+                                    Scaffold
+                                      .of(context)
+                                      .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
+
+                                    if (isCurrentSession) Get.offAll(SignIn());
+                                    else setState(() {});
+                                  },
+                                  background: Container(
+                                    color: Colors.red,
+                                    child: Icon(
+                                      Icons.exit_to_app,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    title: Text(
+                                      snapshot.data.name,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      ClasseViva.setCurrentSession(sessions.data[index]);
+
+                                      _redirectToHomePage();
+                                    },
+                                  ),
+                                ),
                               );
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
+                            }
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
               ),
-            ),
+            ],
           ),
         ),
       ),
