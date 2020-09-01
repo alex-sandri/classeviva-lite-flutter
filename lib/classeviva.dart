@@ -1100,7 +1100,7 @@ class ClasseViva
     document.querySelector("#table_documenti").querySelectorAll(".rigtab").forEach((element) {
       finalGrades.add(ClasseVivaFinalGrade(
         type: element.querySelector(".align_middle").text.trim(),
-        url: Uri.parse(element.querySelectorAll("td").last.querySelector("span").attributes["xhref"]),
+        url: Uri.parse(_endpoints.baseUrl + element.querySelectorAll("td").last.querySelector("span").attributes["xhref"]),
       ));
     });
 
