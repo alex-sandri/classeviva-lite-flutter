@@ -9,6 +9,7 @@ import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/routes/lessons.dart';
 import 'package:classeviva_lite/routes/settings.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
+import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
@@ -52,12 +53,7 @@ class _HomeState extends State<Home> {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: _showLoadingSpinner
-                ?
-                  Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
+                ? Spinner()
                 :
                   ListView(
                     padding: EdgeInsets.all(15),
