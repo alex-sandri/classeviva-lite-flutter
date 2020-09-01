@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FinalGrades extends StatefulWidget {
   @override
@@ -75,8 +76,9 @@ class _FinalGradesState extends State<FinalGrades> {
                                 title: Text(
                                   item.type,
                                 ),
-                                onTap: () {
-                                  // TODO
+                                onTap: () async {
+                                  if (await canLaunch(item.url.toString()))
+                                    await launch(item.url.toString());
                                 },
                               );
                             },
