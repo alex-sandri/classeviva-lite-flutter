@@ -545,7 +545,7 @@ class ClasseViva
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
-    await session.refresh();
+    await checkValidSession();
 
 		final response = await http.get(
       _endpoints.profile(),
