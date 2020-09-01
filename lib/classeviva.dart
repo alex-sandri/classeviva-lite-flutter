@@ -73,23 +73,26 @@ class ClasseVivaSession
   String get id => _id;
 
   Future<void> refresh() async {
-    print("REFRESHING: " + id);
-
-    await signOut();
-
-    print("SIGN OUT: " + id);
-
-    final ClasseVivaSession session = await ClasseVivaSession.create(
+    final ClasseVivaSession refreshedSession = await ClasseVivaSession.create(
       uid: uid,
       pwd: pwd,
       year: year
     );
 
-    _id = session.id;
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    // TODO: Update SharedPreferences
+    final ClasseVivaSession currentSession = await ClasseViva.getCurrentSession();
 
-    print("SIGN IN: " + id);
+    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
+
+    sessions.firstWhere((session) => session.id == this.id)._id = refreshedSession.id;
+
+    await preferences.setStringList("sessions", sessions.map((session) => session.toString()).toList());
+
+    if (currentSession?.id == this.id)
+      await preferences.setString("currentSession", refreshedSession.toString());
+
+    _id = refreshedSession.id;
   }
 
   static Future<ClasseVivaSession> create({ String uid, String pwd, String year = "" }) async {
@@ -542,7 +545,6 @@ class ClasseViva
   }
 
 	Future<ClasseVivaProfile> getProfile() async {
-    print("----------------");
     await session.refresh();
 
 		final response = await http.get(
