@@ -259,9 +259,6 @@ class _AttachmentsState extends State<Attachments> {
                                   ),
                                   title: Text(
                                     attachment.name,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                    ),
                                   ),
                                   subtitle: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
