@@ -82,9 +82,6 @@ class _BulletinBoardState extends State<BulletinBoard> {
                             isThreeLine: true,
                             title: Text(
                               item.titolo,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                              ),
                             ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
