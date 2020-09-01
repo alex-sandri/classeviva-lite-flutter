@@ -1082,7 +1082,9 @@ class ClasseViva
 
     List<String> finalGrades = [];
 
-    // TODO
+    document.querySelector("#table_documenti").querySelectorAll(".rigtab").forEach((element) {
+      print(element.querySelector(".align_middle").text.trim());
+    });
 
     return [];
 	}
