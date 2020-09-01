@@ -286,7 +286,7 @@ class _HomeState extends State<Home> {
                     title: Text(
                       "Aggiungi account",
                     ),
-                    onTap: () => Get.to(SignIn()),
+                    onTap: () => Get.to(SignIn(showAccountChooser: false)),
                   ),
                   ListTile(
                     leading: Icon(
