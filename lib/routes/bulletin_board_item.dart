@@ -77,82 +77,82 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget._item.titolo,
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget._item.titolo,
+            ),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  text: "Descrizione",
+                  icon: Icon(Icons.description),
+                ),
+                Tab(
+                  text: "Allegati",
+                  icon: Icon(Icons.attachment),
+                ),
+              ],
+            ),
           ),
-        ),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: _session == null
-            ? Spinner()
-            : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _item == null
-                  ? Spinner()
-                  : ListView.builder(
-                    itemCount: _item.attachments.length + 2,
-                    itemBuilder: (context, index) {
-                      if (index == 0)
-                        return Padding(
-                          padding: EdgeInsets.all(4),
-                          child: SelectableText(
-                            _item.description,
-                          ),
-                        );
-                      
-                      if (index == 1)
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-                          child: SelectableText(
-                            "Allegati",
-                            style: TextStyle(
-                              fontSize: 25,
-                            ),
-                          ),
-                        );
-
-                      if (_item.attachments.isEmpty)
-                        return Padding(
-                          padding: EdgeInsets.all(4),
-                          child: SelectableText(
-                            "Non sono presenti allegati",
-                          ),
-                        );
-
-                      final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index - 2];
-
-                      return Card(
-                        child: ListTile(
-                          onTap: () async {
-                            await _requestPermission();
-
-                            await FlutterDownloader.enqueue(
-                              url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
-                              savedDir: (Theme.of(context).platform == TargetPlatform.android
-                                ? await getExternalStorageDirectory()
-                                : await getApplicationDocumentsDirectory()).path,
-                              showNotification: true,
-                              openFileFromNotification: true,
-                              headers: _session.getSessionCookieHeader(),
-                            );
-                          },
-                          title: Text(
-                            attachment.name,
-                          ),
+          body: TabBarView(
+            children: [
+              RefreshIndicator(
+                onRefresh: _handleRefresh,
+                backgroundColor: Theme.of(context).appBarTheme.color,
+                child: _item == null
+                ? Spinner()
+                : Padding(
+                    padding: EdgeInsets.all(4),
+                    child: SelectableText(
+                      _item.description,
+                    ),
+                  ),
+              ),
+              RefreshIndicator(
+                onRefresh: _handleRefresh,
+                backgroundColor: Theme.of(context).appBarTheme.color,
+                child: _item == null
+                ? Spinner()
+                : ListView.builder(
+                  itemCount: _item.attachments.isNotEmpty
+                    ? _item.attachments.length
+                    : 1,
+                  itemBuilder: (context, index) {
+                    if (_item.attachments.isEmpty)
+                      return Padding(
+                        padding: EdgeInsets.all(4),
+                        child: SelectableText(
+                          "Non sono presenti allegati",
                         ),
                       );
-                    },
-                  ),
-                )
+
+                    final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index];
+
+                    return Card(
+                      child: ListTile(
+                        onTap: () async {
+                          await _requestPermission();
+
+                          await FlutterDownloader.enqueue(
+                            url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
+                            savedDir: (Theme.of(context).platform == TargetPlatform.android
+                              ? await getExternalStorageDirectory()
+                              : await getApplicationDocumentsDirectory()).path,
+                            showNotification: true,
+                            openFileFromNotification: true,
+                            headers: _session.getSessionCookieHeader(),
+                          );
+                        },
+                        title: Text(
+                          attachment.name,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
