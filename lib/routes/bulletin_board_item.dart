@@ -115,7 +115,6 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
                           child: SelectableText(
                             "Allegati",
                             style: TextStyle(
-                              fontWeight: FontWeight.w900,
                               fontSize: 25,
                             ),
                           ),
@@ -148,9 +147,6 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
                           },
                           title: Text(
                             attachment.name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                            ),
                           ),
                         ),
                       );
