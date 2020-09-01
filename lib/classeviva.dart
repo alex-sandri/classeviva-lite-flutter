@@ -51,6 +51,8 @@ class ClasseVivaEndpoints
   String previousYear(String previousYear) => "https://web$year.spaggiari.eu/home/app/default/xasapi.php?a=lap&bu=https://web$previousYear.spaggiari.eu&ru=/home/&fu=xasapi-ERROR.php";
 
   String calendar(DateTime date) => "https://web$year.spaggiari.eu/cvv/app/default/regclasse.php?data_start=${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}";
+
+  String finalGrades() => "https://web$year.spaggiari.eu/sol/app/default/documenti_sol.php";
 }
 
 class ClasseVivaSession
@@ -1066,6 +1068,23 @@ class ClasseViva
         23, 59, 59,
       ))),
     );
+	}
+
+  Future<List<String>> getFinalGrades() async {
+    await checkValidSession();
+
+		final response = await http.get(
+			_endpoints.finalGrades(),
+      headers: getSessionCookieHeader(),
+    );
+
+    final document = parse(response.body);
+
+    List<String> finalGrades = [];
+
+    // TODO
+
+    return [];
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, { String year = "" }) async {
