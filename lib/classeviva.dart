@@ -84,6 +84,38 @@ class ClasseVivaSession
     print("SIGN IN: " + id);
   }
 
+  Future<ClasseVivaSession> create({ String uid, String pwd, String year = "" }) async {
+    final response = await http.post(
+			ClasseVivaEndpoints(year).auth(),
+      headers: {
+				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+			},
+			body: Uri(queryParameters: {
+        "uid": uid,
+        "pwd": pwd,
+        "cid": "",
+        "pin": "",
+        "target": ""
+      }).query,
+		);
+
+		final responseJson = jsonDecode(response.body);
+
+    if (((responseJson["data"]["auth"]["errors"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["data"]["auth"]["errors"]);
+
+		if (((responseJson["error"] ?? []) as List<dynamic>).length > 0) return Future.error(responseJson["error"]);
+
+    // Use the second PHPSESSID cookie (because for some reason ClasseViva returns two PHPSESSID cookies)
+		final String sessionId = Cookie.fromSetCookieValue(response.headers["set-cookie"].split(",").last).value;
+
+    return ClasseVivaSession(
+      id: sessionId,
+      year: year,
+      uid: uid,
+      pwd: pwd,
+    );
+  }
+
   Future<void> signOut() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
