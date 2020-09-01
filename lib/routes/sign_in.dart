@@ -251,31 +251,31 @@ class _SignInState extends State<SignIn> {
                                       ),
                                     );
 
-                                  return Dismissible(
-                                    key: ValueKey(sessions.data[index]),
-                                    onDismissed: (direction) async {
-                                      final bool isCurrentSession = await ClasseViva.isSignedIn() && (await ClasseViva.getCurrentSession()).id == sessions.data[index].id;
+                                  return Card(
+                                    margin: EdgeInsets.symmetric(vertical: 4),
+                                    child: Dismissible(
+                                      key: ValueKey(sessions.data[index]),
+                                      onDismissed: (direction) async {
+                                        final bool isCurrentSession = await ClasseViva.isSignedIn() && (await ClasseViva.getCurrentSession()).id == sessions.data[index].id;
 
-                                      await sessions.data[index].signOut();
+                                        await sessions.data[index].signOut();
 
-                                      sessions.data.removeAt(index);
+                                        sessions.data.removeAt(index);
 
-                                      Scaffold
-                                        .of(context)
-                                        .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
+                                        Scaffold
+                                          .of(context)
+                                          .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
 
-                                      if (isCurrentSession) Get.offAll(SignIn());
-                                      else setState(() {});
-                                    },
-                                    background: Container(
-                                      color: Colors.red,
-                                      child: Icon(
-                                        Icons.exit_to_app,
-                                        color: Colors.white,
+                                        if (isCurrentSession) Get.offAll(SignIn());
+                                        else setState(() {});
+                                      },
+                                      background: Container(
+                                        color: Colors.red,
+                                        child: Icon(
+                                          Icons.exit_to_app,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    child: Card(
-                                      margin: EdgeInsets.symmetric(vertical: 4),
                                       child: ListTile(
                                         title: Text(
                                           snapshot.data.name,
