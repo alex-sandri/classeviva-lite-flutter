@@ -271,7 +271,16 @@ class _HomeState extends State<Home> {
                       Icons.add,
                     ),
                     title: Text(
-                      "Aggiungi Account",
+                      "Aggiungi account",
+                    ),
+                    onTap: () => Get.to(SignIn()),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.account_circle,
+                    ),
+                    title: Text(
+                      "Gestisci account",
                     ),
                     onTap: () => Get.to(SignIn()),
                   ),
