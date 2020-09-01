@@ -79,7 +79,15 @@ class ClasseVivaSession
 
     print("SIGN OUT: " + id);
 
-    _id = (await ClasseViva.createSession(uid, pwd, year: year)).session.id;
+    final ClasseVivaSession session = await ClasseVivaSession.create(
+      uid: uid,
+      pwd: pwd,
+      year: year
+    );
+
+    _id = session.id;
+
+    // TODO: Update SharedPreferences
 
     print("SIGN IN: " + id);
   }
