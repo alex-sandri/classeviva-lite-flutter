@@ -5,6 +5,7 @@ import 'package:classeviva_lite/routes/bulletin_board.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/calendar.dart';
 import 'package:classeviva_lite/routes/demerits.dart';
+import 'package:classeviva_lite/routes/final_grades.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/routes/lessons.dart';
 import 'package:classeviva_lite/routes/manage_accounts.dart';
@@ -198,7 +199,7 @@ class _HomeState extends State<Home> {
                           title: Text(
                             "Scrutini",
                           ),
-                          onTap: () => null,
+                          onTap: () => Get.to(FinalGrades()),
                         ),
                       ),
                       Divider(
