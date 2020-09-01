@@ -1081,7 +1081,7 @@ class ClasseViva
     );
 	}
 
-  Future<List<String>> getFinalGrades() async {
+  Future<List<ClasseVivaFinalGrade>> getFinalGrades() async {
     await checkValidSession();
 
 		final response = await http.get(
@@ -1091,10 +1091,13 @@ class ClasseViva
 
     final document = parse(response.body);
 
-    List<String> finalGrades = [];
+    List<ClasseVivaFinalGrade> finalGrades = [];
 
     document.querySelector("#table_documenti").querySelectorAll(".rigtab").forEach((element) {
-      finalGrades.add(element.querySelector(".align_middle").text.trim());
+      finalGrades.add(ClasseVivaFinalGrade(
+        type: element.querySelector(".align_middle").text.trim(),
+        url: Uri(),
+      ));
     });
 
     return finalGrades;

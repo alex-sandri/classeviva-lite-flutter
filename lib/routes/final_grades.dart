@@ -10,10 +10,10 @@ class FinalGrades extends StatefulWidget {
 class _FinalGradesState extends State<FinalGrades> {
   ClasseViva _session;
 
-  List<String> _finalGrades;
+  List<ClasseVivaFinalGrade> _finalGrades;
 
   Future<void> _handleRefresh() async {
-    final List<String> finalGrades = await _session.getFinalGrades();
+    final List<ClasseVivaFinalGrade> finalGrades = await _session.getFinalGrades();
 
     if (mounted)
       setState(() {
@@ -69,11 +69,11 @@ class _FinalGradesState extends State<FinalGrades> {
                                 );
                               }
 
-                              final String item = _finalGrades[index];
+                              final ClasseVivaFinalGrade item = _finalGrades[index];
 
                               return ListTile(
                                 title: Text(
-                                  item,
+                                  item.type,
                                 ),
                                 onTap: () {
                                   // TODO
