@@ -234,16 +234,19 @@ class _SignInState extends State<SignIn> {
                                 future: session.getProfile(),
                                 builder: (context, snapshot) {
                                   if (!snapshot.hasData)
-                                    return SkeletonAnimation(
-                                      shimmerColor: Colors.white54,
-                                      gradientColor: Color.fromARGB(0, 244, 244, 244),
-                                      curve: Curves.fastOutSlowIn,
-                                      child: Container(  
-                                        width: double.infinity,  
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).disabledColor,
-                                          borderRadius: BorderRadius.circular(5),
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 4),
+                                      child: SkeletonAnimation(
+                                        shimmerColor: Colors.white54,
+                                        gradientColor: Color.fromARGB(0, 244, 244, 244),
+                                        curve: Curves.fastOutSlowIn,
+                                        child: Container(  
+                                          width: double.infinity,  
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).disabledColor,
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
                                         ),
                                       ),
                                     );
@@ -272,7 +275,7 @@ class _SignInState extends State<SignIn> {
                                       ),
                                     ),
                                     child: Card(
-                                      margin: EdgeInsets.zero,
+                                      margin: EdgeInsets.symmetric(vertical: 4),
                                       child: ListTile(
                                         title: Text(
                                           snapshot.data.name,
