@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'ClasseViva Lite'
+            "Accedi"
           ),
         ),
         body: GestureDetector(
@@ -41,16 +41,6 @@ class _SignInState extends State<SignIn> {
           child: ListView(
             padding: const EdgeInsets.all(15),
             children: <Widget>[
-              Text(
-                'Accedi',
-                style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
               Form(
                 child: Column(
                   children: <Widget>[
