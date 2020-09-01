@@ -1083,10 +1083,10 @@ class ClasseViva
     List<String> finalGrades = [];
 
     document.querySelector("#table_documenti").querySelectorAll(".rigtab").forEach((element) {
-      print(element.querySelector(".align_middle").text.trim());
+      finalGrades.add(element.querySelector(".align_middle").text.trim());
     });
 
-    return [];
+    return finalGrades;
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, { String year = "" }) async {
