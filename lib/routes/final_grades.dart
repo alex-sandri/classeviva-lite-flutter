@@ -57,7 +57,9 @@ class _FinalGradesState extends State<FinalGrades> {
                       child: _finalGrades == null
                         ? Spinner()
                         : ListView.builder(
-                            itemCount: _finalGrades.length + 1,
+                            itemCount: _finalGrades.isNotEmpty
+                              ? _finalGrades.length
+                              : 1,
                             itemBuilder: (context, index) {
                               if (_finalGrades.isEmpty)
                               {
@@ -67,7 +69,16 @@ class _FinalGradesState extends State<FinalGrades> {
                                 );
                               }
 
-                              return Card();
+                              final String item = _finalGrades[index];
+
+                              return ListTile(
+                                title: Text(
+                                  item,
+                                ),
+                                onTap: () {
+                                  // TODO
+                                },
+                              );
                             },
                           ),
                     ),
