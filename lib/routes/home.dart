@@ -190,6 +190,17 @@ class _HomeState extends State<Home> {
                           onTap: () => Get.to(Demerits()),
                         ),
                       ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.poll,
+                          ),
+                          title: Text(
+                            "Scrutini",
+                          ),
+                          onTap: () => null,
+                        ),
+                      ),
                       Divider(
                         color: Theme.of(context).accentColor,
                         thickness: 2,
