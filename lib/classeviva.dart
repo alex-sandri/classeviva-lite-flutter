@@ -513,6 +513,7 @@ class ClasseVivaBook
 {
   final String title;
   final String description;
+  final List<String> categories;
   final String publisher;
   final String isbn;
   final double price;
@@ -523,6 +524,7 @@ class ClasseVivaBook
   ClasseVivaBook({
     @required this.title,
     @required this.description,
+    @required this.categories,
     @required this.publisher,
     @required this.isbn,
     @required this.price,
@@ -1152,7 +1154,7 @@ class ClasseViva
       books.add(ClasseVivaBook(
         title: info.first.text.trim(),
         description: info[1].text.trim(),
-        // TODO: categories
+        categories: info[2].text.split(",").map((category) => category.trim()),
         publisher: info[3].text.trim(),
         isbn: info.last.text.trim(),
         price: double.parse(book.querySelector("[colspan=\"6\"]").text.trim().split(" ").last.replaceFirst("€", "")),
