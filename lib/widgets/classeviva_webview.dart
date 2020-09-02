@@ -27,6 +27,12 @@ class _ClasseVivaWebviewState extends State<ClasseVivaWebview> {
     super.initState();
 
     CookieManager.instance().deleteAllCookies();
+
+    CookieManager.instance().setCookie(
+      url: ClasseVivaEndpoints(widget.session.getShortYear()).baseUrl,
+      name: widget.session.getSessionCookieHeader()["Cookie"].split("=").first,
+      value: widget.session.getSessionCookieHeader()["Cookie"].split("=").last,
+    );
   }
 
   @override
@@ -42,7 +48,6 @@ class _ClasseVivaWebviewState extends State<ClasseVivaWebview> {
           children: [
             InAppWebView(
               initialUrl: widget.url.toString(),
-              initialHeaders: widget.session.getSessionCookieHeader(),
               onProgressChanged: (controller, progress) {
                 setState(() {
                   _loadProgress = progress;
