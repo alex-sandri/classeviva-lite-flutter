@@ -31,7 +31,8 @@ class _BookState extends State<Book> {
                   icon: Icon(Icons.info_outline),
                 ),
                 Tab(
-                  text: "TODO",
+                  text: "Compra",
+                  icon: Icon(Icons.shopping_cart),
                 ),
               ],
             ),
