@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Book extends StatefulWidget {
   final ClasseVivaBook book;
@@ -116,7 +117,21 @@ class _BookState extends State<Book> {
                   ),
                 ],
               ),
-              Container(),
+              ListView(
+                children: [
+                  ListTile(
+                    title: Text(
+                      "Amazon"
+                    ),
+                    onTap: () async {
+                      final String url = "https://www.amazon.it/s?k=${book.isbn}";
+
+                      if (await canLaunch(url))
+                        await launch(url);
+                    },
+                  )
+                ],
+              ),
             ],
           ),
         ),
