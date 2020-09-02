@@ -58,6 +58,28 @@ class _BookState extends State<Book> {
                   SelectableText(
                     book.description,
                   ),
+                  SelectableText(
+                    book.publisher,
+                  ),
+                  SelectableText(
+                    book.isbn,
+                  ),
+                  SelectableText(
+                    NumberFormat.currency(
+                      locale: "it-IT",
+                      name: "EUR",
+                      symbol: "€",
+                    ).format(book.price),
+                  ),
+                  SelectableText(
+                    book.mustBuy.toString(),
+                  ),
+                  SelectableText(
+                    book.isInUse.toString(),
+                  ),
+                  SelectableText(
+                    book.isSuggested.toString(),
+                  ),
                 ],
               ),
               Container(),
