@@ -46,7 +46,7 @@ class _BookState extends State<Book> {
                     spacing: 4,
                     children: book.categories.map((category) {
                       return Chip(
-                        label: Text(
+                        label: SelectableText(
                           category,
                         ),
                       );
