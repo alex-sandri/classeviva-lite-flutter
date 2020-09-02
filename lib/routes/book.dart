@@ -13,6 +13,10 @@ class Book extends StatefulWidget {
 }
 
 class _BookState extends State<Book> {
+  Future<void> _launchUrl(String url) async {
+    if (await canLaunch(url)) await launch(url);
+  }
+
   @override
   Widget build(BuildContext context) {
     final ClasseVivaBook book = widget.book;
@@ -120,16 +124,9 @@ class _BookState extends State<Book> {
               ListView(
                 children: [
                   ListTile(
-                    title: Text(
-                      "Amazon"
-                    ),
-                    onTap: () async {
-                      final String url = "https://www.amazon.it/s?k=${book.isbn}";
-
-                      if (await canLaunch(url))
-                        await launch(url);
-                    },
-                  )
+                    title: Text("Amazon"),
+                    onTap: () => _launchUrl("https://www.amazon.it/s?k=${book.isbn}"),
+                  ),
                 ],
               ),
             ],
