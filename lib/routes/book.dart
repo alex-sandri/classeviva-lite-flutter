@@ -28,7 +28,7 @@ class _BookState extends State<Book> {
               tabs: [
                 Tab(
                   text: "Info",
-                  icon: Icon(Icons.info_outline),
+                  icon: Icon(Icons.info),
                 ),
                 Tab(
                   text: "Compra",
