@@ -1,7 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class FinalGrades extends StatefulWidget {
   @override
@@ -77,8 +77,12 @@ class _FinalGradesState extends State<FinalGrades> {
                                   item.type,
                                 ),
                                 onTap: () async {
-                                  if (await canLaunch(item.url.toString()))
-                                    await launch(item.url.toString());
+                                  final InAppBrowser browser = InAppBrowser();
+
+                                  browser.openUrl(
+                                    url: item.url.toString(),
+                                    headers: _session.getSessionCookieHeader(),
+                                  );
                                 },
                               );
                             },
