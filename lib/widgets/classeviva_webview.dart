@@ -23,6 +23,13 @@ class _ClasseVivaWebviewState extends State<ClasseVivaWebview> {
   int _loadProgress = 0;
 
   @override
+  void initState() {
+    super.initState();
+
+    CookieManager.instance().deleteAllCookies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(

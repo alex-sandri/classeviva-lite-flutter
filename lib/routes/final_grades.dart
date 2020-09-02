@@ -79,9 +79,7 @@ class _FinalGradesState extends State<FinalGrades> {
                                 title: Text(
                                   item.type,
                                 ),
-                                onTap: () async {
-                                  await CookieManager.instance().deleteAllCookies();
-
+                                onTap: () {
                                   Get.to(ClasseVivaWebview(
                                     session: _session,
                                     title: item.type,
