@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Book extends StatefulWidget {
-  final ClasseVivaBook item;
+  final ClasseVivaBook book;
 
-  Book(this.item);
+  Book(this.book);
 
   @override
   _BookState createState() => _BookState();
@@ -14,13 +14,15 @@ class Book extends StatefulWidget {
 class _BookState extends State<Book> {
   @override
   Widget build(BuildContext context) {
+    final ClasseVivaBook book = widget.book;
+
     return Material(
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              widget.item.title,
+              book.title,
             ),
             bottom: TabBar(
               tabs: [
@@ -41,7 +43,7 @@ class _BookState extends State<Book> {
                 children: [
                   Wrap(
                     spacing: 4,
-                    children: widget.item.categories.map((category) {
+                    children: book.categories.map((category) {
                       return Chip(
                         label: Text(
                           category,
@@ -50,11 +52,11 @@ class _BookState extends State<Book> {
                     }).toList(),
                   ),
                   SelectableText(
-                    widget.item.title,
+                    book.title,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SelectableText(
-                    widget.item.description,
+                    book.description,
                   ),
                 ],
               ),
