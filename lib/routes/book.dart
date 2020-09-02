@@ -56,9 +56,11 @@ class _BookState extends State<Book> {
                     book.title,
                     style: Theme.of(context).textTheme.headline6,
                   ),
+                  SizedBox(height: 8),
                   SelectableText(
                     book.description,
                   ),
+                  SizedBox(height: 8),
                   DataTable(
                     headingRowHeight: 0,
                     columns: [
