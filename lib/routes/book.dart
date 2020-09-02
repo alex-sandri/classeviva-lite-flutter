@@ -49,15 +49,9 @@ class _BookState extends State<Book> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
                   SelectableText(
                     widget.item.title,
                     style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(
-                    height: 8,
                   ),
                   SelectableText(
                     widget.item.description,
