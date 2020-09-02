@@ -1144,7 +1144,23 @@ class ClasseViva
 
     List<ClasseVivaBook> books = [];
 
-    // TODO
+    document.querySelectorAll(".gen.ado").forEach((book) {
+      final List<dom.Element> info = book.querySelector("[colspan=\"31\"]").querySelectorAll("p");
+
+      final List<dom.Element> flags = book.querySelector("[colspan=\"7\"]").querySelectorAll("p");
+
+      books.add(ClasseVivaBook(
+        title: info.first.text.trim(),
+        description: info[1].text.trim(),
+        // TODO: categories
+        publisher: info[3].text.trim(),
+        isbn: info.last.text.trim(),
+        price: double.parse(book.querySelector("[colspan=\"6\"]").text.trim().split(" ").last.replaceFirst("€", "")),
+        mustBuy: flags.first.text.trim() == "SI",
+        isInUse: flags[1].text.trim() == "SI",
+        isSuggested: flags.last.text.trim() == "SI",
+      ));
+    });
 
     return books;
 	}
