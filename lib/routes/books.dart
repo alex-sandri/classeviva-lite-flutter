@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Books extends StatefulWidget {
   @override
@@ -89,7 +90,11 @@ class _BooksState extends State<Books> {
                                 book.isbn,
                               ),
                               Text(
-                                book.price.toString(),
+                                NumberFormat.currency(
+                                  locale: "it-IT",
+                                  name: "EUR",
+                                  symbol: "€",
+                                ).format(book.price),
                               ),
                               Text(
                                 book.mustBuy.toString(),
