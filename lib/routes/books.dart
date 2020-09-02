@@ -3,7 +3,6 @@ import 'package:classeviva_lite/routes/book.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class Books extends StatefulWidget {
   @override
