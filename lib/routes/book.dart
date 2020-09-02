@@ -60,6 +60,7 @@ class _BookState extends State<Book> {
                     book.description,
                   ),
                   DataTable(
+                    headingRowHeight: 0,
                     columns: [
                       DataColumn(
                         label: Text(
