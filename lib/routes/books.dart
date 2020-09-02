@@ -71,38 +71,38 @@ class _BooksState extends State<Books> {
                         final ClasseVivaBook book = _books[index];
 
                         return ListTile(
-                          title: Text(
+                          title: SelectableText(
                             book.title,
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              SelectableText(
                                 book.description,
                               ),
-                              Text(
+                              SelectableText(
                                 book.categories.toString(),
                               ),
-                              Text(
+                              SelectableText(
                                 book.publisher,
                               ),
-                              Text(
+                              SelectableText(
                                 book.isbn,
                               ),
-                              Text(
+                              SelectableText(
                                 NumberFormat.currency(
                                   locale: "it-IT",
                                   name: "EUR",
                                   symbol: "€",
                                 ).format(book.price),
                               ),
-                              Text(
+                              SelectableText(
                                 book.mustBuy.toString(),
                               ),
-                              Text(
+                              SelectableText(
                                 book.isInUse.toString(),
                               ),
-                              Text(
+                              SelectableText(
                                 book.isSuggested.toString(),
                               ),
                             ],
