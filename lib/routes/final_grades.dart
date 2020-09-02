@@ -80,13 +80,10 @@ class _FinalGradesState extends State<FinalGrades> {
                                 onTap: () async {
                                   await CookieManager.instance().deleteAllCookies();
 
-                                  await CookieManager.instance().setCookie(
-                                    url: ClasseVivaEndpoints(_session.getShortYear()).baseUrl,
-                                    name: _session.getSessionCookieHeader()["Cookie"].split("=").first,
-                                    value: _session.getSessionCookieHeader()["Cookie"].split("=").last,
-                                  );
-
-                                  Get.to(FinalGradeWebview(item: item));
+                                  Get.to(FinalGradeWebview(
+                                    item: item,
+                                    session: _session,
+                                  ));
                                 },
                               );
                             },
@@ -103,9 +100,11 @@ class _FinalGradesState extends State<FinalGrades> {
 
 class FinalGradeWebview extends StatelessWidget {
   final ClasseVivaFinalGrade item;
+  final ClasseViva session;
 
   FinalGradeWebview({
     @required this.item,
+    @required this.session,
   });
 
   @override
@@ -119,6 +118,7 @@ class FinalGradeWebview extends StatelessWidget {
         ),
         body: InAppWebView(
           initialUrl: item.url.toString(),
+          initialHeaders: session.getSessionCookieHeader(),
         ),
       ),
     );
