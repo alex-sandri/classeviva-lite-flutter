@@ -127,6 +127,26 @@ class _BookState extends State<Book> {
                     title: Text("Amazon"),
                     onTap: () => _launchUrl("https://www.amazon.it/s?k=${book.isbn}"),
                   ),
+                  ListTile(
+                    title: Text("Mondadori Store"),
+                    onTap: () => _launchUrl("https://www.mondadoristore.it/search/?g=${book.isbn}"),
+                  ),
+                  ListTile(
+                    title: Text("IBS"),
+                    onTap: () => _launchUrl("https://www.ibs.it/search/?query=${book.isbn}"),
+                  ),
+                  ListTile(
+                    title: Text("Libraccio"),
+                    onTap: () => _launchUrl("https://www.libraccio.it/src/?xy=${book.isbn}"),
+                  ),
+                  ListTile(
+                    title: Text("HOEPLI"),
+                    onTap: () => _launchUrl("https://www.hoepli.it/cerca/libri.aspx?query=${book.isbn}"),
+                  ),
+                  ListTile(
+                    title: Text("Libreria Scolastica"),
+                    onTap: () => _launchUrl("https://www.libreriascolastica.it/ricerca/query/${book.isbn}"),
+                  ),
                 ],
               ),
             ],
