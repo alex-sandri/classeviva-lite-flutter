@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/attachments.dart';
+import 'package:classeviva_lite/routes/books.dart';
 import 'package:classeviva_lite/routes/bulletin_board.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/calendar.dart';
@@ -212,7 +213,7 @@ class _HomeState extends State<Home> {
                             title: Text(
                               "Libri",
                             ),
-                            onTap: () => null,
+                            onTap: () => Get.to(Books()),
                           ),
                         ),
 
