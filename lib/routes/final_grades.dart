@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/theme_manager.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -98,7 +99,7 @@ class _FinalGradesState extends State<FinalGrades> {
   }
 }
 
-class FinalGradeWebview extends StatelessWidget {
+class FinalGradeWebview extends StatefulWidget {
   final ClasseVivaFinalGrade item;
   final ClasseViva session;
 
@@ -106,6 +107,13 @@ class FinalGradeWebview extends StatelessWidget {
     @required this.item,
     @required this.session,
   });
+
+  @override
+  _FinalGradeWebviewState createState() => _FinalGradeWebviewState();
+}
+
+class _FinalGradeWebviewState extends State<FinalGradeWebview> {
+  int _loadProgress = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +124,27 @@ class FinalGradeWebview extends StatelessWidget {
             "Esito",
           ),
         ),
-        body: InAppWebView(
-          initialUrl: item.url.toString(),
-          initialHeaders: session.getSessionCookieHeader(),
+        body: Stack(
+          children: [
+            InAppWebView(
+              initialUrl: widget.item.url.toString(),
+              initialHeaders: widget.session.getSessionCookieHeader(),
+              onProgressChanged: (controller, progress) {
+                setState(() {
+                  _loadProgress = progress;
+                });
+              },
+            ),
+
+            if (_loadProgress < 100)
+              LinearProgressIndicator(
+                value: _loadProgress.toDouble(),
+                backgroundColor: Colors.transparent,
+                valueColor: AlwaysStoppedAnimation<Color>(ThemeManager.isLightTheme(context)
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).accentColor),
+              ),
+          ],
         ),
       ),
     );
