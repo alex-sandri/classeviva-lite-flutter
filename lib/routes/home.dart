@@ -202,6 +202,20 @@ class _HomeState extends State<Home> {
                           onTap: () => Get.to(FinalGrades()),
                         ),
                       ),
+
+                      if (session.data.getShortYear() == "") // Current year
+                        Card(
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.book,
+                            ),
+                            title: Text(
+                              "Libri",
+                            ),
+                            onTap: () => null,
+                          ),
+                        ),
+
                       Divider(
                         color: Theme.of(context).accentColor,
                         thickness: 2,
