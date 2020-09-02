@@ -57,6 +57,8 @@ class ClasseVivaEndpoints
   String calendar(DateTime date) => "$baseUrl/cvv/app/default/regclasse.php?data_start=${date.year}-${date.month.toString().padLeft(2, "0")}-${date.day.toString().padLeft(2, "0")}";
 
   String finalGrades() => "$baseUrl/sol/app/default/documenti_sol.php";
+
+  String books() => "$baseUrl/ldt/app/default/libri_studente.php";
 }
 
 class ClasseVivaSession
