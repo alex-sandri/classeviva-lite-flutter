@@ -1158,9 +1158,9 @@ class ClasseViva
         publisher: info[3].text.trim(),
         isbn: info.last.text.trim(),
         price: double.parse(book.querySelector("[colspan=\"6\"]").text.trim().split(" ").last.replaceFirst("€", "")),
-        mustBuy: flags.first.text.trim() == "SI",
-        isInUse: flags[1].text.trim() == "SI",
-        isSuggested: flags.last.text.trim() == "SI",
+        mustBuy: flags.first.text.trim().split(" ").last == "SI",
+        isInUse: flags[1].text.trim().split(" ").last == "SI",
+        isSuggested: flags.last.text.trim().split(" ").last == "SI",
       ));
     });
 
