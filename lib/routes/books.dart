@@ -70,7 +70,38 @@ class _BooksState extends State<Books> {
                         final ClasseVivaBook book = _books[index];
 
                         return ListTile(
-                          
+                          title: Text(
+                            book.title,
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                book.description,
+                              ),
+                              Text(
+                                book.categories.toString(),
+                              ),
+                              Text(
+                                book.publisher,
+                              ),
+                              Text(
+                                book.isbn,
+                              ),
+                              Text(
+                                book.price.toString(),
+                              ),
+                              Text(
+                                book.mustBuy.toString(),
+                              ),
+                              Text(
+                                book.isInUse.toString(),
+                              ),
+                              Text(
+                                book.isSuggested.toString(),
+                              ),
+                            ],
+                          ),
                         );
                       },
                     ),
