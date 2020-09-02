@@ -59,68 +59,65 @@ class _BookState extends State<Book> {
                   SelectableText(
                     book.description,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columns: [
-                        DataColumn(
-                          label: Text(
-                            ""
+                  DataTable(
+                    columns: [
+                      DataColumn(
+                        label: Text(
+                          ""
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          ""
+                        ),
+                      ),
+                    ],
+                    rows: [
+                      DataRow(
+                        cells: [
+                          DataCell(SelectableText("Editore")),
+                          DataCell(SelectableText(book.publisher)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(SelectableText("ISBN")),
+                          DataCell(SelectableText(book.isbn)),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(SelectableText("Prezzo")),
+                          DataCell(
+                            SelectableText(
+                              NumberFormat.currency(
+                                locale: "it-IT",
+                                name: "EUR",
+                                symbol: "€",
+                              ).format(book.price),
+                            )
                           ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            ""
-                          ),
-                        ),
-                      ],
-                      rows: [
-                        DataRow(
-                          cells: [
-                            DataCell(SelectableText("Editore")),
-                            DataCell(SelectableText(book.publisher)),
-                          ],
-                        ),
-                        DataRow(
-                          cells: [
-                            DataCell(SelectableText("ISBN")),
-                            DataCell(SelectableText(book.isbn)),
-                          ],
-                        ),
-                        DataRow(
-                          cells: [
-                            DataCell(SelectableText("Prezzo")),
-                            DataCell(
-                              SelectableText(
-                                NumberFormat.currency(
-                                  locale: "it-IT",
-                                  name: "EUR",
-                                  symbol: "€",
-                                ).format(book.price),
-                              )
-                            ),
-                          ],
-                        ),
-                        DataRow(
-                          cells: [
-                            DataCell(SelectableText("Da acquistare")),
-                            DataCell(SelectableText(book.mustBuy.toString())),
-                          ],
-                        ),
-                        DataRow(
-                          cells: [
-                            DataCell(SelectableText("In uso")),
-                            DataCell(SelectableText(book.isInUse.toString())),
-                          ],
-                        ),
-                        DataRow(
-                          cells: [
-                            DataCell(SelectableText("Consigliato")),
-                            DataCell(SelectableText(book.isSuggested.toString())),
-                          ],
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(SelectableText("Da acquistare")),
+                          DataCell(SelectableText(book.mustBuy.toString())),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(SelectableText("In uso")),
+                          DataCell(SelectableText(book.isInUse.toString())),
+                        ],
+                      ),
+                      DataRow(
+                        cells: [
+                          DataCell(SelectableText("Consigliato")),
+                          DataCell(SelectableText(book.isSuggested.toString())),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
