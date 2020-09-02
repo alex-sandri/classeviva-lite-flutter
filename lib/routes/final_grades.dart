@@ -2,6 +2,7 @@ import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get/get.dart';
 
 class FinalGrades extends StatefulWidget {
   @override
@@ -77,12 +78,15 @@ class _FinalGradesState extends State<FinalGrades> {
                                   item.type,
                                 ),
                                 onTap: () async {
-                                  final InAppBrowser browser = InAppBrowser();
+                                  await CookieManager.instance().deleteAllCookies();
 
-                                  browser.openUrl(
-                                    url: item.url.toString(),
-                                    headers: _session.getSessionCookieHeader(),
+                                  await CookieManager.instance().setCookie(
+                                    url: ClasseVivaEndpoints(_session.getShortYear()).baseUrl,
+                                    name: _session.getSessionCookieHeader()["Cookie"].split("=").first,
+                                    value: _session.getSessionCookieHeader()["Cookie"].split("=").last,
                                   );
+
+                                  Get.to(FinalGradeWebview(item: item));
                                 },
                               );
                             },
@@ -91,6 +95,30 @@ class _FinalGradesState extends State<FinalGrades> {
                   ),
                 ],
               ),
+        ),
+      ),
+    );
+  }
+}
+
+class FinalGradeWebview extends StatelessWidget {
+  final ClasseVivaFinalGrade item;
+
+  FinalGradeWebview({
+    @required this.item,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Esito",
+          ),
+        ),
+        body: InAppWebView(
+          initialUrl: item.url.toString(),
         ),
       ),
     );
