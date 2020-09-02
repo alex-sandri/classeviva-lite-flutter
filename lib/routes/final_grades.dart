@@ -121,7 +121,7 @@ class _FinalGradeWebviewState extends State<FinalGradeWebview> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Esito",
+            widget.item.type,
           ),
         ),
         body: Stack(
