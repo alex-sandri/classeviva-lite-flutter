@@ -507,6 +507,29 @@ class ClasseVivaFinalGrade
   });
 }
 
+class ClasseVivaBook
+{
+  final String title;
+  final String description;
+  final String publisher;
+  final String isbn;
+  final double price;
+  final bool mustBuy;
+  final bool isInUse;
+  final bool isSuggested;
+
+  ClasseVivaBook({
+    @required this.title,
+    @required this.description,
+    @required this.publisher,
+    @required this.isbn,
+    @required this.price,
+    @required this.mustBuy,
+    @required this.isInUse,
+    @required this.isSuggested,
+  });
+}
+
 class ClasseViva
 {
   static const Color PRIMARY_LIGHT = Color(0xffcc1020);
