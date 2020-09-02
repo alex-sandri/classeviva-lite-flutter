@@ -62,16 +62,8 @@ class _BookState extends State<Book> {
                   DataTable(
                     headingRowHeight: 0,
                     columns: [
-                      DataColumn(
-                        label: Text(
-                          ""
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ""
-                        ),
-                      ),
+                      DataColumn(label: Text("")),
+                      DataColumn(label: Text("")),
                     ],
                     rows: [
                       DataRow(
