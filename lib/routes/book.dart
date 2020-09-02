@@ -97,19 +97,19 @@ class _BookState extends State<Book> {
                       DataRow(
                         cells: [
                           DataCell(SelectableText("Da acquistare")),
-                          DataCell(SelectableText(book.mustBuy.toString())),
+                          DataCell(SelectableText(book.mustBuy ? "Sì" : "No")),
                         ],
                       ),
                       DataRow(
                         cells: [
                           DataCell(SelectableText("In uso")),
-                          DataCell(SelectableText(book.isInUse.toString())),
+                          DataCell(SelectableText(book.isInUse ? "Sì" : "No")),
                         ],
                       ),
                       DataRow(
                         cells: [
                           DataCell(SelectableText("Consigliato")),
-                          DataCell(SelectableText(book.isSuggested.toString())),
+                          DataCell(SelectableText(book.isSuggested ? "Sì" : "No")),
                         ],
                       ),
                     ],
