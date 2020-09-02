@@ -196,6 +196,21 @@ class _HomeState extends State<Home> {
                       Card(
                         child: ListTile(
                           leading: Icon(
+                            Icons.computer,
+                          ),
+                          title: Text(
+                            "Aule Virtuali",
+                          ),
+                          onTap: () => Get.to(ClasseVivaWebview(
+                            session: session.data,
+                            title: "Aule Virtuali",
+                            url: Uri.parse(ClasseVivaEndpoints(session.data.getShortYear()).virtualClassrooms()),
+                          )),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(
                             Icons.poll,
                           ),
                           title: Text(

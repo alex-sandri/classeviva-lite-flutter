@@ -59,6 +59,8 @@ class ClasseVivaEndpoints
   String finalGrades() => "$baseUrl/sol/app/default/documenti_sol.php";
 
   String books() => "$baseUrl/ldt/app/default/libri_studente.php";
+
+  String virtualClassrooms() => "$baseUrl/cvp/app/default/sva_aule.php";
 }
 
 class ClasseVivaSession
