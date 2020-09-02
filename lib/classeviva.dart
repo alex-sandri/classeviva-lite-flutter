@@ -1154,7 +1154,7 @@ class ClasseViva
       books.add(ClasseVivaBook(
         title: info.first.text.trim(),
         description: info[1].text.trim(),
-        categories: info[2].text.split(",").map((category) => category.trim()),
+        categories: info[2].text.split(",").map((category) => category.trim()).toList(),
         publisher: info[3].text.trim(),
         isbn: info.last.text.trim(),
         price: double.parse(book.querySelector("[colspan=\"6\"]").text.trim().split(" ").last.replaceFirst("€", "")),
