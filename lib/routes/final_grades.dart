@@ -1,9 +1,7 @@
 import 'package:classeviva_lite/classeviva.dart';
-import 'package:classeviva_lite/theme_manager.dart';
 import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
 class FinalGrades extends StatefulWidget {
