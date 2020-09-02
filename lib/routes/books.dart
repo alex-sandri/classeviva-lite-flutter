@@ -1,6 +1,8 @@
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/routes/book.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Books extends StatefulWidget {
@@ -71,42 +73,10 @@ class _BooksState extends State<Books> {
                         final ClasseVivaBook book = _books[index];
 
                         return ListTile(
-                          title: SelectableText(
+                          title: Text(
                             book.title,
                           ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SelectableText(
-                                book.description,
-                              ),
-                              SelectableText(
-                                book.categories.toString(),
-                              ),
-                              SelectableText(
-                                book.publisher,
-                              ),
-                              SelectableText(
-                                book.isbn,
-                              ),
-                              SelectableText(
-                                NumberFormat.currency(
-                                  locale: "it-IT",
-                                  name: "EUR",
-                                  symbol: "€",
-                                ).format(book.price),
-                              ),
-                              SelectableText(
-                                book.mustBuy.toString(),
-                              ),
-                              SelectableText(
-                                book.isInUse.toString(),
-                              ),
-                              SelectableText(
-                                book.isSuggested.toString(),
-                              ),
-                            ],
-                          ),
+                          onTap: () => Get.to(Book(book)),
                         );
                       },
                     ),
