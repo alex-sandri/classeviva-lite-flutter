@@ -12,6 +12,7 @@ import 'package:classeviva_lite/routes/lessons.dart';
 import 'package:classeviva_lite/routes/manage_accounts.dart';
 import 'package:classeviva_lite/routes/settings.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
+import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -260,9 +261,11 @@ class _HomeState extends State<Home> {
                           title: Text(
                             "ClasseViva Web",
                           ),
-                          onTap: () {
-                            // TODO
-                          },
+                          onTap: () => Get.to(ClasseVivaWebview(
+                            session: session.data,
+                            title: "ClasseViva Web",
+                            url: Uri.parse(ClasseVivaEndpoints(session.data.getShortYear()).baseUrl),
+                          )),
                         ),
                       ),
                     ],
