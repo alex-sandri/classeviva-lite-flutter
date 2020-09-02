@@ -1130,6 +1130,23 @@ class ClasseViva
     return finalGrades;
 	}
 
+  Future<List<ClasseVivaBook>> getBooks() async {
+    await checkValidSession();
+
+		final response = await http.get(
+			_endpoints.books(),
+      headers: getSessionCookieHeader(),
+    );
+
+    final document = parse(response.body);
+
+    List<ClasseVivaBook> books = [];
+
+    // TODO
+
+    return books;
+	}
+
 	static Future<ClasseViva> createSession(String uid, String pwd, { String year = "" }) async {
     final ClasseVivaSession session = await ClasseVivaSession.create(
       uid: uid,
