@@ -246,6 +246,25 @@ class _HomeState extends State<Home> {
                           },
                         ),
                       ),
+                      Divider(
+                        color: Theme.of(context).accentColor,
+                        thickness: 2,
+                        indent: 4,
+                        endIndent: 4,
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.language,
+                          ),
+                          title: Text(
+                            "ClasseViva Web",
+                          ),
+                          onTap: () {
+                            // TODO
+                          },
+                        ),
+                      ),
                     ],
               ),
             ),
