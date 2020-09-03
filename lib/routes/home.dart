@@ -212,7 +212,7 @@ class _HomeState extends State<Home> {
                       Card(
                         child: ListTile(
                           leading: Icon(
-                            Icons.computer,
+                            Icons.group,
                           ),
                           title: Text(
                             "Colloqui",
@@ -227,7 +227,7 @@ class _HomeState extends State<Home> {
                       Card(
                         child: ListTile(
                           leading: Icon(
-                            Icons.computer,
+                            Icons.help,
                           ),
                           title: Text(
                             "Sportello",
