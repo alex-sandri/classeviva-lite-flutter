@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 class About extends StatelessWidget {
   @override
@@ -14,9 +15,19 @@ class About extends StatelessWidget {
           children: [
             ListTile(
               title: Text("Licenze"),
-              onTap: () => showLicensePage(
-                context: context,
-              ),
+              onTap: () async {
+                showLicensePage(
+                  context: context,
+                  applicationVersion: (await PackageInfo.fromPlatform()).version,
+                  applicationIcon: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    child: Image.asset(
+                      "assets/icon/icon.png",
+                      height: 50,
+                    ),
+                  ),
+                );
+              }
             ),
           ],
         ),
