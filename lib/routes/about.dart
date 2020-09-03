@@ -10,8 +10,15 @@ class About extends StatelessWidget {
             "Informazioni"
           ),
         ),
-        body: Container(
-
+        body: ListView(
+          children: [
+            ListTile(
+              title: Text("Licenze"),
+              onTap: () => showLicensePage(
+                context: context,
+              ),
+            ),
+          ],
         ),
       ),
     );
