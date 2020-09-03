@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/routes/about.dart';
 import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/attachments.dart';
@@ -357,6 +358,15 @@ class _HomeState extends State<Home> {
                       "Impostazioni",
                     ),
                     onTap: () => Get.to(Settings()),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.info,
+                    ),
+                    title: Text(
+                      "Informazioni",
+                    ),
+                    onTap: () => Get.to(About()),
                   ),
                 ],
               ),
