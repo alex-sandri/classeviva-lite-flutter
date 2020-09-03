@@ -14,6 +14,19 @@ class About extends StatelessWidget {
         body: ListView(
           children: [
             ListTile(
+              title: Text("Versione"),
+              subtitle: FutureBuilder<PackageInfo>(
+                future: PackageInfo.fromPlatform(),
+                builder: (context, packageInfo) {
+                  if (!packageInfo.hasData) return Container();
+
+                  return Text(
+                    "${packageInfo.data.version} (${packageInfo.data.buildNumber})",
+                  );
+                },
+              ),
+            ),
+            ListTile(
               title: Text("Licenze"),
               onTap: () async {
                 showLicensePage(
