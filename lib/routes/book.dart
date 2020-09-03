@@ -32,7 +32,7 @@ class _BookState extends State<Book> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  text: "Info",
+                  text: "Informazioni",
                   icon: Icon(Icons.info),
                 ),
                 Tab(
