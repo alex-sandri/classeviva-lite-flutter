@@ -212,6 +212,36 @@ class _HomeState extends State<Home> {
                       Card(
                         child: ListTile(
                           leading: Icon(
+                            Icons.computer,
+                          ),
+                          title: Text(
+                            "Colloqui",
+                          ),
+                          onTap: () => Get.to(ClasseVivaWebview(
+                            session: session.data,
+                            title: "Colloqui",
+                            url: Uri.parse(ClasseVivaEndpoints(session.data.getShortYear()).meetings()),
+                          )),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.computer,
+                          ),
+                          title: Text(
+                            "Sportello",
+                          ),
+                          onTap: () => Get.to(ClasseVivaWebview(
+                            session: session.data,
+                            title: "Sportello",
+                            url: Uri.parse(ClasseVivaEndpoints(session.data.getShortYear()).helpDesk()),
+                          )),
+                        ),
+                      ),
+                      Card(
+                        child: ListTile(
+                          leading: Icon(
                             Icons.poll,
                           ),
                           title: Text(
