@@ -62,9 +62,9 @@ class ClasseVivaEndpoints
 
   String virtualClassrooms() => "$baseUrl/cvp/app/default/sva_aule.php";
 
-  String meetings() => "$baseUrl/fml/app/default/alunni_sportello.php";
+  String meetings() => "$baseUrl/fml/app/default/genitori_colloqui.php";
 
-  String helpDesk() => "$baseUrl/fml/app/default/genitori_colloqui.php";
+  String helpDesk() => "$baseUrl/fml/app/default/alunni_sportello.php";
 }
 
 class ClasseVivaSession
