@@ -63,9 +63,9 @@ class _HomeState extends State<Home> {
                   ListView(
                     padding: EdgeInsets.all(15),
                     children: <Widget>[
-                      FutureBuilder(
+                      FutureBuilder<ClasseVivaBasicProfile>(
                         future: session.data.getBasicProfile(),
-                        builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
+                        builder: (context, profile) {
                           if (!profile.hasData)
                             return SkeletonAnimation(
                               shimmerColor: Colors.white54,
@@ -322,9 +322,9 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   DrawerHeader(
-                    child: FutureBuilder(
+                    child: FutureBuilder<ClasseVivaBasicProfile>(
                       future: session.data.getBasicProfile(),
-                      builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
+                      builder: (context, profile) {
                         if (!profile.hasData)
                           return Container();
 

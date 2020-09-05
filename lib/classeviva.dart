@@ -169,12 +169,12 @@ class ClasseVivaSession
   );
 }
 
-class ClasseVivaProfile
+class ClasseVivaBasicProfile
 {
   final String name;
   final String school;
 
-  ClasseVivaProfile({
+  ClasseVivaBasicProfile({
     @required this.name,
     @required this.school,
   });
@@ -596,7 +596,7 @@ class ClasseViva
     if (document.querySelector(".name") == null) await session.refresh();
   }
 
-	Future<ClasseVivaProfile> getBasicProfile() async {
+	Future<ClasseVivaBasicProfile> getBasicProfile() async {
     await checkValidSession();
 
 		final response = await http.get(
@@ -606,7 +606,7 @@ class ClasseViva
 
     final document = parse(response.body);
 
-		return ClasseVivaProfile(
+		return ClasseVivaBasicProfile(
       name: document.querySelector(".name").text.trim(),
 			school: document.querySelector(".scuola").text.trim(),
     );

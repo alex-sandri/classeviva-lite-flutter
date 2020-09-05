@@ -220,7 +220,7 @@ class _SignInState extends State<SignIn> {
                           itemBuilder: (context, index) {
                             final ClasseViva session = ClasseViva(sessions.data[index]);
 
-                            return FutureBuilder<ClasseVivaProfile>(
+                            return FutureBuilder<ClasseVivaBasicProfile>(
                               future: session.getBasicProfile(),
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData)
