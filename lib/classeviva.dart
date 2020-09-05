@@ -596,7 +596,7 @@ class ClasseViva
     if (document.querySelector(".name") == null) await session.refresh();
   }
 
-	Future<ClasseVivaProfile> getProfile() async {
+	Future<ClasseVivaProfile> getBasicProfile() async {
     await checkValidSession();
 
 		final response = await http.get(

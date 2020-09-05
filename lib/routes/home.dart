@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.all(15),
                     children: <Widget>[
                       FutureBuilder(
-                        future: session.data.getProfile(),
+                        future: session.data.getBasicProfile(),
                         builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
                           if (!profile.hasData)
                             return SkeletonAnimation(
@@ -323,7 +323,7 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   DrawerHeader(
                     child: FutureBuilder(
-                      future: session.data.getProfile(),
+                      future: session.data.getBasicProfile(),
                       builder: (context, AsyncSnapshot<ClasseVivaProfile> profile) {
                         if (!profile.hasData)
                           return Container();

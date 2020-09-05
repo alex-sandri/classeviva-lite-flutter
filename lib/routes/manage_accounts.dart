@@ -67,7 +67,7 @@ class _ManageAccountsState extends State<ManageAccounts> {
                         final ClasseViva session = ClasseViva(sessions.data[index]);
 
                         return FutureBuilder<ClasseVivaProfile>(
-                          future: session.getProfile(),
+                          future: session.getBasicProfile(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData)
                               return Padding(
