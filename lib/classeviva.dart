@@ -645,7 +645,9 @@ class ClasseViva
 		return ClasseVivaProfile(
       name: basicProfile.name,
       school: basicProfile.school,
-      profilePic: null,
+      profilePic: Image.network(
+        document.getElementById("top_page_foto_div").querySelector("img").attributes["src"]
+      ),
       avatar: CircleAvatar(
 
       ),
