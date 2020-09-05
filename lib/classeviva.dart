@@ -21,6 +21,8 @@ class ClasseVivaEndpoints
 
 	String basicProfile() => "$baseUrl/home/app/default/menu_webinfoschool_genitori.php";
 
+  String profile() => "$baseUrl/acc/app/default/me.php";
+
 	String grades() => "$baseUrl/cvv/app/default/genitori_note.php?filtro=tutto";
 
   String gradesWithPeriods() => "$baseUrl/cvv/app/default/genitori_voti.php";
