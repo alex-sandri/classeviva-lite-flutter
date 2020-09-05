@@ -331,6 +331,9 @@ class _HomeState extends State<Home> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            CircleAvatar(
+                              child: profile.data.profilePic,
+                            ),
                             Text(
                               profile.data.name,
                               style: TextStyle(
@@ -346,7 +349,6 @@ class _HomeState extends State<Home> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-
                             Text(
                               "${session.data.getYear()}/${session.data.getYear() + 1}",
                               style: TextStyle(
