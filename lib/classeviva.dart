@@ -651,7 +651,13 @@ class ClasseViva
       name: basicProfile.name,
       school: basicProfile.school,
       profilePic: CircleAvatar(
-        child: Image.network(profilePicUrl.toString()),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+          child: Image.network(
+            profilePicUrl.toString(),
+            height: 50,
+          ),
+        ),
       ),
       avatar: CircleAvatar(
         // TODO
