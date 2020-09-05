@@ -79,7 +79,6 @@ class _BulletinBoardState extends State<BulletinBoard> {
                         return Card(
                           child: ListTile(
                             onTap: () => Get.to(BulletinBoardItem(item)),
-                            isThreeLine: true,
                             title: Text(
                               item.titolo,
                             ),
