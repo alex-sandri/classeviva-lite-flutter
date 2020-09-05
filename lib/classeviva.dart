@@ -184,7 +184,7 @@ class ClasseVivaBasicProfile
 
 class ClasseVivaProfile extends ClasseVivaBasicProfile
 {
-  final Image profilePic;
+  final CircleAvatar profilePic;
   final CircleAvatar avatar;
 
   ClasseVivaProfile({
@@ -653,7 +653,9 @@ class ClasseViva
 		return ClasseVivaProfile(
       name: basicProfile.name,
       school: basicProfile.school,
-      profilePic: Image.network(profilePicUrl.toString()),
+      profilePic: CircleAvatar(
+        child: Image.network(profilePicUrl.toString()),
+      ),
       avatar: CircleAvatar(
         // TODO
       ),
