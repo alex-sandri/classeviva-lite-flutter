@@ -6,6 +6,8 @@ import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
+
 
 class ClasseVivaEndpoints
 {
@@ -642,14 +644,18 @@ class ClasseViva
 
     // TODO
 
+    final Uri profilePicUrl = Uri
+      .parse(_endpoints.profile())
+      .resolve(
+        document.getElementById("top_page_foto_div").querySelector("img").attributes["src"]
+      );
+
 		return ClasseVivaProfile(
       name: basicProfile.name,
       school: basicProfile.school,
-      profilePic: Image.network(
-        document.getElementById("top_page_foto_div").querySelector("img").attributes["src"]
-      ),
+      profilePic: Image.network(profilePicUrl.toString()),
       avatar: CircleAvatar(
-
+        // TODO
       ),
     );
 	}
