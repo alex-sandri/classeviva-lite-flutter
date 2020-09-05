@@ -36,7 +36,6 @@ dependencies:
   get: ^3.5.1
   flutter_inappwebview: ^4.0.0+4
   package_info: ^0.4.3
-  path: ^1.7.0
   flutter:
     sdk: flutter
   flutter_localizations:
