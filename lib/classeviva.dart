@@ -180,6 +180,17 @@ class ClasseVivaBasicProfile
   });
 }
 
+class ClasseVivaProfile extends ClasseVivaBasicProfile
+{
+  final Image profilePic;
+  final CircleAvatar avatar;
+
+  ClasseVivaProfile({
+    @required this.profilePic,
+    @required this.avatar,
+  });
+}
+
 class ClasseVivaGradesPeriod
 {
 	final String name;
@@ -609,6 +620,26 @@ class ClasseViva
 		return ClasseVivaBasicProfile(
       name: document.querySelector(".name").text.trim(),
 			school: document.querySelector(".scuola").text.trim(),
+    );
+	}
+
+  Future<ClasseVivaProfile> getProfile() async {
+    await checkValidSession();
+
+		final response = await http.get(
+      _endpoints.profile(),
+      headers: getSessionCookieHeader(),
+    );
+
+    final document = parse(response.body);
+
+    // TODO
+
+		return ClasseVivaProfile(
+      profilePic: null,
+      avatar: CircleAvatar(
+
+      ),
     );
 	}
 
