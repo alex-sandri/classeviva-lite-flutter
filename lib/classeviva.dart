@@ -186,9 +186,14 @@ class ClasseVivaProfile extends ClasseVivaBasicProfile
   final CircleAvatar avatar;
 
   ClasseVivaProfile({
+    @required name,
+    @required school,
     @required this.profilePic,
     @required this.avatar,
-  });
+  }): super(
+    name: name,
+    school: school,
+  );
 }
 
 class ClasseVivaGradesPeriod
@@ -626,6 +631,8 @@ class ClasseViva
   Future<ClasseVivaProfile> getProfile() async {
     await checkValidSession();
 
+    final ClasseVivaBasicProfile basicProfile = await getBasicProfile();
+
 		final response = await http.get(
       _endpoints.profile(),
       headers: getSessionCookieHeader(),
@@ -636,6 +643,8 @@ class ClasseViva
     // TODO
 
 		return ClasseVivaProfile(
+      name: basicProfile.name,
+      school: basicProfile.school,
       profilePic: null,
       avatar: CircleAvatar(
 
