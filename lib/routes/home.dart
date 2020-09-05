@@ -331,9 +331,7 @@ class _HomeState extends State<Home> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CircleAvatar(
-                              child: profile.data.profilePic,
-                            ),
+                            profile.data.profilePic,
                             Text(
                               profile.data.name,
                               style: TextStyle(
