@@ -79,6 +79,14 @@ class _BulletinBoardState extends State<BulletinBoard> {
                         return Card(
                           child: ListTile(
                             onTap: () => Get.to(BulletinBoardItem(item)),
+                            trailing: Icon(
+                              item.conf_lettura
+                                ? Icons.mail
+                                : Icons.drafts,
+                              color: item.conf_lettura
+                                ? Colors.green
+                                : Colors.red,
+                            ),
                             title: Text(
                               item.titolo,
                             ),
