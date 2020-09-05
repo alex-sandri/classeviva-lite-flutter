@@ -642,8 +642,6 @@ class ClasseViva
 
     final document = parse(response.body);
 
-    // TODO
-
     final Uri profilePicUrl = Uri
       .parse(_endpoints.profile())
       .resolve(
