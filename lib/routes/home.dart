@@ -322,8 +322,8 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   DrawerHeader(
-                    child: FutureBuilder<ClasseVivaBasicProfile>(
-                      future: session.data.getBasicProfile(),
+                    child: FutureBuilder<ClasseVivaProfile>(
+                      future: session.data.getProfile(),
                       builder: (context, profile) {
                         if (!profile.hasData)
                           return Container();
