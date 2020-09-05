@@ -28,7 +28,7 @@ class Settings extends StatelessWidget {
                     items: [
                       DropdownMenuItem(
                         value: "system",
-                        child: Text("Predefinito"),
+                        child: Text("Predefinito di sistema"),
                       ),
                       DropdownMenuItem(
                         value: "light",
