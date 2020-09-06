@@ -57,6 +57,9 @@ class MyApp extends StatelessWidget {
           color: ClasseViva.PRIMARY_LIGHT,
           elevation: 0,
         ),
+        tabBarTheme: TabBarTheme(
+          indicator: UnderlineTabIndicator(),
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       themeMode: Provider.of<ThemeManager>(context).themeMode,
