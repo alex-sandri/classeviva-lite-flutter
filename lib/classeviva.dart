@@ -668,6 +668,7 @@ class ClasseViva
             height: 50,
           ),
         ),
+        backgroundColor: Colors.white,
       ),
       avatar: CircleAvatar(
         child: Text(
