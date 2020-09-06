@@ -1266,7 +1266,7 @@ class ClasseViva
   static Future<void> addSession(ClasseVivaSession session) async {
     final Box preferences = Hive.box("preferences");
 
-    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
+    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions() ?? [];
 
     sessions.add(session);
 
