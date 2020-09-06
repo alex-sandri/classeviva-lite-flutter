@@ -95,7 +95,7 @@ class _SessionsListState extends State<SessionsList> {
                       margin: EdgeInsets.symmetric(vertical: 4),
                       child: Dismissible(
                         key: ValueKey(_sessions[index]),
-                        onDismissed: (direction) async {
+                        onDismissed: (direction) {
                           final bool isCurrentSession = ClasseViva.isSignedIn() && ClasseViva.getCurrentSession().id == _sessions[index].id;
 
                           _sessions[index].signOut();
@@ -124,7 +124,7 @@ class _SessionsListState extends State<SessionsList> {
                             "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
                           ),
                           leading: snapshot.data.avatar,
-                          onTap: () async {
+                          onTap: () {
                             ClasseViva.setCurrentSession(_sessions[index]);
 
                             Get.offAll(Home());
