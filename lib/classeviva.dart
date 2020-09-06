@@ -1264,7 +1264,7 @@ class ClasseViva
   static void addSession(ClasseVivaSession session) {
     final Box preferences = Hive.box("preferences");
 
-    final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions() ?? [];
+    final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
     sessions.add(session);
 
@@ -1292,7 +1292,7 @@ class ClasseViva
 
     final List<String> sessions = preferences.get("sessions");
 
-    return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList();
+    return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList() ?? [];
 	}
 
   static double getGradeValue(String grade)
