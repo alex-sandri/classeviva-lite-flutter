@@ -50,9 +50,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: _session == null
-            ? Spinner()
-            : Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(

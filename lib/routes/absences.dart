@@ -48,9 +48,7 @@ class _AbsencesState extends State<Absences> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: _session == null
-            ? Spinner()
-            : Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(

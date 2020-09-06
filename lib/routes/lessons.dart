@@ -44,9 +44,7 @@ class _LessonsState extends State<Lessons> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: _session == null
-            ? Spinner()
-            : Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(

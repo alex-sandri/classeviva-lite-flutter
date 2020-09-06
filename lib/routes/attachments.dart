@@ -92,192 +92,190 @@ class _AttachmentsState extends State<Attachments> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: _session == null
-            ? Spinner()
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: _handleRefresh,
-                      backgroundColor: Theme.of(context).appBarTheme.color,
-                      child: _attachments == null
-                        ? Spinner()
-                        : ListView.builder(
-                            itemCount: _attachments.length + 1,
-                            itemBuilder: (context, index) {
-                              if (_attachments.isEmpty)
-                              {
-                                return SelectableText(
-                                  "Non sono presenti elementi in Didattica",
-                                  textAlign: TextAlign.center,
-                                );
-                              }
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  backgroundColor: Theme.of(context).appBarTheme.color,
+                  child: _attachments == null
+                    ? Spinner()
+                    : ListView.builder(
+                        itemCount: _attachments.length + 1,
+                        itemBuilder: (context, index) {
+                          if (_attachments.isEmpty)
+                          {
+                            return SelectableText(
+                              "Non sono presenti elementi in Didattica",
+                              textAlign: TextAlign.center,
+                            );
+                          }
 
-                              if (index == _attachments.length)
-                              {
-                                if (_showLoadMoreSpinner)
-                                  return Padding(
-                                    padding: EdgeInsets.all(4),
-                                    child: Spinner(),
-                                  );
+                          if (index == _attachments.length)
+                          {
+                            if (_showLoadMoreSpinner)
+                              return Padding(
+                                padding: EdgeInsets.all(4),
+                                child: Spinner(),
+                              );
 
-                                if (!_showLoadMoreButton) return Container();
+                            if (!_showLoadMoreButton) return Container();
 
-                                return Padding(
-                                  padding: EdgeInsets.all(4),
-                                  child: FlatButton(
-                                    color: Theme.of(context).appBarTheme.color,
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      "Carica più elementi",
-                                      style: TextStyle(
-                                        color: Theme.of(context).accentColor,
-                                      ),
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                                    ),
-                                    onPressed: () async {
-                                      setState(() {
-                                        _showLoadMoreButton = false;
-                                        _showLoadMoreSpinner = true;
-                                      });
-
-                                      _session.attachmentsPage++;
-
-                                      final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
-
-                                      if (mounted)
-                                        setState(() {
-                                          _attachments.addAll(attachments);
-
-                                          _showLoadMoreButton = attachments.isNotEmpty;
-                                          _showLoadMoreSpinner = false;
-                                        });
-                                    },
+                            return Padding(
+                              padding: EdgeInsets.all(4),
+                              child: FlatButton(
+                                color: Theme.of(context).appBarTheme.color,
+                                padding: EdgeInsets.all(15),
+                                child: Text(
+                                  "Carica più elementi",
+                                  style: TextStyle(
+                                    color: Theme.of(context).accentColor,
                                   ),
-                                );
-                              }
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                ),
+                                onPressed: () async {
+                                  setState(() {
+                                    _showLoadMoreButton = false;
+                                    _showLoadMoreSpinner = true;
+                                  });
 
-                              final ClasseVivaAttachment attachment = _attachments[index];
+                                  _session.attachmentsPage++;
 
-                              IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
-                              {
-                                IconData icon;
+                                  final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
+
+                                  if (mounted)
+                                    setState(() {
+                                      _attachments.addAll(attachments);
+
+                                      _showLoadMoreButton = attachments.isNotEmpty;
+                                      _showLoadMoreSpinner = false;
+                                    });
+                                },
+                              ),
+                            );
+                          }
+
+                          final ClasseVivaAttachment attachment = _attachments[index];
+
+                          IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
+                          {
+                            IconData icon;
+
+                            switch (attachment.type)
+                            {
+                              case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
+                              case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
+                              case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
+                            }
+
+                            return icon; 
+                          }
+
+                          return Card(
+                            child: ListTile(
+                              onTap: () async {
+                                final String url = attachment.url.toString();
 
                                 switch (attachment.type)
                                 {
-                                  case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
-                                  case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
-                                  case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
-                                }
+                                  case ClasseVivaAttachmentType.File:
+                                    await _requestPermission();
 
-                                return icon; 
-                              }
-
-                              return Card(
-                                child: ListTile(
-                                  onTap: () async {
-                                    final String url = attachment.url.toString();
-
-                                    switch (attachment.type)
-                                    {
-                                      case ClasseVivaAttachmentType.File:
-                                        await _requestPermission();
-
-                                        await FlutterDownloader.enqueue(
-                                          url: attachment.url.toString(),
-                                          savedDir: (Theme.of(context).platform == TargetPlatform.android
-                                            ? await getExternalStorageDirectory()
-                                            : await getApplicationDocumentsDirectory()).path,
-                                          showNotification: true,
-                                          openFileFromNotification: true,
-                                          headers: _session.getSessionCookieHeader(),
-                                        );
-                                        break;
-                                      case ClasseVivaAttachmentType.Link:
-                                        if (await canLaunch(url)) await launch(url);
-                                        else
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                title: Text("Errore"),
-                                                content: Text("Impossibile aprire il link"),
-                                              );
-                                            },
+                                    await FlutterDownloader.enqueue(
+                                      url: attachment.url.toString(),
+                                      savedDir: (Theme.of(context).platform == TargetPlatform.android
+                                        ? await getExternalStorageDirectory()
+                                        : await getApplicationDocumentsDirectory()).path,
+                                      showNotification: true,
+                                      openFileFromNotification: true,
+                                      headers: _session.getSessionCookieHeader(),
+                                    );
+                                    break;
+                                  case ClasseVivaAttachmentType.Link:
+                                    if (await canLaunch(url)) await launch(url);
+                                    else
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text("Errore"),
+                                            content: Text("Impossibile aprire il link"),
                                           );
-                                        break;
-                                      case ClasseVivaAttachmentType.Text:
-                                        final response = await http.get(
-                                          url,
-                                          headers: _session.getSessionCookieHeader(),
-                                        );
+                                        },
+                                      );
+                                    break;
+                                  case ClasseVivaAttachmentType.Text:
+                                    final response = await http.get(
+                                      url,
+                                      headers: _session.getSessionCookieHeader(),
+                                    );
 
-                                        final document = parse(response.body);
+                                    final document = parse(response.body);
 
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              content: SingleChildScrollView(
-                                                child: SelectableLinkify(
-                                                  text: document.body.text.trim(),
-                                                  options: LinkifyOptions(humanize: false),
-                                                  onOpen: (link) async {
-                                                    if (await canLaunch(link.url)) await launch(link.url);
-                                                    else
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return AlertDialog(
-                                                            title: Text("Errore"),
-                                                            content: Text("Impossibile aprire il link"),
-                                                          );
-                                                        },
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: SingleChildScrollView(
+                                            child: SelectableLinkify(
+                                              text: document.body.text.trim(),
+                                              options: LinkifyOptions(humanize: false),
+                                              onOpen: (link) async {
+                                                if (await canLaunch(link.url)) await launch(link.url);
+                                                else
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Text("Errore"),
+                                                        content: Text("Impossibile aprire il link"),
                                                       );
-                                                  },
-                                                ),
-                                              ),
-                                            );
-                                          },
+                                                    },
+                                                  );
+                                              },
+                                            ),
+                                          ),
                                         );
-                                        break;
-                                    }
-                                  },
-                                  leading: CircleAvatar(
-                                    child: Icon(
-                                      _getAttachmentIcon(attachment),
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                    backgroundColor: Theme.of(context).appBarTheme.color,
-                                    radius: 25,
-                                  ),
-                                  title: Text(
-                                    attachment.name,
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      SizedBox(height: 5,),
-                                      Text(
-                                        attachment.teacher,
-                                      ),
-                                      SizedBox(height: 5,),
-                                      Text(
-                                        DateFormat.yMMMMd().format(attachment.date),
-                                      ),
-                                    ],
-                                  )
+                                      },
+                                    );
+                                    break;
+                                }
+                              },
+                              leading: CircleAvatar(
+                                child: Icon(
+                                  _getAttachmentIcon(attachment),
+                                  color: Theme.of(context).accentColor,
                                 ),
-                              );
-                            },
-                          ),
-                    ),
-                  ),
-                ],
+                                backgroundColor: Theme.of(context).appBarTheme.color,
+                                radius: 25,
+                              ),
+                              title: Text(
+                                attachment.name,
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    attachment.teacher,
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    DateFormat.yMMMMd().format(attachment.date),
+                                  ),
+                                ],
+                              )
+                            ),
+                          );
+                        },
+                      ),
+                ),
               ),
+            ],
+          ),
         ),
       ),
     );

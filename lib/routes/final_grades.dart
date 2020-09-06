@@ -45,50 +45,48 @@ class _FinalGradesState extends State<FinalGrades> {
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: _session == null
-            ? Spinner()
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: _handleRefresh,
-                      backgroundColor: Theme.of(context).appBarTheme.color,
-                      child: _finalGrades == null
-                        ? Spinner()
-                        : ListView.builder(
-                            itemCount: _finalGrades.isNotEmpty
-                              ? _finalGrades.length
-                              : 1,
-                            itemBuilder: (context, index) {
-                              if (_finalGrades.isEmpty)
-                              {
-                                return SelectableText(
-                                  "Non sono presenti documenti",
-                                  textAlign: TextAlign.center,
-                                );
-                              }
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  backgroundColor: Theme.of(context).appBarTheme.color,
+                  child: _finalGrades == null
+                    ? Spinner()
+                    : ListView.builder(
+                        itemCount: _finalGrades.isNotEmpty
+                          ? _finalGrades.length
+                          : 1,
+                        itemBuilder: (context, index) {
+                          if (_finalGrades.isEmpty)
+                          {
+                            return SelectableText(
+                              "Non sono presenti documenti",
+                              textAlign: TextAlign.center,
+                            );
+                          }
 
-                              final ClasseVivaFinalGrade item = _finalGrades[index];
+                          final ClasseVivaFinalGrade item = _finalGrades[index];
 
-                              return ListTile(
-                                title: Text(
-                                  item.type,
-                                ),
-                                onTap: () {
-                                  Get.to(ClasseVivaWebview(
-                                    session: _session,
-                                    title: item.type,
-                                    url: item.url,
-                                  ));
-                                },
-                              );
+                          return ListTile(
+                            title: Text(
+                              item.type,
+                            ),
+                            onTap: () {
+                              Get.to(ClasseVivaWebview(
+                                session: _session,
+                                title: item.type,
+                                url: item.url,
+                              ));
                             },
-                          ),
-                    ),
-                  ),
-                ],
+                          );
+                        },
+                      ),
+                ),
               ),
+            ],
+          ),
         ),
       ),
     );
