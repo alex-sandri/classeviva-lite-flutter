@@ -673,11 +673,11 @@ class ClasseViva
         child: Text(
           document.querySelector(".iniziali_avatar").text.trim(),
           style: TextStyle(
-            color: Color(int.parse("FF${document.querySelector(".iniziali_colore").attributes["value"].trim()}", radix: 16)),
+            color: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()),
             fontSize: double.parse(document.querySelector(".iniziali_size").attributes["value"].trim()),
           ),
         ),
-        backgroundColor: Color(int.parse("FF${document.querySelector(".iniziali_sfondo").attributes["value"].trim()}", radix: 16)),
+        backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
       ),
     );
 	}
