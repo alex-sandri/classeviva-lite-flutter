@@ -674,7 +674,6 @@ class ClasseViva
           document.querySelector(".iniziali_avatar").text.trim(),
           style: TextStyle(
             color: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()),
-            fontSize: double.parse(document.querySelector(".iniziali_size").attributes["value"].trim()),
           ),
         ),
         backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
