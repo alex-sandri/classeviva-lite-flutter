@@ -50,9 +50,9 @@ class _SessionsListState extends State<SessionsList> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
-              onPressed: () async {
+              onPressed: () {
                 for (int i = 0; i < _sessions.length; i++)
-                  await _sessions[i].signOut();
+                  _sessions[i].signOut();
 
                 Get.offAll(SignIn());
               },
