@@ -108,16 +108,9 @@ class _SessionsListState extends State<SessionsList> {
                             child: ListTile(
                               title: Text(
                                 snapshot.data.name,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900,
-                                ),
                               ),
                               subtitle: Text(
                                 "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
                               ),
                               onTap: () async {
                                 await ClasseViva.setCurrentSession(sessions.data[index]);
