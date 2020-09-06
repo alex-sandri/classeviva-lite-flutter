@@ -417,22 +417,20 @@ class GradesView extends StatelessWidget {
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      child: session == null
-        ? Spinner()
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: refreshHandler,
-                  backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: grades == null
-                    ? Spinner()
-                    : childBuilder(),
-                ),
-              ),
-            ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: refreshHandler,
+              backgroundColor: Theme.of(context).appBarTheme.color,
+              child: grades == null
+                ? Spinner()
+                : childBuilder(),
+            ),
           ),
+        ],
+      ),
     );
   }
 }
