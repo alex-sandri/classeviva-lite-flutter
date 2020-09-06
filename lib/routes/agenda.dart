@@ -40,15 +40,13 @@ class _AgendaState extends State<Agenda> {
   void initState() {
     super.initState();
 
-    ClasseViva.getCurrentSession().then((session) {
-      _session = ClasseViva(session);
+    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
-      _start = _session.yearBeginsAt;
+    _start = _session.yearBeginsAt;
 
-      _end = _session.yearEndsAt;
+    _end = _session.yearEndsAt;
 
-      _handleRefresh();
-    });
+    _handleRefresh();
   }
 
   @override

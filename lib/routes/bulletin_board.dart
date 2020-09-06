@@ -32,11 +32,9 @@ class _BulletinBoardState extends State<BulletinBoard> {
   void initState() {
     super.initState();
 
-    ClasseViva.getCurrentSession().then((session) {
-      _session = ClasseViva(session);
+    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
-      _handleRefresh();
-    });
+    _handleRefresh();
   }
 
   @override

@@ -60,14 +60,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       themeMode: Provider.of<ThemeManager>(context).themeMode,
-      home: FutureBuilder(
-        future: ClasseViva.isSignedIn(),
-        builder: (context, AsyncSnapshot<bool> isSignedIn) {
-          if (!isSignedIn.hasData) return Material();
-
-          return isSignedIn.data ? Home() : SignIn();
-        },
-      ),
+      home: ClasseViva.isSignedIn()
+        ? Home()
+        : SignIn(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

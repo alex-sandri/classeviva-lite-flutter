@@ -49,11 +49,9 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
   void initState() {
     super.initState();
 
-    ClasseViva.getCurrentSession().then((session) {
-      _session = ClasseViva(session);
+    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
-      _handleRefresh();
-    });
+    _handleRefresh();
 
     IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
 

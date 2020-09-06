@@ -34,11 +34,9 @@ class _CalendarState extends State<Calendar> {
   void initState() {
     super.initState();
 
-    ClasseViva.getCurrentSession().then((session) {
-      _session = ClasseViva(session);
+    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
-      _handleRefresh();
-    });
+    _handleRefresh();
   }
 
   @override
