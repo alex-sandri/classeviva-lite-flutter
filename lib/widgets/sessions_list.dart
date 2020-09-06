@@ -7,6 +7,12 @@ import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class SessionsList extends StatefulWidget {
+  final bool shrinkWrap;
+
+  SessionsList({
+    this.shrinkWrap = false,
+  });
+
   @override
   _SessionsListState createState() => _SessionsListState();
 }
@@ -15,6 +21,7 @@ class _SessionsListState extends State<SessionsList> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: widget.shrinkWrap,
       padding: const EdgeInsets.all(15),
       children: <Widget>[
         FutureBuilder<List<ClasseVivaSession>>(

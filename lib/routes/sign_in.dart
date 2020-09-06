@@ -165,7 +165,9 @@ class _SignInState extends State<SignIn> {
               ),
 
               if (widget.showAccountChooser)
-                SessionsList(),
+                SessionsList(
+                  shrinkWrap: true,
+                ),
             ],
           ),
         ),
