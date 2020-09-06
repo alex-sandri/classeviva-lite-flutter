@@ -98,9 +98,9 @@ class ClasseVivaSession
 
     final Box preferences = Hive.box("preferences");
 
-    final ClasseVivaSession currentSession = await ClasseViva.getCurrentSession();
+    final ClasseVivaSession currentSession = ClasseViva.getCurrentSession();
 
-    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
+    final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
     sessions.firstWhere((session) => session.id == this.id)._id = refreshedSession.id;
 
@@ -144,12 +144,12 @@ class ClasseVivaSession
     );
   }
 
-  Future<void> signOut() async {
+  void signOut() {
     final Box preferences = Hive.box("preferences");
 
-    final ClasseVivaSession currentSession = await ClasseViva.getCurrentSession();
+    final ClasseVivaSession currentSession = ClasseViva.getCurrentSession();
 
-    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
+    final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
     sessions.removeWhere((session) => session.id == this.id);
 
