@@ -660,7 +660,14 @@ class ClasseViva
         ),
       ),
       avatar: CircleAvatar(
-        // TODO
+        child: Text(
+          document.querySelector(".iniziali_avatar").text.trim(),
+          style: TextStyle(
+            color: Color(int.parse("FF${document.querySelector(".iniziali_colore").text.trim()}", radix: 16)),
+            fontSize: double.parse(document.querySelector(".iniziali_size").text.trim()),
+          ),
+        ),
+        backgroundColor: Color(int.parse("FF${document.querySelector(".iniziali_sfondo").text.trim()}", radix: 16)),
       ),
     );
 	}
