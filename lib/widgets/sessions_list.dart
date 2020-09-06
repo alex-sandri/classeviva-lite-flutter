@@ -112,6 +112,7 @@ class _SessionsListState extends State<SessionsList> {
                               subtitle: Text(
                                 "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
                               ),
+                              leading: snapshot.data.avatar,
                               onTap: () async {
                                 await ClasseViva.setCurrentSession(sessions.data[index]);
 
