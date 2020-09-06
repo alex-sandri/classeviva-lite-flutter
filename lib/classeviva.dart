@@ -647,6 +647,16 @@ class ClasseViva
         document.getElementById("top_page_foto_div").querySelector("img").attributes["src"]
       );
 
+    Color _getColorFromHexString(String hex) {
+      Color color;
+
+      if (hex.length == 3) // Shorthand form
+        color = Color(int.parse("FF${hex.replaceAllMapped(RegExp("."), (match) => match.group(0) * 2)}", radix: 16));
+      else color = Color(int.parse("FF$hex", radix: 16));
+
+      return color;
+    }
+
 		return ClasseVivaProfile(
       name: basicProfile.name,
       school: basicProfile.school,
