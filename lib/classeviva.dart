@@ -1270,7 +1270,7 @@ class ClasseViva
 
     sessions.add(session);
 
-    await preferences.put("sessions", sessions.map((session) => session.toString()));
+    await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
   }
 
   static Future<ClasseVivaSession> getCurrentSession() async {
