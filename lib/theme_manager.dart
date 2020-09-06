@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 class ThemeManager with ChangeNotifier
 {
   ThemeMode _themeMode;
 
-  Future<ThemeMode> get themeMode async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+  ThemeMode get themeMode {
+    final Box preferences = Hive.box("preferences");
 
-    final String theme = preferences.getString("theme");
+    final String theme = preferences.get("theme");
 
     switch (theme)
     {
@@ -20,7 +20,7 @@ class ThemeManager with ChangeNotifier
     return _themeMode;
   }
 
-  void setTheme(String theme) async {
+  void setTheme(String theme) {
     switch (theme)
     {
       case "system": _themeMode = ThemeMode.system; break;
@@ -28,9 +28,9 @@ class ThemeManager with ChangeNotifier
       case "dark": _themeMode = ThemeMode.dark; break;
     }
 
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final Box preferences = Hive.box("preferences");
 
-    await preferences.setString("theme", theme);
+    preferences.put("theme", theme);
 
     notifyListeners();
   }

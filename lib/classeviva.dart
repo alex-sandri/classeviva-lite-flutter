@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 
 class ClasseVivaEndpoints
@@ -96,7 +96,7 @@ class ClasseVivaSession
       year: year
     );
 
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final Box preferences = Hive.box("preferences");
 
     final ClasseVivaSession currentSession = await ClasseViva.getCurrentSession();
 
@@ -104,10 +104,10 @@ class ClasseVivaSession
 
     sessions.firstWhere((session) => session.id == this.id)._id = refreshedSession.id;
 
-    await preferences.setStringList("sessions", sessions.map((session) => session.toString()).toList());
+    preferences.put("sessions", sessions.map((session) => session.toString()).toList());
 
     if (currentSession?.id == this.id)
-      await preferences.setString("currentSession", refreshedSession.toString());
+      preferences.put("currentSession", refreshedSession.toString());
 
     _id = refreshedSession.id;
   }
@@ -145,7 +145,7 @@ class ClasseVivaSession
   }
 
   Future<void> signOut() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final Box preferences = Hive.box("preferences");
 
     final ClasseVivaSession currentSession = await ClasseViva.getCurrentSession();
 
@@ -153,10 +153,10 @@ class ClasseVivaSession
 
     sessions.removeWhere((session) => session.id == this.id);
 
-    await preferences.setStringList("sessions", sessions.map((session) => session.toString()).toList());
+    preferences.put("sessions", sessions.map((session) => session.toString()).toList());
 
     if (currentSession?.id == this.id)
-      await preferences.remove("currentSession");
+      preferences.delete("currentSession");
   }
 
   @override
@@ -1264,18 +1264,19 @@ class ClasseViva
   }
 
   static Future<void> addSession(ClasseVivaSession session) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final Box preferences = Hive.box("preferences");
 
-    await preferences.setStringList("sessions", [
-      ...((await ClasseViva.getAllSessions())?.map((session) => session.toString()) ?? []),
-      session.toString(),
-    ]);
+    final List<ClasseVivaSession> sessions = await ClasseViva.getAllSessions();
+
+    sessions.add(session);
+
+    await preferences.put("sessions", sessions.map((session) => session.toString()));
   }
 
   static Future<ClasseVivaSession> getCurrentSession() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final Box preferences = Hive.box("preferences");
 
-    final String session = preferences.getString("currentSession");
+    final String session = preferences.get("currentSession");
 
     if (session == null) return null;
 
@@ -1283,15 +1284,15 @@ class ClasseViva
   }
 
   static Future<void> setCurrentSession(ClasseVivaSession session) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final Box preferences = Hive.box("preferences");
 
-    await preferences.setString("currentSession", session.toString());
+    await preferences.put("currentSession", session.toString());
   }
 
   static Future<List<ClasseVivaSession>> getAllSessions() async {
-		final SharedPreferences preferences = await SharedPreferences.getInstance();
+		final Box preferences = Hive.box("preferences");
 
-    final List<String> sessions = preferences.getStringList("sessions");
+    final List<String> sessions = preferences.get("sessions");
 
     return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList();
 	}

@@ -7,10 +7,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-  FlutterDownloader.initialize(debug: false);
+void main() async {
+  await FlutterDownloader.initialize(debug: false);
+
+  await Hive.initFlutter();
+
+  await Hive.openBox("preferences");
 
   runApp(
     MultiProvider(
@@ -31,56 +37,46 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    return FutureBuilder(
-      future: Provider.of<ThemeManager>(context).themeMode,
-      builder: (context, themeMode) {
-        if (!themeMode.hasData)
-          return Container(
-            color: ClasseViva.PRIMARY_LIGHT,
-          );
+    return GetMaterialApp(
+      title: 'ClasseViva Lite',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: ClasseViva.PRIMARY_LIGHT,
+        accentColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: ClasseViva.PRIMARY_LIGHT,
+          elevation: 0,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        brightness: Brightness.dark,
+        primaryColor: Colors.black87,
+        accentColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          color: ClasseViva.PRIMARY_LIGHT,
+          elevation: 0,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      themeMode: Provider.of<ThemeManager>(context).themeMode,
+      home: FutureBuilder(
+        future: ClasseViva.isSignedIn(),
+        builder: (context, AsyncSnapshot<bool> isSignedIn) {
+          if (!isSignedIn.hasData) return Material();
 
-        return GetMaterialApp(
-          title: 'ClasseViva Lite',
-          theme: ThemeData(
-            brightness: Brightness.light,
-            primaryColor: ClasseViva.PRIMARY_LIGHT,
-            accentColor: Colors.white,
-            appBarTheme: AppBarTheme(
-              color: ClasseViva.PRIMARY_LIGHT,
-              elevation: 0,
-            ),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          darkTheme: ThemeData.dark().copyWith(
-            brightness: Brightness.dark,
-            primaryColor: Colors.black87,
-            accentColor: Colors.white,
-            appBarTheme: AppBarTheme(
-              color: ClasseViva.PRIMARY_LIGHT,
-              elevation: 0,
-            ),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          themeMode: themeMode.data,
-          home: FutureBuilder(
-            future: ClasseViva.isSignedIn(),
-            builder: (context, AsyncSnapshot<bool> isSignedIn) {
-              if (!isSignedIn.hasData) return Material();
-
-              return isSignedIn.data ? Home() : SignIn();
-            },
-          ),
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            const Locale("it", "IT"),
-          ],
-        );
-      },
+          return isSignedIn.data ? Home() : SignIn();
+        },
+      ),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale("it", "IT"),
+      ],
     );
   }
 }
