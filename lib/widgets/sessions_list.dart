@@ -59,8 +59,8 @@ class _SessionsListState extends State<SessionsList> {
                   itemBuilder: (context, index) {
                     final ClasseViva session = ClasseViva(sessions.data[index]);
 
-                    return FutureBuilder<ClasseVivaBasicProfile>(
-                      future: session.getBasicProfile(),
+                    return FutureBuilder<ClasseVivaProfile>(
+                      future: session.getProfile(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData)
                           return Padding(
