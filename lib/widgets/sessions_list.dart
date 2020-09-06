@@ -33,30 +33,32 @@ class _SessionsListState extends State<SessionsList> {
       shrinkWrap: widget.shrinkWrap,
       padding: const EdgeInsets.all(15),
       children: <Widget>[
-        Container(
-          width: double.infinity,
-          child: FlatButton(
-            color: ThemeManager.isLightTheme(context)
-              ? Theme.of(context).primaryColor
-              : Theme.of(context).accentColor,
-            colorBrightness: ThemeManager.isLightTheme(context)
-              ? Brightness.dark
-              : Brightness.light,
-            padding: EdgeInsets.all(15),
-            child: Text(
-              "Esci da tutte le sessioni"
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-            ),
-            onPressed: () async {
-              for (int i = 0; i < _sessions.length; i++)
-                await _sessions[i].signOut();
+        if (_sessions.isNotEmpty)
+          Container(
+            width: double.infinity,
+            child: FlatButton(
+              color: ThemeManager.isLightTheme(context)
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).accentColor,
+              colorBrightness: ThemeManager.isLightTheme(context)
+                ? Brightness.dark
+                : Brightness.light,
+              padding: EdgeInsets.all(15),
+              child: Text(
+                "Esci da tutte le sessioni"
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+              ),
+              onPressed: () async {
+                for (int i = 0; i < _sessions.length; i++)
+                  await _sessions[i].signOut();
 
-              Get.offAll(SignIn());
-            },
+                Get.offAll(SignIn());
+              },
+            ),
           ),
-        ),
+
         SizedBox(
           height: 15,
         ),
