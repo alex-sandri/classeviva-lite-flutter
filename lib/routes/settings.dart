@@ -15,9 +15,7 @@ class Settings extends StatelessWidget {
         body: ListView(
           children: [
             ListTile(
-              title: Text(
-                "Tema",
-              ),
+              title: Text("Tema"),
               trailing: DropdownButton(
                 value: Provider.of<ThemeManager>(context).themeMode.toString().split(".").last,
                 items: [
@@ -38,7 +36,16 @@ class Settings extends StatelessWidget {
                   Provider.of<ThemeManager>(context, listen: false).setTheme(value);
                 },
               ),
-            )
+            ),
+            ListTile(
+              title: Text("Blocco app"),
+              trailing: Switch(
+                onChanged: (checked) {
+                  // TODO
+                },
+                value: false,
+              ),
+            ),
           ],
         ),
       ),
