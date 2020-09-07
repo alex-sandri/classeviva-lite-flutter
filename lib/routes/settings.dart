@@ -1,8 +1,14 @@
 import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
+  @override
+  _SettingsState createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -41,9 +47,11 @@ class Settings extends StatelessWidget {
               title: Text("Blocco app"),
               trailing: Switch(
                 onChanged: (checked) {
-                  // TODO
+                  Hive.box("preferences").put("appLockEnabled", checked);
+
+                  setState(() {});
                 },
-                value: false,
+                value: Hive.box("preferences").get("appLockEnabled") ?? false,
               ),
             ),
           ],
