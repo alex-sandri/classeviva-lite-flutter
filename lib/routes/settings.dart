@@ -1,7 +1,7 @@
+import 'package:classeviva_lite/authentication_manager.dart';
 import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
@@ -50,13 +50,11 @@ class _SettingsState extends State<Settings> {
                 onChanged: (checked) async {
                   try
                   {
-                    bool didAuthenticate = await LocalAuthentication().authenticateWithBiometrics(
-                      localizedReason: "Accedi"
-                    );
+                    bool didAuthenticate = await AuthenticationManager.authenticate();
 
                     if (didAuthenticate)
                     {
-                      Hive.box("preferences").put("appLockEnabled", checked);
+                      AuthenticationManager.isAuthenticationEnabled = checked;
 
                       setState(() {});
                     }
@@ -66,7 +64,7 @@ class _SettingsState extends State<Settings> {
                     print(e);
                   }
                 },
-                value: Hive.box("preferences").get("appLockEnabled") ?? false,
+                value: AuthenticationManager.isAuthenticationEnabled,
               ),
             ),
           ],
