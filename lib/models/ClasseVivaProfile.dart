@@ -5,10 +5,10 @@ import 'ClasseVivaBasicProfile.dart';
 @HiveType(typeId: 1)
 class ClasseVivaProfile extends ClasseVivaBasicProfile
 {
-  @HiveField(0)
+  @HiveField(2)
   final CircleAvatar profilePic;
 
-  @HiveField(1)
+  @HiveField(3)
   final CircleAvatar avatar;
 
   ClasseVivaProfile({
