@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,4 +20,15 @@ class HttpManager
 
     return response;
   }
+}
+
+class HttpManagerResult
+{
+  final http.Response response;
+  final bool isError;
+
+  HttpManagerResult({
+    @required this.response,
+    @required this.isError,
+  });
 }
