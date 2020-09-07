@@ -618,7 +618,7 @@ class ClasseViva
 	}
 
   Stream<ClasseVivaProfile> getProfile() async* {
-    CacheManager.delete("profile");
+    yield CacheManager.get("profile");
 
     await checkValidSession();
 
