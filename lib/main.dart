@@ -19,6 +19,8 @@ void main() async {
 
   await Hive.openBox("preferences");
 
+  Widget home;
+
   if (Hive.box("preferences").get("appLockEnabled") ?? false)
   {
     final LocalAuthentication localAuthentication = LocalAuthentication();
@@ -26,6 +28,8 @@ void main() async {
     bool didAuthenticate = await localAuthentication.authenticateWithBiometrics(
       localizedReason: "Accedi"
     );
+
+    if (!didAuthenticate) home = SignIn();
   }
 
   runApp(
@@ -33,12 +37,20 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeManager()),
       ],
-      child: MyApp(),
+      child: MyApp(
+        home: home,
+      ),
     )
   );
 }
 
 class MyApp extends StatelessWidget {
+  final Widget home;
+
+  MyApp({
+    this.home,
+  });
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -76,9 +88,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       themeMode: Provider.of<ThemeManager>(context).themeMode,
-      home: ClasseViva.isSignedIn()
-        ? Home()
-        : SignIn(),
+      home: this.home ?? (ClasseViva.isSignedIn() ? Home() : SignIn()),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
