@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/authentication_manager.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
@@ -123,10 +124,13 @@ class _SessionsListState extends State<SessionsList> {
                         "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
                       ),
                       leading: snapshot.data.avatar,
-                      onTap: () {
-                        ClasseViva.setCurrentSession(_sessions[index]);
+                      onTap: () async {
+                        if (await AuthenticationManager.authenticate())
+                        {
+                          ClasseViva.setCurrentSession(_sessions[index]);
 
-                        Get.offAll(Home());
+                          Get.offAll(Home());
+                        }
                       },
                     ),
                   ),
