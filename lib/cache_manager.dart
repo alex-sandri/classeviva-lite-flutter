@@ -8,5 +8,7 @@ class CacheManager
 
   static void set(String key, dynamic value) => _box.put(key, value);
 
+  static void delete(String key) => _box.delete(key);
+
   static Future<void> initialize() async => _box = await Hive.openBox("cache");
 }
