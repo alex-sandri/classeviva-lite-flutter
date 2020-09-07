@@ -6,8 +6,9 @@ import 'package:http/http.dart' as http;
 
 class HttpManager
 {
-  static Future<http.Response> get({ String url, Map<String, String> headers}) async {
+  static Future<HttpManagerResult> get({ String url, Map<String, String> headers}) async {
     http.Response response;
+    bool isError = false;
 
     try
     {
@@ -15,10 +16,15 @@ class HttpManager
     }
     on SocketException catch (e)
     {
+      isError = true;
+
       Get.rawSnackbar(message: "Errore");
     }
 
-    return response;
+    return HttpManagerResult(
+      response: response,
+      isError: isError,
+    );
   }
 }
 

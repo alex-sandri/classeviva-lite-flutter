@@ -580,12 +580,14 @@ class ClasseViva
   }
 
   Future<void> checkValidSession() async {
-    final response = await HttpManager.get(
+    final result = await HttpManager.get(
       url: _endpoints.basicProfile(),
       headers: getSessionCookieHeader(),
     );
 
-    final document = parse(response.body);
+    if (result.isError) return;
+
+    final document = parse(result.response.body);
 
     if (document.querySelector(".name") == null) await session.refresh();
   }
