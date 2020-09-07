@@ -328,7 +328,7 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               DrawerHeader(
                 child: StreamBuilder<ClasseVivaProfile>(
-                  stream: _session.getProfile(),
+                  stream: _session.getProfile().asBroadcastStream(),
                   builder: (context, profile) {
                     if (!profile.hasData)
                       return Container();
