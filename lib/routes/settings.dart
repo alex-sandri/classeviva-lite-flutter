@@ -1,7 +1,6 @@
 import 'package:classeviva_lite/authentication_manager.dart';
 import 'package:classeviva_lite/theme_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
