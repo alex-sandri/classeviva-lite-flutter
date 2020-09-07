@@ -10,7 +10,7 @@ class Books extends StatefulWidget {
 }
 
 class _BooksState extends State<Books> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   List<ClasseVivaBook> _books;
 
@@ -25,8 +25,6 @@ class _BooksState extends State<Books> {
 
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
   }

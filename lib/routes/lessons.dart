@@ -10,7 +10,7 @@ class Lessons extends StatefulWidget {
 }
 
 class _LessonsState extends State<Lessons> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   List<ClasseVivaSubject> _subjects;
 
@@ -25,8 +25,6 @@ class _LessonsState extends State<Lessons> {
 
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
   }

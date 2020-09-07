@@ -11,7 +11,7 @@ class Demerits extends StatefulWidget {
 }
 
 class _DemeritsState extends State<Demerits> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   List<ClasseVivaDemerit> _demerits;
 
@@ -31,8 +31,6 @@ class _DemeritsState extends State<Demerits> {
 
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
   }

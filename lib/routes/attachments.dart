@@ -19,7 +19,7 @@ class Attachments extends StatefulWidget {
 }
 
 class _AttachmentsState extends State<Attachments> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   List<ClasseVivaAttachment> _attachments;
 
@@ -55,8 +55,6 @@ class _AttachmentsState extends State<Attachments> {
   @override
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
 

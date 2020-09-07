@@ -10,7 +10,7 @@ class FinalGrades extends StatefulWidget {
 }
 
 class _FinalGradesState extends State<FinalGrades> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   List<ClasseVivaFinalGrade> _finalGrades;
 
@@ -26,8 +26,6 @@ class _FinalGradesState extends State<FinalGrades> {
   @override
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
   }

@@ -18,7 +18,7 @@ class BulletinBoardItem extends StatefulWidget {
 }
 
 class _BulletinBoardItemState extends State<BulletinBoardItem> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   ClasseVivaBulletinBoardItemDetails _item;
 
@@ -48,8 +48,6 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
   @override
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
 

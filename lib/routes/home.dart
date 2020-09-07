@@ -27,15 +27,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   bool _showLoadingSpinner = false;
-
-  void initState() {
-    super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
-  }
 
   @override
   Widget build(BuildContext context) {

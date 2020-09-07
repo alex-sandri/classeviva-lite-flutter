@@ -13,7 +13,7 @@ class Grades extends StatefulWidget {
 }
 
 class _GradesState extends State<Grades> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   List<ClasseVivaGrade> _grades;
 
@@ -70,8 +70,6 @@ class _GradesState extends State<Grades> {
 
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
   }

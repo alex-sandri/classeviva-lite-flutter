@@ -9,7 +9,7 @@ class Absences extends StatefulWidget {
 }
 
 class _AbsencesState extends State<Absences> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   List<ClasseVivaAbsence> _absences;
 
@@ -29,8 +29,6 @@ class _AbsencesState extends State<Absences> {
 
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _handleRefresh();
   }

@@ -11,7 +11,7 @@ class Agenda extends StatefulWidget {
 }
 
 class _AgendaState extends State<Agenda> {
-  ClasseViva _session;
+  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   DateTime _start;
 
@@ -39,8 +39,6 @@ class _AgendaState extends State<Agenda> {
 
   void initState() {
     super.initState();
-
-    _session =  ClasseViva(ClasseViva.getCurrentSession());
 
     _start = _session.yearBeginsAt;
 
