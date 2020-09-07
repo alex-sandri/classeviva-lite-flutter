@@ -39,13 +39,16 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: 'ClasseViva Lite',
-      theme: ThemeData(
+      theme: ThemeData.light().copyWith(
         brightness: Brightness.light,
         primaryColor: ClasseViva.PRIMARY_LIGHT,
         accentColor: Colors.white,
         appBarTheme: AppBarTheme(
           color: ClasseViva.PRIMARY_LIGHT,
           elevation: 0,
+        ),
+        tabBarTheme: TabBarTheme(
+          indicator: UnderlineTabIndicator(),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
