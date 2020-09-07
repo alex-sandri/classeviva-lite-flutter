@@ -14,7 +14,7 @@ class HttpManager
     }
     on SocketException catch (e)
     {
-      Get.snackbar(null, "Errore");
+      Get.rawSnackbar(message: "Errore");
     }
 
     return response;
