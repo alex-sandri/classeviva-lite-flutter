@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:classeviva_lite/cache_manager.dart';
+import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
@@ -168,41 +170,6 @@ class ClasseVivaSession
     year: session.split(";").last,
     uid: session.split(";")[1],
     pwd: session.split(";")[2],
-  );
-}
-
-@HiveType(typeId: 0)
-class ClasseVivaBasicProfile
-{
-  @HiveField(0)
-  final String name;
-
-  @HiveField(1)
-  final String school;
-
-  ClasseVivaBasicProfile({
-    @required this.name,
-    @required this.school,
-  });
-}
-
-@HiveType(typeId: 1)
-class ClasseVivaProfile extends ClasseVivaBasicProfile
-{
-  @HiveField(0)
-  final CircleAvatar profilePic;
-
-  @HiveField(1)
-  final CircleAvatar avatar;
-
-  ClasseVivaProfile({
-    @required name,
-    @required school,
-    @required this.profilePic,
-    @required this.avatar,
-  }): super(
-    name: name,
-    school: school,
   );
 }
 

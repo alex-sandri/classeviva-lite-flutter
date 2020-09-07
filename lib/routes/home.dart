@@ -1,3 +1,5 @@
+import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/about.dart';
 import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';

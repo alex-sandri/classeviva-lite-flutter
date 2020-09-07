@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/authentication_manager.dart';
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:classeviva_lite/theme_manager.dart';
