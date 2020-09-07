@@ -14,8 +14,8 @@ class ClasseVivaProfile extends ClasseVivaBasicProfile
   final CircleAvatar avatar;
 
   ClasseVivaProfile({
-    @required name,
-    @required school,
+    @required String name,
+    @required String school,
     @required this.profilePic,
     @required this.avatar,
   }): super(
