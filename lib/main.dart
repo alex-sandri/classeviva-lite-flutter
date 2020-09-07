@@ -1,6 +1,8 @@
 import 'package:classeviva_lite/authentication_manager.dart';
 import 'package:classeviva_lite/cache_manager.dart';
 import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:classeviva_lite/theme_manager.dart';
@@ -17,6 +19,9 @@ void main() async {
   await FlutterDownloader.initialize(debug: false);
 
   await Hive.initFlutter();
+
+  Hive.registerAdapter(ClasseVivaBasicProfileAdapter());
+  Hive.registerAdapter(ClasseVivaProfileAdapter());
 
   await Hive.openBox("preferences");
 
