@@ -10,24 +10,24 @@ class ClasseVivaProfileAvatar
   final String text;
 
   @HiveField(1)
-  final int backgroundColorValue;
+  final Color backgroundColor;
 
   @HiveField(2)
-  final int foregroundColorValue;
+  final Color foregroundColor;
 
   ClasseVivaProfileAvatar({
     @required this.text,
-    @required this.backgroundColorValue,
-    @required this.foregroundColorValue,
+    @required this.backgroundColor,
+    @required this.foregroundColor,
   });
 
   Widget toWidget() => CircleAvatar(
     child: Text(
       text,
       style: TextStyle(
-        color: Color(foregroundColorValue),
+        color: foregroundColor,
       ),
     ),
-    backgroundColor: Color(backgroundColorValue),
+    backgroundColor: backgroundColor,
   );
 }

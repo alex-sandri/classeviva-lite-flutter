@@ -19,8 +19,8 @@ class ClasseVivaProfileAvatarAdapter
     };
     return ClasseVivaProfileAvatar(
       text: fields[0] as String,
-      backgroundColorValue: fields[1] as int,
-      foregroundColorValue: fields[2] as int,
+      backgroundColor: fields[1] as Color,
+      foregroundColor: fields[2] as Color,
     );
   }
 
@@ -31,9 +31,9 @@ class ClasseVivaProfileAvatarAdapter
       ..writeByte(0)
       ..write(obj.text)
       ..writeByte(1)
-      ..write(obj.backgroundColorValue)
+      ..write(obj.backgroundColor)
       ..writeByte(2)
-      ..write(obj.foregroundColorValue);
+      ..write(obj.foregroundColor);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/adapters/ColorAdapter.dart';
 import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
@@ -20,6 +21,8 @@ void main() async {
   await FlutterDownloader.initialize(debug: false);
 
   await Hive.initFlutter();
+
+  Hive.registerAdapter(ColorAdapter());
 
   Hive.registerAdapter(ClasseVivaBasicProfileAdapter());
   Hive.registerAdapter(ClasseVivaProfileAdapter());
