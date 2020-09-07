@@ -50,9 +50,7 @@ class _SettingsState extends State<Settings> {
                 onChanged: (checked) async {
                   try
                   {
-                    bool didAuthenticate = await AuthenticationManager.authenticate();
-
-                    if (didAuthenticate)
+                    if (await AuthenticationManager.authenticate())
                     {
                       AuthenticationManager.isAuthenticationEnabled = checked;
 

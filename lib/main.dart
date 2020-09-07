@@ -21,12 +21,8 @@ void main() async {
 
   Widget home;
 
-  if (AuthenticationManager.isAuthenticationEnabled)
-  {
-    bool didAuthenticate = await AuthenticationManager.authenticate();
-
-    if (!didAuthenticate) home = SignIn();
-  }
+  if (AuthenticationManager.isAuthenticationEnabled && !await AuthenticationManager.authenticate())
+    home = SignIn();
 
   runApp(
     MultiProvider(
