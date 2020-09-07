@@ -1,5 +1,5 @@
-import 'package:classeviva_lite/authentication_manager.dart';
-import 'package:classeviva_lite/theme_manager.dart';
+import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
+import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

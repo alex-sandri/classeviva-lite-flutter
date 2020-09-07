@@ -1,9 +1,9 @@
-import 'package:classeviva_lite/authentication_manager.dart';
-import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
+import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
-import 'package:classeviva_lite/theme_manager.dart';
+import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';

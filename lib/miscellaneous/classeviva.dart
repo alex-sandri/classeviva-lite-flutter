@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:classeviva_lite/cache_manager.dart';
-import 'package:classeviva_lite/http_manager.dart';
+import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
+import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:flutter/material.dart';

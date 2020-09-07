@@ -1,7 +1,7 @@
-import 'package:classeviva_lite/classeviva.dart';
+import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
-import 'package:classeviva_lite/theme_manager.dart';
+import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
