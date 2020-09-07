@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/authentication_manager.dart';
+import 'package:classeviva_lite/cache_manager.dart';
 import 'package:classeviva_lite/classeviva.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
@@ -18,6 +19,8 @@ void main() async {
   await Hive.initFlutter();
 
   await Hive.openBox("preferences");
+
+  await CacheManager.initialize();
 
   Widget home;
 
