@@ -629,7 +629,7 @@ class ClasseViva
     );
 	}
 
-  Future<ClasseVivaProfile> getProfile() async {
+  Stream<ClasseVivaProfile> getProfile() async* {
     await checkValidSession();
 
     final ClasseVivaBasicProfile basicProfile = await getBasicProfile().first;
@@ -657,7 +657,7 @@ class ClasseViva
       return color;
     }
 
-		return ClasseVivaProfile(
+		yield ClasseVivaProfile(
       name: basicProfile.name,
       school: basicProfile.school,
       profilePic: CircleAvatar(

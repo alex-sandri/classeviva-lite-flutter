@@ -70,8 +70,8 @@ class _SessionsListState extends State<SessionsList> {
           itemBuilder: (context, index) {
             final ClasseViva session = ClasseViva(_sessions[index]);
 
-            return FutureBuilder<ClasseVivaProfile>(
-              future: session.getProfile(),
+            return StreamBuilder<ClasseVivaProfile>(
+              stream: session.getProfile(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
                   return Padding(
