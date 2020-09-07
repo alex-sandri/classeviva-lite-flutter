@@ -7,6 +7,14 @@ part 'ClasseVivaProfile.g.dart';
 @HiveType(typeId: 1)
 class ClasseVivaProfile extends ClasseVivaBasicProfile
 {
+  @override
+  @HiveField(0)
+  final String name;
+
+  @override
+  @HiveField(1)
+  final String school;
+
   @HiveField(2)
   final CircleAvatar profilePic;
 
@@ -14,8 +22,8 @@ class ClasseVivaProfile extends ClasseVivaBasicProfile
   final CircleAvatar avatar;
 
   ClasseVivaProfile({
-    @required String name,
-    @required String school,
+    @required this.name,
+    @required this.school,
     @required this.profilePic,
     @required this.avatar,
   }): super(
