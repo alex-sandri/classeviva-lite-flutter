@@ -597,12 +597,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-      _endpoints.basicProfile(),
+		final result = await HttpManager.get(
+      url: _endpoints.basicProfile(),
       headers: getSessionCookieHeader(),
     );
 
-    final document = parse(response.body);
+    if (result.isError) return;
+
+    final document = parse(result.response.body);
 
     final ClasseVivaBasicProfile basicProfile = ClasseVivaBasicProfile(
       name: document.querySelector(".name").text.trim(),
