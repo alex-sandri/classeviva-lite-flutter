@@ -655,8 +655,8 @@ class ClasseViva
         profilePicUrl: profilePicUrl.toString(),
         avatar: ClasseVivaProfileAvatar(
           text: document.querySelector(".iniziali_avatar").text.trim(),
-          backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
-          foregroundColor: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()),
+          backgroundColorValue: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()).value,
+          foregroundColorValue: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()).value,
         ),
       );
 
