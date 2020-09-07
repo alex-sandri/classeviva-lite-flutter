@@ -124,7 +124,7 @@ class _SessionsListState extends State<SessionsList> {
                       subtitle: Text(
                         "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
                       ),
-                      leading: snapshot.data.avatar,
+                      leading: snapshot.data.avatar.toWidget(),
                       onTap: () async {
                         if (await AuthenticationManager.authenticate())
                         {

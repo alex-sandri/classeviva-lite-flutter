@@ -5,6 +5,7 @@ import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
@@ -617,7 +618,7 @@ class ClasseViva
 	}
 
   Stream<ClasseVivaProfile> getProfile() async* {
-    yield CacheManager.get("profile");
+    CacheManager.delete("profile");
 
     await checkValidSession();
 
@@ -651,24 +652,11 @@ class ClasseViva
       final ClasseVivaProfile profile = ClasseVivaProfile(
         name: basicProfile.name,
         school: basicProfile.school,
-        profilePic: CircleAvatar(
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-            child: Image.network(
-              profilePicUrl.toString(),
-              height: 50,
-            ),
-          ),
-          backgroundColor: Colors.white,
-        ),
-        avatar: CircleAvatar(
-          child: Text(
-            document.querySelector(".iniziali_avatar").text.trim(),
-            style: TextStyle(
-              color: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()),
-            ),
-          ),
+        profilePicUrl: profilePicUrl.toString(),
+        avatar: ClasseVivaProfileAvatar(
+          text: document.querySelector(".iniziali_avatar").text.trim(),
           backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
+          foregroundColor: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()),
         ),
       );
 
