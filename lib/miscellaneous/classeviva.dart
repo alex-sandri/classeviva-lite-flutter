@@ -638,8 +638,6 @@ class ClasseViva
         headers: getSessionCookieHeader(),
       );
 
-      print(result.isError);
-
       if (result.isError) return;
 
       final document = parse(result.response.body);
