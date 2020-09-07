@@ -590,9 +590,9 @@ class ClasseViva
   }
 
 	Stream<ClasseVivaBasicProfile> getBasicProfile() async* {
-    await checkValidSession();
-
     yield CacheManager.get("basicProfile");
+
+    await checkValidSession();
 
 		final response = await http.get(
       _endpoints.basicProfile(),
