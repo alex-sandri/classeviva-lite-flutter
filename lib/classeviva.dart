@@ -631,10 +631,12 @@ class ClasseViva
 
     final document = parse(response.body);
 
-		yield ClasseVivaBasicProfile(
+    final ClasseVivaBasicProfile basicProfile = ClasseVivaBasicProfile(
       name: document.querySelector(".name").text.trim(),
 			school: document.querySelector(".scuola").text.trim(),
     );
+
+		yield basicProfile;
 	}
 
   Stream<ClasseVivaProfile> getProfile() async* {
@@ -665,7 +667,7 @@ class ClasseViva
       return color;
     }
 
-		yield ClasseVivaProfile(
+		final ClasseVivaProfile profile = ClasseVivaProfile(
       name: basicProfile.name,
       school: basicProfile.school,
       profilePic: CircleAvatar(
@@ -688,6 +690,8 @@ class ClasseViva
         backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
       ),
     );
+
+    yield profile;
 	}
 
   Future<List<ClasseVivaGrade>> getGrades() async {
