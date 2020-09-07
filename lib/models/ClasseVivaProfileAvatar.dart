@@ -4,10 +4,13 @@ import 'package:hive/hive.dart';
 @HiveType(typeId: 2)
 class ClasseVivaProfileAvatar
 {
+  @HiveField(0)
   final String text;
 
+  @HiveField(1)
   final Color backgroundColor;
 
+  @HiveField(2)
   final Color foregroundColor;
 
   ClasseVivaProfileAvatar({
