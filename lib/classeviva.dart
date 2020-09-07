@@ -621,23 +621,6 @@ class ClasseViva
 
     await checkValidSession();
 
-    final ClasseVivaBasicProfile basicProfile = await getBasicProfile().first;
-
-		final result = await HttpManager.get(
-      url: _endpoints.profile(),
-      headers: getSessionCookieHeader(),
-    );
-
-    if (result.isError) return;
-
-    final document = parse(result.response.body);
-
-    final Uri profilePicUrl = Uri
-      .parse(_endpoints.profile())
-      .resolve(
-        document.getElementById("top_page_foto_div").querySelector("img").attributes["src"]
-      );
-
     Color _getColorFromHexString(String hex) {
       Color color;
 
@@ -648,33 +631,53 @@ class ClasseViva
       return color;
     }
 
-		final ClasseVivaProfile profile = ClasseVivaProfile(
-      name: basicProfile.name,
-      school: basicProfile.school,
-      profilePic: CircleAvatar(
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-          child: Image.network(
-            profilePicUrl.toString(),
-            height: 50,
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      avatar: CircleAvatar(
-        child: Text(
-          document.querySelector(".iniziali_avatar").text.trim(),
-          style: TextStyle(
-            color: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()),
-          ),
-        ),
-        backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
-      ),
-    );
+    await for (ClasseVivaBasicProfile basicProfile in getBasicProfile())
+    {
+      final result = await HttpManager.get(
+        url: _endpoints.profile(),
+        headers: getSessionCookieHeader(),
+      );
 
-    CacheManager.set("profile", profile);
+      print(result.isError);
 
-    yield profile;
+      if (result.isError) return;
+
+      final document = parse(result.response.body);
+
+      final Uri profilePicUrl = Uri
+        .parse(_endpoints.profile())
+        .resolve(
+          document.getElementById("top_page_foto_div").querySelector("img").attributes["src"]
+        );
+
+      final ClasseVivaProfile profile = ClasseVivaProfile(
+        name: basicProfile.name,
+        school: basicProfile.school,
+        profilePic: CircleAvatar(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            child: Image.network(
+              profilePicUrl.toString(),
+              height: 50,
+            ),
+          ),
+          backgroundColor: Colors.white,
+        ),
+        avatar: CircleAvatar(
+          child: Text(
+            document.querySelector(".iniziali_avatar").text.trim(),
+            style: TextStyle(
+              color: _getColorFromHexString(document.querySelector(".iniziali_colore").attributes["value"].trim()),
+            ),
+          ),
+          backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
+        ),
+      );
+
+      CacheManager.set("profile", profile);
+
+      yield profile;
+    }
 	}
 
   Future<List<ClasseVivaGrade>> getGrades() async {
