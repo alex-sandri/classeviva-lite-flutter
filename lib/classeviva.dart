@@ -170,9 +170,13 @@ class ClasseVivaSession
   );
 }
 
+@HiveType(typeId: 0)
 class ClasseVivaBasicProfile
 {
+  @HiveField(0)
   final String name;
+
+  @HiveField(1)
   final String school;
 
   ClasseVivaBasicProfile({
@@ -181,9 +185,13 @@ class ClasseVivaBasicProfile
   });
 }
 
+@HiveType(typeId: 1)
 class ClasseVivaProfile extends ClasseVivaBasicProfile
 {
+  @HiveField(0)
   final CircleAvatar profilePic;
+
+  @HiveField(1)
   final CircleAvatar avatar;
 
   ClasseVivaProfile({
