@@ -617,16 +617,20 @@ class ClasseViva
 	}
 
   Stream<ClasseVivaProfile> getProfile() async* {
+    yield CacheManager.get("profile");
+
     await checkValidSession();
 
     final ClasseVivaBasicProfile basicProfile = await getBasicProfile().first;
 
-		final response = await http.get(
-      _endpoints.profile(),
+		final result = await HttpManager.get(
+      url: _endpoints.profile(),
       headers: getSessionCookieHeader(),
     );
 
-    final document = parse(response.body);
+    if (result.isError) return;
+
+    final document = parse(result.response.body);
 
     final Uri profilePicUrl = Uri
       .parse(_endpoints.profile())
@@ -667,6 +671,8 @@ class ClasseViva
         backgroundColor: _getColorFromHexString(document.querySelector(".iniziali_sfondo").attributes["value"].trim()),
       ),
     );
+
+    CacheManager.set("profile", profile);
 
     yield profile;
 	}
