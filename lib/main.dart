@@ -3,6 +3,7 @@ import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
@@ -22,6 +23,7 @@ void main() async {
 
   Hive.registerAdapter(ClasseVivaBasicProfileAdapter());
   Hive.registerAdapter(ClasseVivaProfileAdapter());
+  Hive.registerAdapter(ClasseVivaProfileAvatarAdapter());
 
   await Hive.openBox("preferences");
 

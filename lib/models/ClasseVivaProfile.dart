@@ -1,18 +1,15 @@
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'ClasseVivaBasicProfile.dart';
 
 part 'ClasseVivaProfile.g.dart';
 
 @HiveType(typeId: 1)
-class ClasseVivaProfile extends ClasseVivaBasicProfile
+class ClasseVivaProfile
 {
-  @override
   @HiveField(0)
   final String name;
 
-  @override
   @HiveField(1)
   final String school;
 
@@ -27,10 +24,7 @@ class ClasseVivaProfile extends ClasseVivaBasicProfile
     @required this.school,
     @required this.profilePicUrl,
     @required this.avatar,
-  }): super(
-    name: name,
-    school: school,
-  );
+  });
 
   Widget get profilePic => CircleAvatar(
     child: ClipRRect(
