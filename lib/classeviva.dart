@@ -613,7 +613,7 @@ class ClasseViva
     if (document.querySelector(".name") == null) await session.refresh();
   }
 
-	Future<ClasseVivaBasicProfile> getBasicProfile() async {
+	Stream<ClasseVivaBasicProfile> getBasicProfile() async* {
     await checkValidSession();
 
 		final response = await http.get(
@@ -623,7 +623,7 @@ class ClasseViva
 
     final document = parse(response.body);
 
-		return ClasseVivaBasicProfile(
+		yield ClasseVivaBasicProfile(
       name: document.querySelector(".name").text.trim(),
 			school: document.querySelector(".scuola").text.trim(),
     );
@@ -632,7 +632,7 @@ class ClasseViva
   Future<ClasseVivaProfile> getProfile() async {
     await checkValidSession();
 
-    final ClasseVivaBasicProfile basicProfile = await getBasicProfile();
+    final ClasseVivaBasicProfile basicProfile = await getBasicProfile().first;
 
 		final response = await http.get(
       _endpoints.profile(),

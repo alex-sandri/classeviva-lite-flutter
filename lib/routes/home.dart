@@ -66,8 +66,8 @@ class _HomeState extends State<Home> {
               ListView(
                 padding: EdgeInsets.all(15),
                 children: <Widget>[
-                  FutureBuilder<ClasseVivaBasicProfile>(
-                    future: _session.getBasicProfile(),
+                  StreamBuilder<ClasseVivaBasicProfile>(
+                    stream: _session.getBasicProfile(),
                     builder: (context, profile) {
                       if (!profile.hasData)
                         return SkeletonAnimation(
