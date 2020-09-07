@@ -15,10 +15,8 @@ class ClasseVivaProfile extends ClasseVivaBasicProfile
   @HiveField(1)
   final String school;
 
-  @HiveField(2)
   final CircleAvatar profilePic;
 
-  @HiveField(3)
   final CircleAvatar avatar;
 
   ClasseVivaProfile({
