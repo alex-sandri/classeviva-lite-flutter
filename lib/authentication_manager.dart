@@ -3,9 +3,9 @@ import 'package:local_auth/local_auth.dart';
 
 class AuthenticationManager
 {
-  bool get isAuthenticationEnabled => Hive.box("preferences").get("appLockEnabled") ?? false;
+  static bool get isAuthenticationEnabled => Hive.box("preferences").get("appLockEnabled") ?? false;
 
-  set isAuthenticationEnabled(bool enabled) => Hive.box("preferences").put("appLockEnabled", enabled);
+  static set isAuthenticationEnabled(bool enabled) => Hive.box("preferences").put("appLockEnabled", enabled);
 
   static Future<bool> authenticate() async {
     final LocalAuthentication localAuthentication = LocalAuthentication();
