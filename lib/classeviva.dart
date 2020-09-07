@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:classeviva_lite/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
@@ -624,6 +625,8 @@ class ClasseViva
 	Stream<ClasseVivaBasicProfile> getBasicProfile() async* {
     await checkValidSession();
 
+    yield CacheManager.get("basicProfile");
+
 		final response = await http.get(
       _endpoints.basicProfile(),
       headers: getSessionCookieHeader(),
@@ -635,6 +638,8 @@ class ClasseViva
       name: document.querySelector(".name").text.trim(),
 			school: document.querySelector(".scuola").text.trim(),
     );
+
+    CacheManager.set("basicProfile", basicProfile);
 
 		yield basicProfile;
 	}
