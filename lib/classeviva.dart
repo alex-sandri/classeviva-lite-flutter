@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:classeviva_lite/cache_manager.dart';
+import 'package:classeviva_lite/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:flutter/material.dart';
@@ -579,8 +580,8 @@ class ClasseViva
   }
 
   Future<void> checkValidSession() async {
-    final response = await http.get(
-      _endpoints.basicProfile(),
+    final response = await HttpManager.get(
+      url: _endpoints.basicProfile(),
       headers: getSessionCookieHeader(),
     );
 
