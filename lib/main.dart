@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -17,6 +18,15 @@ void main() async {
   await Hive.initFlutter();
 
   await Hive.openBox("preferences");
+
+  if (Hive.box("preferences").get("appLockEnabled") ?? false)
+  {
+    final LocalAuthentication localAuthentication = LocalAuthentication();
+
+    bool didAuthenticate = await localAuthentication.authenticateWithBiometrics(
+      localizedReason: "Accedi"
+    );
+  }
 
   runApp(
     MultiProvider(
