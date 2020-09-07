@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+part 'ClasseVivaProfileAvatar.g.dart';
+
 @HiveType(typeId: 2)
 class ClasseVivaProfileAvatar
 {
