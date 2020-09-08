@@ -149,7 +149,7 @@ class ClasseVivaSession
     );
   }
 
-  void signOut() {
+  Future<void> signOut() async {
     final Box preferences = Hive.box("preferences");
 
     final ClasseVivaSession currentSession = ClasseViva.getCurrentSession();
@@ -158,12 +158,12 @@ class ClasseVivaSession
 
     sessions.removeWhere((session) => session.id == this.id);
 
-    preferences.put("sessions", sessions.map((session) => session.toString()).toList());
+    await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
 
     if (currentSession?.id == this.id)
-      preferences.delete("currentSession");
+      await preferences.delete("currentSession");
 
-    CacheManager.empty();
+    await CacheManager.empty();
   }
 
   @override
