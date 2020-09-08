@@ -52,9 +52,9 @@ class _SessionsListState extends State<SessionsList> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
-              onPressed: () {
+              onPressed: () async {
                 for (int i = 0; i < _sessions.length; i++)
-                  _sessions[i].signOut();
+                  await _sessions[i].signOut();
 
                 Get.offAll(SignIn());
               },
@@ -96,10 +96,10 @@ class _SessionsListState extends State<SessionsList> {
                   margin: EdgeInsets.symmetric(vertical: 4),
                   child: Dismissible(
                     key: ValueKey(_sessions[index]),
-                    onDismissed: (direction) {
+                    onDismissed: (direction) async {
                       final bool isCurrentSession = ClasseViva.isSignedIn() && ClasseViva.getCurrentSession().id == _sessions[index].id;
 
-                      _sessions[index].signOut();
+                      await _sessions[index].signOut();
 
                       _sessions.removeAt(index);
 

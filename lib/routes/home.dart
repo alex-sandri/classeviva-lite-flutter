@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.exit_to_app),
               tooltip: "Esci",
               onPressed: () async {
-                _session.session.signOut();
+                await _session.session.signOut();
 
                 Get.offAll(SignIn());
               },
