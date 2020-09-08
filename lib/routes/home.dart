@@ -278,6 +278,8 @@ class _HomeState extends State<Home> {
                   "Anno Precedente",
                 ),
                 onTap: () async {
+                  Get.back();
+
                   setState(() {
                     _showLoadingSpinner = true;
                   });
