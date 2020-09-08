@@ -25,8 +25,6 @@ class _AttachmentsState extends State<Attachments> {
 
   bool _showLoadMoreButton = true;
 
-  bool _showLoadMoreSpinner = false;
-
   ReceivePort _port = ReceivePort();
 
   Future<void> _handleRefresh() async {
@@ -40,10 +38,15 @@ class _AttachmentsState extends State<Attachments> {
       });
   }
 
+  bool _loading = false;
+
   Future<void> _loadMore() async {
+    if (_loading) return;
+
     setState(() {
+      _loading = true;
+
       _showLoadMoreButton = false;
-      _showLoadMoreSpinner = true;
     });
 
     _session.attachmentsPage++;
@@ -52,10 +55,11 @@ class _AttachmentsState extends State<Attachments> {
 
     if (mounted)
       setState(() {
+        _loading = false;
+
         _attachments.addAll(attachments);
 
         _showLoadMoreButton = attachments.isNotEmpty;
-        _showLoadMoreSpinner = false;
       });
   }
 
@@ -131,7 +135,7 @@ class _AttachmentsState extends State<Attachments> {
 
                           if (index == _attachments.length)
                           {
-                            if (_showLoadMoreSpinner)
+                            if (_loading)
                               return Padding(
                                 padding: EdgeInsets.all(4),
                                 child: Spinner(),
