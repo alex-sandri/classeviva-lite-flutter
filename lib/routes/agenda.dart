@@ -58,6 +58,7 @@ class _AgendaState extends State<Agenda> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.calendar_today),
+              tooltip: "Cambia periodo",
               onPressed: () async {
                 final DateTimeRange selectedDateRange = await showDateRangePicker(
                   context: context,

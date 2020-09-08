@@ -47,6 +47,7 @@ class _CalendarState extends State<Calendar> {
           actions: [
             IconButton(
               icon: Icon(Icons.calendar_today),
+              tooltip: "Cambia giorno",
               onPressed: () async {
                 final DateTime selectedDate = await showDatePicker(
                   context: context,
@@ -83,6 +84,7 @@ class _CalendarState extends State<Calendar> {
                           icon: Icon(
                             Icons.chevron_left,
                           ),
+                          tooltip: "Giorno precedente",
                           onPressed: () {
                             _date = _date.subtract(Duration(days: 1));
 
@@ -98,6 +100,7 @@ class _CalendarState extends State<Calendar> {
                           icon: Icon(
                             Icons.chevron_right,
                           ),
+                          tooltip: "Giorno successivo",
                           onPressed: () {
                             _date = _date.add(Duration(days: 1));
 
