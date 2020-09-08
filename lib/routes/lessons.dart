@@ -90,9 +90,6 @@ class _LessonsState extends State<Lessons> {
                                       return ListTile(
                                         title: SelectableText(
                                           lesson.description,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                          ),
                                         ),
                                         subtitle: SelectableText(
                                           DateFormat.yMMMMd().format(lesson.date),
