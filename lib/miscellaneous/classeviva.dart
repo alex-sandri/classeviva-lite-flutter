@@ -1087,7 +1087,14 @@ class ClasseViva
       if (jsonResponse["read"] != null) responseItems.addAll(jsonResponse["read"]);
     }
 
-		return responseItems.map((item) => ClasseVivaBulletinBoardItem.fromJson(item)).toList();
+    List<ClasseVivaBulletinBoardItem> items = responseItems.map((item) => ClasseVivaBulletinBoardItem.fromJson(item)).toList();
+
+    items.sort((a, b) {
+      // Most recent first
+      return b.evento_data.compareTo(a.evento_data);
+    });
+
+		return items;
 	}
 
   Future<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async {
