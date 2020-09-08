@@ -152,9 +152,7 @@ class _AttachmentsState extends State<Attachments> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.zero,
                               ),
-                              onPressed: () async {
-                                
-                              },
+                              onPressed: _loadMore,
                             );
                           }
 
