@@ -73,7 +73,6 @@ class _LessonsState extends State<Lessons> {
                                 color: ThemeManager.isLightTheme(context)
                                   ? Colors.black
                                   : Colors.white,
-                                fontWeight: FontWeight.w900,
                               ),
                             ),
                             children: [
