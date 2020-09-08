@@ -45,7 +45,10 @@ class _BulletinBoardState extends State<BulletinBoard> {
               icon: Icon(Icons.search),
               tooltip: "Cerca",
               onPressed: () {
-                // TODO
+                showSearch(
+                  context: context,
+                  delegate: BulletinBoardSearchDelegate(),
+                );
               },
             )
           ],
@@ -134,5 +137,49 @@ class _BulletinBoardState extends State<BulletinBoard> {
         ),
       ),
     );
+  }
+}
+
+class BulletinBoardSearchDelegate extends SearchDelegate
+{
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context).copyWith(
+      primaryColor: Theme.of(context).appBarTheme.color,
+    );
+
+    return theme;
+  }
+  
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.close),
+        tooltip: "Cancella",
+        onPressed: () {
+          query = "";
+        },
+      )
+    ];
+  }
+  
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      tooltip: "Indietro",
+      onPressed: () => Navigator.of(context).pop(),
+    );
+  }
+  
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO
+  }
+  
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return ListView();
   }
 }
