@@ -120,39 +120,37 @@ class _AttachmentsState extends State<Attachments> {
 
                             if (!_showLoadMoreButton) return Container();
 
-                            return Padding(
-                              padding: EdgeInsets.all(4),
-                              child: FlatButton(
-                                color: Theme.of(context).appBarTheme.color,
-                                padding: EdgeInsets.all(15),
-                                child: Text(
-                                  "Carica più elementi",
-                                  style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                  ),
+                            return FlatButton(
+                              color: Theme.of(context).appBarTheme.color,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              padding: EdgeInsets.all(15),
+                              child: Text(
+                                "Carica più elementi",
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                                ),
-                                onPressed: () async {
-                                  setState(() {
-                                    _showLoadMoreButton = false;
-                                    _showLoadMoreSpinner = true;
-                                  });
-
-                                  _session.attachmentsPage++;
-
-                                  final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
-
-                                  if (mounted)
-                                    setState(() {
-                                      _attachments.addAll(attachments);
-
-                                      _showLoadMoreButton = attachments.isNotEmpty;
-                                      _showLoadMoreSpinner = false;
-                                    });
-                                },
                               ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                              onPressed: () async {
+                                setState(() {
+                                  _showLoadMoreButton = false;
+                                  _showLoadMoreSpinner = true;
+                                });
+
+                                _session.attachmentsPage++;
+
+                                final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
+
+                                if (mounted)
+                                  setState(() {
+                                    _attachments.addAll(attachments);
+
+                                    _showLoadMoreButton = attachments.isNotEmpty;
+                                    _showLoadMoreSpinner = false;
+                                  });
+                              },
                             );
                           }
 
