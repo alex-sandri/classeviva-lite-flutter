@@ -40,6 +40,7 @@ dependencies:
   local_auth: ^0.6.3+1
   hive_generator: ^0.7.1
   build_runner: ^1.10.1
+  cache_image: ^1.0.5
   flutter:
     sdk: flutter
   flutter_localizations:

@@ -1,3 +1,4 @@
+import 'package:cache_image/cache_image.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -29,8 +30,8 @@ class ClasseVivaProfile
   Widget get profilePic => CircleAvatar(
     child: ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(50)),
-      child: Image.network(
-        profilePicUrl.toString(),
+      child: Image(
+        image: CacheImage(profilePicUrl.toString()),
         height: 50,
       ),
     ),
