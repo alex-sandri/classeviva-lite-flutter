@@ -40,6 +40,25 @@ class _AttachmentsState extends State<Attachments> {
       });
   }
 
+  Future<void> _loadMore() async {
+    setState(() {
+      _showLoadMoreButton = false;
+      _showLoadMoreSpinner = true;
+    });
+
+    _session.attachmentsPage++;
+
+    final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
+
+    if (mounted)
+      setState(() {
+        _attachments.addAll(attachments);
+
+        _showLoadMoreButton = attachments.isNotEmpty;
+        _showLoadMoreSpinner = false;
+      });
+  }
+
   Future<void> _requestPermission() async {
     PermissionStatus permission = await Permission.storage.status;
 
@@ -134,22 +153,7 @@ class _AttachmentsState extends State<Attachments> {
                                 borderRadius: BorderRadius.zero,
                               ),
                               onPressed: () async {
-                                setState(() {
-                                  _showLoadMoreButton = false;
-                                  _showLoadMoreSpinner = true;
-                                });
-
-                                _session.attachmentsPage++;
-
-                                final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
-
-                                if (mounted)
-                                  setState(() {
-                                    _attachments.addAll(attachments);
-
-                                    _showLoadMoreButton = attachments.isNotEmpty;
-                                    _showLoadMoreSpinner = false;
-                                  });
+                                
                               },
                             );
                           }
