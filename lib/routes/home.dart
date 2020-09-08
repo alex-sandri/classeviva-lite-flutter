@@ -262,57 +262,6 @@ class _HomeState extends State<Home> {
                         onTap: () => Get.to(Books()),
                       ),
                     ),
-
-                  Divider(
-                    color: Theme.of(context).accentColor,
-                    thickness: 2,
-                    indent: 4,
-                    endIndent: 4,
-                  ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.skip_previous,
-                      ),
-                      title: Text(
-                        "Anno Precedente",
-                      ),
-                      onTap: () async {
-                        setState(() {
-                          _showLoadingSpinner = true;
-                        });
-
-                        await ClasseViva.createSession(
-                          _session.session.uid,
-                          _session.session.pwd,
-                          year: (int.parse(_session.getShortYear(false)) - 1).toString(),
-                        );
-
-                        Get.offAll(Home());
-                      },
-                    ),
-                  ),
-                  Divider(
-                    color: Theme.of(context).accentColor,
-                    thickness: 2,
-                    indent: 4,
-                    endIndent: 4,
-                  ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.language,
-                      ),
-                      title: Text(
-                        "ClasseViva Web",
-                      ),
-                      onTap: () => Get.to(ClasseVivaWebview(
-                        session: _session,
-                        title: "ClasseViva Web",
-                        url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
-                      )),
-                    ),
-                  ),
                 ],
           ),
         ),
@@ -321,6 +270,41 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               HomeDrawerHeader(_session),
+              ListTile(
+                leading: Icon(
+                  Icons.skip_previous,
+                ),
+                title: Text(
+                  "Anno Precedente",
+                ),
+                onTap: () async {
+                  setState(() {
+                    _showLoadingSpinner = true;
+                  });
+
+                  await ClasseViva.createSession(
+                    _session.session.uid,
+                    _session.session.pwd,
+                    year: (int.parse(_session.getShortYear(false)) - 1).toString(),
+                  );
+
+                  Get.offAll(Home());
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.language,
+                ),
+                title: Text(
+                  "ClasseViva Web",
+                ),
+                onTap: () => Get.to(ClasseVivaWebview(
+                  session: _session,
+                  title: "ClasseViva Web",
+                  url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
+                )),
+              ),
+              Divider(),
               ListTile(
                 leading: Icon(
                   Icons.add,
