@@ -85,8 +85,13 @@ class _LessonsState extends State<Lessons> {
                                       child: Spinner(),
                                     );
 
-                                  return Column(
-                                    children: lessons.data.map((lesson) {
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: lessons.data.length,
+                                    itemBuilder: (context, index) {
+                                      final ClasseVivaLesson lesson = lessons.data[index];
+
                                       return ListTile(
                                         title: SelectableText(
                                           lesson.description,
@@ -95,7 +100,7 @@ class _LessonsState extends State<Lessons> {
                                           DateFormat.yMMMMd().format(lesson.date),
                                         ),
                                       );
-                                    }).toList(),
+                                    },
                                   );
                                 },
                               )
