@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/about.dart';
@@ -46,6 +47,8 @@ class _HomeState extends State<Home> {
               tooltip: "Esci",
               onPressed: () async {
                 await _session.session.signOut();
+
+                await CacheManager.empty();
 
                 Get.offAll(SignIn());
               },

@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
+import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/home.dart';
@@ -56,6 +57,8 @@ class _SessionsListState extends State<SessionsList> {
                 for (int i = 0; i < _sessions.length; i++)
                   await _sessions[i].signOut();
 
+                await CacheManager.empty();
+
                 Get.offAll(SignIn());
               },
             ),
@@ -107,7 +110,12 @@ class _SessionsListState extends State<SessionsList> {
                         .of(context)
                         .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
 
-                      if (isCurrentSession) Get.offAll(SignIn());
+                      if (isCurrentSession)
+                      {
+                        await CacheManager.empty();
+
+                        Get.offAll(SignIn());
+                      }
                       else setState(() {});
                     },
                     background: Container(
