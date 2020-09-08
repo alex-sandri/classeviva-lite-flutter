@@ -43,6 +43,15 @@ class _BulletinBoardState extends State<BulletinBoard> {
           title: Text(
             'Bacheca'
           ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              tooltip: "Cerca",
+              onPressed: () {
+                // TODO
+              },
+            )
+          ],
         ),
         body: GestureDetector(
           onTap: () {
