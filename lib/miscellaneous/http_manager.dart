@@ -18,7 +18,7 @@ class HttpManager
     {
       isError = true;
 
-      Get.rawSnackbar(message: "Errore");
+      Get.rawSnackbar(message: "Nessuna connessione a Internet");
     }
 
     return HttpManagerResult(
