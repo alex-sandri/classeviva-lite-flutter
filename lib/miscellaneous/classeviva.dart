@@ -634,6 +634,8 @@ class ClasseViva
 
     await for (ClasseVivaBasicProfile basicProfile in getBasicProfile())
     {
+      if (basicProfile == null) continue;
+
       final result = await HttpManager.get(
         url: _endpoints.profile(),
         headers: getSessionCookieHeader(),
