@@ -15,6 +15,8 @@ class _BulletinBoardState extends State<BulletinBoard> {
 
   List<ClasseVivaBulletinBoardItem> _items;
 
+  bool _hideInactive = true;
+
   Future<void> _handleRefresh() async {
     final List<ClasseVivaBulletinBoardItem> items = await _session.getBulletinBoard();
 
@@ -63,9 +65,27 @@ class _BulletinBoardState extends State<BulletinBoard> {
               ListTile(
                 title: Text("Nascondi comunicazioni non attive"),
                 trailing: Switch(
-                  value: true,
-                  onChanged: (checked) {
-                    // TODO
+                  value: _hideInactive,
+                  onChanged: (checked) async {
+                    setState(() {
+                      _items = null;
+
+                      _hideInactive = checked;
+                    });
+
+                    final List<ClasseVivaBulletinBoardItem> items = await _session.getBulletinBoard(
+                      hideInactive: checked,
+                    );
+
+                    items.sort((a, b) {
+                      // Most recent first
+                      return b.evento_data.compareTo(a.evento_data);
+                    });
+
+                    if (mounted)
+                      setState(() {
+                        _items = items;
+                      });
                   },
                 ),
               ),
