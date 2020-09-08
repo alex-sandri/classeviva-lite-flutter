@@ -614,7 +614,7 @@ class ClasseViva
 			school: document.querySelector(".scuola").text.trim(),
     );
 
-    CacheManager.set("basicProfile", basicProfile);
+    await CacheManager.set("basicProfile", basicProfile);
 
 		yield basicProfile;
 	}
@@ -662,7 +662,7 @@ class ClasseViva
         ),
       );
 
-      CacheManager.set("profile", profile);
+      await CacheManager.set("profile", profile);
 
       yield profile;
     }
