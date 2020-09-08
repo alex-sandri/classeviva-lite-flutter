@@ -17,13 +17,21 @@ class _BulletinBoardState extends State<BulletinBoard> {
 
   bool _hideInactive = true;
 
-  Future<void> _handleRefresh() async {
-    final List<ClasseVivaBulletinBoardItem> items = await _session.getBulletinBoard();
+  Future<List<ClasseVivaBulletinBoardItem>> _getItems({ bool hideInactive = true }) async {
+    final List<ClasseVivaBulletinBoardItem> items = await _session.getBulletinBoard(
+      hideInactive: hideInactive,
+    );
 
     items.sort((a, b) {
       // Most recent first
       return b.evento_data.compareTo(a.evento_data);
     });
+
+    return items;
+  }
+
+  Future<void> _handleRefresh() async {
+    final List<ClasseVivaBulletinBoardItem> items = await _getItems(hideInactive: _hideInactive);
 
     if (mounted)
       setState(() {
@@ -73,14 +81,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
                       _hideInactive = checked;
                     });
 
-                    final List<ClasseVivaBulletinBoardItem> items = await _session.getBulletinBoard(
-                      hideInactive: checked,
-                    );
-
-                    items.sort((a, b) {
-                      // Most recent first
-                      return b.evento_data.compareTo(a.evento_data);
-                    });
+                    final List<ClasseVivaBulletinBoardItem> items = await _getItems(hideInactive: checked);
 
                     if (mounted)
                       setState(() {
