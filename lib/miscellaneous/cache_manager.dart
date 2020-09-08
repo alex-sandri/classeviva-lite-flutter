@@ -10,5 +10,11 @@ class CacheManager
 
   static void delete(String key) => _box.delete(key);
 
+  static Future<void> empty() async {
+    await _box.deleteFromDisk();
+
+    await CacheManager.initialize();
+  }
+
   static Future<void> initialize() async => _box = await Hive.openBox("cache");
 }
