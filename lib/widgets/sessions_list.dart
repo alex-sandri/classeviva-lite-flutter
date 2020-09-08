@@ -126,7 +126,11 @@ class _SessionsListState extends State<SessionsList> {
                       ),
                       leading: snapshot.data.avatar.toWidget(),
                       onTap: () async {
-                        if (await AuthenticationManager.authenticate())
+                        bool success = AuthenticationManager.isAuthenticationEnabled
+                          ? await AuthenticationManager.authenticate()
+                          : true;
+
+                        if (success)
                         {
                           ClasseViva.setCurrentSession(_sessions[index]);
 
