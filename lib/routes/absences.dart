@@ -90,9 +90,6 @@ class _AbsencesState extends State<Absences> {
                         return ListTile(
                           title: SelectableText(
                             type,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                            ),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
