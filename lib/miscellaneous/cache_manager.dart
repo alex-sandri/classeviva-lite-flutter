@@ -6,7 +6,7 @@ class CacheManager
 
   static dynamic get(String key) => _box.get(key);
 
-  static void set(String key, dynamic value) => _box.put(key, value);
+  static Future<void> set(String key, dynamic value) => _box.put(key, value);
 
   static Future<void> delete(String key) => _box.delete(key);
 
