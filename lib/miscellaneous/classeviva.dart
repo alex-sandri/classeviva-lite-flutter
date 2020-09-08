@@ -162,6 +162,8 @@ class ClasseVivaSession
 
     if (currentSession?.id == this.id)
       preferences.delete("currentSession");
+
+    CacheManager.empty();
   }
 
   @override
