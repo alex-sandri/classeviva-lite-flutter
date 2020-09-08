@@ -337,6 +337,7 @@ class _HomeState extends State<Home> {
                 ),
                 onTap: () => Get.to(Settings()),
               ),
+              Divider(),
               ListTile(
                 leading: Icon(
                   Icons.info,
