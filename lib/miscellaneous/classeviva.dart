@@ -109,10 +109,10 @@ class ClasseVivaSession
 
     sessions.firstWhere((session) => session.id == this.id)._id = refreshedSession.id;
 
-    preferences.put("sessions", sessions.map((session) => session.toString()).toList());
+    await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
 
     if (currentSession?.id == this.id)
-      preferences.put("currentSession", refreshedSession.toString());
+      await preferences.put("currentSession", refreshedSession.toString());
 
     _id = refreshedSession.id;
   }
@@ -1236,23 +1236,23 @@ class ClasseViva
       year: year
     );
 
-    ClasseViva.addSession(session);
+    await ClasseViva.addSession(session);
 
-    ClasseViva.setCurrentSession(session);
+    await ClasseViva.setCurrentSession(session);
 
 		return ClasseViva(session);
 	}
 
   static bool isSignedIn() => ClasseViva.getCurrentSession() != null;
 
-  static void addSession(ClasseVivaSession session) {
+  static Future<void> addSession(ClasseVivaSession session) async {
     final Box preferences = Hive.box("preferences");
 
     final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
     sessions.add(session);
 
-    preferences.put("sessions", sessions.map((session) => session.toString()).toList());
+    await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
   }
 
   static ClasseVivaSession getCurrentSession() {
@@ -1265,10 +1265,10 @@ class ClasseViva
     return ClasseVivaSession.fromString(session);
   }
 
-  static void setCurrentSession(ClasseVivaSession session) {
+  static Future<void> setCurrentSession(ClasseVivaSession session) async {
     final Box preferences = Hive.box("preferences");
 
-    preferences.put("currentSession", session.toString());
+    await preferences.put("currentSession", session.toString());
   }
 
   static List<ClasseVivaSession> getAllSessions() {

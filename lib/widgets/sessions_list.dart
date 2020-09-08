@@ -140,7 +140,7 @@ class _SessionsListState extends State<SessionsList> {
 
                         if (success)
                         {
-                          ClasseViva.setCurrentSession(_sessions[index]);
+                          await ClasseViva.setCurrentSession(_sessions[index]);
 
                           Get.offAll(Home());
                         }
