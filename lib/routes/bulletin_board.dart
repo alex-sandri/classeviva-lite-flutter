@@ -167,7 +167,7 @@ class BulletinBoardSearchDelegate extends SearchDelegate
       primaryColor: theme.appBarTheme.color,
       textTheme: theme.primaryTextTheme.copyWith(
         headline6: theme.primaryTextTheme.headline6.copyWith(
-          color: Colors.white
+          color: Colors.white,
         ),
       ),
     );
