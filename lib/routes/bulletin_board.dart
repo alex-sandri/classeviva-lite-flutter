@@ -161,16 +161,16 @@ class BulletinBoardSearchDelegate extends SearchDelegate
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context).copyWith(
-      primaryColor: Theme.of(context).appBarTheme.color,
-      textTheme: Theme.of(context).primaryTextTheme.copyWith(
-        headline6: Theme.of(context).primaryTextTheme.headline6.copyWith(
+    final ThemeData theme = Theme.of(context);
+
+    return theme.copyWith(
+      primaryColor: theme.appBarTheme.color,
+      textTheme: theme.primaryTextTheme.copyWith(
+        headline6: theme.primaryTextTheme.headline6.copyWith(
           color: Colors.white
         ),
       ),
     );
-
-    return theme;
   }
   
   @override
