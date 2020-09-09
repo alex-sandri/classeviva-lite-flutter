@@ -84,59 +84,70 @@ class _BulletinBoardState extends State<BulletinBoard> {
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _items == null
-                  ? Spinner()
-                  : ListView.builder(
-                      itemCount: _items.length + 1,
-                      itemBuilder: (context, index) {
-                        if (_items.isEmpty)
-                          return SelectableText(
-                            "Non sono presenti elementi in bacheca",
-                            textAlign: TextAlign.center,
-                          );
-
-                        if (index == _items.length) return Container();
-
-                        final ClasseVivaBulletinBoardItem item = _items[index];
-
-                        return Card(
-                          child: ListTile(
-                            onTap: () => Get.to(BulletinBoardItem(item)),
-                            trailing: Icon(
-                              item.conf_lettura
-                                ? Icons.mail
-                                : Icons.drafts,
-                              color: item.conf_lettura
-                                ? Colors.green
-                                : Colors.red,
-                            ),
-                            title: Text(
-                              item.titolo,
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(height: 5,),
-                                Text(
-                                  DateFormat.yMMMMd().format(item.evento_data),
-                                ),
-                                SizedBox(height: 5,),
-                                Text(
-                                  item.tipo_com_desc,
-                                ),
-                              ],
-                            )
-                          ),
-                        );
-                      },
-                    ),
-                )
+                  child: BulletinBoardItemsListView(_items),
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class BulletinBoardItemsListView extends StatelessWidget {
+  final List<ClasseVivaBulletinBoardItem> _items;
+
+  BulletinBoardItemsListView(this._items);
+
+  @override
+  Widget build(BuildContext context) {
+    return _items == null
+      ? Spinner()
+      : ListView.builder(
+          itemCount: _items.length + 1,
+          itemBuilder: (context, index) {
+            if (_items.isEmpty)
+              return SelectableText(
+                "Non sono presenti elementi in bacheca",
+                textAlign: TextAlign.center,
+              );
+
+            if (index == _items.length) return Container();
+
+            final ClasseVivaBulletinBoardItem item = _items[index];
+
+            return Card(
+              child: ListTile(
+                onTap: () => Get.to(BulletinBoardItem(item)),
+                trailing: Icon(
+                  item.conf_lettura
+                    ? Icons.mail
+                    : Icons.drafts,
+                  color: item.conf_lettura
+                    ? Colors.green
+                    : Colors.red,
+                ),
+                title: Text(
+                  item.titolo,
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 5,),
+                    Text(
+                      DateFormat.yMMMMd().format(item.evento_data),
+                    ),
+                    SizedBox(height: 5,),
+                    Text(
+                      item.tipo_com_desc,
+                    ),
+                  ],
+                )
+              ),
+            );
+          },
+        );
   }
 }
 
