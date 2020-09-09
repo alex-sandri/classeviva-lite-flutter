@@ -56,7 +56,7 @@ class ClasseVivaEndpoints
 
   String lessons(String subjectId, List<String> teacherIds) => "$baseUrl/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 
-  String bulletinBoard(bool hideInactive) => "$baseUrl/sif/app/default/bacheca_personale.php?action=get_comunicazioni&ncna=${hideInactive ? "1" : "0"}";
+  String bulletinBoard(String query, bool hideInactive) => "$baseUrl/sif/app/default/bacheca_personale.php?action=get_comunicazioni&cerca=$query&ncna=${hideInactive ? "1" : "0"}";
 
   String bulletinBoardItemDetails(String id) => "$baseUrl/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
@@ -1068,11 +1068,11 @@ class ClasseViva
 		return lessons;
 	}
 
-  Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard({ bool hideInactive = true }) async {
+  Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard({ String query = "", bool hideInactive = true }) async {
     await checkValidSession();
 
 		final response = await http.get(
-			_endpoints.bulletinBoard(hideInactive),
+			_endpoints.bulletinBoard(query, hideInactive),
       headers: getSessionCookieHeader(),
     );
 
