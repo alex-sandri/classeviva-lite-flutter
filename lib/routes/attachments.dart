@@ -41,7 +41,7 @@ class _AttachmentsState extends State<Attachments> {
   bool _loading = false;
 
   Future<void> _loadMore() async {
-    if (_loading || !_showLoadMoreButton) return;
+    if (!_showLoadMoreButton) return;
 
     setState(() {
       _loading = true;
