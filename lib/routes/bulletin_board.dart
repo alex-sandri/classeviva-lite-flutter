@@ -184,7 +184,17 @@ class BulletinBoardSearchDelegate extends SearchDelegate
   
   @override
   Widget buildResults(BuildContext context) {
-    // TODO
+    return FutureBuilder<List<ClasseVivaBulletinBoardItem>>(
+      future: ClasseViva(ClasseViva.getCurrentSession()).getBulletinBoard(
+        query: query,
+        hideInactive: false,
+      ),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Spinner();
+
+        return BulletinBoardItemsListView(snapshot.data);
+      },
+    );
   }
   
   @override
