@@ -59,15 +59,15 @@ class _DemeritsState extends State<Demerits> {
                   ? Spinner()
                   : ListView.separated(
                       separatorBuilder: (context, index) => Divider(),
-                      itemCount: _demerits.length + 1,
+                      itemCount: _demerits.isNotEmpty
+                        ? _demerits.length
+                        : 1,
                       itemBuilder: (context, index) {
                         if (_demerits.isEmpty)
                           return SelectableText(
                             "Non sono presenti note",
                             textAlign: TextAlign.center,
                           );
-
-                        if (index == _demerits.length) return Container();
 
                         final ClasseVivaDemerit demerit = _demerits[index];
 

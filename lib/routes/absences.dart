@@ -57,15 +57,15 @@ class _AbsencesState extends State<Absences> {
                   ? Spinner()
                   : ListView.separated(
                       separatorBuilder: (context, index) => Divider(),
-                      itemCount: _absences.length + 1,
+                      itemCount: _absences.isNotEmpty
+                        ? _absences.length
+                        : 1,
                       itemBuilder: (context, index) {
                         if (_absences.isEmpty)
                           return SelectableText(
                             "Non sono presenti assenze o ritardi",
                             textAlign: TextAlign.center,
                           );
-
-                        if (index == _absences.length) return Container();
 
                         final ClasseVivaAbsence absence = _absences[index];
 

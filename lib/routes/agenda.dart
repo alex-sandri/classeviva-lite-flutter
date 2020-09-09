@@ -93,15 +93,15 @@ class _AgendaState extends State<Agenda> {
                   ? Spinner()
                   : ListView.separated(
                       separatorBuilder: (context, index) => Divider(),
-                      itemCount: _items.length + 1,
+                      itemCount: _items.isNotEmpty
+                        ? _items.length
+                        : 1,
                       itemBuilder: (context, index) {
                         if (_items.isEmpty)
                           return SelectableText(
                             "Non sono presenti elementi in agenda nel periodo selezionato",
                             textAlign: TextAlign.center,
                           );
-
-                        if (index == _items.length) return Container();
 
                         final ClasseVivaAgendaItem item = _items[index];
 

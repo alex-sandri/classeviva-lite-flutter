@@ -53,15 +53,15 @@ class _LessonsState extends State<Lessons> {
                   ? Spinner()
                   : ListView.separated(
                       separatorBuilder: (context, index) => Divider(),
-                      itemCount: _subjects.length + 1,
+                      itemCount: _subjects.isNotEmpty
+                        ? _subjects.length
+                        : 1,
                       itemBuilder: (context, index) {
                         if (_subjects.isEmpty)
                           return SelectableText(
                             "Non sono presenti lezioni",
                             textAlign: TextAlign.center,
                           );
-
-                        if (index == _subjects.length) return Container();
 
                         final ClasseVivaSubject subject = _subjects[index];
 

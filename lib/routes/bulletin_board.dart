@@ -105,15 +105,15 @@ class BulletinBoardItemsListView extends StatelessWidget {
     return _items == null
       ? Spinner()
       : ListView.builder(
-          itemCount: _items.length + 1,
+          itemCount: _items.isNotEmpty
+            ? _items.length
+            : 1,
           itemBuilder: (context, index) {
             if (_items.isEmpty)
               return SelectableText(
                 "Non sono presenti elementi in bacheca",
                 textAlign: TextAlign.center,
               );
-
-            if (index == _items.length) return Container();
 
             final ClasseVivaBulletinBoardItem item = _items[index];
 

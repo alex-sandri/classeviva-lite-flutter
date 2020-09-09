@@ -112,15 +112,15 @@ class _GradesState extends State<Grades> {
                 refreshHandler: _handleRefresh,
                 childBuilder: () {
                   return ListView.builder(
-                    itemCount: _grades.length + 1,
+                    itemCount: _grades.isNotEmpty
+                        ? _grades.length
+                        : 1,
                     itemBuilder: (context, index) {
                       if (_grades.isEmpty)
                         return SelectableText(
                           "Non sono presenti valutazioni",
                           textAlign: TextAlign.center,
                         );
-
-                      if (index == _grades.length) return Container();
 
                       final ClasseVivaGrade grade = _grades[index];
 
