@@ -153,10 +153,21 @@ class BulletinBoardItemsListView extends StatelessWidget {
 
 class BulletinBoardSearchDelegate extends SearchDelegate
 {
+  BulletinBoardSearchDelegate(): super(
+    searchFieldStyle: TextStyle(
+      color: Colors.white70,
+    ),
+  );
+
   @override
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context).copyWith(
       primaryColor: Theme.of(context).appBarTheme.color,
+      textTheme: Theme.of(context).primaryTextTheme.copyWith(
+        headline6: Theme.of(context).primaryTextTheme.headline6.copyWith(
+          color: Colors.white
+        ),
+      ),
     );
 
     return theme;
