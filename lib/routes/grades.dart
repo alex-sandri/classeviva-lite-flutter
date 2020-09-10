@@ -64,7 +64,6 @@ class _GradesState extends State<Grades> {
             )
           : Colors.orange,
         fontSize: 30,
-        fontWeight: FontWeight.w900,
       ),
     );
   }
@@ -152,7 +151,6 @@ class _GradesState extends State<Grades> {
                                 Text(
                                   "Media Totale",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w900,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -238,7 +236,6 @@ class _GradesState extends State<Grades> {
                               color: ThemeManager.isLightTheme(context)
                                 ? Colors.black
                                 : Colors.white,
-                              fontWeight: FontWeight.w900,
                             ),
                           ),
                           subtitle: previousAverageGrade != -1
@@ -276,7 +273,6 @@ class _GradesState extends State<Grades> {
                                 Text(
                                   "Media ${period.name}",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w900,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -372,7 +368,6 @@ class _GradesState extends State<Grades> {
                                 color: ThemeManager.isLightTheme(context)
                                   ? Colors.black
                                   : Colors.white,
-                                fontWeight: FontWeight.w900,
                               ),
                             ),
                             subtitle: previousAverageGrade != -1
