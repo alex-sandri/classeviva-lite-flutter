@@ -2,7 +2,11 @@ import 'package:classeviva_lite/adapters/ColorAdapter.dart';
 import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
+import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
+import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
+import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/routes/home.dart';
@@ -29,6 +33,10 @@ void main() async {
   Hive.registerAdapter(ClasseVivaBasicProfileAdapter());
   Hive.registerAdapter(ClasseVivaProfileAdapter());
   Hive.registerAdapter(ClasseVivaProfileAvatarAdapter());
+  Hive.registerAdapter(ClasseVivaCalendarAdapter());
+  Hive.registerAdapter(ClasseVivaCalendarLessonAdapter());
+  Hive.registerAdapter(ClasseVivaGradeAdapter());
+  Hive.registerAdapter(ClasseVivaAgendaItemAdapter());
 
   await Hive.openBox("preferences");
 
