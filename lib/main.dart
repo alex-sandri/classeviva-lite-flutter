@@ -8,6 +8,7 @@ import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
+import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 void main() async {
   await FlutterDownloader.initialize(debug: false);
@@ -93,7 +95,32 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       themeMode: Provider.of<ThemeManager>(context).themeMode,
-      home: this.home ?? (ClasseViva.isSignedIn() ? Home() : SignIn()),
+      home: Builder(
+        builder: (context) {
+          final QuickActions quickActions = QuickActions();
+
+          quickActions.initialize((shortcutType) {
+            final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+
+            switch (shortcutType)
+            {
+              case "action_web":
+                Get.to(ClasseVivaWebview(
+                  session: _session,
+                  title: "ClasseViva Web",
+                  url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
+                ));
+                break;
+            }
+          });
+
+          quickActions.setShortcutItems([
+            const ShortcutItem(type: "action_web", localizedTitle: "ClasseViva Web", icon: "ic_launcher"),
+          ]);
+
+          return this.home ?? (ClasseViva.isSignedIn() ? Home() : SignIn());
+        },
+      ),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
