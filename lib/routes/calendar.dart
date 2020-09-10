@@ -159,7 +159,7 @@ class _CalendarState extends State<Calendar> {
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => Divider(),
                           itemCount: _calendar.lessons.isNotEmpty
-                            ? _calendar.lessons
+                            ? _calendar.lessons.length
                             : 1,
                           itemBuilder: (context, index) {
                             if (_calendar.lessons.isEmpty)
