@@ -287,6 +287,8 @@ class _HomeState extends State<Home> {
                     _showLoadingSpinner = true;
                   });
 
+                  await CacheManager.empty();
+
                   await ClasseViva.createSession(
                     _session.session.uid,
                     _session.session.pwd,
