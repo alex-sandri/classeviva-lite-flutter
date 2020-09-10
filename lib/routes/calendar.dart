@@ -17,7 +17,11 @@ class _CalendarState extends State<Calendar> {
 
   ClasseVivaCalendar _calendar;
 
-  DateTime _date = DateTime.now();
+  DateTime _date = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
 
   Future<void> _fetch() async {
     await for (final ClasseVivaCalendar calendar in _session.getCalendar(_date))
