@@ -22,6 +22,8 @@ class _CalendarState extends State<Calendar> {
   Future<void> _fetch() async {
     await for (final ClasseVivaCalendar calendar in _session.getCalendar(_date))
     {
+      if (calendar == null) continue;
+
       print(calendar);
 
       if (mounted && _date.isAtSameMomentAs(calendar.date))
