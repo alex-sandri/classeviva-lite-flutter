@@ -1134,7 +1134,9 @@ class ClasseViva
     );
 	}
 
-  Future<ClasseVivaCalendar> getCalendar(DateTime date) async {
+  Stream<ClasseVivaCalendar> getCalendar(DateTime date) async* {
+    yield CacheManager.get("calendar-${date.year}-${date.month}-${date.day}");
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -1177,7 +1179,7 @@ class ClasseViva
       ));
     });
 
-    return ClasseVivaCalendar(
+    final ClasseVivaCalendar calendar = ClasseVivaCalendar(
       date: date,
       grades: (await getGrades()).where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
       lessons: lessons,
@@ -1188,6 +1190,10 @@ class ClasseViva
         23, 59, 59,
       ))),
     );
+
+    await CacheManager.set("calendar-${date.year}-${date.month}-${date.day}", calendar);
+
+    yield calendar;
 	}
 
   Future<List<ClasseVivaFinalGrade>> getFinalGrades() async {
