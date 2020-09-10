@@ -1,4 +1,6 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
+import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
+import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';

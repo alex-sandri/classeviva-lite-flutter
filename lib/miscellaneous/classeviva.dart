@@ -3,7 +3,11 @@ import 'dart:io';
 
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
+import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
+import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
+import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
@@ -191,84 +195,6 @@ class ClasseVivaGradesPeriod
     @required this.name,
     @required this.grades,
   });
-}
-
-class ClasseVivaGrade
-{
-	final String subject;
-	final String grade;
-	final String type;
-	final String description;
-	final DateTime date;
-
-  ClasseVivaGrade({
-    @required this.subject,
-    @required this.grade,
-    @required this.type,
-    @required this.description,
-    @required this.date,
-  });
-}
-
-class ClasseVivaAgendaItem
-{
-	final String id;
-	final String title;
-	final DateTime start;
-	final DateTime end;
-	final bool allDay;
-	final String data_inserimento;
-	final String nota_2;
-	final String master_id;
-	final String classe_id;
-	final String classe_desc;
-	final int gruppo;
-	final String autore_desc;
-	final String autore_id;
-	final String tipo;
-	final String materia_desc;
-	final String materia_id;
-
-  ClasseVivaAgendaItem({
-    @required this.id,
-    @required this.title,
-    @required this.start,
-    @required this.end,
-    @required this.allDay,
-    @required this.data_inserimento,
-    @required this.nota_2,
-    @required this.master_id,
-    @required this.classe_id,
-    @required this.classe_desc,
-    @required this.gruppo,
-    @required this.autore_desc,
-    @required this.autore_id,
-    @required this.tipo,
-    @required this.materia_desc,
-    @required this.materia_id,
-  });
-
-  factory ClasseVivaAgendaItem.fromJson(Map<String, dynamic> json)
-  {
-    return ClasseVivaAgendaItem(
-      id: json["id"],
-      title: json["title"],
-      start: DateTime.parse(json["start"]),
-      end: DateTime.parse(json["end"]),
-      allDay: json["allDay"],
-      data_inserimento: json["data_inserimento"],
-      nota_2: json["nota_2"],
-      master_id: json["master_id"],
-      classe_id: json["classe_id"],
-      classe_desc: json["classe_desc"],
-      gruppo: json["gruppo"],
-      autore_desc: json["autore_desc"],
-      autore_id: json["autore_id"],
-      tipo: json["tipo"],
-      materia_desc: json["materia_desc"],
-      materia_id: json["materia_id"]
-    );
-  }
 }
 
 enum ClasseVivaAttachmentType
@@ -471,40 +397,6 @@ class ClasseVivaBulletinBoardItemDetails
     @required this.title,
     @required this.description,
     @required this.attachments,
-  });
-}
-
-class ClasseVivaCalendarLesson
-{
-  final String teacher;
-  final String subject;
-  final String type;
-  final String description;
-  final int hour;
-  final Duration duration;
-
-  ClasseVivaCalendarLesson({
-    @required this.teacher,
-    @required this.subject,
-    @required this.type,
-    @required this.description,
-    @required this.hour,
-    @required this.duration,
-  });
-}
-
-class ClasseVivaCalendar
-{
-  final DateTime date;
-  final List<ClasseVivaGrade> grades;
-  final List<ClasseVivaCalendarLesson> lessons;
-  final List<ClasseVivaAgendaItem> agenda;
-
-  ClasseVivaCalendar({
-    @required this.date,
-    @required this.grades,
-    @required this.lessons,
-    @required this.agenda,
   });
 }
 
