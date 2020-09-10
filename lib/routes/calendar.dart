@@ -24,8 +24,6 @@ class _CalendarState extends State<Calendar> {
     {
       if (calendar == null) continue;
 
-      print(calendar);
-
       if (mounted && _date.isAtSameMomentAs(calendar.date))
         setState(() {
           _calendar = calendar;
