@@ -6,7 +6,9 @@ import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
+import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
@@ -95,26 +97,31 @@ class ClasseVivaSession
   String get id => _id;
 
   Future<void> refresh() async {
-    final ClasseVivaSession refreshedSession = await ClasseVivaSession.create(
+    await ClasseVivaSession.create(
       uid: uid,
       pwd: pwd,
       year: year
-    );
+    ).then((refreshedSession) async {
+      final Box preferences = Hive.box("preferences");
 
-    final Box preferences = Hive.box("preferences");
+      final ClasseVivaSession currentSession = ClasseViva.getCurrentSession();
 
-    final ClasseVivaSession currentSession = ClasseViva.getCurrentSession();
+      final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
-    final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
+      sessions.firstWhere((session) => session.id == this.id)._id = refreshedSession.id;
 
-    sessions.firstWhere((session) => session.id == this.id)._id = refreshedSession.id;
+      await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
 
-    await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
+      if (currentSession?.id == this.id)
+        await preferences.put("currentSession", refreshedSession.toString());
 
-    if (currentSession?.id == this.id)
-      await preferences.put("currentSession", refreshedSession.toString());
+      _id = refreshedSession.id;
+    },
+    onError: (error) async {
+      await signOut();
 
-    _id = refreshedSession.id;
+      Get.offAll(SignIn());
+    });
   }
 
   static Future<ClasseVivaSession> create({ String uid, String pwd, String year = "" }) async {
