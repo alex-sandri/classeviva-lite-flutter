@@ -135,9 +135,6 @@ class AgendaItemTile extends StatelessWidget {
     return ListTile(
       title: SelectableText(
         _item.autore_desc,
-        style: TextStyle(
-          fontWeight: FontWeight.w900,
-        ),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

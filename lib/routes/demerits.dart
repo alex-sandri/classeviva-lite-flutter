@@ -74,9 +74,6 @@ class _DemeritsState extends State<Demerits> {
                         return ListTile(
                           title: SelectableText(
                             demerit.teacher,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                            ),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

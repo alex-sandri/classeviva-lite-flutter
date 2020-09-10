@@ -458,9 +458,6 @@ class GradeTile extends StatelessWidget {
       ),
       title: SelectableText(
         grade.subject,
-        style: TextStyle(
-          fontWeight: FontWeight.w900,
-        ),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
