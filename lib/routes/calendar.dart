@@ -17,17 +17,24 @@ class _CalendarState extends State<Calendar> {
 
   DateTime _date = DateTime.now();
 
+  Future<void> _fetch() async {
+    await for (final ClasseVivaCalendar calendar in _session.getCalendar(_date))
+    {
+      print(calendar);
+
+      if (mounted && _date.isAtSameMomentAs(calendar.date))
+        setState(() {
+          _calendar = calendar;
+        });
+    }
+  }
+
   Future<void> _handleRefresh() async {
     setState(() {
       _calendar = null;
     });
 
-    final ClasseVivaCalendar calendar = await _session.getCalendar(_date);
-
-    if (mounted && _date.isAtSameMomentAs(calendar.date))
-      setState(() {
-        _calendar = calendar;
-      });
+    await _fetch();
   }
 
   void initState() {
