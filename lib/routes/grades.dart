@@ -22,27 +22,38 @@ class _GradesState extends State<Grades> {
 
   List<ClasseVivaGradesPeriod> _periods = [];
 
+  Future<void> _fetch() async {
+    await for (final List<ClasseVivaGrade> grades in _session.getGrades())
+    {
+      if (grades == null) continue;
+
+      _subjects = groupBy(grades, (ClasseVivaGrade grade) => grade.subject);
+
+      grades.sort((a, b) {
+        // Most recent first
+        return b.date.compareTo(a.date);
+      });
+
+      if (mounted)
+        setState(() {
+          _grades = grades;
+        });
+
+      final List<ClasseVivaGradesPeriod> periods = await _session.getPeriods();
+
+      if (mounted)
+        setState(() {
+          _periods = periods;
+        });
+    }
+  }
+
   Future<void> _handleRefresh() async {
-    final List<ClasseVivaGrade> grades = await _session.getGrades();
-
-    _subjects = groupBy(grades, (ClasseVivaGrade grade) => grade.subject);
-
-    grades.sort((a, b) {
-      // Most recent first
-      return b.date.compareTo(a.date);
+    setState(() {
+      _grades = null;
     });
 
-    if (mounted)
-      setState(() {
-        _grades = grades;
-      });
-
-    final List<ClasseVivaGradesPeriod> periods = await _session.getPeriods();
-
-    if (mounted)
-      setState(() {
-        _periods = periods;
-      });
+    await _fetch();
   }
 
   Text _getAverageGradeChangeTextWidget(double previous, double current) {
