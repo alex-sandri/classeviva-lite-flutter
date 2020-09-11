@@ -568,7 +568,7 @@ class ClasseViva
 	}
 
   Stream<List<ClasseVivaGrade>> getGrades() async* {
-    yield (CacheManager.get("grades") as List<dynamic>).whereType<ClasseVivaGrade>().toList();
+    yield (CacheManager.get("grades") as List<dynamic>)?.whereType<ClasseVivaGrade>()?.toList();
 
     await checkValidSession();
 
