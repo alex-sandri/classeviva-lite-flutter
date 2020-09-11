@@ -65,15 +65,17 @@ class _SettingsState extends State<Settings> {
                 value: AuthenticationManager.isAuthenticationEnabled,
               ),
             ),
-            ListTile(
-              title: Text("Svuota cache"),
-              onTap: () async {
-                await CacheManager.empty();
+            Builder(
+              builder: (context) => ListTile(
+                title: Text("Svuota cache"),
+                onTap: () async {
+                  await CacheManager.empty();
 
-                Scaffold
-                  .of(context)
-                  .showSnackBar(SnackBar(content: Text("Cache svuotata")));
-              },
+                  Scaffold
+                    .of(context)
+                    .showSnackBar(SnackBar(content: Text("Cache svuotata")));
+                },
+              ),
             ),
           ],
         ),
