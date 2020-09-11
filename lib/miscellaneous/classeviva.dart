@@ -531,7 +531,7 @@ class ClasseViva
       return color;
     }
 
-    await for (ClasseVivaBasicProfile basicProfile in getBasicProfile())
+    await for (final ClasseVivaBasicProfile basicProfile in getBasicProfile())
     {
       if (basicProfile == null) continue;
 
@@ -567,7 +567,9 @@ class ClasseViva
     }
 	}
 
-  Future<List<ClasseVivaGrade>> getGrades() async {
+  Stream<List<ClasseVivaGrade>> getGrades() async* {
+    yield CacheManager.get("grades");
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -606,7 +608,9 @@ class ClasseViva
       }
 		});
 
-		return grades;
+    await CacheManager.set("grades", grades);
+
+		yield grades;
 	}
 
 	Future<List<ClasseVivaGradesPeriod>> getPeriods() async {
@@ -1071,21 +1075,24 @@ class ClasseViva
       ));
     });
 
-    final ClasseVivaCalendar calendar = ClasseVivaCalendar(
-      date: date,
-      grades: (await getGrades()).where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
-      lessons: lessons,
-      agenda: (await getAgenda(date, DateTime(
-        date.year,
-        date.month,
-        date.day,
-        23, 59, 59,
-      ))),
-    );
+    await for (final List<ClasseVivaGrade> grades in getGrades())
+    {
+      final ClasseVivaCalendar calendar = ClasseVivaCalendar(
+        date: date,
+        grades: grades.where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
+        lessons: lessons,
+        agenda: (await getAgenda(date, DateTime(
+          date.year,
+          date.month,
+          date.day,
+          23, 59, 59,
+        ))),
+      );
 
-    await CacheManager.set("calendar-${date.year}-${date.month}-${date.day}", calendar);
+      await CacheManager.set("calendar-${date.year}-${date.month}-${date.day}", calendar);
 
-    yield calendar;
+      yield calendar;
+    }
 	}
 
   Future<List<ClasseVivaFinalGrade>> getFinalGrades() async {
