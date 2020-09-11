@@ -22,6 +22,7 @@ class _SettingsState extends State<Settings> {
         body: ListView(
           children: [
             ListTile(
+              leading: Icon(Icons.brush),
               title: Text("Tema"),
               trailing: DropdownButton(
                 value: Provider.of<ThemeManager>(context).themeMode.toString().split(".").last,
@@ -45,6 +46,7 @@ class _SettingsState extends State<Settings> {
               ),
             ),
             ListTile(
+              leading: Icon(Icons.lock),
               title: Text("Blocco app"),
               trailing: Switch(
                 onChanged: (checked) async {
@@ -67,6 +69,7 @@ class _SettingsState extends State<Settings> {
             ),
             Builder(
               builder: (context) => ListTile(
+                leading: Icon(Icons.delete),
                 title: Text("Svuota cache"),
                 onTap: () async {
                   await CacheManager.empty();
