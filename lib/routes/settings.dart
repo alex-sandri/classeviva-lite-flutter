@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
+import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,6 +64,16 @@ class _SettingsState extends State<Settings> {
                 },
                 value: AuthenticationManager.isAuthenticationEnabled,
               ),
+            ),
+            ListTile(
+              title: Text("Svuota cache"),
+              onTap: () async {
+                await CacheManager.empty();
+
+                Scaffold
+                  .of(context)
+                  .showSnackBar(SnackBar(content: Text("Cache svuotata")));
+              },
             ),
           ],
         ),
