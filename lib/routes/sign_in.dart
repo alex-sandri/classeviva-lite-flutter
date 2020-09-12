@@ -167,6 +167,7 @@ class _SignInState extends State<SignIn> {
               if (widget.showAccountChooser)
                 SessionsList(
                   shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(vertical: 15),
                 ),
             ],
           ),
