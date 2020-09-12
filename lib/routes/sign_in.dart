@@ -29,8 +29,6 @@ class _SignInState extends State<SignIn> {
 
   final FocusNode _pwdFocusNode = FocusNode();
 
-  void _redirectToHomePage() => Get.offAll(Home());
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -135,7 +133,7 @@ class _SignInState extends State<SignIn> {
                             await ClasseViva
                               .createSession(_uidController.text, _pwdController.text)
                               .then(
-                                (session) => _redirectToHomePage(),
+                                (session) => Get.offAll(Home()),
                                 onError: (error) {
                                   showDialog(
                                     context: context,
