@@ -10,11 +10,14 @@ import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class SessionsList extends StatefulWidget {
+  final ScrollPhysics physics;
+
   final bool shrinkWrap;
 
   final EdgeInsets padding;
 
   SessionsList({
+    this.physics,
     this.shrinkWrap = false,
     this.padding = const EdgeInsets.all(15),
   });
@@ -36,6 +39,7 @@ class _SessionsListState extends State<SessionsList> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: widget.physics,
       shrinkWrap: widget.shrinkWrap,
       padding: widget.padding,
       children: <Widget>[
