@@ -14,18 +14,29 @@ class _AbsencesState extends State<Absences> {
 
   List<ClasseVivaAbsence> _absences;
 
-  Future<void> _handleRefresh() async {
-    final List<ClasseVivaAbsence> absences = await _session.getAbsences();
+  Future<void> _fetch() async {
+    await for (final List<ClasseVivaAbsence> absences in _session.getAbsences())
+    {
+      if (absences == null) continue;
 
-    absences.sort((a, b) {
-      // Most recent first
-      return b.from.compareTo(a.from);
+      absences.sort((a, b) {
+        // Most recent first
+        return b.from.compareTo(a.from);
+      });
+
+      if (mounted)
+        setState(() {
+          _absences = absences;
+        });
+    }
+  }
+
+  Future<void> _handleRefresh() async {
+    setState(() {
+      _absences = null;
     });
 
-    if (mounted)
-      setState(() {
-        _absences = absences;
-      });
+    await _fetch();
   }
 
   void initState() {

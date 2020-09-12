@@ -740,7 +740,7 @@ class ClasseViva
 		return demerits;
 	}
 
-  Future<List<ClasseVivaAbsence>> getAbsences() async {
+  Stream<List<ClasseVivaAbsence>> getAbsences() async* {
     await checkValidSession();
 
 		final response = await http.get(
@@ -867,7 +867,7 @@ class ClasseViva
       rowIndex++;
     });
 
-		return absences;
+		yield absences;
 	}
 
   Future<List<ClasseVivaSubject>> getSubjects() async {
