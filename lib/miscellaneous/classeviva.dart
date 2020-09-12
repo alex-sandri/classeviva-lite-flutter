@@ -869,6 +869,11 @@ class ClasseViva
       rowIndex++;
     });
 
+    absences.sort((a, b) {
+      // Most recent first
+      return b.from.compareTo(a.from);
+    });
+
     await CacheManager.set("absences", absences);
 
 		yield absences;

@@ -19,11 +19,6 @@ class _AbsencesState extends State<Absences> {
     {
       if (absences == null) continue;
 
-      absences.sort((a, b) {
-        // Most recent first
-        return b.from.compareTo(a.from);
-      });
-
       if (mounted)
         setState(() {
           _absences = absences;
