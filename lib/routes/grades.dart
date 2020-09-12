@@ -23,7 +23,7 @@ class _GradesState extends State<Grades> {
 
   List<ClasseVivaGradesPeriod> _periods = [];
 
-  Future<void> _fetch() async {
+  Future<void> _fetchGrades() async {
     await for (final List<ClasseVivaGrade> grades in _session.getGrades())
     {
       if (grades == null) continue;
@@ -40,7 +40,9 @@ class _GradesState extends State<Grades> {
           _grades = grades;
         });
     }
+  }
 
+  Future<void> _fetchPeriods() async {
     await for (final List<ClasseVivaGradesPeriod> periods in _session.getPeriods())
     {
       if (periods == null) continue;
@@ -57,7 +59,7 @@ class _GradesState extends State<Grades> {
       _grades = null;
     });
 
-    await _fetch();
+    await Future.wait([ _fetchGrades(), _fetchPeriods() ]);
   }
 
   Text _getAverageGradeChangeTextWidget(double previous, double current) {
