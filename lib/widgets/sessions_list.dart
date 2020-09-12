@@ -147,6 +147,8 @@ class _SessionsListState extends State<SessionsList> {
 
                         if (success)
                         {
+                          await CacheManager.empty();
+
                           await ClasseViva.setCurrentSession(_sessions[index]);
 
                           Get.offAll(Home());
