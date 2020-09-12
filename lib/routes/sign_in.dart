@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
@@ -133,7 +134,11 @@ class _SignInState extends State<SignIn> {
                             await ClasseViva
                               .createSession(_uidController.text, _pwdController.text)
                               .then(
-                                (session) => Get.offAll(Home()),
+                                (session) async {
+                                  await CacheManager.empty();
+
+                                  Get.offAll(Home());
+                                },
                                 onError: (error) {
                                   showDialog(
                                     context: context,
