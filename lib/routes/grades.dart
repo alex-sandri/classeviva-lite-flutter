@@ -38,8 +38,11 @@ class _GradesState extends State<Grades> {
         setState(() {
           _grades = grades;
         });
+    }
 
-      final List<ClasseVivaGradesPeriod> periods = await _session.getPeriods();
+    await for (final List<ClasseVivaGradesPeriod> periods in _session.getPeriods())
+    {
+      if (periods == null) continue;
 
       if (mounted)
         setState(() {

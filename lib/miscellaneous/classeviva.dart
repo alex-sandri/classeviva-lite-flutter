@@ -613,7 +613,7 @@ class ClasseViva
 		yield grades;
 	}
 
-	Future<List<ClasseVivaGradesPeriod>> getPeriods() async {
+	Stream<List<ClasseVivaGradesPeriod>> getPeriods() async* {
     await checkValidSession();
 
 		final response = await http.get(
@@ -662,7 +662,7 @@ class ClasseViva
       ));
     });
 
-		return periods;
+		yield periods;
 	}
 
 	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {
