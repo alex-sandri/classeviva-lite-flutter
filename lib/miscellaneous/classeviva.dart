@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
+import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
@@ -227,37 +228,6 @@ class ClasseVivaDemerit
     @required this.date,
     @required this.content,
     @required this.type,
-  });
-}
-
-enum ClasseVivaAbsenceType
-{
-  Absence,
-  Late,
-  ShortDelay,
-  EarlyExit,
-}
-
-enum ClasseVivaAbsenceStatus
-{
-  Justified,
-  NotJustified,
-}
-
-class ClasseVivaAbsence
-{
-  final DateTime from;
-  final DateTime to;
-  final String description;
-  final ClasseVivaAbsenceType type;
-  final ClasseVivaAbsenceStatus status;
-
-  ClasseVivaAbsence({
-    @required this.from,
-    @required this.to,
-    @required this.description,
-    @required this.type,
-    @required this.status,
   });
 }
 
