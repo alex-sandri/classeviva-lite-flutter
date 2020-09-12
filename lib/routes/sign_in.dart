@@ -134,24 +134,26 @@ class _SignInState extends State<SignIn> {
 
                             await ClasseViva
                               .createSession(_uidController.text, _pwdController.text)
-                              .then((session) => _redirectToHomePage(),
-                              onError: (error) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Errore",
-                                      ),
-                                      content: Text(
-                                        (error is List)
-                                          ? error.join("\n")
-                                          : error.toString(),
-                                      ),
-                                    );
-                                  },
-                                );
-                              })
+                              .then(
+                                (session) => _redirectToHomePage(),
+                                onError: (error) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          "Errore",
+                                        ),
+                                        content: Text(
+                                          (error is List)
+                                            ? error.join("\n")
+                                            : error.toString(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              )
                               .whenComplete(() {
                                 setState(() {
                                   _showSpinner = false;
