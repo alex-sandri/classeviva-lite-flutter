@@ -34,17 +34,17 @@ void main() async {
   Hive.registerAdapter(ColorAdapter());
   Hive.registerAdapter(DurationAdapter());
 
-  Hive.registerAdapter(ClasseVivaBasicProfileAdapter());
-  Hive.registerAdapter(ClasseVivaProfileAdapter());
-  Hive.registerAdapter(ClasseVivaProfileAvatarAdapter());
-  Hive.registerAdapter(ClasseVivaCalendarAdapter());
-  Hive.registerAdapter(ClasseVivaCalendarLessonAdapter());
-  Hive.registerAdapter(ClasseVivaGradeAdapter());
-  Hive.registerAdapter(ClasseVivaAgendaItemAdapter());
-  Hive.registerAdapter(ClasseVivaGradesPeriodAdapter());
-  Hive.registerAdapter(ClasseVivaAbsenceAdapter());
-  Hive.registerAdapter(ClasseVivaAbsenceTypeAdapter());
-  Hive.registerAdapter(ClasseVivaAbsenceStatusAdapter());
+  /* 0 */ Hive.registerAdapter(ClasseVivaBasicProfileAdapter());
+  /* 1 */ Hive.registerAdapter(ClasseVivaProfileAdapter());
+  /* 2 */ Hive.registerAdapter(ClasseVivaProfileAvatarAdapter());
+  /* 3 */ Hive.registerAdapter(ClasseVivaCalendarAdapter());
+  /* 4 */ Hive.registerAdapter(ClasseVivaGradeAdapter());
+  /* 5 */ Hive.registerAdapter(ClasseVivaAgendaItemAdapter());
+  /* 6 */ Hive.registerAdapter(ClasseVivaCalendarLessonAdapter());
+  /* 7 */ Hive.registerAdapter(ClasseVivaGradesPeriodAdapter());
+  /* 8 */ Hive.registerAdapter(ClasseVivaAbsenceAdapter());
+  /* 9 */ Hive.registerAdapter(ClasseVivaAbsenceTypeAdapter());
+  /* 10 */ Hive.registerAdapter(ClasseVivaAbsenceStatusAdapter());
 
   await Hive.openBox("preferences");
 
