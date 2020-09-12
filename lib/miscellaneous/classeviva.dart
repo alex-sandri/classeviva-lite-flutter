@@ -614,6 +614,8 @@ class ClasseViva
 	}
 
 	Stream<List<ClasseVivaGradesPeriod>> getPeriods() async* {
+    yield (CacheManager.get("gradesWithPeriods") as List<dynamic>)?.whereType<ClasseVivaGradesPeriod>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -661,6 +663,8 @@ class ClasseViva
         grades: grades,
       ));
     });
+
+    await CacheManager.set("gradesWithPeriods", periods);
 
 		yield periods;
 	}
