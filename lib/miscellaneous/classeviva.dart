@@ -741,6 +741,8 @@ class ClasseViva
 	}
 
   Stream<List<ClasseVivaAbsence>> getAbsences() async* {
+    yield (CacheManager.get("absences") as List<dynamic>)?.whereType<ClasseVivaAbsence>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -866,6 +868,8 @@ class ClasseViva
 
       rowIndex++;
     });
+
+    await CacheManager.set("absences", absences);
 
 		yield absences;
 	}
