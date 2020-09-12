@@ -8,6 +8,7 @@ import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
+import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
@@ -184,17 +185,6 @@ class ClasseVivaSession
     uid: session.split(";")[1],
     pwd: session.split(";")[2],
   );
-}
-
-class ClasseVivaGradesPeriod
-{
-	final String name;
-  final List<ClasseVivaGrade> grades;
-
-  ClasseVivaGradesPeriod({
-    @required this.name,
-    @required this.grades,
-  });
 }
 
 enum ClasseVivaAttachmentType
