@@ -894,7 +894,9 @@ class ClasseViva
 		yield subjects;
 	}
 
-  Future<List<ClasseVivaLesson>> getLessons(ClasseVivaSubject subject) async {
+  Stream<List<ClasseVivaLesson>> getLessons(ClasseVivaSubject subject) async* {
+    yield (CacheManager.get("lessons") as List<dynamic>)?.whereType<ClasseVivaLesson>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -933,7 +935,9 @@ class ClasseViva
       ));
 		});
 
-		return lessons;
+    await CacheManager.set("lessons", lessons);
+
+		yield lessons;
 	}
 
   Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard({ String query = "", bool hideInactive = true }) async {

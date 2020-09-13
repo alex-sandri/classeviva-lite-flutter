@@ -87,8 +87,8 @@ class _LessonsState extends State<Lessons> {
                             ),
                           ),
                           children: [
-                            FutureBuilder(
-                              future: _session.getLessons(subject),
+                            StreamBuilder(
+                              stream: _session.getLessons(subject),
                               builder: (context, AsyncSnapshot<List<ClasseVivaLesson>> lessons) {
                                 if (!lessons.hasData)
                                   return Padding(
