@@ -12,6 +12,7 @@ import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
+import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -228,19 +229,6 @@ class ClasseVivaDemerit
     @required this.date,
     @required this.content,
     @required this.type,
-  });
-}
-
-class ClasseVivaSubject
-{
-  final String id;
-  final String name;
-  final List<String> teacherIds;
-
-  ClasseVivaSubject({
-    @required this.id,
-    @required this.name,
-    @required this.teacherIds,
   });
 }
 

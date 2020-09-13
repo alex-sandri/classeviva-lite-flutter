@@ -12,6 +12,7 @@ import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
+import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
 import 'package:classeviva_lite/routes/home.dart';
 import 'package:classeviva_lite/routes/sign_in.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
@@ -46,6 +47,7 @@ void main() async {
   /* 8 */ Hive.registerAdapter(ClasseVivaAbsenceAdapter());
   /* 9 */ Hive.registerAdapter(ClasseVivaAbsenceTypeAdapter());
   /* 10 */ Hive.registerAdapter(ClasseVivaAbsenceStatusAdapter());
+  /* 11 */ Hive.registerAdapter(ClasseVivaSubjectAdapter());
 
   await Hive.openBox("preferences");
 
