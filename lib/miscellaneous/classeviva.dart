@@ -21,6 +21,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'package:hive/hive.dart';
+import 'package:rxdart/rxdart.dart';
 
 
 class ClasseVivaEndpoints
@@ -1032,19 +1033,29 @@ class ClasseViva
       ));
     });
 
-    await for (final List<ClasseVivaGrade> grades in getGrades())
+    await for (final ClasseVivaCalendar calendar in CombineLatestStream.combine2<List<ClasseVivaGrade>, List<ClasseVivaAgendaItem>, ClasseVivaCalendar>(
+      getGrades(),
+      getAgenda(date, DateTime(
+        date.year,
+        date.month,
+        date.day,
+        23, 59, 59,
+      )),
+      (grades, agenda) {
+        if (grades == null || agenda == null) return null;
+
+        final ClasseVivaCalendar calendar = ClasseVivaCalendar(
+          date: date,
+          grades: grades.where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
+          lessons: lessons,
+          agenda: agenda,
+        );
+
+        return calendar;
+      },
+    ))
     {
-      final ClasseVivaCalendar calendar = ClasseVivaCalendar(
-        date: date,
-        grades: grades.where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
-        lessons: lessons,
-        agenda: (await getAgenda(date, DateTime(
-          date.year,
-          date.month,
-          date.day,
-          23, 59, 59,
-        ))),
-      );
+      if (calendar == null) continue;
 
       await CacheManager.set("calendar-${date.year}-${date.month}-${date.day}", calendar);
 
