@@ -22,6 +22,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -113,6 +114,8 @@ class MyApp extends StatelessWidget {
       themeMode: Provider.of<ThemeManager>(context).themeMode,
       home: Builder(
         builder: (context) {
+          Intl.defaultLocale = Localizations.localeOf(context).toLanguageTag();
+
           final QuickActions quickActions = QuickActions();
 
           quickActions.initialize((shortcutType) {
