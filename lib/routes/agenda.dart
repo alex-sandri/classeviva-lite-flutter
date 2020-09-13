@@ -20,22 +20,29 @@ class _AgendaState extends State<Agenda> {
 
   List<ClasseVivaAgendaItem> _items;
 
+  Future<void> _fetch() async {
+    await for (final List<ClasseVivaAgendaItem> items in _session.getAgenda(_start, _end))
+    {
+      if (items == null) continue;
+
+      items.sort((a, b) {
+        // Most recent first
+        return b.start.compareTo(a.start);
+      });
+
+      if (mounted)
+        setState(() {
+          _items = items;
+        });
+    }
+  }
+
   Future<void> _handleRefresh() async {
     setState(() {
       _items = null;
     });
 
-    final List<ClasseVivaAgendaItem> items = await _session.getAgenda(_start, _end);
-
-    items.sort((a, b) {
-      // Most recent first
-      return b.start.compareTo(a.start);
-    });
-
-    if (mounted)
-      setState(() {
-        _items = items;
-      });
+    await _fetch();
   }
 
   void initState() {

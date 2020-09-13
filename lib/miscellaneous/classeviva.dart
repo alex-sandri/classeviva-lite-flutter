@@ -605,7 +605,7 @@ class ClasseViva
 		yield periods;
 	}
 
-	Future<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async {
+	Stream<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async* {
     await checkValidSession();
 
 		final response = await http.get(
@@ -613,7 +613,7 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
-		return ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
+		yield ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
 	}
 
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
