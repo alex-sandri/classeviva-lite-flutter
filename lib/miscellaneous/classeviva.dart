@@ -868,7 +868,7 @@ class ClasseViva
 	}
 
   Stream<List<ClasseVivaSubject>> getSubjects() async* {
-    yield (CacheManager.get("absences") as List<dynamic>)?.whereType<ClasseVivaSubject>()?.toList();
+    yield (CacheManager.get("subjects") as List<dynamic>)?.whereType<ClasseVivaSubject>()?.toList();
 
     await checkValidSession();
 
