@@ -77,47 +77,45 @@ class _LessonsState extends State<Lessons> {
 
                         final ClasseVivaSubject subject = _subjects[index];
 
-                        return Card(
-                          child: ExpansionTile(
-                            title: Text(
-                              subject.name,
-                              style: TextStyle(
-                                color: ThemeManager.isLightTheme(context)
-                                  ? Colors.black
-                                  : Colors.white,
-                              ),
+                        return ExpansionTile(
+                          title: Text(
+                            subject.name,
+                            style: TextStyle(
+                              color: ThemeManager.isLightTheme(context)
+                                ? Colors.black
+                                : Colors.white,
                             ),
-                            children: [
-                              FutureBuilder(
-                                future: _session.getLessons(subject),
-                                builder: (context, AsyncSnapshot<List<ClasseVivaLesson>> lessons) {
-                                  if (!lessons.hasData)
-                                    return Padding(
-                                      padding: EdgeInsets.all(8),
-                                      child: Spinner(),
-                                    );
-
-                                  return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: lessons.data.length,
-                                    itemBuilder: (context, index) {
-                                      final ClasseVivaLesson lesson = lessons.data[index];
-
-                                      return ListTile(
-                                        title: SelectableText(
-                                          lesson.description,
-                                        ),
-                                        subtitle: SelectableText(
-                                          DateFormat.yMMMMd().format(lesson.date),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              )
-                            ],
                           ),
+                          children: [
+                            FutureBuilder(
+                              future: _session.getLessons(subject),
+                              builder: (context, AsyncSnapshot<List<ClasseVivaLesson>> lessons) {
+                                if (!lessons.hasData)
+                                  return Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Spinner(),
+                                  );
+
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: lessons.data.length,
+                                  itemBuilder: (context, index) {
+                                    final ClasseVivaLesson lesson = lessons.data[index];
+
+                                    return ListTile(
+                                      title: SelectableText(
+                                        lesson.description,
+                                      ),
+                                      subtitle: SelectableText(
+                                        DateFormat.yMMMMd().format(lesson.date),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            )
+                          ],
                         );
                       },
                     ),
