@@ -607,6 +607,8 @@ class ClasseViva
 	}
 
 	Stream<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async* {
+    yield (CacheManager.get("agenda") as List<dynamic>)?.whereType<ClasseVivaAgendaItem>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -614,7 +616,11 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
-		yield ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
+    final List<ClasseVivaAgendaItem> agenda = ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
+
+    await CacheManager.set("agenda", agenda);
+
+		yield agenda;
 	}
 
 	Future<List<ClasseVivaAttachment>> getAttachments() async {
