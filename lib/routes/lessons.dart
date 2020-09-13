@@ -14,13 +14,24 @@ class _LessonsState extends State<Lessons> {
 
   List<ClasseVivaSubject> _subjects;
 
-  Future<void> _handleRefresh() async {
-    final List<ClasseVivaSubject> subjects = await _session.getSubjects();
+  Future<void> _fetch() async {
+    await for (final List<ClasseVivaSubject> subjects in _session.getSubjects())
+    {
+      if (subjects == null) continue;
 
-    if (mounted)
-      setState(() {
-        _subjects = subjects;
-      });
+      if (mounted)
+        setState(() {
+          _subjects = subjects;
+        });
+    }
+  }
+
+  Future<void> _handleRefresh() async {
+    setState(() {
+      _subjects = null;
+    });
+
+    await _fetch();
   }
 
   void initState() {

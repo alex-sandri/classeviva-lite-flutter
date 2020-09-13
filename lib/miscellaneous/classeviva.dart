@@ -879,7 +879,9 @@ class ClasseViva
 		yield absences;
 	}
 
-  Future<List<ClasseVivaSubject>> getSubjects() async {
+  Stream<List<ClasseVivaSubject>> getSubjects() async* {
+    yield (CacheManager.get("absences") as List<dynamic>)?.whereType<ClasseVivaSubject>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -899,7 +901,9 @@ class ClasseViva
 			));
 		});
 
-		return subjects;
+    await CacheManager.set("subjects", subjects);
+
+		yield subjects;
 	}
 
   Future<List<ClasseVivaLesson>> getLessons(ClasseVivaSubject subject) async {
