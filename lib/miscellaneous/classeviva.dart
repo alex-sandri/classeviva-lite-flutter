@@ -10,6 +10,7 @@ import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
+import 'package:classeviva_lite/models/ClasseVivaLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
@@ -229,19 +230,6 @@ class ClasseVivaDemerit
     @required this.date,
     @required this.content,
     @required this.type,
-  });
-}
-
-class ClasseVivaLesson
-{
-  final String teacher;
-  final DateTime date;
-  final String description;
-
-  ClasseVivaLesson({
-    @required this.teacher,
-    @required this.date,
-    @required this.description,
   });
 }
 

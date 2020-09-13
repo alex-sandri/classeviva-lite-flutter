@@ -48,6 +48,7 @@ void main() async {
   /* 9 */ Hive.registerAdapter(ClasseVivaAbsenceTypeAdapter());
   /* 10 */ Hive.registerAdapter(ClasseVivaAbsenceStatusAdapter());
   /* 11 */ Hive.registerAdapter(ClasseVivaSubjectAdapter());
+  /* 12 */ Hive.registerAdapter(ClasseVivaCalendarLessonAdapter());
 
   await Hive.openBox("preferences");
 

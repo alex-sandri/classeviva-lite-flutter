@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
+import 'package:classeviva_lite/models/ClasseVivaLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
@@ -87,9 +88,9 @@ class _LessonsState extends State<Lessons> {
                             ),
                           ),
                           children: [
-                            StreamBuilder(
+                            StreamBuilder<List<ClasseVivaLesson>>(
                               stream: _session.getLessons(subject),
-                              builder: (context, AsyncSnapshot<List<ClasseVivaLesson>> lessons) {
+                              builder: (context, lessons) {
                                 if (!lessons.hasData)
                                   return Padding(
                                     padding: EdgeInsets.all(8),
