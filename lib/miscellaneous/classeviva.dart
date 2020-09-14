@@ -6,6 +6,7 @@ import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
+import 'package:classeviva_lite/models/ClasseVivaBook.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaDemerit.dart';
@@ -331,31 +332,6 @@ class ClasseVivaFinalGrade
   ClasseVivaFinalGrade({
     @required this.type,
     @required this.url,
-  });
-}
-
-class ClasseVivaBook
-{
-  final String title;
-  final String description;
-  final List<String> categories;
-  final String publisher;
-  final String isbn;
-  final double price;
-  final bool mustBuy;
-  final bool isInUse;
-  final bool isSuggested;
-
-  ClasseVivaBook({
-    @required this.title,
-    @required this.description,
-    @required this.categories,
-    @required this.publisher,
-    @required this.isbn,
-    @required this.price,
-    @required this.mustBuy,
-    @required this.isInUse,
-    @required this.isSuggested,
   });
 }
 
