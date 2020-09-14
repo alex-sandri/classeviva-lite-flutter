@@ -2,6 +2,7 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
+import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
@@ -161,33 +162,15 @@ class _CalendarState extends State<Calendar> {
                                 break;
                             }
 
-                            String type;
-
-                            switch (absence.type)
-                            {
-                              case ClasseVivaAbsenceType.Absence: type = "Assenza"; break;
-                              case ClasseVivaAbsenceType.Late: type = "Ritardo"; break;
-                              case ClasseVivaAbsenceType.ShortDelay: type = "Ritardo Breve"; break;
-                              case ClasseVivaAbsenceType.EarlyExit: type = "Uscita Anticipata"; break;
-                            }
-
-                            String status;
-
-                            switch (absence.status)
-                            {
-                              case ClasseVivaAbsenceStatus.Justified: status = "Giustificata"; break;
-                              case ClasseVivaAbsenceStatus.NotJustified: status = "Non Giustificata"; break;
-                            }
-
                             return Card(
                               color: color,
                               child: ListTile(
                                 leading: Icon(Icons.error),
-                                title: SelectableText(type),
+                                title: SelectableText(Absences.getTypeString(absence.type)),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    SelectableText(status),
+                                    SelectableText(Absences.getStatusString(absence.status)),
 
                                     if (absence.description.isNotEmpty)
                                       SelectableText(

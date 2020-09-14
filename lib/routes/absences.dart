@@ -7,6 +7,32 @@ import 'package:intl/intl.dart';
 class Absences extends StatefulWidget {
   @override
   _AbsencesState createState() => _AbsencesState();
+
+  static String getTypeString(ClasseVivaAbsenceType type) {
+    String typeString;
+
+    switch (type)
+    {
+      case ClasseVivaAbsenceType.Absence: typeString = "Assenza"; break;
+      case ClasseVivaAbsenceType.Late: typeString = "Ritardo"; break;
+      case ClasseVivaAbsenceType.ShortDelay: typeString = "Ritardo Breve"; break;
+      case ClasseVivaAbsenceType.EarlyExit: typeString = "Uscita Anticipata"; break;
+    }
+
+    return typeString;
+  }
+
+  static String getStatusString(ClasseVivaAbsenceStatus status) {
+    String statusString;
+
+    switch (status)
+    {
+      case ClasseVivaAbsenceStatus.Justified: statusString = "Giustificata"; break;
+      case ClasseVivaAbsenceStatus.NotJustified: statusString = "Non Giustificata"; break;
+    }
+
+    return statusString;
+  }
 }
 
 class _AbsencesState extends State<Absences> {
@@ -76,28 +102,8 @@ class _AbsencesState extends State<Absences> {
 
                         final ClasseVivaAbsence absence = _absences[index];
 
-                        String type;
-
-                        switch (absence.type)
-                        {
-                          case ClasseVivaAbsenceType.Absence: type = "Assenza"; break;
-                          case ClasseVivaAbsenceType.Late: type = "Ritardo"; break;
-                          case ClasseVivaAbsenceType.ShortDelay: type = "Ritardo Breve"; break;
-                          case ClasseVivaAbsenceType.EarlyExit: type = "Uscita Anticipata"; break;
-                        }
-
-                        String status;
-
-                        switch (absence.status)
-                        {
-                          case ClasseVivaAbsenceStatus.Justified: status = "Giustificata"; break;
-                          case ClasseVivaAbsenceStatus.NotJustified: status = "Non Giustificata"; break;
-                        }
-
                         return ListTile(
-                          title: SelectableText(
-                            type,
-                          ),
+                          title: SelectableText(Absences.getTypeString(absence.type)),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -108,9 +114,7 @@ class _AbsencesState extends State<Absences> {
                                   : "${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)}",
                               ),
                               SizedBox(height: 5,),
-                              SelectableText(
-                                status,
-                              ),
+                              SelectableText(Absences.getStatusString(absence.status)),
                               SizedBox(height: 5,),
 
                               if (absence.description.isNotEmpty)
