@@ -495,12 +495,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-      _endpoints.grades(),
+		final result = await HttpManager.get(
+      url: _endpoints.grades(),
       headers: getSessionCookieHeader(),
     );
 
-		final document = parse(response.body);
+		if (result.isError) return;
+
+    final document = parse(result.response.body);
 
 		List<ClasseVivaGrade> grades = [];
 
@@ -546,12 +548,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-      _endpoints.gradesWithPeriods(),
+		final result = await HttpManager.get(
+      url: _endpoints.gradesWithPeriods(),
       headers: getSessionCookieHeader(),
     );
 
-		final document = parse(response.body);
+		if (result.isError) return;
+
+    final document = parse(result.response.body);
 
 		List<ClasseVivaGradesPeriod> periods = [];
 
@@ -607,12 +611,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-      _endpoints.agenda(start, end),
+		final result = await HttpManager.get(
+      url: _endpoints.agenda(start, end),
       headers: getSessionCookieHeader(),
     );
 
-    final List<ClasseVivaAgendaItem> agenda = ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
+    if (result.isError) return;
+
+    final List<ClasseVivaAgendaItem> agenda = ((jsonDecode(result.response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
 
     agenda.sort((a, b) {
       // Most recent first
@@ -699,12 +705,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.demerits(),
+		final result = await HttpManager.get(
+			url: _endpoints.demerits(),
       headers: getSessionCookieHeader(),
     );
 
-		final document = parse(response.body);
+		if (result.isError) return;
+
+    final document = parse(result.response.body);
 
 		List<ClasseVivaDemerit> demerits = [];
 
@@ -738,12 +746,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.absences(),
+		final result = await HttpManager.get(
+			url: _endpoints.absences(),
       headers: getSessionCookieHeader(),
     );
 
-		final document = parse(response.body);
+		if (result.isError) return;
+
+    final document = parse(result.response.body);
 
 		List<ClasseVivaAbsence> absences = [];
 
@@ -877,12 +887,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.subjects(),
+		final result = await HttpManager.get(
+			url: _endpoints.subjects(),
       headers: getSessionCookieHeader(),
     );
 
-		final document = parse(response.body);
+		if (result.isError) return;
+
+    final document = parse(result.response.body);
 
 		List<ClasseVivaSubject> subjects = [];
 
@@ -904,10 +916,12 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.lessons(subject.id, subject.teacherIds),
+		final result = await HttpManager.get(
+			url: _endpoints.lessons(subject.id, subject.teacherIds),
       headers: getSessionCookieHeader(),
     );
+
+    if (result.isError) return;
 
 		final document = parse('''
       <!DOCTYPE html>
@@ -917,7 +931,7 @@ class ClasseViva
         <body>
           <table>
             <tbody>
-            ${response.body}
+            ${result.response.body}
             </tbody>
           </table>
         </body>
@@ -1009,12 +1023,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.calendar(date),
+		final result = await HttpManager.get(
+			url: _endpoints.calendar(date),
       headers: getSessionCookieHeader(),
     );
 
-    final document = parse(response.body);
+    if (result.isError) return;
+
+    final document = parse(result.response.body);
 
     List<ClasseVivaCalendarLesson> lessons = [];
 
