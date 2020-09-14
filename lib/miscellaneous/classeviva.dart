@@ -614,6 +614,11 @@ class ClasseViva
 
     final List<ClasseVivaAgendaItem> agenda = ((jsonDecode(response.body) ?? []) as List).map((item) => ClasseVivaAgendaItem.fromJson(item)).toList();
 
+    agenda.sort((a, b) {
+      // Most recent first
+      return b.start.compareTo(a.start);
+    });
+
     await CacheManager.set("agenda", agenda);
 
 		yield agenda;

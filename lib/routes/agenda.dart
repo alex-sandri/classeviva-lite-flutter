@@ -25,11 +25,6 @@ class _AgendaState extends State<Agenda> {
     {
       if (items == null) continue;
 
-      items.sort((a, b) {
-        // Most recent first
-        return b.start.compareTo(a.start);
-      });
-
       if (mounted)
         setState(() {
           _items = items;
