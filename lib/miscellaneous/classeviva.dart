@@ -607,6 +607,8 @@ class ClasseViva
 	}
 
 	Stream<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async* {
+    // TODO: Cache entire agenda and filter result based on 'start' and 'end' before yielding it
+
     yield (CacheManager.get("agenda") as List<dynamic>)?.whereType<ClasseVivaAgendaItem>()?.toList();
 
     await checkValidSession();
