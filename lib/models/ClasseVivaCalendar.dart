@@ -22,6 +22,7 @@ class ClasseVivaCalendar
   @HiveField(3)
   final List<ClasseVivaAgendaItem> agenda;
 
+  @HiveField(4)
   final List<ClasseVivaAbsence> absences;
 
   ClasseVivaCalendar({
