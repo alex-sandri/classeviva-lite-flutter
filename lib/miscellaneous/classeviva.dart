@@ -693,7 +693,9 @@ class ClasseViva
 		return attachments;
 	}
 
-	Future<List<ClasseVivaDemerit>> getDemerits() async {
+	Stream<List<ClasseVivaDemerit>> getDemerits() async* {
+    yield (CacheManager.get("demerits") as List<dynamic>)?.whereType<ClasseVivaDemerit>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -720,7 +722,9 @@ class ClasseViva
 			));
 		});
 
-		return demerits;
+    await CacheManager.set("demerits", demerits);
+
+		yield demerits;
 	}
 
   Stream<List<ClasseVivaAbsence>> getAbsences() async* {

@@ -15,18 +15,29 @@ class _DemeritsState extends State<Demerits> {
 
   List<ClasseVivaDemerit> _demerits;
 
-  Future<void> _handleRefresh() async {
-    final List<ClasseVivaDemerit> demerits = await _session.getDemerits();
+  Future<void> _fetch() async {
+    await for (final List<ClasseVivaDemerit> demerits in _session.getDemerits())
+    {
+      if (demerits == null) continue;
 
-    demerits.sort((a, b) {
-      // Most recent first
-      return b.date.compareTo(a.date);
+      demerits.sort((a, b) {
+        // Most recent first
+        return b.date.compareTo(a.date);
+      });
+
+      if (mounted)
+        setState(() {
+          _demerits = demerits;
+        });
+    }
+  }
+
+  Future<void> _handleRefresh() async {
+    setState(() {
+      _demerits = null;
     });
 
-    if (mounted)
-      setState(() {
-        _demerits = demerits;
-      });
+    await _fetch();
   }
 
   void initState() {
