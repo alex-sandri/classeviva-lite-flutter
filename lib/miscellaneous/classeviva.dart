@@ -1049,7 +1049,7 @@ class ClasseViva
       )),
       getAbsences(),
       (grades, agenda, absences) {
-        if (grades == null || agenda == null) return null;
+        if (grades == null || agenda == null || absences == null) return null;
 
         final ClasseVivaCalendar calendar = ClasseVivaCalendar(
           date: date,
