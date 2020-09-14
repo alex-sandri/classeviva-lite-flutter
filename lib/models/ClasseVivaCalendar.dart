@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
@@ -21,10 +22,13 @@ class ClasseVivaCalendar
   @HiveField(3)
   final List<ClasseVivaAgendaItem> agenda;
 
+  final List<ClasseVivaAbsence> absences;
+
   ClasseVivaCalendar({
     @required this.date,
     @required this.grades,
     @required this.lessons,
     @required this.agenda,
+    @required this.absences,
   });
 }
