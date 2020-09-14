@@ -30,11 +30,6 @@ class _GradesState extends State<Grades> {
 
       _subjects = groupBy(grades, (ClasseVivaGrade grade) => grade.subject);
 
-      grades.sort((a, b) {
-        // Most recent first
-        return b.date.compareTo(a.date);
-      });
-
       if (mounted)
         setState(() {
           _grades = grades;
@@ -325,11 +320,6 @@ class _GradesState extends State<Grades> {
 
                         final String subject = subjects.keys.elementAt(index - 1);
                         final List<ClasseVivaGrade> grades = subjects.values.elementAt(index - 1);
-
-                        grades.sort((a, b) {
-                          // Most recent first
-                          return b.date.compareTo(a.date);
-                        });
 
                         final List<ClasseVivaGrade> gradesValidForAverageCount = ClasseViva.getGradesValidForAverageCount(grades);
 

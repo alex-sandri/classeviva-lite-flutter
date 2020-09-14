@@ -531,6 +531,11 @@ class ClasseViva
       }
 		});
 
+    grades.sort((a, b) {
+      // Most recent first
+      return b.date.compareTo(a.date);
+    });
+
     await CacheManager.set("grades", grades);
 
 		yield grades;
@@ -579,6 +584,11 @@ class ClasseViva
             ),
           ));
         });
+      });
+
+      grades.sort((a, b) {
+        // Most recent first
+        return b.date.compareTo(a.date);
       });
 
       periods.add(ClasseVivaGradesPeriod(
