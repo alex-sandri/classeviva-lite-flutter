@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
+import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
@@ -128,6 +129,21 @@ class _CalendarState extends State<Calendar> {
                           valueColor: AlwaysStoppedAnimation<Color>(ThemeManager.isLightTheme(context)
                             ? Theme.of(context).primaryColor
                             : Theme.of(context).accentColor),
+                        ),
+
+                      if (_calendar != null && _calendar.absences.isNotEmpty)
+                        ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => Divider(),
+                          itemCount: _calendar.grades.length,
+                          itemBuilder: (context, index) {
+                            final ClasseVivaAbsence absence = _calendar.absences[index];
+
+                            return ListTile(
+                              title: Text(absence.description),
+                            );
+                          },
                         ),
 
                       if (_calendar != null && _calendar.grades.isNotEmpty)
