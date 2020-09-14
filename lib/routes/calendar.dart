@@ -132,6 +132,11 @@ class _CalendarState extends State<Calendar> {
                         ),
 
                       if (_calendar != null && _calendar.absences.isNotEmpty)
+                        ListTile(
+                          title: Text("Assenze"),
+                        ),
+
+                      if (_calendar != null && _calendar.absences.isNotEmpty)
                         ListView.separated(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
