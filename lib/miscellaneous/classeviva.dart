@@ -1124,15 +1124,19 @@ class ClasseViva
     return finalGrades;
 	}
 
-  Future<List<ClasseVivaBook>> getBooks() async {
+  Stream<List<ClasseVivaBook>> getBooks() async* {
+    yield (CacheManager.get("books") as List<dynamic>)?.whereType<ClasseVivaBook>()?.toList();
+
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.books(),
+		final result = await HttpManager.get(
+			url: _endpoints.books(),
       headers: getSessionCookieHeader(),
     );
 
-    final document = parse(response.body);
+    if (result.isError) return;
+
+    final document = parse(result.response.body);
 
     List<ClasseVivaBook> books = [];
 
@@ -1154,7 +1158,9 @@ class ClasseViva
       ));
     });
 
-    return books;
+    await CacheManager.set("books", books);
+
+    yield books;
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, { String year = "" }) async {

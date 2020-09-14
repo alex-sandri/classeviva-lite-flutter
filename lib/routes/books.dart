@@ -15,12 +15,15 @@ class _BooksState extends State<Books> {
   List<ClasseVivaBook> _books;
 
   Future<void> _handleRefresh() async {
-    final List<ClasseVivaBook> books = await _session.getBooks();
+    await for (final List<ClasseVivaBook> books in _session.getBooks())
+    {
+      if (books == null) continue;
 
-    if (mounted)
-      setState(() {
-        _books = books;
-      });
+      if (mounted)
+        setState(() {
+          _books = books;
+        });
+    }
   }
 
   void initState() {
