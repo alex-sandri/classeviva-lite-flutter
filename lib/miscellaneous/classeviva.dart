@@ -8,6 +8,7 @@ import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
+import 'package:classeviva_lite/models/ClasseVivaDemerit.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/models/ClasseVivaLesson.dart';
@@ -216,21 +217,6 @@ class ClasseVivaAttachment
     @required this.type,
     @required this.date,
     @required this.url,
-  });
-}
-
-class ClasseVivaDemerit
-{
-	final String teacher;
-	final DateTime date;
-	final String content;
-	final String type;
-
-  ClasseVivaDemerit({
-    @required this.teacher,
-    @required this.date,
-    @required this.content,
-    @required this.type,
   });
 }
 
