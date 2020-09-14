@@ -1039,7 +1039,7 @@ class ClasseViva
       ));
     });
 
-    await for (final ClasseVivaCalendar calendar in CombineLatestStream.combine2<List<ClasseVivaGrade>, List<ClasseVivaAgendaItem>, ClasseVivaCalendar>(
+    await for (final ClasseVivaCalendar calendar in CombineLatestStream.combine3<List<ClasseVivaGrade>, List<ClasseVivaAgendaItem>, List<ClasseVivaAbsence>, ClasseVivaCalendar>(
       getGrades(),
       getAgenda(date, DateTime(
         date.year,
@@ -1047,7 +1047,8 @@ class ClasseViva
         date.day,
         23, 59, 59,
       )),
-      (grades, agenda) {
+      getAbsences(),
+      (grades, agenda, absences) {
         if (grades == null || agenda == null) return null;
 
         final ClasseVivaCalendar calendar = ClasseVivaCalendar(
@@ -1055,6 +1056,7 @@ class ClasseViva
           grades: grades.where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
           lessons: lessons,
           agenda: agenda,
+          absences: absences,
         );
 
         return calendar;
