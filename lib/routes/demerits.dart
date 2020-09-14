@@ -16,7 +16,7 @@ class _DemeritsState extends State<Demerits> {
 
   List<ClasseVivaDemerit> _demerits;
 
-  Future<void> _fetch() async {
+  Future<void> _handleRefresh() async {
     await for (final List<ClasseVivaDemerit> demerits in _session.getDemerits())
     {
       if (demerits == null) continue;
@@ -26,14 +26,6 @@ class _DemeritsState extends State<Demerits> {
           _demerits = demerits;
         });
     }
-  }
-
-  Future<void> _handleRefresh() async {
-    setState(() {
-      _demerits = null;
-    });
-
-    await _fetch();
   }
 
   void initState() {

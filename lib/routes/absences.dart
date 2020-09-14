@@ -40,7 +40,7 @@ class _AbsencesState extends State<Absences> {
 
   List<ClasseVivaAbsence> _absences;
 
-  Future<void> _fetch() async {
+  Future<void> _handleRefresh() async {
     await for (final List<ClasseVivaAbsence> absences in _session.getAbsences())
     {
       if (absences == null) continue;
@@ -50,14 +50,6 @@ class _AbsencesState extends State<Absences> {
           _absences = absences;
         });
     }
-  }
-
-  Future<void> _handleRefresh() async {
-    setState(() {
-      _absences = null;
-    });
-
-    await _fetch();
   }
 
   void initState() {

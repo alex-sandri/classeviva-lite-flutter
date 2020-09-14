@@ -20,7 +20,7 @@ class _AgendaState extends State<Agenda> {
 
   List<ClasseVivaAgendaItem> _items;
 
-  Future<void> _fetch() async {
+  Future<void> _handleRefresh() async {
     await for (final List<ClasseVivaAgendaItem> items in _session.getAgenda(_start, _end))
     {
       if (items == null) continue;
@@ -35,14 +35,6 @@ class _AgendaState extends State<Agenda> {
           _items = items;
         });
     }
-  }
-
-  Future<void> _handleRefresh() async {
-    setState(() {
-      _items = null;
-    });
-
-    await _fetch();
   }
 
   void initState() {

@@ -25,7 +25,7 @@ class _CalendarState extends State<Calendar> {
     DateTime.now().day,
   );
 
-  Future<void> _fetch() async {
+  Future<void> _handleRefresh() async {
     await for (final ClasseVivaCalendar calendar in _session.getCalendar(_date))
     {
       if (calendar == null) continue;
@@ -35,14 +35,6 @@ class _CalendarState extends State<Calendar> {
           _calendar = calendar;
         });
     }
-  }
-
-  Future<void> _handleRefresh() async {
-    setState(() {
-      _calendar = null;
-    });
-
-    await _fetch();
   }
 
   void initState() {
@@ -73,7 +65,11 @@ class _CalendarState extends State<Calendar> {
 
                 if (selectedDate != null)
                 {
-                  _date = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+                  setState(() {
+                    _date = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+
+                    _calendar = null;
+                  });
 
                   _handleRefresh();
                 }
@@ -101,7 +97,11 @@ class _CalendarState extends State<Calendar> {
                           ),
                           tooltip: "Giorno precedente",
                           onPressed: () {
-                            _date = _date.subtract(Duration(days: 1));
+                            setState(() {
+                              _date = _date.subtract(Duration(days: 1));
+
+                              _calendar = null;
+                            });
 
                             _handleRefresh();
                           },
@@ -117,7 +117,11 @@ class _CalendarState extends State<Calendar> {
                           ),
                           tooltip: "Giorno successivo",
                           onPressed: () {
-                            _date = _date.add(Duration(days: 1));
+                            setState(() {
+                              _date = _date.add(Duration(days: 1));
+
+                              _calendar = null;
+                            });
 
                             _handleRefresh();
                           },
