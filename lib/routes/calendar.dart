@@ -149,10 +149,16 @@ class _CalendarState extends State<Calendar> {
 
                             switch (absence.type)
                             {
-                              case ClasseVivaAbsenceType.Absence: color = Colors.red; break;
-                              case ClasseVivaAbsenceType.Late: color = Colors.orange; break;
-                              case ClasseVivaAbsenceType.ShortDelay: color = Colors.orange; break;
-                              case ClasseVivaAbsenceType.EarlyExit: color = Colors.yellow; break;
+                              case ClasseVivaAbsenceType.Absence:
+                                color = Colors.red;
+                                break;
+                              case ClasseVivaAbsenceType.Late:
+                              case ClasseVivaAbsenceType.ShortDelay:
+                                color = Colors.orange;
+                                break;
+                              case ClasseVivaAbsenceType.EarlyExit:
+                                color = Colors.yellow;
+                                break;
                             }
 
                             String type;
