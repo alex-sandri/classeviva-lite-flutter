@@ -21,11 +21,6 @@ class _DemeritsState extends State<Demerits> {
     {
       if (demerits == null) continue;
 
-      demerits.sort((a, b) {
-        // Most recent first
-        return b.date.compareTo(a.date);
-      });
-
       if (mounted)
         setState(() {
           _demerits = demerits;

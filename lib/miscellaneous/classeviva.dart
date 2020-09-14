@@ -708,6 +708,11 @@ class ClasseViva
 			));
 		});
 
+    demerits.sort((a, b) {
+      // Most recent first
+      return b.date.compareTo(a.date);
+    });
+
     await CacheManager.set("demerits", demerits);
 
 		yield demerits;
