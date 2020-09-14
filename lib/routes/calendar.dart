@@ -145,8 +145,51 @@ class _CalendarState extends State<Calendar> {
                           itemBuilder: (context, index) {
                             final ClasseVivaAbsence absence = _calendar.absences[index];
 
-                            return ListTile(
-                              title: Text(absence.description),
+                            Color color;
+
+                            switch (absence.type)
+                            {
+                              case ClasseVivaAbsenceType.Absence: color = Colors.red; break;
+                              case ClasseVivaAbsenceType.Late: color = Colors.orange; break;
+                              case ClasseVivaAbsenceType.ShortDelay: color = Colors.orange; break;
+                              case ClasseVivaAbsenceType.EarlyExit: color = Colors.yellow; break;
+                            }
+
+                            String type;
+
+                            switch (absence.type)
+                            {
+                              case ClasseVivaAbsenceType.Absence: type = "Assenza"; break;
+                              case ClasseVivaAbsenceType.Late: type = "Ritardo"; break;
+                              case ClasseVivaAbsenceType.ShortDelay: type = "Ritardo Breve"; break;
+                              case ClasseVivaAbsenceType.EarlyExit: type = "Uscita Anticipata"; break;
+                            }
+
+                            String status;
+
+                            switch (absence.status)
+                            {
+                              case ClasseVivaAbsenceStatus.Justified: status = "Giustificata"; break;
+                              case ClasseVivaAbsenceStatus.NotJustified: status = "Non Giustificata"; break;
+                            }
+
+                            return Card(
+                              color: color,
+                              child: ListTile(
+                                leading: Icon(Icons.error),
+                                title: SelectableText(type),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    SelectableText(status),
+
+                                    if (absence.description.isNotEmpty)
+                                      SelectableText(
+                                        absence.description,
+                                      ),
+                                  ],
+                                ),
+                              ),
                             );
                           },
                         ),
