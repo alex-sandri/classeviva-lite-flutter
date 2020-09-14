@@ -1056,7 +1056,10 @@ class ClasseViva
           grades: grades.where((grade) => grade.date.isAtSameMomentAs(date)).toList(),
           lessons: lessons,
           agenda: agenda,
-          absences: absences,
+          absences: absences.where(
+            (absence) =>
+              (date.isAfter(absence.from) && date.isBefore(absence.to))
+              || ((absence.from == absence.to) && (absence.from == date))).toList(),
         );
 
         return calendar;
