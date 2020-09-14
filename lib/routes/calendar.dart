@@ -136,7 +136,7 @@ class _CalendarState extends State<Calendar> {
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.grades.length,
+                          itemCount: _calendar.absences.length,
                           itemBuilder: (context, index) {
                             final ClasseVivaAbsence absence = _calendar.absences[index];
 
