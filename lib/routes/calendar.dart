@@ -231,7 +231,7 @@ class _CalendarState extends State<Calendar> {
                               leading: Column(
                                 children: [
                                   SelectableText(
-                                    "${lesson.hour}^ ora",
+                                    "${lesson.hour}ª ora",
                                   ),
                                   SelectableText(
                                     "${lesson.duration.inHours}hh",
