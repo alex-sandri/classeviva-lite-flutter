@@ -608,7 +608,9 @@ class ClasseViva
 		yield agenda;
 	}
 
-	Future<List<ClasseVivaAttachment>> getAttachments() async {
+	Stream<List<ClasseVivaAttachment>> getAttachments() async* {
+    if (attachmentsPage == 1) yield (CacheManager.get("attachments") as List<dynamic>)?.whereType<ClasseVivaAttachment>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -675,7 +677,9 @@ class ClasseViva
       ));
 		});
 
-		return attachments;
+    if (attachmentsPage == 1) await CacheManager.set("attachments", attachments);
+
+		yield attachments;
 	}
 
 	Stream<List<ClasseVivaDemerit>> getDemerits() async* {

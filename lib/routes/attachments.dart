@@ -30,12 +30,15 @@ class _AttachmentsState extends State<Attachments> {
   Future<void> _handleRefresh() async {
     _session.attachmentsPage = 1;
 
-    final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
+    await for (final List<ClasseVivaAttachment> attachments in _session.getAttachments())
+    {
+      if (attachments == null) continue;
 
-    if (mounted)
-      setState(() {
-        _attachments = attachments;
-      });
+      if (mounted)
+        setState(() {
+          _attachments = attachments;
+        });
+    }
   }
 
   bool _loading = false;
@@ -51,16 +54,19 @@ class _AttachmentsState extends State<Attachments> {
 
     _session.attachmentsPage++;
 
-    final List<ClasseVivaAttachment> attachments = await _session.getAttachments();
+    await for (final List<ClasseVivaAttachment> attachments in _session.getAttachments())
+    {
+      if (attachments == null) continue;
 
-    if (mounted)
-      setState(() {
+      if (mounted)
+        setState(() {
         _loading = false;
 
         _attachments.addAll(attachments);
 
         _showLoadMoreButton = attachments.isNotEmpty;
       });
+    }
   }
 
   Future<void> _requestPermission() async {
