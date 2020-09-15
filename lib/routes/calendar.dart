@@ -234,7 +234,7 @@ class _CalendarState extends State<Calendar> {
                                     "${lesson.hour}ª ora",
                                   ),
                                   SelectableText(
-                                    "${lesson.duration.inHours}hh",
+                                    "${lesson.duration.inHours} ${lesson.duration.inHours == 1 ? "ora" : "ore"}",
                                     style: TextStyle(
                                       fontSize: 10,
                                     ),
