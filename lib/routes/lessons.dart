@@ -79,7 +79,7 @@ class _LessonsState extends State<Lessons> {
                             ),
                           ),
                           children: [
-                            LessonsExpansionTileListView(subject: subject),
+                            LessonsListView(subject: subject),
                           ],
                         );
                       },
@@ -94,10 +94,10 @@ class _LessonsState extends State<Lessons> {
   }
 }
 
-class LessonsExpansionTileListView extends StatelessWidget {
+class LessonsListView extends StatelessWidget {
   final ClasseVivaSubject subject;
 
-  LessonsExpansionTileListView({
+  LessonsListView({
     @required this.subject,
   });
 
