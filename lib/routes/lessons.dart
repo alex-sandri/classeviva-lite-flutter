@@ -79,34 +79,7 @@ class _LessonsState extends State<Lessons> {
                             ),
                           ),
                           children: [
-                            StreamBuilder<List<ClasseVivaLesson>>(
-                              stream: _session.getLessons(subject),
-                              builder: (context, lessons) {
-                                if (!lessons.hasData)
-                                  return Padding(
-                                    padding: EdgeInsets.all(8),
-                                    child: Spinner(),
-                                  );
-
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: lessons.data.length,
-                                  itemBuilder: (context, index) {
-                                    final ClasseVivaLesson lesson = lessons.data[index];
-
-                                    return ListTile(
-                                      title: SelectableText(
-                                        lesson.description,
-                                      ),
-                                      subtitle: SelectableText(
-                                        DateFormat.yMMMMd().format(lesson.date),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            )
+                            LessonsExpansionTileListView(subject: subject),
                           ],
                         );
                       },
@@ -117,6 +90,46 @@ class _LessonsState extends State<Lessons> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class LessonsExpansionTileListView extends StatelessWidget {
+  final ClasseVivaSubject subject;
+
+  LessonsExpansionTileListView({
+    @required this.subject,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<ClasseVivaLesson>>(
+      stream: ClasseViva(ClasseViva.getCurrentSession()).getLessons(subject),
+      builder: (context, lessons) {
+        if (!lessons.hasData)
+          return Padding(
+            padding: EdgeInsets.all(8),
+            child: Spinner(),
+          );
+
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: lessons.data.length,
+          itemBuilder: (context, index) {
+            final ClasseVivaLesson lesson = lessons.data[index];
+
+            return ListTile(
+              title: SelectableText(
+                lesson.description,
+              ),
+              subtitle: SelectableText(
+                DateFormat.yMMMMd().format(lesson.date),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
