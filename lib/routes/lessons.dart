@@ -56,8 +56,7 @@ class _LessonsState extends State<Lessons> {
                   backgroundColor: Theme.of(context).appBarTheme.color,
                   child: _subjects == null
                   ? Spinner()
-                  : ListView.separated(
-                      separatorBuilder: (context, index) => Divider(),
+                  : ListView.builder(
                       itemCount: _subjects.isNotEmpty
                         ? _subjects.length
                         : 1,
