@@ -5,6 +5,7 @@ import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
+import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaBook.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
@@ -54,6 +55,8 @@ void main() async {
   /* 12 */ Hive.registerAdapter(ClasseVivaLessonAdapter());
   /* 13 */ Hive.registerAdapter(ClasseVivaDemeritAdapter());
   /* 14 */ Hive.registerAdapter(ClasseVivaBookAdapter());
+  /* 15 */ Hive.registerAdapter(ClasseVivaAttachmentAdapter());
+  /* 16 */ Hive.registerAdapter(ClasseVivaAttachmentTypeAdapter());
 
   await Hive.openBox("preferences");
 

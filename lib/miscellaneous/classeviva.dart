@@ -5,6 +5,7 @@ import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
+import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaBook.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
@@ -191,34 +192,6 @@ class ClasseVivaSession
     uid: session.split(";")[1],
     pwd: session.split(";")[2],
   );
-}
-
-enum ClasseVivaAttachmentType
-{
-  File,
-  Link,
-  Text,
-}
-
-class ClasseVivaAttachment
-{
-	final String id;
-	final String teacher;
-	final String name;
-	final String folder;
-	final ClasseVivaAttachmentType type;
-	final DateTime date;
-	final Uri url;
-
-  ClasseVivaAttachment({
-    @required this.id,
-    @required this.teacher,
-    @required this.name,
-    @required this.folder,
-    @required this.type,
-    @required this.date,
-    @required this.url,
-  });
 }
 
 class ClasseVivaBulletinBoardItem
