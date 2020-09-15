@@ -124,7 +124,7 @@ class ClasseVivaSession
       await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
 
       if (currentSession?.id == this.id)
-        await preferences.put("currentSession", refreshedSession.toString());
+        await ClasseViva.setCurrentSession(refreshedSession);
 
       _id = refreshedSession.id;
     },
