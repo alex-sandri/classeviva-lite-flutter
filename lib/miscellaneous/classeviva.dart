@@ -599,7 +599,7 @@ class ClasseViva
 			final id = attachment.attributes["contenuto_id"];
 
 			ClasseVivaAttachmentType type;
-			Uri url;
+			String url;
 
       switch(attachment.querySelector("img").attributes["src"].split("/").last.split(".").first)
       {
@@ -611,13 +611,13 @@ class ClasseViva
 			switch (type)
 			{
 				case ClasseVivaAttachmentType.File:
-          url = Uri.parse(_endpoints.fileAttachments(id, attachment.querySelector(".button_action").attributes["cksum"]));
+          url = _endpoints.fileAttachments(id, attachment.querySelector(".button_action").attributes["cksum"]);
           break;
 				case ClasseVivaAttachmentType.Link:
-          url = Uri.parse(attachment.querySelector(".button_action").attributes["ref"]);
+          url = attachment.querySelector(".button_action").attributes["ref"];
           break;
 				case ClasseVivaAttachmentType.Text:
-          url = Uri.parse(_endpoints.textAttachments(id));
+          url = _endpoints.textAttachments(id);
           break;
 			}
 

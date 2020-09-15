@@ -193,7 +193,7 @@ class _AttachmentsState extends State<Attachments> {
                             return Card(
                               child: ListTile(
                                 onTap: () async {
-                                  final String url = attachment.url.toString();
+                                  final String url = attachment.url;
 
                                   switch (attachment.type)
                                   {
@@ -201,7 +201,7 @@ class _AttachmentsState extends State<Attachments> {
                                       await _requestPermission();
 
                                       await FlutterDownloader.enqueue(
-                                        url: attachment.url.toString(),
+                                        url: url,
                                         savedDir: (Theme.of(context).platform == TargetPlatform.android
                                           ? await getExternalStorageDirectory()
                                           : await getApplicationDocumentsDirectory()).path,

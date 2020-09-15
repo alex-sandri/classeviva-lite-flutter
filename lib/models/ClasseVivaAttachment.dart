@@ -25,7 +25,7 @@ class ClasseVivaAttachment
 	final DateTime date;
 
   @HiveField(6)
-	final Uri url;
+	final String url;
 
   ClasseVivaAttachment({
     @required this.id,
