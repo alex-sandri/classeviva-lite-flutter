@@ -123,8 +123,16 @@ class LessonsListView extends StatelessWidget {
               title: SelectableText(
                 lesson.description,
               ),
-              subtitle: SelectableText(
-                DateFormat.yMMMMd().format(lesson.date),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SelectableText(
+                    lesson.teacher,
+                  ),
+                  SelectableText(
+                    DateFormat.yMMMMd().format(lesson.date),
+                  ),
+                ],
               ),
             );
           },
