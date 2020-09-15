@@ -891,7 +891,7 @@ class ClasseViva
 	}
 
   Stream<List<ClasseVivaLesson>> getLessons(ClasseVivaSubject subject) async* {
-    yield (CacheManager.get("lessons") as List<dynamic>)?.whereType<ClasseVivaLesson>()?.toList();
+    yield (CacheManager.get("lessons-${subject.id}") as List<dynamic>)?.whereType<ClasseVivaLesson>()?.toList();
 
     await checkValidSession();
 
@@ -933,7 +933,7 @@ class ClasseViva
       ));
 		});
 
-    await CacheManager.set("lessons", lessons);
+    await CacheManager.set("lessons-${subject.id}", lessons);
 
 		yield lessons;
 	}
