@@ -776,6 +776,7 @@ class ClasseViva
             year,
             toMonthIndex + 1,
             int.parse(toDateString.split(" ").first.replaceAll(RegExp(r'^0+(?=.)'), "")),
+            23, 59, 59,
           ),
           description: description,
           type: ClasseVivaAbsenceType.Absence,
@@ -1062,8 +1063,7 @@ class ClasseViva
           agenda: agenda,
           absences: absences.where(
             (absence) =>
-              (date.isAfter(absence.from) && date.isBefore(absence.to))
-              || ((absence.from == absence.to) && (absence.from == date))).toList(),
+              (date.isAfter(absence.from) || date == absence.from) && date.isBefore(absence.to)).toList(),
         );
 
         return calendar;
