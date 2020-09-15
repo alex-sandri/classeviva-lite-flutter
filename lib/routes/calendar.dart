@@ -250,14 +250,19 @@ class _CalendarState extends State<Calendar> {
                                   SelectableText(
                                     lesson.teacher,
                                   ),
-                                  SelectableText(
-                                    lesson.type,
-                                    style: TextStyle(
-                                      color: Colors.red,
+                                  SelectableText.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: lesson.type,
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        TextSpan(text: " "),
+                                        TextSpan(text: lesson.description),
+                                      ],
                                     ),
-                                  ),
-                                  SelectableText(
-                                    lesson.description,
                                   ),
                                 ],
                               ),
