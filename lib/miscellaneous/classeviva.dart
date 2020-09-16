@@ -227,9 +227,9 @@ class ClasseViva
 
 	ClasseViva(this.session)
   {
-    yearBeginsAt = DateTime(getYear(), 7, 1);
+    yearBeginsAt = DateTime(getYear(), 8, 1);
 
-    yearEndsAt = DateTime(getYear() + 1, 6, 31);
+    yearEndsAt = DateTime(getYear() + 1, 7, 31);
 
     _endpoints = ClasseVivaEndpoints(session.year);
   }
