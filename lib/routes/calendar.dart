@@ -59,8 +59,8 @@ class _CalendarState extends State<Calendar> {
                 final DateTime selectedDate = await showDatePicker(
                   context: context,
                   initialDate: _date,
-                  firstDate: DateTime(1970),
-                  lastDate: DateTime(2099),
+                  firstDate: _session.yearBeginsAt,
+                  lastDate: _session.yearEndsAt,
                 );
 
                 if (selectedDate != null)
