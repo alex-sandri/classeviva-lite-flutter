@@ -9,6 +9,7 @@ import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaBook.dart';
 import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItem.dart';
+import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItemDetails.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaDemerit.dart';
@@ -193,32 +194,6 @@ class ClasseVivaSession
     uid: session.split(";")[1],
     pwd: session.split(";")[2],
   );
-}
-
-class ClasseVivaBulletinBoardItemDetailsAttachment
-{
-  final String id;
-  final String name;
-
-  ClasseVivaBulletinBoardItemDetailsAttachment({
-    @required this.id,
-    @required this.name,
-  });
-}
-
-class ClasseVivaBulletinBoardItemDetails
-{
-  final String id;
-  final String title;
-  final String description;
-  final List<ClasseVivaBulletinBoardItemDetailsAttachment> attachments;
-
-  ClasseVivaBulletinBoardItemDetails({
-    @required this.id,
-    @required this.title,
-    @required this.description,
-    @required this.attachments,
-  });
 }
 
 class ClasseVivaFinalGrade

@@ -9,6 +9,7 @@ import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaBook.dart';
 import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItem.dart';
+import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItemDetails.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaDemerit.dart';
@@ -59,6 +60,8 @@ void main() async {
   /* 15 */ Hive.registerAdapter(ClasseVivaAttachmentAdapter());
   /* 16 */ Hive.registerAdapter(ClasseVivaAttachmentTypeAdapter());
   /* 17 */ Hive.registerAdapter(ClasseVivaBulletinBoardItemAdapter());
+  /* 18 */ Hive.registerAdapter(ClasseVivaBulletinBoardItemDetailsAdapter());
+  /* 19 */ Hive.registerAdapter(ClasseVivaBulletinBoardItemDetailsAttachmentAdapter());
 
   await Hive.openBox("preferences");
 
