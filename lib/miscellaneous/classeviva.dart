@@ -445,14 +445,15 @@ class ClasseViva
 	}
 
 	Stream<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async* {
-    // TODO: Cache entire agenda and filter result based on 'start' and 'end' before yielding it
+    List<ClasseVivaAgendaItem> _getItemsInsideDateRange(List<ClasseVivaAgendaItem> items) =>
+      items?.where((item) => item.start.isAfter(start) && item.end.isBefore(end))?.toList(); 
 
-    yield (CacheManager.get("agenda") as List<dynamic>)?.whereType<ClasseVivaAgendaItem>()?.toList();
+    yield _getItemsInsideDateRange((CacheManager.get("agenda") as List<dynamic>)?.whereType<ClasseVivaAgendaItem>()?.toList());
 
     await checkValidSession();
 
 		final result = await HttpManager.get(
-      url: _endpoints.agenda(start, end),
+      url: _endpoints.agenda(yearBeginsAt, yearEndsAt),
       headers: getSessionCookieHeader(),
     );
 
@@ -467,7 +468,7 @@ class ClasseViva
 
     await CacheManager.set("agenda", agenda);
 
-		yield agenda;
+		yield _getItemsInsideDateRange(agenda);
 	}
 
 	Stream<List<ClasseVivaAttachment>> getAttachments() async* {
