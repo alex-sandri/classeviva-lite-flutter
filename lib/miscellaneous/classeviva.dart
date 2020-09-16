@@ -881,10 +881,12 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.bulletinBoardItemDetails(id),
+		final result = await HttpManager.get(
+			url: _endpoints.bulletinBoardItemDetails(id),
       headers: getSessionCookieHeader(),
     );
+
+    if (result.isError) return;
 
     final document = parse('''
       <!DOCTYPE html>
@@ -892,7 +894,7 @@ class ClasseViva
         <head>
         </head>
         <body>
-          ${response.body}
+          ${result.response.body}
         </body>
       </html>
     ''');
