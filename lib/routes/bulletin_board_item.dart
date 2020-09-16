@@ -26,12 +26,15 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
   ReceivePort _port = ReceivePort();
 
   Future<void> _handleRefresh() async {
-    final ClasseVivaBulletinBoardItemDetails item = await _session.getBulletinBoardItemDetails(widget._item.id);
+    await for (final ClasseVivaBulletinBoardItemDetails item in _session.getBulletinBoardItemDetails(widget._item.id))
+    {
+      if (item == null) continue;
 
-    if (mounted)
-      setState(() {
-        _item = item;
-      });
+      if (mounted)
+        setState(() {
+          _item = item;
+        });
+    }
   }
 
   Future<void> _requestPermission() async {

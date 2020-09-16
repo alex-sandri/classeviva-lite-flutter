@@ -876,7 +876,9 @@ class ClasseViva
 		yield items;
 	}
 
-  Future<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async {
+  Stream<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async* {
+    yield CacheManager.get("bulletin-board-item-$id");
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -895,7 +897,7 @@ class ClasseViva
       </html>
     ''');
 
-    return ClasseVivaBulletinBoardItemDetails(
+    final ClasseVivaBulletinBoardItemDetails itemDetails = ClasseVivaBulletinBoardItemDetails(
       id: document.querySelector("[comunicazione_id]").attributes["comunicazione_id"],
       title: document.querySelector("div:first-child").text.trim(),
       description: document.querySelector(".comunicazione_testo").text.trim(),
@@ -904,6 +906,10 @@ class ClasseViva
         name: attachment.text.trim(),
       )).toList(),
     );
+
+    await CacheManager.set("bulletin-board-item-$id", itemDetails);
+
+    yield itemDetails;
 	}
 
   Stream<ClasseVivaCalendar> getCalendar(DateTime date) async* {
