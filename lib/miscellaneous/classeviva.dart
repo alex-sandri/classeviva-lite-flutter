@@ -975,12 +975,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.finalGrades(),
+		final result = await HttpManager.get(
+			url: _endpoints.finalGrades(),
       headers: getSessionCookieHeader(),
     );
 
-    final document = parse(response.body);
+    if (result.isError) return;
+
+    final document = parse(result.response.body);
 
     List<ClasseVivaFinalGrade> finalGrades = [];
 
