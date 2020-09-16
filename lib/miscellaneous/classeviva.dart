@@ -510,12 +510,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-      _endpoints.attachments(attachmentsPage),
+		final result = await HttpManager.get(
+      url: _endpoints.attachments(attachmentsPage),
       headers: getSessionCookieHeader(),
     );
 
-		final document = parse(response.body);
+    if (result.isError) return;
+
+		final document = parse(result.response.body);
 
 		List<ClasseVivaAttachment> attachments = [];
 
@@ -844,12 +846,14 @@ class ClasseViva
 
     await checkValidSession();
 
-		final response = await http.get(
-			_endpoints.bulletinBoard(query, hideInactive),
+		final result = await HttpManager.get(
+			url: _endpoints.bulletinBoard(query, hideInactive),
       headers: getSessionCookieHeader(),
     );
 
-    final jsonResponse = jsonDecode("${response.body}");
+    if (result.isError) return;
+
+    final jsonResponse = jsonDecode("${result.response.body}");
 
     List responseItems = [];
 
