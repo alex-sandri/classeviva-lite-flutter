@@ -970,7 +970,9 @@ class ClasseViva
     }
 	}
 
-  Future<List<ClasseVivaFinalGrade>> getFinalGrades() async {
+  Stream<List<ClasseVivaFinalGrade>> getFinalGrades() async* {
+    yield (CacheManager.get("final-grades") as List<dynamic>)?.whereType<ClasseVivaFinalGrade>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -989,7 +991,9 @@ class ClasseViva
       ));
     });
 
-    return finalGrades;
+    await CacheManager.set("final-grades", finalGrades);
+
+    yield finalGrades;
 	}
 
   Stream<List<ClasseVivaBook>> getBooks() async* {

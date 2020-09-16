@@ -15,12 +15,15 @@ class _FinalGradesState extends State<FinalGrades> {
   List<ClasseVivaFinalGrade> _finalGrades;
 
   Future<void> _handleRefresh() async {
-    final List<ClasseVivaFinalGrade> finalGrades = await _session.getFinalGrades();
+    await for (final List<ClasseVivaFinalGrade> finalGrades in _session.getFinalGrades())
+    {
+      if (finalGrades == null) continue;
 
-    if (mounted)
-      setState(() {
-        _finalGrades = finalGrades;
-      });
+      if (mounted)
+        setState(() {
+          _finalGrades = finalGrades;
+        });
+    }
   }
 
   @override
