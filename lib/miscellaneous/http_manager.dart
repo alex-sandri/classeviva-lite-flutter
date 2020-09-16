@@ -14,7 +14,7 @@ class HttpManager
     {
       response = await http.get(url, headers: headers);
     }
-    on SocketException catch (e)
+    on SocketException
     {
       isError = true;
 
