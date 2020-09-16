@@ -202,7 +202,7 @@ class ClasseViva
   static const Color PRIMARY_LIGHT = Color(0xffcc1020);
 
   int getYear() => session.year == ""
-    ? DateTime.now().year
+    ? DateTime.now().year // TODO: Must return (DateTime.now().year) if 8 <= month <= 12 and (DateTime.now().year - 1) otherwise
     : int.parse("20${session.year}");
 
   /// Use this for previous years websites.
@@ -625,7 +625,7 @@ class ClasseViva
         final int toMonthIndex = months.indexOf(toDateString.split(" ").last);
 
         // 7 -> ago
-        final int year = getYear() + (fromMonthIndex <= 7 ? 1 : 0);
+        final int year = getYear() + (fromMonthIndex < 7 ? 1 : 0);
 
         String description = "";
 
@@ -660,7 +660,7 @@ class ClasseViva
 
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
-        final int year = getYear() + (monthIndex <= 7 ? 1 : 0);
+        final int year = getYear() + (monthIndex < 7 ? 1 : 0);
 
         final DateTime date = DateTime(
           year,
@@ -694,7 +694,7 @@ class ClasseViva
 
         final int monthIndex = months.indexOf(dateString.split(" ").last);
 
-        final int year = getYear() + (monthIndex <= 7 ? 1 : 0);
+        final int year = getYear() + (monthIndex < 7 ? 1 : 0);
 
         final DateTime date = DateTime(
           year,
