@@ -8,6 +8,7 @@ import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaBook.dart';
+import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaDemerit.dart';
@@ -192,83 +193,6 @@ class ClasseVivaSession
     uid: session.split(";")[1],
     pwd: session.split(";")[2],
   );
-}
-
-class ClasseVivaBulletinBoardItem
-{
-  final String id;
-  final String titolo;
-  final String testo;
-  final DateTime data_start;
-  final DateTime data_stop;
-  final String tipo_com;
-  final String tipo_com_desc;
-  final String nome_file;
-  final String richieste;
-  final String id_relazione;
-  final bool conf_lettura;
-  final bool flag_risp;
-  final String testo_risp;
-  final String file_risp;
-  final bool modificato;
-  final DateTime evento_data;
-
-  ClasseVivaBulletinBoardItem({
-    @required this.id,
-    @required this.titolo,
-    @required this.testo,
-    @required this.data_start,
-    @required this.data_stop,
-    @required this.tipo_com,
-    @required this.tipo_com_desc,
-    @required this.nome_file,
-    @required this.richieste,
-    @required this.id_relazione,
-    @required this.conf_lettura,
-    @required this.flag_risp,
-    @required this.testo_risp,
-    @required this.file_risp,
-    @required this.modificato,
-    @required this.evento_data,
-  });
-
-  factory ClasseVivaBulletinBoardItem.fromJson(Map<String, dynamic> json)
-  {
-    final String startDateString = json["data_start"];
-    final String endDateString = json["data_stop"];
-    final String eventDateString = json["evento_data"];
-
-    return ClasseVivaBulletinBoardItem(
-      id: json["id"],
-      titolo: json["titolo"],
-      testo: json["testo"],
-      data_start: DateTime(
-        int.parse(startDateString.split("-").last),
-        int.parse(startDateString.split("-")[1]),
-        int.parse(startDateString.split("-").first),
-      ),
-      data_stop: DateTime(
-        int.parse(endDateString.split("-").last),
-        int.parse(endDateString.split("-")[1]),
-        int.parse(endDateString.split("-").first),
-      ),
-      tipo_com: json["tipo_com"],
-      tipo_com_desc: json["tipo_com_desc"],
-      nome_file: json["nome_file"],
-      richieste: json["richieste"],
-      id_relazione: json["id_relazione"],
-      conf_lettura: json["conf_lettura"] == "letto",
-      flag_risp: json["flag_risp"] == "1",
-      testo_risp: json["testo_risp"],
-      file_risp: json["file_risp"],
-      modificato: json["modificato"] == "1",
-      evento_data: DateTime(
-        int.parse(eventDateString.split("-").last),
-        int.parse(eventDateString.split("-")[1]),
-        int.parse(eventDateString.split("-").first),
-      ),
-    );
-  }
 }
 
 class ClasseVivaBulletinBoardItemDetailsAttachment
