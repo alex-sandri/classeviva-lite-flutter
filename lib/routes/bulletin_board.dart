@@ -18,12 +18,15 @@ class _BulletinBoardState extends State<BulletinBoard> {
   bool _hideInactive = true;
 
   Future<void> _handleRefresh() async {
-    final List<ClasseVivaBulletinBoardItem> items = await _session.getBulletinBoard(hideInactive: _hideInactive);
+    await for (final List<ClasseVivaBulletinBoardItem> items in _session.getBulletinBoard(hideInactive: _hideInactive))
+    {
+      if (items == null) continue;
 
-    if (mounted)
-      setState(() {
-        _items = items;
-      });
+      if (mounted)
+        setState(() {
+          _items = items;
+        });
+    }
   }
 
   void initState() {
@@ -71,12 +74,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
                       _hideInactive = checked;
                     });
 
-                    final List<ClasseVivaBulletinBoardItem> items = await _session.getBulletinBoard(hideInactive: checked);
-
-                    if (mounted)
-                      setState(() {
-                        _items = items;
-                      });
+                    _handleRefresh();
                   },
                 ),
               ),
@@ -195,8 +193,8 @@ class BulletinBoardSearchDelegate extends SearchDelegate
   
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<List<ClasseVivaBulletinBoardItem>>(
-      future: ClasseViva(ClasseViva.getCurrentSession()).getBulletinBoard(
+    return StreamBuilder<List<ClasseVivaBulletinBoardItem>>(
+      stream: ClasseViva(ClasseViva.getCurrentSession()).getBulletinBoard(
         query: query,
         hideInactive: false,
       ),

@@ -915,7 +915,9 @@ class ClasseViva
 		yield lessons;
 	}
 
-  Future<List<ClasseVivaBulletinBoardItem>> getBulletinBoard({ String query = "", bool hideInactive = true }) async {
+  Stream<List<ClasseVivaBulletinBoardItem>> getBulletinBoard({ String query = "", bool hideInactive = true }) async* {
+    yield (CacheManager.get("bulletin-board") as List<dynamic>)?.whereType<ClasseVivaBulletinBoardItem>()?.toList();
+
     await checkValidSession();
 
 		final response = await http.get(
@@ -941,7 +943,9 @@ class ClasseViva
       return b.evento_data.compareTo(a.evento_data);
     });
 
-		return items;
+    await CacheManager.set("bulletin-board", items);
+
+		yield items;
 	}
 
   Future<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async {
