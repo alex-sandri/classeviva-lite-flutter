@@ -13,6 +13,7 @@ import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItemDetails.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaDemerit.dart';
+import 'package:classeviva_lite/models/ClasseVivaFinalGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/models/ClasseVivaLesson.dart';
@@ -194,17 +195,6 @@ class ClasseVivaSession
     uid: session.split(";")[1],
     pwd: session.split(";")[2],
   );
-}
-
-class ClasseVivaFinalGrade
-{
-  final String type;
-  final Uri url;
-
-  ClasseVivaFinalGrade({
-    @required this.type,
-    @required this.url,
-  });
 }
 
 class ClasseViva
@@ -989,7 +979,7 @@ class ClasseViva
     document.querySelector("#table_documenti").querySelectorAll(".rigtab").forEach((element) {
       finalGrades.add(ClasseVivaFinalGrade(
         type: element.querySelector(".align_middle").text.trim(),
-        url: Uri.parse(_endpoints.baseUrl + element.querySelectorAll("td").last.querySelector("span").attributes["xhref"]),
+        url: _endpoints.baseUrl + element.querySelectorAll("td").last.querySelector("span").attributes["xhref"],
       ));
     });
 

@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
+import 'package:classeviva_lite/models/ClasseVivaFinalGrade.dart';
 import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class _FinalGradesState extends State<FinalGrades> {
                               Get.to(ClasseVivaWebview(
                                 session: _session,
                                 title: item.type,
-                                url: item.url,
+                                url: Uri.parse(item.url),
                               ));
                             },
                           );
