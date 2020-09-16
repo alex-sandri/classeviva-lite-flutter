@@ -58,8 +58,8 @@ class _AgendaState extends State<Agenda> {
                 final DateTimeRange selectedDateRange = await showDateRangePicker(
                   context: context,
                   initialDateRange: DateTimeRange(start: _start, end: _end),
-                  firstDate: DateTime(1970),
-                  lastDate: DateTime(2099),
+                  firstDate: _session.yearBeginsAt,
+                  lastDate: _session.yearEndsAt,
                 );
 
                 if (selectedDateRange != null)
