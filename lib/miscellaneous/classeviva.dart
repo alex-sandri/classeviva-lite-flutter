@@ -201,9 +201,15 @@ class ClasseViva
 {
   static const Color PRIMARY_LIGHT = Color(0xffcc1020);
 
-  int getYear() => session.year == ""
-    ? DateTime.now().year // TODO: Must return (DateTime.now().year) if 8 <= month <= 12 and (DateTime.now().year - 1) otherwise
-    : int.parse("20${session.year}");
+  int getYear() {
+    if (session.year.isNotEmpty) return int.parse("20${session.year}");
+
+    final int currentMonth = DateTime.now().month;
+
+    if (currentMonth >= 8 && currentMonth <= 12) return DateTime.now().year;
+
+    return DateTime.now().year - 1;
+  }
 
   /// Use this for previous years websites.
   ///
