@@ -73,7 +73,7 @@ class ClasseVivaEndpoints
 
   String lessons(String subjectId, List<String> teacherIds) => "$baseUrl/fml/app/default/regclasse_lezioni_xstudenti.php?action=loadLezioni&materia=$subjectId&autori_id=${teacherIds.join(",")}";
 
-  String bulletinBoard(String query, bool hideInactive) => "$baseUrl/sif/app/default/bacheca_personale.php?action=get_comunicazioni&cerca=$query&ncna=${hideInactive ? "1" : "0"}";
+  String bulletinBoard(bool hideInactive) => "$baseUrl/sif/app/default/bacheca_personale.php?action=get_comunicazioni&ncna=${hideInactive ? "1" : "0"}";
 
   String bulletinBoardItemDetails(String id) => "$baseUrl/sif/app/default/bacheca_comunicazione.php?action=risposta_com&com_id=$id";
 
@@ -814,12 +814,22 @@ class ClasseViva
 	}
 
   Stream<List<ClasseVivaBulletinBoardItem>> getBulletinBoard({ String query = "", bool hideInactive = true }) async* {
-    yield (CacheManager.get("bulletin-board") as List<dynamic>)?.whereType<ClasseVivaBulletinBoardItem>()?.toList();
+    List<ClasseVivaBulletinBoardItem> _search(List<ClasseVivaBulletinBoardItem> items, String query) =>
+      items
+        .where((item) =>
+          item
+          .titolo
+          .toLowerCase()
+          .contains(query.toLowerCase())
+        )
+        .toList();
+
+    yield _search((CacheManager.get("bulletin-board") as List<dynamic>)?.whereType<ClasseVivaBulletinBoardItem>()?.toList(), query);
 
     await checkValidSession();
 
 		final result = await HttpManager.get(
-			url: _endpoints.bulletinBoard(query, hideInactive),
+			url: _endpoints.bulletinBoard(hideInactive),
       headers: getSessionCookieHeader(),
     );
 
@@ -845,7 +855,7 @@ class ClasseViva
 
     await CacheManager.set("bulletin-board", items);
 
-		yield items;
+		yield _search(items, query);
 	}
 
   Stream<ClasseVivaBulletinBoardItemDetails> getBulletinBoardItemDetails(String id) async* {
