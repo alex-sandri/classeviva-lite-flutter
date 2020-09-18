@@ -45,27 +45,25 @@ class _SettingsState extends State<Settings> {
                 },
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.lock),
+            SwitchListTile(
+              secondary: Icon(Icons.lock),
               title: Text("Blocco app"),
-              trailing: Switch(
-                onChanged: (checked) async {
-                  try
+              value: AuthenticationManager.isAuthenticationEnabled,
+              onChanged: (checked) async {
+                try
+                {
+                  if (await AuthenticationManager.authenticate())
                   {
-                    if (await AuthenticationManager.authenticate())
-                    {
-                      AuthenticationManager.isAuthenticationEnabled = checked;
+                    AuthenticationManager.isAuthenticationEnabled = checked;
 
-                      setState(() {});
-                    }
+                    setState(() {});
                   }
-                  catch (e)
-                  {
-                    print(e);
-                  }
-                },
-                value: AuthenticationManager.isAuthenticationEnabled,
-              ),
+                }
+                catch (e)
+                {
+                  print(e);
+                }
+              },
             ),
             Builder(
               builder: (context) => ListTile(
