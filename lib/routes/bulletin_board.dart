@@ -64,20 +64,18 @@ class _BulletinBoardState extends State<BulletinBoard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ListTile(
+              SwitchListTile(
                 title: Text("Nascondi comunicazioni non attive"),
-                trailing: Switch(
-                  value: _hideInactive,
-                  onChanged: (checked) async {
-                    setState(() {
-                      _items = null;
+                value: _hideInactive,
+                onChanged: (checked) async {
+                  setState(() {
+                    _items = null;
 
-                      _hideInactive = checked;
-                    });
+                    _hideInactive = checked;
+                  });
 
-                    _handleRefresh();
-                  },
-                ),
+                  _handleRefresh();
+                },
               ),
               Expanded(
                 child: RefreshIndicator(
