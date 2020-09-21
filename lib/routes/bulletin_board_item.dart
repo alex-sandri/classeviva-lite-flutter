@@ -132,24 +132,22 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
 
                     final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index];
 
-                    return Card(
-                      child: ListTile(
-                        onTap: () async {
-                          await _requestPermission();
+                    return ListTile(
+                      onTap: () async {
+                        await _requestPermission();
 
-                          await FlutterDownloader.enqueue(
-                            url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
-                            savedDir: (Theme.of(context).platform == TargetPlatform.android
-                              ? await getExternalStorageDirectory()
-                              : await getApplicationDocumentsDirectory()).path,
-                            showNotification: true,
-                            openFileFromNotification: true,
-                            headers: _session.getSessionCookieHeader(),
-                          );
-                        },
-                        title: Text(
-                          attachment.name,
-                        ),
+                        await FlutterDownloader.enqueue(
+                          url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
+                          savedDir: (Theme.of(context).platform == TargetPlatform.android
+                            ? await getExternalStorageDirectory()
+                            : await getApplicationDocumentsDirectory()).path,
+                          showNotification: true,
+                          openFileFromNotification: true,
+                          headers: _session.getSessionCookieHeader(),
+                        );
+                      },
+                      title: Text(
+                        attachment.name,
                       ),
                     );
                   },
