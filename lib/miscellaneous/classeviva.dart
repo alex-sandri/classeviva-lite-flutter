@@ -816,13 +816,13 @@ class ClasseViva
   Stream<List<ClasseVivaBulletinBoardItem>> getBulletinBoard({ String query = "", bool hideInactive = true }) async* {
     List<ClasseVivaBulletinBoardItem> _search(List<ClasseVivaBulletinBoardItem> items, String query) =>
       items
-        .where((item) =>
+        ?.where((item) =>
           item
           .titolo
           .toLowerCase()
           .contains(query.toLowerCase())
         )
-        .toList();
+        ?.toList();
 
     yield _search((CacheManager.get("bulletin-board") as List<dynamic>)?.whereType<ClasseVivaBulletinBoardItem>()?.toList(), query);
 
