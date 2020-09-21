@@ -190,101 +190,99 @@ class _AttachmentsState extends State<Attachments> {
                               return icon; 
                             }
 
-                            return Card(
-                              child: ListTile(
-                                onTap: () async {
-                                  final String url = attachment.url;
+                            return ListTile(
+                              onTap: () async {
+                                final String url = attachment.url;
 
-                                  switch (attachment.type)
-                                  {
-                                    case ClasseVivaAttachmentType.File:
-                                      await _requestPermission();
+                                switch (attachment.type)
+                                {
+                                  case ClasseVivaAttachmentType.File:
+                                    await _requestPermission();
 
-                                      await FlutterDownloader.enqueue(
-                                        url: url,
-                                        savedDir: (Theme.of(context).platform == TargetPlatform.android
-                                          ? await getExternalStorageDirectory()
-                                          : await getApplicationDocumentsDirectory()).path,
-                                        showNotification: true,
-                                        openFileFromNotification: true,
-                                        headers: _session.getSessionCookieHeader(),
-                                      );
-                                      break;
-                                    case ClasseVivaAttachmentType.Link:
-                                      if (await canLaunch(url)) await launch(url);
-                                      else
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              title: Text("Errore"),
-                                              content: Text("Impossibile aprire il link"),
-                                            );
-                                          },
-                                        );
-                                      break;
-                                    case ClasseVivaAttachmentType.Text:
-                                      final response = await http.get(
-                                        url,
-                                        headers: _session.getSessionCookieHeader(),
-                                      );
-
-                                      final document = parse(response.body);
-
+                                    await FlutterDownloader.enqueue(
+                                      url: url,
+                                      savedDir: (Theme.of(context).platform == TargetPlatform.android
+                                        ? await getExternalStorageDirectory()
+                                        : await getApplicationDocumentsDirectory()).path,
+                                      showNotification: true,
+                                      openFileFromNotification: true,
+                                      headers: _session.getSessionCookieHeader(),
+                                    );
+                                    break;
+                                  case ClasseVivaAttachmentType.Link:
+                                    if (await canLaunch(url)) await launch(url);
+                                    else
                                       showDialog(
                                         context: context,
                                         builder: (context) {
                                           return AlertDialog(
-                                            content: SingleChildScrollView(
-                                              child: SelectableLinkify(
-                                                text: document.body.text.trim(),
-                                                options: LinkifyOptions(humanize: false),
-                                                onOpen: (link) async {
-                                                  if (await canLaunch(link.url)) await launch(link.url);
-                                                  else
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return AlertDialog(
-                                                          title: Text("Errore"),
-                                                          content: Text("Impossibile aprire il link"),
-                                                        );
-                                                      },
-                                                    );
-                                                },
-                                              ),
-                                            ),
+                                            title: Text("Errore"),
+                                            content: Text("Impossibile aprire il link"),
                                           );
                                         },
                                       );
-                                      break;
-                                  }
-                                },
-                                leading: CircleAvatar(
-                                  child: Icon(
-                                    _getAttachmentIcon(attachment),
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                  backgroundColor: Theme.of(context).appBarTheme.color,
-                                  radius: 25,
+                                    break;
+                                  case ClasseVivaAttachmentType.Text:
+                                    final response = await http.get(
+                                      url,
+                                      headers: _session.getSessionCookieHeader(),
+                                    );
+
+                                    final document = parse(response.body);
+
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: SingleChildScrollView(
+                                            child: SelectableLinkify(
+                                              text: document.body.text.trim(),
+                                              options: LinkifyOptions(humanize: false),
+                                              onOpen: (link) async {
+                                                if (await canLaunch(link.url)) await launch(link.url);
+                                                else
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Text("Errore"),
+                                                        content: Text("Impossibile aprire il link"),
+                                                      );
+                                                    },
+                                                  );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                    break;
+                                }
+                              },
+                              leading: CircleAvatar(
+                                child: Icon(
+                                  _getAttachmentIcon(attachment),
+                                  color: Theme.of(context).accentColor,
                                 ),
-                                title: Text(
-                                  attachment.name,
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(height: 5,),
-                                    Text(
-                                      attachment.teacher,
-                                    ),
-                                    SizedBox(height: 5,),
-                                    Text(
-                                      DateFormat.yMMMMd().format(attachment.date),
-                                    ),
-                                  ],
-                                )
+                                backgroundColor: Theme.of(context).appBarTheme.color,
+                                radius: 25,
                               ),
+                              title: Text(
+                                attachment.name,
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    attachment.teacher,
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    DateFormat.yMMMMd().format(attachment.date),
+                                  ),
+                                ],
+                              )
                             );
                           },
                         ),
