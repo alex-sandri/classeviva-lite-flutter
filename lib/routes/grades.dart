@@ -206,55 +206,53 @@ class _GradesState extends State<Grades> {
                       final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
                       final double averageGrade = ClasseViva.getAverageGrade(grades);
 
-                      return Card(
-                        child: ExpansionTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            foregroundColor: ThemeManager.isLightTheme(context)
-                              ? Colors.black
-                              : Colors.white,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Center(
-                                  child: CircularProgressIndicator(
-                                    value: averageGrade != -1
-                                      ? averageGrade / 10
-                                      : 1,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      averageGrade != -1
-                                        ? ClasseViva.getGradeColor(ClasseVivaGrade(
-                                            subject: "",
-                                            grade: averageGrade.toStringAsFixed(1),
-                                            type: "",
-                                            description: "",
-                                            date: DateTime.now(),
-                                          ))
-                                        : Colors.blue,
-                                    ),
+                      return ExpansionTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: ThemeManager.isLightTheme(context)
+                            ? Colors.black
+                            : Colors.white,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Center(
+                                child: CircularProgressIndicator(
+                                  value: averageGrade != -1
+                                    ? averageGrade / 10
+                                    : 1,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    averageGrade != -1
+                                      ? ClasseViva.getGradeColor(ClasseVivaGrade(
+                                          subject: "",
+                                          grade: averageGrade.toStringAsFixed(1),
+                                          type: "",
+                                          description: "",
+                                          date: DateTime.now(),
+                                        ))
+                                      : Colors.blue,
                                   ),
                                 ),
-                                Text(
-                                  averageGrade != -1
-                                    ? averageGrade.toStringAsFixed(1)
-                                    : "N/A",
-                                ),
-                              ],
-                            ),
+                              ),
+                              Text(
+                                averageGrade != -1
+                                  ? averageGrade.toStringAsFixed(1)
+                                  : "N/A",
+                              ),
+                            ],
                           ),
-                          title: Text(
-                            subject,
-                            style: TextStyle(
-                              color: ThemeManager.isLightTheme(context)
-                                ? Colors.black
-                                : Colors.white,
-                            ),
-                          ),
-                          subtitle: previousAverageGrade != -1
-                            ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
-                            : null,
-                          children: grades.map((grade) => GradeTile(grade)).toList(),
                         ),
+                        title: Text(
+                          subject,
+                          style: TextStyle(
+                            color: ThemeManager.isLightTheme(context)
+                              ? Colors.black
+                              : Colors.white,
+                          ),
+                        ),
+                        subtitle: previousAverageGrade != -1
+                          ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
+                          : null,
+                        children: grades.map((grade) => GradeTile(grade)).toList(),
                       );
                     },
                   );
@@ -328,60 +326,58 @@ class _GradesState extends State<Grades> {
                         final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
                         final double averageGrade = ClasseViva.getAverageGrade(grades);
 
-                        return Card(
-                          child: ExpansionTile(
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              foregroundColor: ThemeManager.isLightTheme(context)
+                        return ExpansionTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: ThemeManager.isLightTheme(context)
+                              ? Colors.black
+                              : Colors.white,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    value: averageGrade != -1
+                                      ? averageGrade / 10
+                                      : 1,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      averageGrade != -1
+                                        ? ClasseViva.getGradeColor(ClasseVivaGrade(
+                                            subject: "",
+                                            grade: averageGrade.toStringAsFixed(1),
+                                            type: "",
+                                            description: "",
+                                            date: DateTime.now(),
+                                          ))
+                                        : Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  averageGrade != -1
+                                    ? averageGrade.toStringAsFixed(1)
+                                    : "N/A",
+                                  style: TextStyle(
+                                    color: ThemeManager.isLightTheme(context)
+                                      ? Colors.black
+                                      : Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          title: Text(
+                            subject,
+                            style: TextStyle(
+                              color: ThemeManager.isLightTheme(context)
                                 ? Colors.black
                                 : Colors.white,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Center(
-                                    child: CircularProgressIndicator(
-                                      value: averageGrade != -1
-                                        ? averageGrade / 10
-                                        : 1,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        averageGrade != -1
-                                          ? ClasseViva.getGradeColor(ClasseVivaGrade(
-                                              subject: "",
-                                              grade: averageGrade.toStringAsFixed(1),
-                                              type: "",
-                                              description: "",
-                                              date: DateTime.now(),
-                                            ))
-                                          : Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    averageGrade != -1
-                                      ? averageGrade.toStringAsFixed(1)
-                                      : "N/A",
-                                    style: TextStyle(
-                                      color: ThemeManager.isLightTheme(context)
-                                        ? Colors.black
-                                        : Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
-                            title: Text(
-                              subject,
-                              style: TextStyle(
-                                color: ThemeManager.isLightTheme(context)
-                                  ? Colors.black
-                                  : Colors.white,
-                              ),
-                            ),
-                            subtitle: previousAverageGrade != -1
-                              ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
-                              : null,
-                            children: grades.map((grade) => GradeTile(grade)).toList(),
                           ),
+                          subtitle: previousAverageGrade != -1
+                            ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
+                            : null,
+                          children: grades.map((grade) => GradeTile(grade)).toList(),
                         );
                       },
                     );
