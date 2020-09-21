@@ -533,17 +533,38 @@ class ClasseViva
         .replaceAll(" ", "/")
         .replaceFirstMapped(RegExp(months.join("|")), (match) => (months.indexWhere((element) => element == match.group(0)) + 1).toString());
 
+      DateTime date;
+
+      if (dateString.startsWith("Oggi"))
+        date = DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+          int.parse(dateString.split("/").last.split(":").first),
+          int.parse(dateString.split("/").last.split(":").last),
+        );
+      else if (dateString.startsWith("Ieri"))
+        date = DateTime(
+          DateTime.now().subtract(Duration(hours: 24)).year,
+          DateTime.now().subtract(Duration(hours: 24)).month,
+          DateTime.now().subtract(Duration(hours: 24)).day,
+          int.parse(dateString.split("/").last.split(":").first),
+          int.parse(dateString.split("/").last.split(":").last),
+        );
+      else
+        date = DateTime(
+          int.parse(dateString.split("/").last),
+          int.parse(dateString.split("/")[1]),
+          int.parse(dateString.split("/").first),
+        );
+
 			attachments.add(ClasseVivaAttachment(
 				id: id,
 				teacher: attachment.querySelector(":nth-child(2) div").text.trim(),
 				name: attachment.querySelector(".row_contenuto_desc").text.trim(),
 				folder: attachment.querySelector(".row_contenuto_desc").nextElementSibling.nextElementSibling.querySelector("span").text.trim(),
 				type: type,
-				date: DateTime(
-          int.parse(dateString.split("/").last),
-          int.parse(dateString.split("/")[1]),
-          int.parse(dateString.split("/").first),
-        ),
+				date: date,
 				url: url,
       ));
 		});
