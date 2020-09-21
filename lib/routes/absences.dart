@@ -101,7 +101,7 @@ class _AbsencesState extends State<Absences> {
                             children: <Widget>[
                               SizedBox(height: 5,),
                               SelectableText(
-                                absence.from == absence.to.subtract(Duration(hours: 23, minutes: 59, seconds: 59))
+                                (absence.from == absence.to || absence.from == absence.to.subtract(Duration(hours: 23, minutes: 59, seconds: 59)))
                                   ? DateFormat.yMMMMd().format(absence.from)
                                   : "${DateFormat.yMMMMd().format(absence.from)} - ${DateFormat.yMMMMd().format(absence.to)}",
                               ),
