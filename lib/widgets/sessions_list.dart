@@ -74,9 +74,10 @@ class _SessionsListState extends State<SessionsList> {
         SizedBox(
           height: 15,
         ),
-        ListView.builder(
+        ListView.separated(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
+          separatorBuilder: (context, index) => Divider(),
           itemCount: _sessions.length,
           itemBuilder: (context, index) {
             final ClasseViva session = ClasseViva(_sessions[index]);
@@ -102,59 +103,56 @@ class _SessionsListState extends State<SessionsList> {
                     ),
                   );
 
-                return Card(
-                  margin: EdgeInsets.symmetric(vertical: 4),
-                  child: Dismissible(
-                    key: ValueKey(_sessions[index]),
-                    onDismissed: (direction) async {
-                      final bool isCurrentSession = ClasseViva.isSignedIn() && ClasseViva.getCurrentSession().id == _sessions[index].id;
+                return Dismissible(
+                  key: ValueKey(_sessions[index]),
+                  onDismissed: (direction) async {
+                    final bool isCurrentSession = ClasseViva.isSignedIn() && ClasseViva.getCurrentSession().id == _sessions[index].id;
 
-                      await _sessions[index].signOut();
+                    await _sessions[index].signOut();
 
-                      _sessions.removeAt(index);
+                    _sessions.removeAt(index);
 
-                      Scaffold
-                        .of(context)
-                        .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
+                    Scaffold
+                      .of(context)
+                      .showSnackBar(SnackBar(content: Text("Sessione rimossa")));
 
-                      if (isCurrentSession)
+                    if (isCurrentSession)
+                    {
+                      await CacheManager.empty();
+
+                      Get.offAll(SignIn());
+                    }
+                    else setState(() {});
+                  },
+                  background: Container(
+                    color: Colors.red,
+                    child: Icon(
+                      Icons.exit_to_app,
+                      color: Colors.white,
+                    ),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      snapshot.data.name,
+                    ),
+                    subtitle: Text(
+                      "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
+                    ),
+                    leading: snapshot.data.avatar.toWidget(),
+                    onTap: () async {
+                      bool success = AuthenticationManager.isAuthenticationEnabled
+                        ? await AuthenticationManager.authenticate()
+                        : true;
+
+                      if (success)
                       {
                         await CacheManager.empty();
 
-                        Get.offAll(SignIn());
+                        await ClasseViva.setCurrentSession(_sessions[index]);
+
+                        Get.offAll(Home());
                       }
-                      else setState(() {});
                     },
-                    background: Container(
-                      color: Colors.red,
-                      child: Icon(
-                        Icons.exit_to_app,
-                        color: Colors.white,
-                      ),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        snapshot.data.name,
-                      ),
-                      subtitle: Text(
-                        "${snapshot.data.school} (${session.getYear()}/${session.getYear() + 1})",
-                      ),
-                      leading: snapshot.data.avatar.toWidget(),
-                      onTap: () async {
-                        bool success = AuthenticationManager.isAuthenticationEnabled
-                          ? await AuthenticationManager.authenticate()
-                          : true;
-
-                        if (success)
-                        {
-                          await CacheManager.empty();
-
-                          await ClasseViva.setCurrentSession(_sessions[index]);
-
-                          Get.offAll(Home());
-                        }
-                      },
-                    ),
                   ),
                 );
               }
