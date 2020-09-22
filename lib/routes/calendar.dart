@@ -40,6 +40,9 @@ class _CalendarState extends State<Calendar> {
   void initState() {
     super.initState();
 
+    if (_session.yearEndsAt.isBefore(_date))
+      _date = _session.yearEndsAt;
+
     _handleRefresh();
   }
 
