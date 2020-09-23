@@ -124,6 +124,13 @@ class _AttachmentsState extends State<Attachments> {
                 url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).homework()),
               )),
             ),
+            IconButton(
+              icon: Icon(Icons.search),
+              tooltip: "Cerca",
+              onPressed: () {
+                // TODO
+              },
+            ),
           ],
         ),
         body: GestureDetector(
