@@ -89,9 +89,10 @@ class _AttachmentsState extends State<Attachments> {
             IconButton(
               icon: Icon(Icons.search),
               tooltip: "Cerca",
-              onPressed: () {
-                // TODO
-              },
+              onPressed: () => showSearch(
+                context: context,
+                delegate: AttachmentsSearchDelegate(),
+              ),
             ),
           ],
         ),

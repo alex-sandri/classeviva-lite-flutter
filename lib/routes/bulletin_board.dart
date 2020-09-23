@@ -48,12 +48,10 @@ class _BulletinBoardState extends State<BulletinBoard> {
             IconButton(
               icon: Icon(Icons.search),
               tooltip: "Cerca",
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: BulletinBoardSearchDelegate(),
-                );
-              },
+              onPressed: () => showSearch(
+                context: context,
+                delegate: BulletinBoardSearchDelegate(),
+              ),
             )
           ],
         ),
