@@ -40,12 +40,6 @@ class _AttachmentsState extends State<Attachments> {
     }
   }
 
-  Future<void> _requestPermission() async {
-    PermissionStatus permission = await Permission.storage.status;
-
-    if (permission != PermissionStatus.granted) await Permission.storage.request();
-  }
-
   static void downloadCallback(String id, DownloadTaskStatus status, int progress) {
     final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port');
 
@@ -112,133 +106,7 @@ class _AttachmentsState extends State<Attachments> {
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _attachments == null
-                    ? Spinner()
-                    : ListView.builder(
-                        itemCount: _attachments.isNotEmpty
-                          ? _attachments.length
-                          : 1,
-                        itemBuilder: (context, index) {
-                          if (_attachments.isEmpty)
-                          {
-                            return SelectableText(
-                              "Non sono presenti elementi in Didattica",
-                              textAlign: TextAlign.center,
-                            );
-                          }
-
-                          final ClasseVivaAttachment attachment = _attachments[index];
-
-                          IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
-                          {
-                            IconData icon;
-
-                            switch (attachment.type)
-                            {
-                              case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
-                              case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
-                              case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
-                            }
-
-                            return icon; 
-                          }
-
-                          return ListTile(
-                            onTap: () async {
-                              final String url = attachment.url;
-
-                              switch (attachment.type)
-                              {
-                                case ClasseVivaAttachmentType.File:
-                                  await _requestPermission();
-
-                                  await FlutterDownloader.enqueue(
-                                    url: url,
-                                    savedDir: (Theme.of(context).platform == TargetPlatform.android
-                                      ? await getExternalStorageDirectory()
-                                      : await getApplicationDocumentsDirectory()).path,
-                                    showNotification: true,
-                                    openFileFromNotification: true,
-                                    headers: _session.getSessionCookieHeader(),
-                                  );
-                                  break;
-                                case ClasseVivaAttachmentType.Link:
-                                  if (await canLaunch(url)) await launch(url);
-                                  else
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: Text("Errore"),
-                                          content: Text("Impossibile aprire il link"),
-                                        );
-                                      },
-                                    );
-                                  break;
-                                case ClasseVivaAttachmentType.Text:
-                                  final response = await http.get(
-                                    url,
-                                    headers: _session.getSessionCookieHeader(),
-                                  );
-
-                                  final document = parse(response.body);
-
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: SingleChildScrollView(
-                                          child: SelectableLinkify(
-                                            text: document.body.text.trim(),
-                                            options: LinkifyOptions(humanize: false),
-                                            onOpen: (link) async {
-                                              if (await canLaunch(link.url)) await launch(link.url);
-                                              else
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return AlertDialog(
-                                                      title: Text("Errore"),
-                                                      content: Text("Impossibile aprire il link"),
-                                                    );
-                                                  },
-                                                );
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                  break;
-                              }
-                            },
-                            leading: CircleAvatar(
-                              child: Icon(
-                                _getAttachmentIcon(attachment),
-                                color: Theme.of(context).accentColor,
-                              ),
-                              backgroundColor: Theme.of(context).appBarTheme.color,
-                              radius: 25,
-                            ),
-                            title: Text(
-                              attachment.name,
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(height: 5,),
-                                Text(
-                                  attachment.teacher,
-                                ),
-                                SizedBox(height: 5,),
-                                Text(
-                                  DateFormat.yMMMMd().add_jms().format(attachment.date),
-                                ),
-                              ],
-                            )
-                          );
-                        },
-                      ),
+                  child: AttachmentsListView(_attachments),
                 ),
               ),
             ],
@@ -246,5 +114,210 @@ class _AttachmentsState extends State<Attachments> {
         ),
       ),
     );
+  }
+}
+
+class AttachmentsListView extends StatelessWidget {
+  final List<ClasseVivaAttachment> _attachments;
+
+  AttachmentsListView(this._attachments);
+
+  Future<void> _requestPermission() async {
+    PermissionStatus permission = await Permission.storage.status;
+
+    if (permission != PermissionStatus.granted) await Permission.storage.request();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _attachments == null
+      ? Spinner()
+      : ListView.builder(
+          itemCount: _attachments.isNotEmpty
+            ? _attachments.length
+            : 1,
+          itemBuilder: (context, index) {
+            if (_attachments.isEmpty)
+            {
+              return SelectableText(
+                "Non sono presenti elementi in Didattica",
+                textAlign: TextAlign.center,
+              );
+            }
+
+            final ClasseVivaAttachment attachment = _attachments[index];
+
+            IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
+            {
+              IconData icon;
+
+              switch (attachment.type)
+              {
+                case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
+                case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
+                case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
+              }
+
+              return icon; 
+            }
+
+            return ListTile(
+              onTap: () async {
+                final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
+
+                final String url = attachment.url;
+
+                switch (attachment.type)
+                {
+                  case ClasseVivaAttachmentType.File:
+                    await _requestPermission();
+
+                    await FlutterDownloader.enqueue(
+                      url: url,
+                      savedDir: (Theme.of(context).platform == TargetPlatform.android
+                        ? await getExternalStorageDirectory()
+                        : await getApplicationDocumentsDirectory()).path,
+                      showNotification: true,
+                      openFileFromNotification: true,
+                      headers: session.getSessionCookieHeader(),
+                    );
+                    break;
+                  case ClasseVivaAttachmentType.Link:
+                    if (await canLaunch(url)) await launch(url);
+                    else
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Errore"),
+                            content: Text("Impossibile aprire il link"),
+                          );
+                        },
+                      );
+                    break;
+                  case ClasseVivaAttachmentType.Text:
+                    final response = await http.get(
+                      url,
+                      headers: session.getSessionCookieHeader(),
+                    );
+
+                    final document = parse(response.body);
+
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: SingleChildScrollView(
+                            child: SelectableLinkify(
+                              text: document.body.text.trim(),
+                              options: LinkifyOptions(humanize: false),
+                              onOpen: (link) async {
+                                if (await canLaunch(link.url)) await launch(link.url);
+                                else
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text("Errore"),
+                                        content: Text("Impossibile aprire il link"),
+                                      );
+                                    },
+                                  );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                    break;
+                }
+              },
+              leading: CircleAvatar(
+                child: Icon(
+                  _getAttachmentIcon(attachment),
+                  color: Theme.of(context).accentColor,
+                ),
+                backgroundColor: Theme.of(context).appBarTheme.color,
+                radius: 25,
+              ),
+              title: Text(
+                attachment.name,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 5,),
+                  Text(
+                    attachment.teacher,
+                  ),
+                  SizedBox(height: 5,),
+                  Text(
+                    DateFormat.yMMMMd().add_jms().format(attachment.date),
+                  ),
+                ],
+              )
+            );
+          },
+        );
+  }
+}
+
+class AttachmentsSearchDelegate extends SearchDelegate
+{
+  AttachmentsSearchDelegate(): super(
+    searchFieldStyle: TextStyle(
+      color: Colors.white70,
+    ),
+  );
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return theme.copyWith(
+      primaryColor: theme.appBarTheme.color,
+      textTheme: theme.primaryTextTheme.copyWith(
+        headline6: theme.primaryTextTheme.headline6.copyWith(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+  
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.close),
+        tooltip: "Cancella",
+        onPressed: () {
+          query = "";
+        },
+      )
+    ];
+  }
+  
+  @override
+  Widget buildLeading(BuildContext context) {
+    return BackButton(
+      onPressed: () => Navigator.of(context).pop(),
+    );
+  }
+  
+  @override
+  Widget buildResults(BuildContext context) {
+    return StreamBuilder<List<ClasseVivaAttachment>>(
+      stream: ClasseViva(ClasseViva.getCurrentSession()).getAttachments(query: query),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Spinner();
+
+        return AttachmentsListView(snapshot.data);
+      },
+    );
+  }
+  
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return ListView();
   }
 }
