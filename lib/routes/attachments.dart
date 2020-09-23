@@ -232,7 +232,7 @@ class _AttachmentsState extends State<Attachments> {
                                 ),
                                 SizedBox(height: 5,),
                                 Text(
-                                  DateFormat.yMMMMd().format(attachment.date),
+                                  DateFormat.yMMMMd().add_jms().format(attachment.date),
                                 ),
                               ],
                             )
