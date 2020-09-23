@@ -519,52 +519,52 @@ class ClasseViva
           break;
 			}
 
-      const List<String> months = [
-        "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
-      ];
-
       final String dateString = attachment
-        .querySelector("[colspan=\"7\"] div")
+        .querySelector(".contenuto_desc div span:last-child")
         .text
         .trim()
-        .split(",")
-        .last
+        .split(" ")
+        [2];
+
+      final String timeString = attachment
+        .querySelector(".contenuto_desc div span:last-child")
+        .text
         .trim()
-        .replaceAll(" ", "/")
-        .replaceFirstMapped(RegExp(months.join("|")), (match) => (months.indexWhere((element) => element == match.group(0)) + 1).toString());
+        .split(" ")
+        .last;
 
-      DateTime date;
+      final dom.Element parentFolderElement = document.querySelector("[folder_id=\"${attachment.attributes["master_id"].trim()}\"]");
 
-      if (dateString.startsWith("Oggi"))
-        date = DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-          DateTime.now().day,
-          int.parse(dateString.split("/").last.split(":").first),
-          int.parse(dateString.split("/").last.split(":").last),
-        );
-      else if (dateString.startsWith("Ieri"))
-        date = DateTime(
-          DateTime.now().subtract(Duration(hours: 24)).year,
-          DateTime.now().subtract(Duration(hours: 24)).month,
-          DateTime.now().subtract(Duration(hours: 24)).day,
-          int.parse(dateString.split("/").last.split(":").first),
-          int.parse(dateString.split("/").last.split(":").last),
-        );
-      else
-        date = DateTime(
-          int.parse(dateString.split("/").last),
-          int.parse(dateString.split("/")[1]),
-          int.parse(dateString.split("/").first),
-        );
+      String teacher;
+
+      dom.Element tempElement = parentFolderElement;
+
+      do
+      {
+        tempElement = tempElement.previousElementSibling;
+      }
+      while (tempElement.attributes["style"] != "height: 40px;");
+
+      teacher = tempElement.querySelector("[colspan=\"12\"]").text.trim();
+
+      // Remove unnecessary information (this will leave the element with only the folder name)
+      // Use '?.' to avoid calling remove on null (the element was removed in a previous iteration)
+      parentFolderElement.querySelector("td:last-child").querySelector("span")?.remove();
 
 			attachments.add(ClasseVivaAttachment(
 				id: id,
-				teacher: attachment.querySelector(":nth-child(2) div").text.trim(),
+				teacher: teacher,
 				name: attachment.querySelector(".row_contenuto_desc").text.trim(),
-				folder: attachment.querySelector(".row_contenuto_desc").nextElementSibling.nextElementSibling.querySelector("span").text.trim(),
+				folder: parentFolderElement.text.trim(),
 				type: type,
-				date: date,
+				date: DateTime(
+          int.parse(dateString.split("-").last),
+          int.parse(dateString.split("-")[1]),
+          int.parse(dateString.split("-").first),
+          int.parse(timeString.split(":").first),
+          int.parse(timeString.split(":")[1]),
+          int.parse(timeString.split(":").last),
+        ),
 				url: url,
       ));
 		});
