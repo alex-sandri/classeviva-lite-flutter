@@ -58,7 +58,7 @@ class ClasseVivaEndpoints
     + "&end="
     + (end.toUtc().add(end.timeZoneOffset).millisecondsSinceEpoch / 1000).truncate().toString();
 
-	String attachments(int page) => "$baseUrl/fml/app/default/didattica_genitori_new.php?p=$page";
+	String attachments() => "$baseUrl/fml/app/default/didattica_genitori.php";
 
 	String fileAttachments(String id, String checksum) =>
 		"$baseUrl/fml/app/default/didattica_genitori.php?a=downloadContenuto&contenuto_id=$id&cksum=$checksum";
@@ -230,8 +230,6 @@ class ClasseViva
   final ClasseVivaSession session;
 
   ClasseVivaEndpoints _endpoints;
-
-  int attachmentsPage = 1;
 
 	ClasseViva(this.session)
   {
@@ -480,12 +478,12 @@ class ClasseViva
 	}
 
 	Stream<List<ClasseVivaAttachment>> getAttachments() async* {
-    if (attachmentsPage == 1) yield (CacheManager.get("attachments") as List<dynamic>)?.whereType<ClasseVivaAttachment>()?.toList();
+    yield (CacheManager.get("attachments") as List<dynamic>)?.whereType<ClasseVivaAttachment>()?.toList();
 
     await checkValidSession();
 
 		final result = await HttpManager.get(
-      url: _endpoints.attachments(attachmentsPage),
+      url: _endpoints.attachments(),
       headers: getSessionCookieHeader(),
     );
 
@@ -571,7 +569,7 @@ class ClasseViva
       ));
 		});
 
-    if (attachmentsPage == 1) await CacheManager.set("attachments", attachments);
+    await CacheManager.set("attachments", attachments);
 
 		yield attachments;
 	}
