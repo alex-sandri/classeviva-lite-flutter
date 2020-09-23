@@ -477,8 +477,18 @@ class ClasseViva
 		yield _getItemsInsideDateRange(agenda);
 	}
 
-	Stream<List<ClasseVivaAttachment>> getAttachments() async* {
-    yield (CacheManager.get("attachments") as List<dynamic>)?.whereType<ClasseVivaAttachment>()?.toList();
+	Stream<List<ClasseVivaAttachment>> getAttachments({ String query = "" }) async* {
+    List<ClasseVivaAttachment> _search(List<ClasseVivaAttachment> items, String query) =>
+      items
+        ?.where((item) =>
+          item
+          .name
+          .toLowerCase()
+          .contains(query.toLowerCase())
+        )
+        ?.toList();
+
+    yield _search((CacheManager.get("attachments") as List<dynamic>)?.whereType<ClasseVivaAttachment>()?.toList(), query);
 
     await checkValidSession();
 
@@ -571,7 +581,7 @@ class ClasseViva
 
     await CacheManager.set("attachments", attachments);
 
-		yield attachments;
+		yield _search(attachments, query);
 	}
 
 	Stream<List<ClasseVivaDemerit>> getDemerits() async* {
