@@ -90,6 +90,8 @@ class ClasseVivaEndpoints
   String meetings() => "$baseUrl/fml/app/default/genitori_colloqui.php";
 
   String helpDesk() => "$baseUrl/fml/app/default/alunni_sportello.php";
+
+  String homework() => "$baseUrl/fml/app/default/regdidattica_studenti_compito.php";
 }
 
 class ClasseVivaSession

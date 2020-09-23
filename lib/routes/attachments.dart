@@ -3,9 +3,11 @@ import 'dart:ui';
 
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
+import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
@@ -112,9 +114,17 @@ class _AttachmentsState extends State<Attachments> {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Didattica'
-          ),
+          title: Text("Didattica"),
+          actions: [
+            FlatButton(
+              child: Text("Compiti"),
+              onPressed: () => Get.to(ClasseVivaWebview(
+                session: _session,
+                title: "Compiti",
+                url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).homework()),
+              )),
+            ),
+          ],
         ),
         body: GestureDetector(
           onTap: () {
