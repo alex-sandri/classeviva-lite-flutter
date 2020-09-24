@@ -28,7 +28,7 @@ class _GradesState extends State<Grades> {
     {
       if (grades == null) continue;
 
-      _subjects = groupBy(grades, (ClasseVivaGrade grade) => grade.subject);
+      _subjects = groupBy(grades, (grade) => grade.subject);
 
       if (mounted)
         setState(() {

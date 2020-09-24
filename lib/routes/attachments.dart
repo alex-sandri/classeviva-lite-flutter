@@ -5,6 +5,7 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,8 @@ class _AttachmentsState extends State<Attachments> {
 
   List<ClasseVivaAttachment> _attachments;
 
+  Map<String, List<ClasseVivaAttachment>> _folders;
+
   bool _showFolders = false;
 
   ReceivePort _port = ReceivePort();
@@ -38,6 +41,8 @@ class _AttachmentsState extends State<Attachments> {
       if (mounted)
         setState(() {
           _attachments = attachments;
+
+          _folders = groupBy(attachments, (attachment) => attachment.folder);
         });
     }
   }
@@ -115,7 +120,17 @@ class _AttachmentsState extends State<Attachments> {
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
                   child: _showFolders
-                    ? Container()
+                    ? ListView.builder(
+                        itemCount: _folders.length,
+                        itemBuilder: (context, index) {
+                          final MapEntry<String, List<ClasseVivaAttachment>> folder = _folders.entries.elementAt(index);
+
+                          return ExpansionTile(
+                            title: Text(folder.key),
+                            children: folder.value.map((attachment) => AttachmentListTile(attachment)).toList(),
+                          );
+                        },
+                      )
                     : AttachmentsListView(_attachments),
                 ),
               ),
@@ -127,16 +142,136 @@ class _AttachmentsState extends State<Attachments> {
   }
 }
 
-class AttachmentsListView extends StatelessWidget {
-  final List<ClasseVivaAttachment> _attachments;
+class AttachmentListTile extends StatelessWidget {
+  final ClasseVivaAttachment attachment;
 
-  AttachmentsListView(this._attachments);
+  AttachmentListTile(this.attachment);
 
   Future<void> _requestPermission() async {
     PermissionStatus permission = await Permission.storage.status;
 
     if (permission != PermissionStatus.granted) await Permission.storage.request();
   }
+
+  IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
+  {
+    IconData icon;
+
+    switch (attachment.type)
+    {
+      case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
+      case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
+      case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
+    }
+
+    return icon; 
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () async {
+        final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
+
+        final String url = attachment.url;
+
+        switch (attachment.type)
+        {
+          case ClasseVivaAttachmentType.File:
+            await _requestPermission();
+
+            await FlutterDownloader.enqueue(
+              url: url,
+              savedDir: (Theme.of(context).platform == TargetPlatform.android
+                ? await getExternalStorageDirectory()
+                : await getApplicationDocumentsDirectory()).path,
+              showNotification: true,
+              openFileFromNotification: true,
+              headers: session.getSessionCookieHeader(),
+            );
+            break;
+          case ClasseVivaAttachmentType.Link:
+            if (await canLaunch(url)) await launch(url);
+            else
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Errore"),
+                    content: Text("Impossibile aprire il link"),
+                  );
+                },
+              );
+            break;
+          case ClasseVivaAttachmentType.Text:
+            final response = await http.get(
+              url,
+              headers: session.getSessionCookieHeader(),
+            );
+
+            final document = parse(response.body);
+
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: SingleChildScrollView(
+                    child: SelectableLinkify(
+                      text: document.body.text.trim(),
+                      options: LinkifyOptions(humanize: false),
+                      onOpen: (link) async {
+                        if (await canLaunch(link.url)) await launch(link.url);
+                        else
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Errore"),
+                                content: Text("Impossibile aprire il link"),
+                              );
+                            },
+                          );
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
+            break;
+        }
+      },
+      leading: CircleAvatar(
+        child: Icon(
+          _getAttachmentIcon(attachment),
+          color: Theme.of(context).accentColor,
+        ),
+        backgroundColor: Theme.of(context).appBarTheme.color,
+        radius: 25,
+      ),
+      title: Text(
+        attachment.name,
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 5,),
+          Text(
+            attachment.teacher,
+          ),
+          SizedBox(height: 5,),
+          Text(
+            DateFormat.yMMMMd().add_jms().format(attachment.date),
+          ),
+        ],
+      )
+    );
+  }
+}
+
+class AttachmentsListView extends StatelessWidget {
+  final List<ClasseVivaAttachment> _attachments;
+
+  AttachmentsListView(this._attachments);
 
   @override
   Widget build(BuildContext context) {
@@ -155,118 +290,7 @@ class AttachmentsListView extends StatelessWidget {
               );
             }
 
-            final ClasseVivaAttachment attachment = _attachments[index];
-
-            IconData _getAttachmentIcon(ClasseVivaAttachment attachment)
-            {
-              IconData icon;
-
-              switch (attachment.type)
-              {
-                case ClasseVivaAttachmentType.File: icon = Icons.insert_drive_file; break;
-                case ClasseVivaAttachmentType.Link: icon = Icons.link; break;
-                case ClasseVivaAttachmentType.Text: icon = Icons.text_fields; break;
-              }
-
-              return icon; 
-            }
-
-            return ListTile(
-              onTap: () async {
-                final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
-
-                final String url = attachment.url;
-
-                switch (attachment.type)
-                {
-                  case ClasseVivaAttachmentType.File:
-                    await _requestPermission();
-
-                    await FlutterDownloader.enqueue(
-                      url: url,
-                      savedDir: (Theme.of(context).platform == TargetPlatform.android
-                        ? await getExternalStorageDirectory()
-                        : await getApplicationDocumentsDirectory()).path,
-                      showNotification: true,
-                      openFileFromNotification: true,
-                      headers: session.getSessionCookieHeader(),
-                    );
-                    break;
-                  case ClasseVivaAttachmentType.Link:
-                    if (await canLaunch(url)) await launch(url);
-                    else
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text("Errore"),
-                            content: Text("Impossibile aprire il link"),
-                          );
-                        },
-                      );
-                    break;
-                  case ClasseVivaAttachmentType.Text:
-                    final response = await http.get(
-                      url,
-                      headers: session.getSessionCookieHeader(),
-                    );
-
-                    final document = parse(response.body);
-
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: SingleChildScrollView(
-                            child: SelectableLinkify(
-                              text: document.body.text.trim(),
-                              options: LinkifyOptions(humanize: false),
-                              onOpen: (link) async {
-                                if (await canLaunch(link.url)) await launch(link.url);
-                                else
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text("Errore"),
-                                        content: Text("Impossibile aprire il link"),
-                                      );
-                                    },
-                                  );
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                    break;
-                }
-              },
-              leading: CircleAvatar(
-                child: Icon(
-                  _getAttachmentIcon(attachment),
-                  color: Theme.of(context).accentColor,
-                ),
-                backgroundColor: Theme.of(context).appBarTheme.color,
-                radius: 25,
-              ),
-              title: Text(
-                attachment.name,
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 5,),
-                  Text(
-                    attachment.teacher,
-                  ),
-                  SizedBox(height: 5,),
-                  Text(
-                    DateFormat.yMMMMd().add_jms().format(attachment.date),
-                  ),
-                ],
-              )
-            );
+            return AttachmentListTile(_attachments[index]);
           },
         );
   }
