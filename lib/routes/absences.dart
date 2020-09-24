@@ -63,9 +63,16 @@ class _AbsencesState extends State<Absences> {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Assenze / Ritardi'
-          ),
+          title: Text("Assenze / Ritardi"),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.show_chart),
+              tooltip: "Infografica",
+              onPressed: () {
+                // TODO
+              },
+            ),
+          ],
         ),
         body: GestureDetector(
           onTap: () {
