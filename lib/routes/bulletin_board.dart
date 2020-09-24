@@ -65,7 +65,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
               SwitchListTile(
                 title: Text("Nascondi comunicazioni non attive"),
                 value: _hideInactive,
-                onChanged: (checked) async {
+                onChanged: (checked) {
                   setState(() {
                     _items = null;
 

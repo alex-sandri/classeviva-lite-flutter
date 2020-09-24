@@ -26,6 +26,8 @@ class _AttachmentsState extends State<Attachments> {
 
   List<ClasseVivaAttachment> _attachments;
 
+  bool _showFolders = false;
+
   ReceivePort _port = ReceivePort();
 
   Future<void> _handleRefresh() async {
@@ -103,11 +105,18 @@ class _AttachmentsState extends State<Attachments> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              SwitchListTile(
+                title: Text("Mostra cartelle"),
+                value: _showFolders,
+                onChanged: (checked) => setState(() => _showFolders = checked),
+              ),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: AttachmentsListView(_attachments),
+                  child: _showFolders
+                    ? Container()
+                    : AttachmentsListView(_attachments),
                 ),
               ),
             ],
