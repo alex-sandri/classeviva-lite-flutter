@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
+import 'package:classeviva_lite/models/ClasseVivaAbsenceMonth.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
@@ -197,27 +198,6 @@ class ClasseVivaSession
     uid: session.split(";")[1],
     pwd: session.split(";")[2],
   );
-}
-
-class ClasseVivaAbsenceMonth
-{
-  final String name;
-
-  final int presencesCount;
-
-  final int absencesCount;
-
-  final int delaysCount;
-
-  final int exitsCount;
-
-  ClasseVivaAbsenceMonth({
-    @required this.name,
-    @required this.presencesCount,
-    @required this.absencesCount,
-    @required this.delaysCount,
-    @required this.exitsCount,
-  });
 }
 
 class ClasseViva
@@ -793,8 +773,8 @@ class ClasseViva
 		yield absences;
 	}
 
-  Future<List<ClasseVivaAbsenceMonth>> getAbsencesStats() async {
-    // yield ...
+  Stream<List<ClasseVivaAbsenceMonth>> getAbsencesStats() async* {
+    yield (CacheManager.get("absences-stats") as List<dynamic>)?.whereType<ClasseVivaAbsenceMonth>()?.toList();
 
     await checkValidSession();
 
@@ -803,7 +783,7 @@ class ClasseViva
       headers: getSessionCookieHeader(),
     );
 
-		// if (result.isError) return;
+		if (result.isError) return;
 
     final document = parse(result.response.body);
 
@@ -827,9 +807,9 @@ class ClasseViva
       ));
 		});
 
-    // set cache
+    await CacheManager.set("absences-stats", months);
 
-		return months;
+		yield months;
 	}
 
   Stream<List<ClasseVivaSubject>> getSubjects() async* {

@@ -1,4 +1,5 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
+import 'package:classeviva_lite/models/ClasseVivaAbsenceMonth.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -14,7 +15,7 @@ class _AbsencesStatsState extends State<AbsencesStats> {
   List<ClasseVivaAbsenceMonth> _months;
 
   Future<void> _handleRefresh() async {
-    await for (final List<ClasseVivaAbsenceMonth> months in _session.getAbsencesStats().asStream())
+    await for (final List<ClasseVivaAbsenceMonth> months in _session.getAbsencesStats())
     {
       if (months == null) continue;
 
