@@ -69,7 +69,7 @@ class _AbsencesState extends State<Absences> {
               icon: Icon(Icons.show_chart),
               tooltip: "Infografica",
               onPressed: () {
-                // TODO
+                _session.getAbsencesStats();
               },
             ),
           ],

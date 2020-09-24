@@ -199,6 +199,27 @@ class ClasseVivaSession
   );
 }
 
+class ClasseVivaAbsenceMonth
+{
+  final String name;
+
+  final int presencesCount;
+
+  final int absencesCount;
+
+  final int delaysCount;
+
+  final int exitsCount;
+
+  ClasseVivaAbsenceMonth({
+    @required this.name,
+    @required this.presencesCount,
+    @required this.absencesCount,
+    @required this.delaysCount,
+    @required this.exitsCount,
+  });
+}
+
 class ClasseViva
 {
   static const Color PRIMARY_LIGHT = Color(0xffcc1020);
@@ -770,6 +791,45 @@ class ClasseViva
     await CacheManager.set("absences", absences);
 
 		yield absences;
+	}
+
+  Future<List<ClasseVivaAbsenceMonth>> getAbsencesStats() async {
+    // yield ...
+
+    await checkValidSession();
+
+		final result = await HttpManager.get(
+			url: _endpoints.absences(),
+      headers: getSessionCookieHeader(),
+    );
+
+		// if (result.isError) return;
+
+    final document = parse(result.response.body);
+
+    final List<String> monthNames = [];
+
+    document.querySelectorAll("#skeda_sintesi_xmese tr[height=\"38\"]").last.querySelectorAll("td[colspan=\"2\"]").getRange(0, 10).forEach((month) {
+      monthNames.add(month.text.trim());
+		});
+
+    final List<ClasseVivaAbsenceMonth> months = [];
+
+    int i = 0;
+
+		document.querySelector("#skeda_sintesi_xmese tr[height=\"57\"]").querySelectorAll("td[colspan=\"2\"]").getRange(0, 10).forEach((month) {
+      months.add(ClasseVivaAbsenceMonth(
+        name: monthNames[i++],
+        presencesCount: 0,
+        absencesCount: 0,
+        delaysCount: 0,
+        exitsCount: 0,
+      ));
+		});
+
+    // set cache
+
+		return months;
 	}
 
   Stream<List<ClasseVivaSubject>> getSubjects() async* {
