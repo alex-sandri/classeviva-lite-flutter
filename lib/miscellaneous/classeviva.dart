@@ -820,10 +820,10 @@ class ClasseViva
 		document.querySelector("#skeda_sintesi_xmese tr[height=\"57\"]").querySelectorAll("td[colspan=\"2\"]").getRange(0, 10).forEach((month) {
       months.add(ClasseVivaAbsenceMonth(
         name: monthNames[i++],
-        presencesCount: 0,
-        absencesCount: 0,
-        delaysCount: 0,
-        exitsCount: 0,
+        presencesCount: int.parse(month.querySelectorAll("p").first.text.trim()),
+        absencesCount: int.parse(month.querySelectorAll("p")[1].text.trim()),
+        delaysCount: int.parse(month.querySelectorAll("p")[2].text.trim()),
+        exitsCount: int.parse(month.querySelectorAll("p").last.text.trim()),
       ));
 		});
 

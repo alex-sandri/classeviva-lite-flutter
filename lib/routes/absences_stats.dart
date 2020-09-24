@@ -52,7 +52,12 @@ class _AbsencesStatsState extends State<AbsencesStats> {
                   : charts.BarChart(
                       _months.map((month) => charts.Series(
                         id: month.name,
-                        data: _months.map((e) => e.presencesCount + e.absencesCount + e.delaysCount + e.exitsCount).toList(),
+                        data: [
+                          month.presencesCount,
+                          month.absencesCount,
+                          month.delaysCount,
+                          month.exitsCount,
+                        ],
                         domainFn: (int n, _) => month.name,
                         measureFn: (int n, _) => n,
                       )).toList(),
