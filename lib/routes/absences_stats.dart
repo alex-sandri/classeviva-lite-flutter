@@ -53,13 +53,14 @@ class _AbsencesStatsState extends State<AbsencesStats> {
                       _months.map((month) => charts.Series(
                         id: month.name,
                         data: [
-                          month.presencesCount,
-                          month.absencesCount,
-                          month.delaysCount,
-                          month.exitsCount,
+                          _EventsPerMonth(month: month.name, count: month.presencesCount, color: Colors.green),
+                          _EventsPerMonth(month: month.name, count: month.absencesCount, color: Colors.red),
+                          _EventsPerMonth(month: month.name, count: month.delaysCount, color: Colors.orange),
+                          _EventsPerMonth(month: month.name, count: month.exitsCount, color: Colors.yellow),
                         ],
-                        domainFn: (int n, _) => month.name,
-                        measureFn: (int n, _) => n,
+                        domainFn: (_EventsPerMonth e, _) => e.month,
+                        measureFn: (_EventsPerMonth e, _) => e.count,
+                        colorFn: (_EventsPerMonth e, _) => e.color,
                       )).toList(),
                       animate: true,
                       barGroupingType: charts.BarGroupingType.stacked,
@@ -72,4 +73,25 @@ class _AbsencesStatsState extends State<AbsencesStats> {
       ),
     );
   }
+}
+
+class _EventsPerMonth
+{
+  final String month;
+
+  final int count;
+
+  final charts.Color color;
+
+  _EventsPerMonth({
+    @required this.month,
+    @required this.count,
+    @required Color color,
+  }):
+    this.color = charts.Color(
+      a: color.alpha,
+      r: color.red,
+      g: color.green,
+      b: color.blue,
+    );
 }
