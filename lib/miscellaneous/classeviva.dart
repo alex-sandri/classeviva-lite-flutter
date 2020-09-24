@@ -579,6 +579,11 @@ class ClasseViva
       ));
 		});
 
+    attachments.sort((a, b) {
+      // Most recent first
+      return b.date.compareTo(a.date);
+    });
+
     await CacheManager.set("attachments", attachments);
 
 		yield _search(attachments, query);
