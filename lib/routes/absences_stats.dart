@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class AbsencesStats extends StatefulWidget {
   @override
@@ -48,7 +49,16 @@ class _AbsencesStatsState extends State<AbsencesStats> {
                   backgroundColor: Theme.of(context).appBarTheme.color,
                   child: _months == null
                   ? Spinner()
-                  : Container(),
+                  : charts.BarChart(
+                      _months.map((month) => charts.Series(
+                        id: month.name,
+                        data: _months.map((e) => e.presencesCount + e.absencesCount + e.delaysCount + e.exitsCount).toList(),
+                        domainFn: (int n, _) => month.name,
+                        measureFn: (int n, _) => n,
+                      )).toList(),
+                      animate: true,
+                      barGroupingType: charts.BarGroupingType.stacked,
+                    ),
                 ),
               ),
             ],
