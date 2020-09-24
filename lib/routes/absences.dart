@@ -1,7 +1,9 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
+import 'package:classeviva_lite/routes/absences_stats.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Absences extends StatefulWidget {
@@ -68,9 +70,7 @@ class _AbsencesState extends State<Absences> {
             IconButton(
               icon: Icon(Icons.show_chart),
               tooltip: "Infografica",
-              onPressed: () {
-                _session.getAbsencesStats();
-              },
+              onPressed: () => Get.to(AbsencesStats()),
             ),
           ],
         ),
