@@ -2,7 +2,6 @@ import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -25,7 +24,7 @@ class _SettingsState extends State<Settings> {
               leading: Icon(Icons.brush),
               title: Text("Tema"),
               trailing: DropdownButton(
-                value: Provider.of<ThemeManager>(context).themeMode.toString().split(".").last,
+                value: ThemeManager.themeMode.toString().split(".").last,
                 items: [
                   DropdownMenuItem(
                     value: "system",
@@ -41,7 +40,9 @@ class _SettingsState extends State<Settings> {
                   ),
                 ],
                 onChanged: (value) {
-                  Provider.of<ThemeManager>(context, listen: false).setTheme(value);
+                  ThemeManager.setTheme(value);
+
+                  setState(() {});
                 },
               ),
             ),

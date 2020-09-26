@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-class ThemeManager with ChangeNotifier
+class ThemeManager
 {
-  ThemeMode _themeMode;
-
-  ThemeMode get themeMode {
+  static ThemeMode get themeMode {
     final Box preferences = Hive.box("preferences");
 
     final String theme = preferences.get("theme");
 
     switch (theme)
     {
-      case "light": _themeMode = ThemeMode.light; break;
-      case "dark": _themeMode = ThemeMode.dark; break;
-      default: _themeMode = ThemeMode.system; break;
+      case "light": return ThemeMode.light;
+      case "dark": return ThemeMode.dark;
+      default: return ThemeMode.system;
     }
-
-    return _themeMode;
   }
 
-  void setTheme(String theme) {
-    switch (theme)
-    {
-      case "system": _themeMode = ThemeMode.system; break;
-      case "light": _themeMode = ThemeMode.light; break;
-      case "dark": _themeMode = ThemeMode.dark; break;
-    }
-
+  static void setTheme(String theme) {
     final Box preferences = Hive.box("preferences");
 
     preferences.put("theme", theme);
 
-    notifyListeners();
+    Get.changeThemeMode(ThemeManager.themeMode);
   }
 
   static bool isLightTheme(BuildContext context) => Theme.of(context).brightness == Brightness.light;

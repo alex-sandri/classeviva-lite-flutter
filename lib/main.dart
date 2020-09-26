@@ -32,7 +32,6 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quick_actions/quick_actions.dart';
 
@@ -76,16 +75,7 @@ void main() async {
   if (AuthenticationManager.isAuthenticationEnabled && !await AuthenticationManager.authenticate())
     home = SignIn();
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeManager()),
-      ],
-      child: MyApp(
-        home: home,
-      ),
-    )
-  );
+  runApp(MyApp(home: home));
 }
 
 class MyApp extends StatelessWidget {
@@ -131,7 +121,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      themeMode: Provider.of<ThemeManager>(context).themeMode,
+      themeMode: ThemeManager.themeMode,
       home: Builder(
         builder: (context) {
           Intl.defaultLocale = Localizations.localeOf(context).toLanguageTag();
