@@ -44,6 +44,7 @@ dependencies:
   rxdart: ^0.24.1
   charts_flutter: ^0.9.0
   calendar_timeline: ^0.6.3
+  calendar_views: ^0.5.2
   flutter:
     sdk: flutter
   flutter_localizations:
