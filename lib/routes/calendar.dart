@@ -52,10 +52,25 @@ class _CalendarState extends State<Calendar> {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Registro'
-          ),
+          title: Text("Registro"),
           actions: [
+            IconButton(
+              icon: Icon(Icons.today),
+              tooltip: "Oggi",
+              onPressed: () {
+                setState(() {
+                  _date = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day,
+                  );
+
+                  _calendar = null;
+                });
+
+                _handleRefresh();
+              },
+            ),
             IconButton(
               icon: Icon(Icons.calendar_today),
               tooltip: "Cambia giorno",
