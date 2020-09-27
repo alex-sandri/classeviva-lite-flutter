@@ -85,6 +85,7 @@ class _CalendarState extends State<Calendar> {
             ),
           ],
           bottom: PreferredSize(
+            // Height of the CalendarTimeline widget
             preferredSize: Size.fromHeight(115),
             child: CalendarTimeline(
               initialDate: _date,
