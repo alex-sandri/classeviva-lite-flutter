@@ -96,199 +96,189 @@ class _CalendarState extends State<Calendar> {
             ),
           ],
         ),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: ListView(
-                    children: [
-                      CalendarTimeline(
-                        initialDate: _date,
-                        firstDate: _session.yearBeginsAt,
-                        lastDate: _session.yearEndsAt,
-                        onDateSelected: (date) {
-                          setState(() {
-                            _date = DateTime(date.year, date.month, date.day);
+        body: RefreshIndicator(
+          onRefresh: _handleRefresh,
+          backgroundColor: Theme.of(context).appBarTheme.color,
+          child: ListView(
+            children: [
+              CalendarTimeline(
+                initialDate: _date,
+                firstDate: _session.yearBeginsAt,
+                lastDate: _session.yearEndsAt,
+                onDateSelected: (date) {
+                  setState(() {
+                    _date = DateTime(date.year, date.month, date.day);
 
-                            _calendar = null;
-                          });
+                    _calendar = null;
+                  });
 
-                          _handleRefresh();
-                        },
-                        monthColor: Colors.grey,
-                        dayColor: Colors.grey,
-                        activeDayColor: Colors.white,
-                        activeBackgroundDayColor: Colors.redAccent,
-                        dotsColor: Colors.white,
-                        locale: Localizations.localeOf(context).languageCode,
-                      ),
-
-                      if (_calendar == null)
-                        LinearProgressIndicator(
-                          backgroundColor: Colors.transparent,
-                          valueColor: AlwaysStoppedAnimation<Color>(ThemeManager.isLightTheme(context)
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).accentColor),
-                        ),
-
-                      if (_calendar != null && _calendar.absences.isNotEmpty)
-                        ListTile(
-                          title: Text("Assenze"),
-                        ),
-
-                      if (_calendar != null && _calendar.absences.isNotEmpty)
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.absences.length,
-                          itemBuilder: (context, index) {
-                            final ClasseVivaAbsence absence = _calendar.absences[index];
-
-                            Color color;
-
-                            switch (absence.type)
-                            {
-                              case ClasseVivaAbsenceType.Absence:
-                                color = Colors.red;
-                                break;
-                              case ClasseVivaAbsenceType.Late:
-                              case ClasseVivaAbsenceType.ShortDelay:
-                                color = Colors.orange;
-                                break;
-                              case ClasseVivaAbsenceType.EarlyExit:
-                                color = Colors.yellow;
-                                break;
-                            }
-
-                            return Card(
-                              color: color,
-                              child: ListTile(
-                                leading: Icon(Icons.error),
-                                title: SelectableText(Absences.getTypeString(absence.type)),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    SelectableText(Absences.getStatusString(absence.status)),
-
-                                    if (absence.description.isNotEmpty)
-                                      SelectableText(
-                                        absence.description,
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-
-                      if (_calendar != null && _calendar.grades.isNotEmpty)
-                        ListTile(
-                          title: Text(
-                            "Voti",
-                          ),
-                        ),
-
-                      if (_calendar != null && _calendar.grades.isNotEmpty)
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.grades.length,
-                          itemBuilder: (context, index) => GradeTile(_calendar.grades[index], showDay: false),
-                        ),
-
-                      if (_calendar != null)
-                        ListTile(
-                          title: Text(
-                            "Lezioni",
-                          ),
-                        ),
-                      
-                      if (_calendar != null)
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.lessons.isNotEmpty
-                            ? _calendar.lessons.length
-                            : 1,
-                          itemBuilder: (context, index) {
-                            if (_calendar.lessons.isEmpty)
-                              return SelectableText(
-                                "Nessun evento",
-                                textAlign: TextAlign.center,
-                              );
-
-                            final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
-
-                            return ListTile(
-                              leading: Column(
-                                children: [
-                                  SelectableText(
-                                    "${lesson.hour}ª ora",
-                                  ),
-                                  SelectableText(
-                                    "${lesson.duration.inHours} ${lesson.duration.inHours == 1 ? "ora" : "ore"}",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              title: SelectableText(
-                                lesson.subject,
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SelectableText(
-                                    lesson.teacher,
-                                  ),
-                                  SelectableText.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: lesson.type,
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                        TextSpan(text: " "),
-                                        TextSpan(text: lesson.description),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-
-                      if (_calendar != null && _calendar.agenda.isNotEmpty)
-                        ListTile(
-                          title: Text(
-                            "Agenda",
-                          ),
-                        ),
-
-                      if (_calendar != null && _calendar.agenda.isNotEmpty)
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => Divider(),
-                          itemCount: _calendar.agenda.length,
-                          itemBuilder: (context, index) => AgendaItemTile(_calendar.agenda[index], showDay: false),
-                        ),
-                    ],
-                  ),
-                )
+                  _handleRefresh();
+                },
+                monthColor: Colors.grey,
+                dayColor: Colors.grey,
+                activeDayColor: Colors.white,
+                activeBackgroundDayColor: Colors.redAccent,
+                dotsColor: Colors.white,
+                locale: Localizations.localeOf(context).languageCode,
               ),
+
+              if (_calendar == null)
+                LinearProgressIndicator(
+                  backgroundColor: Colors.transparent,
+                  valueColor: AlwaysStoppedAnimation<Color>(ThemeManager.isLightTheme(context)
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).accentColor),
+                ),
+
+              if (_calendar != null && _calendar.absences.isNotEmpty)
+                ListTile(
+                  title: Text("Assenze"),
+                ),
+
+              if (_calendar != null && _calendar.absences.isNotEmpty)
+                ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: _calendar.absences.length,
+                  itemBuilder: (context, index) {
+                    final ClasseVivaAbsence absence = _calendar.absences[index];
+
+                    Color color;
+
+                    switch (absence.type)
+                    {
+                      case ClasseVivaAbsenceType.Absence:
+                        color = Colors.red;
+                        break;
+                      case ClasseVivaAbsenceType.Late:
+                      case ClasseVivaAbsenceType.ShortDelay:
+                        color = Colors.orange;
+                        break;
+                      case ClasseVivaAbsenceType.EarlyExit:
+                        color = Colors.yellow;
+                        break;
+                    }
+
+                    return Card(
+                      color: color,
+                      child: ListTile(
+                        leading: Icon(Icons.error),
+                        title: SelectableText(Absences.getTypeString(absence.type)),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SelectableText(Absences.getStatusString(absence.status)),
+
+                            if (absence.description.isNotEmpty)
+                              SelectableText(
+                                absence.description,
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+
+              if (_calendar != null && _calendar.grades.isNotEmpty)
+                ListTile(
+                  title: Text(
+                    "Voti",
+                  ),
+                ),
+
+              if (_calendar != null && _calendar.grades.isNotEmpty)
+                ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: _calendar.grades.length,
+                  itemBuilder: (context, index) => GradeTile(_calendar.grades[index], showDay: false),
+                ),
+
+              if (_calendar != null)
+                ListTile(
+                  title: Text(
+                    "Lezioni",
+                  ),
+                ),
+              
+              if (_calendar != null)
+                ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: _calendar.lessons.isNotEmpty
+                    ? _calendar.lessons.length
+                    : 1,
+                  itemBuilder: (context, index) {
+                    if (_calendar.lessons.isEmpty)
+                      return SelectableText(
+                        "Nessun evento",
+                        textAlign: TextAlign.center,
+                      );
+
+                    final ClasseVivaCalendarLesson lesson = _calendar.lessons[index];
+
+                    return ListTile(
+                      leading: Column(
+                        children: [
+                          SelectableText(
+                            "${lesson.hour}ª ora",
+                          ),
+                          SelectableText(
+                            "${lesson.duration.inHours} ${lesson.duration.inHours == 1 ? "ora" : "ore"}",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                      title: SelectableText(
+                        lesson.subject,
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SelectableText(
+                            lesson.teacher,
+                          ),
+                          SelectableText.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: lesson.type,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                TextSpan(text: " "),
+                                TextSpan(text: lesson.description),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+
+              if (_calendar != null && _calendar.agenda.isNotEmpty)
+                ListTile(
+                  title: Text(
+                    "Agenda",
+                  ),
+                ),
+
+              if (_calendar != null && _calendar.agenda.isNotEmpty)
+                ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: _calendar.agenda.length,
+                  itemBuilder: (context, index) => AgendaItemTile(_calendar.agenda[index], showDay: false),
+                ),
             ],
           ),
         ),
