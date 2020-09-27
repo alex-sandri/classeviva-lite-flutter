@@ -9,7 +9,6 @@ import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
   @override
