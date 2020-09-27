@@ -26,11 +26,15 @@ class _CalendarState extends State<Calendar> {
     DateTime.now().day,
   );
 
+  DaysPageController _daysPageController;
+
   void _setDate(DateTime date) {
     setState(() {
       _date = DateTime(date.year, date.month, date.day);
 
       _calendar = null;
+
+      _daysPageController.jumpToDay(date);
     });
 
     _handleRefresh();
@@ -59,6 +63,11 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    _daysPageController = DaysPageController(
+      daysPerPage: 1,
+      firstDayOnInitialPage: _date,
+    );
+
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -102,10 +111,7 @@ class _CalendarState extends State<Calendar> {
           ),
         ),
         body: DaysPageView(
-          controller: DaysPageController(
-            daysPerPage: 1,
-            firstDayOnInitialPage: _date,
-          ),
+          controller: _daysPageController,
           onDaysChanged: (dates) => _setDate(dates.first),
           pageBuilder: (context, dates) {
             final DateTime date = dates.first;
