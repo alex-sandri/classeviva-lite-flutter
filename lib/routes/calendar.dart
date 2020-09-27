@@ -84,6 +84,21 @@ class _CalendarState extends State<Calendar> {
               },
             ),
           ],
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(115),
+            child: CalendarTimeline(
+              initialDate: _date,
+              firstDate: _session.yearBeginsAt,
+              lastDate: _session.yearEndsAt,
+              onDateSelected: _setDate,
+              monthColor: Colors.white,
+              dayColor: Colors.grey,
+              activeDayColor: Colors.white,
+              activeBackgroundDayColor: Colors.redAccent,
+              dotsColor: Colors.white,
+              locale: Localizations.localeOf(context).languageCode,
+            ),
+          ),
         ),
         body: RefreshIndicator(
           onRefresh: _handleRefresh,
@@ -97,19 +112,6 @@ class _CalendarState extends State<Calendar> {
             pageBuilder: (context, dates) {
               return ListView(
                 children: [
-                  CalendarTimeline(
-                    initialDate: _date,
-                    firstDate: _session.yearBeginsAt,
-                    lastDate: _session.yearEndsAt,
-                    onDateSelected: _setDate,
-                    monthColor: Colors.grey,
-                    dayColor: Colors.grey,
-                    activeDayColor: Colors.white,
-                    activeBackgroundDayColor: Colors.redAccent,
-                    dotsColor: Colors.white,
-                    locale: Localizations.localeOf(context).languageCode,
-                  ),
-
                   if (_calendar == null)
                     LinearProgressIndicator(
                       backgroundColor: Colors.transparent,
