@@ -1,3 +1,4 @@
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
@@ -81,9 +82,7 @@ class _CalendarState extends State<Calendar> {
           ],
         ),
         body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -93,42 +92,25 @@ class _CalendarState extends State<Calendar> {
                   backgroundColor: Theme.of(context).appBarTheme.color,
                   child: ListView(
                     children: [
-                      ListTile(
-                        leading: IconButton(
-                          icon: Icon(
-                            Icons.chevron_left,
-                          ),
-                          tooltip: "Giorno precedente",
-                          onPressed: () {
-                            setState(() {
-                              _date = _date.subtract(Duration(days: 1));
+                      CalendarTimeline(
+                        initialDate: _date,
+                        firstDate: _session.yearBeginsAt,
+                        lastDate: _session.yearEndsAt,
+                        onDateSelected: (date) {
+                          setState(() {
+                            _date = DateTime(date.year, date.month, date.day);
 
-                              _calendar = null;
-                            });
+                            _calendar = null;
+                          });
 
-                            _handleRefresh();
-                          },
-                        ),
-                        title: Center(
-                          child: Text(
-                            DateFormat.yMMMMEEEEd().format(_date),
-                          ),
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.chevron_right,
-                          ),
-                          tooltip: "Giorno successivo",
-                          onPressed: () {
-                            setState(() {
-                              _date = _date.add(Duration(days: 1));
-
-                              _calendar = null;
-                            });
-
-                            _handleRefresh();
-                          },
-                        ),
+                          _handleRefresh();
+                        },
+                        monthColor: Colors.grey,
+                        dayColor: Colors.grey,
+                        activeDayColor: Colors.white,
+                        activeBackgroundDayColor: Colors.redAccent,
+                        dotsColor: Colors.white,
+                        locale: Localizations.localeOf(context).languageCode,
                       ),
 
                       if (_calendar == null)
