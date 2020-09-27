@@ -101,24 +101,24 @@ class _CalendarState extends State<Calendar> {
             ),
           ),
         ),
-        body: RefreshIndicator(
-          onRefresh: _handleRefresh,
-          backgroundColor: Theme.of(context).appBarTheme.color,
-          child: DaysPageView(
-            controller: DaysPageController(
-              daysPerPage: 1,
-              firstDayOnInitialPage: _date,
-            ),
-            onDaysChanged: (dates) => _setDate(dates.first),
-            pageBuilder: (context, dates) {
-              final DateTime date = dates.first;
+        body: DaysPageView(
+          controller: DaysPageController(
+            daysPerPage: 1,
+            firstDayOnInitialPage: _date,
+          ),
+          onDaysChanged: (dates) => _setDate(dates.first),
+          pageBuilder: (context, dates) {
+            final DateTime date = dates.first;
 
-              return StreamBuilder<ClasseVivaCalendar>(
-                stream: _session.getCalendar(date),
-                builder: (context, snapshot) {
-                  final ClasseVivaCalendar calendar = snapshot.data;
+            return StreamBuilder<ClasseVivaCalendar>(
+              stream: _session.getCalendar(date),
+              builder: (context, snapshot) {
+                final ClasseVivaCalendar calendar = snapshot.data;
 
-                  return ListView(
+                return RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  backgroundColor: Theme.of(context).appBarTheme.color,
+                  child: ListView(
                     children: [
                       if (calendar == null)
                         LinearProgressIndicator(
@@ -278,11 +278,11 @@ class _CalendarState extends State<Calendar> {
                           itemBuilder: (context, index) => AgendaItemTile(calendar.agenda[index], showDay: false),
                         ),
                     ],
-                  );
-                }
-              );
-            }
-          ),
+                  ),
+                );
+              }
+            );
+          }
         ),
       ),
     );
