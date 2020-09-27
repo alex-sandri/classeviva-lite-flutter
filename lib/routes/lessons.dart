@@ -120,20 +120,8 @@ class LessonsListView extends StatelessWidget {
             final ClasseVivaLesson lesson = lessons.data[index];
 
             return ListTile(
-              title: SelectableText(
-                lesson.description,
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    lesson.teacher,
-                  ),
-                  SelectableText(
-                    DateFormat.yMMMMd().format(lesson.date),
-                  ),
-                ],
-              ),
+              title: SelectableText("${DateFormat.yMMMMd().format(lesson.date)} - ${lesson.teacher}"),
+              subtitle: SelectableText(lesson.description),
             );
           },
         );
