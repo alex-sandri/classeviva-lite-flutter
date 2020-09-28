@@ -1,4 +1,3 @@
-import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:calendar_views/calendar_views.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
@@ -8,6 +7,8 @@ import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:date_picker_timeline/extra/style.dart';
 import 'package:flutter/material.dart';
 
 class Calendar extends StatefulWidget {
@@ -19,6 +20,8 @@ class _CalendarState extends State<Calendar> {
   final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
 
   ClasseVivaCalendar _calendar;
+
+  final DatePickerController _datePickerController = DatePickerController();
 
   DateTime _date = DateTime(
     DateTime.now().year,
@@ -33,6 +36,8 @@ class _CalendarState extends State<Calendar> {
       _date = DateTime(date.year, date.month, date.day);
 
       _calendar = null;
+
+      _datePickerController.animateToDate(_date);
 
       _daysPageController.jumpToDay(date);
     });
@@ -59,6 +64,9 @@ class _CalendarState extends State<Calendar> {
       _date = _session.yearEndsAt;
 
     _handleRefresh();
+
+    WidgetsBinding.instance
+      .addPostFrameCallback((_) => _datePickerController.jumpToSelection());
   }
 
   @override
@@ -94,19 +102,19 @@ class _CalendarState extends State<Calendar> {
             ),
           ],
           bottom: PreferredSize(
-            // Height of the CalendarTimeline widget
-            preferredSize: Size.fromHeight(115),
-            child: CalendarTimeline(
-              initialDate: _date,
-              firstDate: _session.yearBeginsAt,
-              lastDate: _session.yearEndsAt,
-              onDateSelected: _setDate,
-              monthColor: Colors.white,
-              dayColor: Colors.grey,
-              activeDayColor: Colors.white,
-              activeBackgroundDayColor: Colors.redAccent,
-              dotsColor: Colors.white,
-              locale: Localizations.localeOf(context).languageCode,
+            // Height of the DatePicker widget
+            preferredSize: Size.fromHeight(80),
+            child: DatePicker(
+              _session.yearBeginsAt,
+              controller: _datePickerController,
+              initialSelectedDate: _date,
+              daysCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays,
+              onDateChange: _setDate,
+              monthTextStyle: defaultMonthTextStyle.copyWith(color: Colors.white70),
+              dateTextStyle: defaultDateTextStyle.copyWith(color: Colors.white70),
+              dayTextStyle: defaultDayTextStyle.copyWith(color: Colors.white70),
+              selectedTextColor: Colors.white,
+              selectionColor: Colors.blueAccent.shade400,
             ),
           ),
         ),
