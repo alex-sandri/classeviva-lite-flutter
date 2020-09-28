@@ -115,6 +115,7 @@ class _CalendarState extends State<Calendar> {
               dayTextStyle: defaultDayTextStyle.copyWith(color: Colors.white70),
               selectedTextColor: Colors.white,
               selectionColor: Colors.blueAccent.shade400,
+              locale: Localizations.localeOf(context).languageCode,
             ),
           ),
         ),
