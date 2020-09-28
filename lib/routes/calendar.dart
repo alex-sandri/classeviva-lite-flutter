@@ -108,7 +108,7 @@ class _CalendarState extends State<Calendar> {
               _session.yearBeginsAt,
               controller: _datePickerController,
               initialSelectedDate: _date,
-              daysCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays,
+              daysCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays + 1,
               onDateChange: _setDate,
               monthTextStyle: defaultMonthTextStyle.copyWith(color: Colors.white70),
               dateTextStyle: defaultDateTextStyle.copyWith(color: Colors.white70),
