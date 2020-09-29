@@ -71,6 +71,14 @@ class _AgendaState extends State<Agenda> {
                 }
               },
             ),
+            IconButton(
+              icon: Icon(Icons.search),
+              tooltip: "Cerca",
+              onPressed: () => showSearch(
+                context: context,
+                delegate: null,
+              ),
+            ),
           ],
         ),
         body: GestureDetector(
