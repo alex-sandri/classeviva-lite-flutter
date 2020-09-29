@@ -112,7 +112,22 @@ class _BulletinBoardState extends State<BulletinBoard> {
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: BulletinBoardItemsListView(_items),
+                  child: _items == null
+                    ? Spinner()
+                    : ListView.builder(
+                        itemCount: _items.isNotEmpty
+                          ? _items.length
+                          : 1,
+                        itemBuilder: (context, index) {
+                          if (_items.isEmpty)
+                            return SelectableText(
+                              "Non sono presenti elementi in bacheca",
+                              textAlign: TextAlign.center,
+                            );
+
+                          return BulletinBoardListTile(_items[index]);
+                        },
+                      ),
                 ),
               ),
             ],
@@ -123,56 +138,39 @@ class _BulletinBoardState extends State<BulletinBoard> {
   }
 }
 
-class BulletinBoardItemsListView extends StatelessWidget {
-  final List<ClasseVivaBulletinBoardItem> _items;
+class BulletinBoardListTile extends StatelessWidget {
+  final ClasseVivaBulletinBoardItem item;
 
-  BulletinBoardItemsListView(this._items);
+  BulletinBoardListTile(this.item);
 
   @override
   Widget build(BuildContext context) {
-    return _items == null
-      ? Spinner()
-      : ListView.builder(
-          itemCount: _items.isNotEmpty
-            ? _items.length
-            : 1,
-          itemBuilder: (context, index) {
-            if (_items.isEmpty)
-              return SelectableText(
-                "Non sono presenti elementi in bacheca",
-                textAlign: TextAlign.center,
-              );
-
-            final ClasseVivaBulletinBoardItem item = _items[index];
-
-            return ListTile(
-              onTap: () => Get.to(BulletinBoardItem(item)),
-              trailing: Icon(
-                item.conf_lettura
-                  ? Icons.mail
-                  : Icons.drafts,
-                color: item.conf_lettura
-                  ? Colors.green
-                  : Colors.red,
-              ),
-              title: Text(
-                item.titolo,
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 5,),
-                  Text(
-                    DateFormat.yMMMMd().format(item.evento_data),
-                  ),
-                  SizedBox(height: 5,),
-                  Text(
-                    item.tipo_com_desc,
-                  ),
-                ],
-              )
-            );
-          },
-        );
+    return ListTile(
+      onTap: () => Get.to(BulletinBoardItem(item)),
+      trailing: Icon(
+        item.conf_lettura
+          ? Icons.mail
+          : Icons.drafts,
+        color: item.conf_lettura
+          ? Colors.green
+          : Colors.red,
+      ),
+      title: Text(
+        item.titolo,
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 5,),
+          Text(
+            DateFormat.yMMMMd().format(item.evento_data),
+          ),
+          SizedBox(height: 5,),
+          Text(
+            item.tipo_com_desc,
+          ),
+        ],
+      )
+    );
   }
 }
