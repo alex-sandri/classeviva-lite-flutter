@@ -56,33 +56,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
                     query: query,
                     hideInactive: false,
                   ),
-                  builder: (item) => ListTile(
-                    onTap: () => Get.to(BulletinBoardItem(item)),
-                    trailing: Icon(
-                      item.conf_lettura
-                        ? Icons.mail
-                        : Icons.drafts,
-                      color: item.conf_lettura
-                        ? Colors.green
-                        : Colors.red,
-                    ),
-                    title: Text(
-                      item.titolo,
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: 5,),
-                        Text(
-                          DateFormat.yMMMMd().format(item.evento_data),
-                        ),
-                        SizedBox(height: 5,),
-                        Text(
-                          item.tipo_com_desc,
-                        ),
-                      ],
-                    )
-                  ),
+                  builder: (item) => BulletinBoardListTile(item),
                 ),
               ),
             )
