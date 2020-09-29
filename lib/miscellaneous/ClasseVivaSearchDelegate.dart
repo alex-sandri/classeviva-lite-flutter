@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ClasseVivaSearchDelegate<T> extends SearchDelegate
 {
-  final Stream<List<T>> stream;
+  final Stream<List<T>> Function(String) stream;
 
   final Widget Function(T) builder;
 
@@ -43,7 +43,7 @@ class ClasseVivaSearchDelegate<T> extends SearchDelegate
   @override
   Widget buildResults(BuildContext context) {
     return StreamBuilder<List<T>>(
-      stream: stream,
+      stream: stream(query),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Spinner();
 

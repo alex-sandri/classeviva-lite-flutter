@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
@@ -74,7 +75,14 @@ class _AgendaState extends State<Agenda> {
               tooltip: "Cerca",
               onPressed: () => showSearch(
                 context: context,
-                delegate: _AgendaSearchDelegate(),
+                delegate: ClasseVivaSearchDelegate<ClasseVivaAgendaItem>(
+                  stream: (query) async* {
+                    final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
+
+                    yield* session.getAgenda(session.yearBeginsAt, session.yearEndsAt, query: query);
+                  },
+                  builder: (item) => AgendaItemTile(item),
+                ),
               ),
             ),
           ],
@@ -164,81 +172,5 @@ class AgendaItemTile extends StatelessWidget {
         ],
       )
     );
-  }
-}
-
-class _AgendaSearchDelegate extends SearchDelegate
-{
-  _AgendaSearchDelegate(): super(
-    searchFieldStyle: TextStyle(
-      color: Colors.white70,
-    ),
-  );
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return theme.copyWith(
-      primaryColor: theme.appBarTheme.color,
-      textTheme: theme.primaryTextTheme.copyWith(
-        headline6: theme.primaryTextTheme.headline6.copyWith(
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-  
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.close),
-        tooltip: "Cancella",
-        onPressed: () => query = "",
-      ),
-    ];
-  }
-  
-  @override
-  Widget buildLeading(BuildContext context) => BackButton(onPressed: Navigator.of(context).pop);
-  
-  @override
-  Widget buildResults(BuildContext context) {
-    return StreamBuilder<List<ClasseVivaAgendaItem>>(
-      stream: () {
-        final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
-
-        return session.getAgenda(session.yearBeginsAt, session.yearEndsAt, query: query);
-      }(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return Spinner();
-
-        final List<ClasseVivaAgendaItem> items = snapshot.data;
-
-        return ListView.separated(
-          separatorBuilder: (context, index) => Divider(),
-          itemCount: items.isNotEmpty
-            ? items.length
-            : 1,
-          itemBuilder: (context, index) {
-            if (items.isEmpty)
-              return SelectableText(
-                "Nessun risultato",
-                textAlign: TextAlign.center,
-              );
-
-            final ClasseVivaAgendaItem item = items[index];
-
-            return AgendaItemTile(item);
-          },
-        );
-      },
-    );
-  }
-  
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return ListView();
   }
 }
