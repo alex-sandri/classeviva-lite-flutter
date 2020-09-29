@@ -1,6 +1,7 @@
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/widgets/classeviva_webview.dart';
@@ -98,7 +99,10 @@ class _AttachmentsState extends State<Attachments> {
               tooltip: "Cerca",
               onPressed: () => showSearch(
                 context: context,
-                delegate: AttachmentsSearchDelegate(),
+                delegate: ClasseVivaSearchDelegate<ClasseVivaAttachment>(
+                  stream: (query) => ClasseViva(ClasseViva.getCurrentSession()).getAttachments(query: query),
+                  builder: (item) => AttachmentListTile(item),
+                ),
               ),
             ),
           ],
@@ -293,65 +297,5 @@ class AttachmentsListView extends StatelessWidget {
             return AttachmentListTile(_attachments[index]);
           },
         );
-  }
-}
-
-class AttachmentsSearchDelegate extends SearchDelegate
-{
-  AttachmentsSearchDelegate(): super(
-    searchFieldStyle: TextStyle(
-      color: Colors.white70,
-    ),
-  );
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return theme.copyWith(
-      primaryColor: theme.appBarTheme.color,
-      textTheme: theme.primaryTextTheme.copyWith(
-        headline6: theme.primaryTextTheme.headline6.copyWith(
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-  
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.close),
-        tooltip: "Cancella",
-        onPressed: () {
-          query = "";
-        },
-      )
-    ];
-  }
-  
-  @override
-  Widget buildLeading(BuildContext context) {
-    return BackButton(
-      onPressed: () => Navigator.of(context).pop(),
-    );
-  }
-  
-  @override
-  Widget buildResults(BuildContext context) {
-    return StreamBuilder<List<ClasseVivaAttachment>>(
-      stream: ClasseViva(ClasseViva.getCurrentSession()).getAttachments(query: query),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return Spinner();
-
-        return AttachmentsListView(snapshot.data);
-      },
-    );
-  }
-  
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return ListView();
   }
 }
