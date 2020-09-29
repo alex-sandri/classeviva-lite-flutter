@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItem.dart';
 import 'package:classeviva_lite/routes/bulletin_board_item.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
@@ -50,7 +51,39 @@ class _BulletinBoardState extends State<BulletinBoard> {
               tooltip: "Cerca",
               onPressed: () => showSearch(
                 context: context,
-                delegate: BulletinBoardSearchDelegate(),
+                delegate: ClasseVivaSearchDelegate(
+                  stream: (query) => ClasseViva(ClasseViva.getCurrentSession()).getBulletinBoard(
+                    query: query,
+                    hideInactive: false,
+                  ),
+                  builder: (item) => ListTile(
+                    onTap: () => Get.to(BulletinBoardItem(item)),
+                    trailing: Icon(
+                      item.conf_lettura
+                        ? Icons.mail
+                        : Icons.drafts,
+                      color: item.conf_lettura
+                        ? Colors.green
+                        : Colors.red,
+                    ),
+                    title: Text(
+                      item.titolo,
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 5,),
+                        Text(
+                          DateFormat.yMMMMd().format(item.evento_data),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(
+                          item.tipo_com_desc,
+                        ),
+                      ],
+                    )
+                  ),
+                ),
               ),
             )
           ],
@@ -141,68 +174,5 @@ class BulletinBoardItemsListView extends StatelessWidget {
             );
           },
         );
-  }
-}
-
-class BulletinBoardSearchDelegate extends SearchDelegate
-{
-  BulletinBoardSearchDelegate(): super(
-    searchFieldStyle: TextStyle(
-      color: Colors.white70,
-    ),
-  );
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return theme.copyWith(
-      primaryColor: theme.appBarTheme.color,
-      textTheme: theme.primaryTextTheme.copyWith(
-        headline6: theme.primaryTextTheme.headline6.copyWith(
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-  
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.close),
-        tooltip: "Cancella",
-        onPressed: () {
-          query = "";
-        },
-      )
-    ];
-  }
-  
-  @override
-  Widget buildLeading(BuildContext context) {
-    return BackButton(
-      onPressed: () => Navigator.of(context).pop(),
-    );
-  }
-  
-  @override
-  Widget buildResults(BuildContext context) {
-    return StreamBuilder<List<ClasseVivaBulletinBoardItem>>(
-      stream: ClasseViva(ClasseViva.getCurrentSession()).getBulletinBoard(
-        query: query,
-        hideInactive: false,
-      ),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return Spinner();
-
-        return BulletinBoardItemsListView(snapshot.data);
-      },
-    );
-  }
-  
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return ListView();
   }
 }
