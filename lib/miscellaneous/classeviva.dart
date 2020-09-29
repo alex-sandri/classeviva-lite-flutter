@@ -126,7 +126,7 @@ class ClasseVivaSession
 
       final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
-      sessions.firstWhere((session) => session.id == this.id)._id = refreshedSession.id;
+      sessions.firstWhere((session) => session.id == this.id)?._id = refreshedSession.id;
 
       await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
 
