@@ -451,11 +451,21 @@ class ClasseViva
 		yield periods;
 	}
 
-	Stream<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end) async* {
+	Stream<List<ClasseVivaAgendaItem>> getAgenda(DateTime start, DateTime end, { String query = "", }) async* {
+    List<ClasseVivaAgendaItem> _search(List<ClasseVivaAgendaItem> items, String query) =>
+      items
+        ?.where((item) =>
+          item
+          .nota_2
+          .toLowerCase()
+          .contains(query.toLowerCase())
+        )
+        ?.toList();
+
     List<ClasseVivaAgendaItem> _getItemsInsideDateRange(List<ClasseVivaAgendaItem> items) =>
       items?.where((item) => item.start.isAfter(start) && item.end.isBefore(end))?.toList(); 
 
-    yield _getItemsInsideDateRange((CacheManager.get("agenda") as List<dynamic>)?.whereType<ClasseVivaAgendaItem>()?.toList());
+    yield _search(_getItemsInsideDateRange((CacheManager.get("agenda") as List<dynamic>)?.whereType<ClasseVivaAgendaItem>()?.toList()), query);
 
     await checkValidSession();
 
@@ -475,7 +485,7 @@ class ClasseViva
 
     await CacheManager.set("agenda", agenda);
 
-		yield _getItemsInsideDateRange(agenda);
+		yield _search(_getItemsInsideDateRange(agenda), query);
 	}
 
 	Stream<List<ClasseVivaAttachment>> getAttachments({ String query = "" }) async* {

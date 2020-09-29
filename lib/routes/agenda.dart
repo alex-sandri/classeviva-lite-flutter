@@ -209,7 +209,7 @@ class _AgendaSearchDelegate extends SearchDelegate
       stream: () {
         final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
 
-        return session.getAgenda(session.yearBeginsAt, session.yearEndsAt);
+        return session.getAgenda(session.yearBeginsAt, session.yearEndsAt, query: query);
       }(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Spinner();
@@ -224,7 +224,7 @@ class _AgendaSearchDelegate extends SearchDelegate
           itemBuilder: (context, index) {
             if (items.isEmpty)
               return SelectableText(
-                "Non sono presenti elementi in agenda nel periodo selezionato",
+                "Nessun risultato",
                 textAlign: TextAlign.center,
               );
 
