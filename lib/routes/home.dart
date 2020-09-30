@@ -249,16 +249,18 @@ class _HomeState extends State<Home> {
                       onTap: () => Get.to(FinalGrades()),
                     ),
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.payment),
-                      title: Text("Pagamenti"),
-                      onTap: () => Get.to(ClasseVivaWebview(
-                        title: "Pagamenti",
-                        url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).payments()),
-                      )),
+
+                  if (_session.getShortYear() == "") // Current year
+                    Card(
+                      child: ListTile(
+                        leading: Icon(Icons.payment),
+                        title: Text("Pagamenti"),
+                        onTap: () => Get.to(ClasseVivaWebview(
+                          title: "Pagamenti",
+                          url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).payments()),
+                        )),
+                      ),
                     ),
-                  ),
 
                   if (_session.getShortYear() == "") // Current year
                     Card(
