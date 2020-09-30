@@ -31,8 +31,14 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
             height: 80,
             width: MediaQuery.of(context).size.width / 7, // 7 days in a row
             child: ListTile(
-              title: Text(date.day.toString()),
-              subtitle: Text(DateFormat.M().format(date)),
+              title: Text(
+                date.day.toString(),
+                textAlign: TextAlign.center,
+              ),
+              subtitle: Text(
+                DateFormat(DateFormat.ABBR_MONTH).format(date),
+                textAlign: TextAlign.center,
+              ),
               onTap: () {
                 // TODO
 
