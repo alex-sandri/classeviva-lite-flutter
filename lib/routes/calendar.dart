@@ -7,6 +7,7 @@ import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
+import 'package:classeviva_lite/widgets/ClasseVivaCalendarStrip.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/extra/style.dart';
 import 'package:flutter/material.dart';
@@ -104,19 +105,7 @@ class _CalendarState extends State<Calendar> {
           bottom: PreferredSize(
             // Height of the DatePicker widget
             preferredSize: Size.fromHeight(80),
-            child: DatePicker(
-              _session.yearBeginsAt,
-              controller: _datePickerController,
-              initialSelectedDate: _date,
-              daysCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays + 1,
-              onDateChange: _setDate,
-              monthTextStyle: defaultMonthTextStyle.copyWith(color: Colors.white70),
-              dateTextStyle: defaultDateTextStyle.copyWith(color: Colors.white70),
-              dayTextStyle: defaultDayTextStyle.copyWith(color: Colors.white70),
-              selectedTextColor: Colors.white,
-              selectionColor: Colors.blueAccent.shade400,
-              locale: Localizations.localeOf(context).languageCode,
-            ),
+            child: ClasseVivaCalendarStrip(onDateChange: _setDate),
           ),
         ),
         body: DaysPageView(

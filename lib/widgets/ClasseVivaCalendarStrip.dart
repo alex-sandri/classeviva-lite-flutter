@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ClasseVivaCalendarStrip extends StatefulWidget {
-  final void Function(DateTime) onDateChanged;
+  final void Function(DateTime) onDateChange;
 
   ClasseVivaCalendarStrip({
-    @required this.onDateChanged,
+    @required this.onDateChange,
   });
 
   @override
@@ -30,7 +30,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
             // TODO
             print(date);
 
-            widget.onDateChanged(date);
+            widget.onDateChange(date);
           },
         );
       },
