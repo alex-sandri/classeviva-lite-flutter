@@ -1,5 +1,4 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
-import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaLesson.dart';
 import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
