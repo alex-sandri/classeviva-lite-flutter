@@ -37,9 +37,7 @@ class _HomeState extends State<Home> {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'ClasseViva Lite'
-          ),
+          title: Text("ClasseViva Lite"),
           elevation: 0,
           actions: <Widget>[
             IconButton(
@@ -93,14 +91,10 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.w900,
                             ),
                           ),
-                          SelectableText(
-                            profile.data.school,
-                          ),
+                          SelectableText(profile.data.school),
 
                           if (_session.getShortYear() != "")
-                            SelectableText(
-                              "20${_session.getShortYear()}/20${int.parse(_session.getShortYear()) + 1}",
-                            ),
+                            SelectableText("20${_session.getShortYear()}/20${int.parse(_session.getShortYear()) + 1}"),
                         ],
                       );
                     },
@@ -110,100 +104,64 @@ class _HomeState extends State<Home> {
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.today,
-                      ),
-                      title: Text(
-                        "Registro",
-                      ),
+                      leading: Icon(Icons.today),
+                      title: Text("Registro"),
                       onTap: () => Get.to(Calendar()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.grade,
-                      ),
-                      title: Text(
-                        "Valutazioni",
-                      ),
+                      leading: Icon(Icons.grade),
+                      title: Text("Valutazioni"),
                       onTap: () => Get.to(Grades()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.watch_later,
-                      ),
-                      title: Text(
-                        "Assenze / Ritardi",
-                      ),
+                      leading: Icon(Icons.watch_later),
+                      title: Text("Assenze / Ritardi"),
                       onTap: () => Get.to(Absences()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.bookmark_border,
-                      ),
-                      title: Text(
-                        "Bacheca",
-                      ),
+                      leading: Icon(Icons.bookmark_border),
+                      title: Text("Bacheca"),
                       onTap: () => Get.to(BulletinBoard()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.book,
-                      ),
-                      title: Text(
-                        "Lezioni",
-                      ),
+                      leading: Icon(Icons.book),
+                      title: Text("Lezioni"),
                       onTap: () => Get.to(Lessons()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.view_agenda,
-                      ),
-                      title: Text(
-                        "Agenda & Compiti",
-                      ),
+                      leading: Icon(Icons.view_agenda),
+                      title: Text("Agenda & Compiti"),
                       onTap: () => Get.to(Agenda()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.attachment,
-                      ),
-                      title: Text(
-                        "Didattica",
-                      ),
+                      leading: Icon(Icons.attachment),
+                      title: Text("Didattica"),
                       onTap: () => Get.to(Attachments()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.note,
-                      ),
-                      title: Text(
-                        "Note",
-                      ),
+                      leading: Icon(Icons.note),
+                      title: Text("Note"),
                       onTap: () => Get.to(Demerits()),
                     ),
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.computer,
-                      ),
-                      title: Text(
-                        "Aule Virtuali",
-                      ),
+                      leading: Icon(Icons.computer),
+                      title: Text("Aule Virtuali"),
                       onTap: () => Get.to(ClasseVivaWebview(
                         title: "Aule Virtuali",
                         url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).virtualClassrooms()),
@@ -212,12 +170,8 @@ class _HomeState extends State<Home> {
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.group,
-                      ),
-                      title: Text(
-                        "Colloqui",
-                      ),
+                      leading: Icon(Icons.group),
+                      title: Text("Colloqui"),
                       onTap: () => Get.to(ClasseVivaWebview(
                         title: "Colloqui",
                         url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).meetings()),
@@ -226,12 +180,8 @@ class _HomeState extends State<Home> {
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.help,
-                      ),
-                      title: Text(
-                        "Sportello",
-                      ),
+                      leading: Icon(Icons.help),
+                      title: Text("Sportello"),
                       onTap: () => Get.to(ClasseVivaWebview(
                         title: "Sportello",
                         url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).helpDesk()),
@@ -240,12 +190,8 @@ class _HomeState extends State<Home> {
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(
-                        Icons.poll,
-                      ),
-                      title: Text(
-                        "Scrutini",
-                      ),
+                      leading: Icon(Icons.poll),
+                      title: Text("Scrutini"),
                       onTap: () => Get.to(FinalGrades()),
                     ),
                   ),
@@ -265,12 +211,8 @@ class _HomeState extends State<Home> {
                   if (_session.getShortYear() == "") // Current year
                     Card(
                       child: ListTile(
-                        leading: Icon(
-                          Icons.book,
-                        ),
-                        title: Text(
-                          "Libri",
-                        ),
+                        leading: Icon(Icons.book),
+                        title: Text("Libri"),
                         onTap: () => Get.to(Books()),
                       ),
                     ),
@@ -283,12 +225,8 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               HomeDrawerHeader(_session),
               ListTile(
-                leading: Icon(
-                  Icons.skip_previous,
-                ),
-                title: Text(
-                  "Anno Precedente",
-                ),
+                leading: Icon(Icons.skip_previous),
+                title: Text("Anno Precedente"),
                 onTap: () async {
                   Get.back();
 
@@ -308,12 +246,8 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                leading: Icon(
-                  Icons.language,
-                ),
-                title: Text(
-                  "ClasseViva Web",
-                ),
+                leading: Icon(Icons.language),
+                title: Text("ClasseViva Web"),
                 onTap: () => Get.to(ClasseVivaWebview(
                   title: "ClasseViva Web",
                   url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
@@ -321,40 +255,24 @@ class _HomeState extends State<Home> {
               ),
               Divider(),
               ListTile(
-                leading: Icon(
-                  Icons.add,
-                ),
-                title: Text(
-                  "Aggiungi account",
-                ),
+                leading: Icon(Icons.add),
+                title: Text("Aggiungi account"),
                 onTap: () => Get.to(SignIn(showAccountChooser: false)),
               ),
               ListTile(
-                leading: Icon(
-                  Icons.account_circle,
-                ),
-                title: Text(
-                  "Gestisci account",
-                ),
+                leading: Icon(Icons.account_circle),
+                title: Text("Gestisci account"),
                 onTap: () => Get.to(ManageAccounts()),
               ),
               ListTile(
-                leading: Icon(
-                  Icons.settings,
-                ),
-                title: Text(
-                  "Impostazioni",
-                ),
+                leading: Icon(Icons.settings),
+                title: Text("Impostazioni"),
                 onTap: () => Get.to(Settings()),
               ),
               Divider(),
               ListTile(
-                leading: Icon(
-                  Icons.info,
-                ),
-                title: Text(
-                  "Informazioni",
-                ),
+                leading: Icon(Icons.info),
+                title: Text("Informazioni"),
                 onTap: () => Get.to(About()),
               ),
             ],
