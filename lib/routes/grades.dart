@@ -241,14 +241,7 @@ class _GradesState extends State<Grades> {
                             ],
                           ),
                         ),
-                        title: Text(
-                          subject,
-                          style: TextStyle(
-                            color: ThemeManager.isLightTheme(context)
-                              ? Colors.black
-                              : Colors.white,
-                          ),
-                        ),
+                        title: Text(subject),
                         subtitle: previousAverageGrade != -1
                           ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
                           : null,
@@ -366,14 +359,7 @@ class _GradesState extends State<Grades> {
                               ],
                             ),
                           ),
-                          title: Text(
-                            subject,
-                            style: TextStyle(
-                              color: ThemeManager.isLightTheme(context)
-                                ? Colors.black
-                                : Colors.white,
-                            ),
-                          ),
+                          title: Text(subject),
                           subtitle: previousAverageGrade != -1
                             ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
                             : null,

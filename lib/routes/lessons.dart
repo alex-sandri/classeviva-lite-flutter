@@ -70,14 +70,7 @@ class _LessonsState extends State<Lessons> {
                         final ClasseVivaSubject subject = _subjects[index];
 
                         return ExpansionTile(
-                          title: Text(
-                            subject.name,
-                            style: TextStyle(
-                              color: ThemeManager.isLightTheme(context)
-                                ? Colors.black
-                                : Colors.white,
-                            ),
-                          ),
+                          title: Text(subject.name),
                           children: [
                             LessonsListView(subject: subject),
                           ],
