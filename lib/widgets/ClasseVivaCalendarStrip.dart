@@ -35,7 +35,6 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
               subtitle: Text(DateFormat.M().format(date)),
               onTap: () {
                 // TODO
-                print(date);
 
                 widget.onDateChange(date);
               },
