@@ -43,7 +43,6 @@ dependencies:
   quick_actions: ^0.4.0+8
   rxdart: ^0.24.1
   charts_flutter: ^0.9.0
-  date_picker_timeline: ^1.2.1
   calendar_views: ^0.5.2
   flutter:
     sdk: flutter

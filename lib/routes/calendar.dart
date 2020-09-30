@@ -8,8 +8,6 @@ import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaCalendarStrip.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:date_picker_timeline/extra/style.dart';
 import 'package:flutter/material.dart';
 
 class Calendar extends StatefulWidget {
@@ -21,8 +19,6 @@ class _CalendarState extends State<Calendar> {
   final ClasseViva _session = ClasseViva.current;
 
   ClasseVivaCalendar _calendar;
-
-  final DatePickerController _datePickerController = DatePickerController();
 
   DateTime _date = DateTime(
     DateTime.now().year,
@@ -37,8 +33,6 @@ class _CalendarState extends State<Calendar> {
       _date = DateTime(date.year, date.month, date.day);
 
       _calendar = null;
-
-      _datePickerController.animateToDate(_date, duration: Duration(milliseconds: 100));
 
       _daysPageController.jumpToDay(date);
     });
@@ -65,9 +59,6 @@ class _CalendarState extends State<Calendar> {
       _date = _session.yearEndsAt;
 
     _handleRefresh();
-
-    WidgetsBinding.instance
-      .addPostFrameCallback((_) => _datePickerController.jumpToSelection());
   }
 
   @override
