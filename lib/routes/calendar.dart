@@ -37,7 +37,7 @@ class _CalendarState extends State<Calendar> {
 
       _calendar = null;
 
-      _datePickerController.animateToDate(_date);
+      _datePickerController.animateToDate(_date, duration: Duration(milliseconds: 100));
 
       _daysPageController.jumpToDay(date);
     });
