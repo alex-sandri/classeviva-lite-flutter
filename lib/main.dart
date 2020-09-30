@@ -135,7 +135,6 @@ class MyApp extends StatelessWidget {
             {
               case "action_web":
                 Get.to(ClasseVivaWebview(
-                  session: _session,
                   title: "ClasseViva Web",
                   url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
                 ));

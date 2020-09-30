@@ -89,7 +89,6 @@ class _AttachmentsState extends State<Attachments> {
             FlatButton(
               child: Text("Compiti"),
               onPressed: () => Get.to(ClasseVivaWebview(
-                session: _session,
                 title: "Compiti",
                 url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).homework()),
               )),

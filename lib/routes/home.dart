@@ -205,7 +205,6 @@ class _HomeState extends State<Home> {
                         "Aule Virtuali",
                       ),
                       onTap: () => Get.to(ClasseVivaWebview(
-                        session: _session,
                         title: "Aule Virtuali",
                         url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).virtualClassrooms()),
                       )),
@@ -220,7 +219,6 @@ class _HomeState extends State<Home> {
                         "Colloqui",
                       ),
                       onTap: () => Get.to(ClasseVivaWebview(
-                        session: _session,
                         title: "Colloqui",
                         url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).meetings()),
                       )),
@@ -235,7 +233,6 @@ class _HomeState extends State<Home> {
                         "Sportello",
                       ),
                       onTap: () => Get.to(ClasseVivaWebview(
-                        session: _session,
                         title: "Sportello",
                         url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).helpDesk()),
                       )),
@@ -306,7 +303,6 @@ class _HomeState extends State<Home> {
                   "ClasseViva Web",
                 ),
                 onTap: () => Get.to(ClasseVivaWebview(
-                  session: _session,
                   title: "ClasseViva Web",
                   url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
                 )),

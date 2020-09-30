@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class ClasseVivaWebview extends StatefulWidget {
-  final ClasseViva session;
-
   final String title;
   final Uri url;
 
   ClasseVivaWebview({
-    @required this.session,
     @required this.title,
     @required this.url,
   });
@@ -28,10 +25,12 @@ class _ClasseVivaWebviewState extends State<ClasseVivaWebview> {
 
     CookieManager.instance().deleteAllCookies();
 
+    final ClasseViva session = ClasseViva.current;
+
     CookieManager.instance().setCookie(
-      url: ClasseVivaEndpoints(widget.session.getShortYear()).baseUrl,
-      name: widget.session.getSessionCookieHeader()["Cookie"].split("=").first,
-      value: widget.session.getSessionCookieHeader()["Cookie"].split("=").last,
+      url: ClasseVivaEndpoints(session.getShortYear()).baseUrl,
+      name: session.getSessionCookieHeader()["Cookie"].split("=").first,
+      value: session.getSessionCookieHeader()["Cookie"].split("=").last,
     );
   }
 

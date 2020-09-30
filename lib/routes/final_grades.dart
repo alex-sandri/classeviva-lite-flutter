@@ -77,7 +77,6 @@ class _FinalGradesState extends State<FinalGrades> {
                             ),
                             onTap: () {
                               Get.to(ClasseVivaWebview(
-                                session: _session,
                                 title: item.type,
                                 url: Uri.parse(item.url),
                               ));
