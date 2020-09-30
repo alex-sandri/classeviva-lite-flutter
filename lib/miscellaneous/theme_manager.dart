@@ -1,13 +1,11 @@
+import 'package:classeviva_lite/miscellaneous/PreferencesManager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 class ThemeManager
 {
   static ThemeMode get themeMode {
-    final Box preferences = Hive.box("preferences");
-
-    final String theme = preferences.get("theme");
+    final String theme = PreferencesManager.get("theme");
 
     switch (theme)
     {
@@ -18,9 +16,7 @@ class ThemeManager
   }
 
   static void setTheme(String theme) {
-    final Box preferences = Hive.box("preferences");
-
-    preferences.put("theme", theme);
+    PreferencesManager.set("theme", theme);
 
     Get.changeThemeMode(ThemeManager.themeMode);
   }

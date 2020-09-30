@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:classeviva_lite/miscellaneous/PreferencesManager.dart';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
@@ -27,7 +28,6 @@ import 'package:get/get.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
-import 'package:hive/hive.dart';
 import 'package:rxdart/rxdart.dart';
 
 
@@ -120,15 +120,13 @@ class ClasseVivaSession
       pwd: pwd,
       year: year
     ).then((refreshedSession) async {
-      final Box preferences = Hive.box("preferences");
-
       final ClasseVivaSession currentSession = ClasseViva.getCurrentSession();
 
       final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
       sessions.firstWhere((session) => session.id == this.id)?._id = refreshedSession.id;
 
-      await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
+      await PreferencesManager.set("sessions", sessions.map((session) => session.toString()).toList());
 
       if (currentSession?.id == this.id)
         await ClasseViva.setCurrentSession(refreshedSession);
@@ -175,18 +173,16 @@ class ClasseVivaSession
   }
 
   Future<void> signOut() async {
-    final Box preferences = Hive.box("preferences");
-
     final ClasseVivaSession currentSession = ClasseViva.getCurrentSession();
 
     final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
     sessions.removeWhere((session) => session.id == this.id);
 
-    await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
+    await PreferencesManager.set("sessions", sessions.map((session) => session.toString()).toList());
 
     if (currentSession?.id == this.id)
-      await preferences.delete("currentSession");
+      await PreferencesManager.delete("currentSession");
   }
 
   @override
@@ -1156,19 +1152,15 @@ class ClasseViva
   static bool isSignedIn() => ClasseViva.getCurrentSession() != null;
 
   static Future<void> addSession(ClasseVivaSession session) async {
-    final Box preferences = Hive.box("preferences");
-
     final List<ClasseVivaSession> sessions = ClasseViva.getAllSessions();
 
     sessions.add(session);
 
-    await preferences.put("sessions", sessions.map((session) => session.toString()).toList());
+    await PreferencesManager.set("sessions", sessions.map((session) => session.toString()).toList());
   }
 
   static ClasseVivaSession getCurrentSession() {
-    final Box preferences = Hive.box("preferences");
-
-    final String session = preferences.get("currentSession");
+    final String session = PreferencesManager.get("currentSession");
 
     if (session == null) return null;
 
@@ -1176,15 +1168,11 @@ class ClasseViva
   }
 
   static Future<void> setCurrentSession(ClasseVivaSession session) async {
-    final Box preferences = Hive.box("preferences");
-
-    await preferences.put("currentSession", session.toString());
+    await PreferencesManager.set("currentSession", session.toString());
   }
 
   static List<ClasseVivaSession> getAllSessions() {
-		final Box preferences = Hive.box("preferences");
-
-    final List<String> sessions = preferences.get("sessions");
+    final List<String> sessions = PreferencesManager.get("sessions");
 
     return sessions?.map((session) => ClasseVivaSession.fromString(session))?.toList() ?? [];
 	}
