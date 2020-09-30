@@ -103,7 +103,7 @@ class _CalendarState extends State<Calendar> {
             ),
           ],
           bottom: PreferredSize(
-            // Height of the DatePicker widget
+            // Height of the ClasseVivaCalendarStrip widget
             preferredSize: Size.fromHeight(80),
             child: ClasseVivaCalendarStrip(onDateChange: _setDate),
           ),
