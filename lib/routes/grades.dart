@@ -15,7 +15,7 @@ class Grades extends StatefulWidget {
 }
 
 class _GradesState extends State<Grades> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaGrade> _grades;
 

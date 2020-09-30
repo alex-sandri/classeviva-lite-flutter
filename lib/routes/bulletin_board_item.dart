@@ -20,7 +20,7 @@ class BulletinBoardItem extends StatefulWidget {
 }
 
 class _BulletinBoardItemState extends State<BulletinBoardItem> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   ClasseVivaBulletinBoardItemDetails _item;
 

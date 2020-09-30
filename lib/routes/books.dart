@@ -11,7 +11,7 @@ class Books extends StatefulWidget {
 }
 
 class _BooksState extends State<Books> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaBook> _books;
 

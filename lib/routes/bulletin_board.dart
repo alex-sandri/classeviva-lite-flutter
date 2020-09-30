@@ -13,7 +13,7 @@ class BulletinBoard extends StatefulWidget {
 }
 
 class _BulletinBoardState extends State<BulletinBoard> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaBulletinBoardItem> _items;
 
@@ -52,7 +52,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
               onPressed: () => showSearch(
                 context: context,
                 delegate: ClasseVivaSearchDelegate(
-                  stream: (query) => ClasseViva(ClasseViva.getCurrentSession()).getBulletinBoard(
+                  stream: (query) => ClasseViva.current.getBulletinBoard(
                     query: query,
                     hideInactive: false,
                   ),

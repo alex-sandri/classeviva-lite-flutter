@@ -13,7 +13,7 @@ class Agenda extends StatefulWidget {
 }
 
 class _AgendaState extends State<Agenda> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   DateTime _start;
 
@@ -77,7 +77,7 @@ class _AgendaState extends State<Agenda> {
                 context: context,
                 delegate: ClasseVivaSearchDelegate<ClasseVivaAgendaItem>(
                   stream: (query) async* {
-                    final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
+                    final ClasseViva session = ClasseViva.current;
 
                     yield* session.getAgenda(session.yearBeginsAt, session.yearEndsAt, query: query);
                   },

@@ -24,7 +24,7 @@ class Attachments extends StatefulWidget {
 }
 
 class _AttachmentsState extends State<Attachments> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaAttachment> _attachments;
 
@@ -100,7 +100,7 @@ class _AttachmentsState extends State<Attachments> {
               onPressed: () => showSearch(
                 context: context,
                 delegate: ClasseVivaSearchDelegate<ClasseVivaAttachment>(
-                  stream: (query) => ClasseViva(ClasseViva.getCurrentSession()).getAttachments(query: query),
+                  stream: (query) => ClasseViva.current.getAttachments(query: query),
                   builder: (item) => AttachmentListTile(item),
                 ),
               ),
@@ -176,7 +176,7 @@ class AttachmentListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () async {
-        final ClasseViva session = ClasseViva(ClasseViva.getCurrentSession());
+        final ClasseViva session = ClasseViva.current;
 
         final String url = attachment.url;
 

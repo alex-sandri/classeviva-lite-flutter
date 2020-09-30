@@ -12,7 +12,7 @@ class Demerits extends StatefulWidget {
 }
 
 class _DemeritsState extends State<Demerits> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaDemerit> _demerits;
 

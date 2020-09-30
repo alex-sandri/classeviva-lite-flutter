@@ -10,7 +10,7 @@ class AbsencesStats extends StatefulWidget {
 }
 
 class _AbsencesStatsState extends State<AbsencesStats> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaAbsenceMonth> _months;
 

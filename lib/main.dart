@@ -129,7 +129,7 @@ class MyApp extends StatelessWidget {
           final QuickActions quickActions = QuickActions();
 
           quickActions.initialize((shortcutType) {
-            final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+            final ClasseViva _session = ClasseViva.current;
 
             switch (shortcutType)
             {

@@ -38,7 +38,7 @@ class Absences extends StatefulWidget {
 }
 
 class _AbsencesState extends State<Absences> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaAbsence> _absences;
 

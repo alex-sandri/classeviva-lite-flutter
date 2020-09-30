@@ -241,6 +241,8 @@ class ClasseViva
     _endpoints = ClasseVivaEndpoints(session.year);
   }
 
+  static ClasseViva get current => ClasseViva(ClasseViva.getCurrentSession());
+
   Map<String, String> getSessionCookieHeader() {
     return {
       "Cookie": "PHPSESSID=${session.id}",

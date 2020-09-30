@@ -11,7 +11,7 @@ class Lessons extends StatefulWidget {
 }
 
 class _LessonsState extends State<Lessons> {
-  final ClasseViva _session = ClasseViva(ClasseViva.getCurrentSession());
+  final ClasseViva _session = ClasseViva.current;
 
   List<ClasseVivaSubject> _subjects;
 
@@ -96,7 +96,7 @@ class LessonsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<ClasseVivaLesson>>(
-      stream: ClasseViva(ClasseViva.getCurrentSession()).getLessons(subject),
+      stream: ClasseViva.current.getLessons(subject),
       builder: (context, lessons) {
         if (!lessons.hasData)
           return Padding(
