@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ClasseVivaCalendarStrip extends StatefulWidget {
+  final DateTime selectedDate;
+
   final void Function(DateTime) onDateChange;
 
   ClasseVivaCalendarStrip({
+    @required this.selectedDate,
     @required this.onDateChange,
   });
 
@@ -31,6 +34,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
             height: 80,
             width: MediaQuery.of(context).size.width / 7, // 7 days in a row
             child: ListTile(
+              selected: widget.selectedDate == date,
               title: Text(
                 date.day.toString(),
                 textAlign: TextAlign.center,

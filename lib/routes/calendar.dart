@@ -96,7 +96,10 @@ class _CalendarState extends State<Calendar> {
           bottom: PreferredSize(
             // Height of the ClasseVivaCalendarStrip widget
             preferredSize: Size.fromHeight(80),
-            child: ClasseVivaCalendarStrip(onDateChange: _setDate),
+            child: ClasseVivaCalendarStrip(
+              selectedDate: _date,
+              onDateChange: _setDate,
+            ),
           ),
         ),
         body: DaysPageView(
