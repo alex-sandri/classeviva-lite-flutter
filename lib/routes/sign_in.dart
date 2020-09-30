@@ -53,7 +53,6 @@ class _SignInState extends State<SignIn> {
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (value) => _pwdFocusNode.requestFocus(),
                       autofillHints: [ AutofillHints.username, AutofillHints.email ],
-                      readOnly: _showSpinner,
                       autocorrect: false,
                       controller: _uidController,
                       decoration: InputDecoration(
@@ -74,7 +73,6 @@ class _SignInState extends State<SignIn> {
                       textInputAction: TextInputAction.done,
                       focusNode: _pwdFocusNode,
                       autofillHints: [ AutofillHints.password ],
-                      readOnly: _showSpinner,
                       autocorrect: false,
                       controller: _pwdController,
                       decoration: InputDecoration(
