@@ -131,6 +131,7 @@ class _AttachmentsState extends State<Attachments> {
 
                           return ExpansionTile(
                             title: Text(folder.key),
+                            subtitle: Text(folder.value.first.teacher),
                             children: folder.value.map((attachment) => AttachmentListTile(attachment)).toList(),
                           );
                         },
