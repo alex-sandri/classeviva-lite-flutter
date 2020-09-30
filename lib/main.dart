@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/adapters/ColorAdapter.dart';
 import 'package:classeviva_lite/adapters/DurationAdapter.dart';
+import 'package:classeviva_lite/miscellaneous/PreferencesManager.dart';
 import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
@@ -66,7 +67,7 @@ void main() async {
   /* 20 */ Hive.registerAdapter(ClasseVivaFinalGradeAdapter());
   /* 21 */ Hive.registerAdapter(ClasseVivaAbsenceMonthAdapter());
 
-  await Hive.openBox("preferences");
+  await PreferencesManager.initialize();
 
   await CacheManager.initialize();
 
