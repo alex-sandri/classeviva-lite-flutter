@@ -21,6 +21,8 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
 
   final ScrollController _scrollController = ScrollController();
 
+  bool _isSelected(DateTime date) => date == widget.selectedDate;
+
   @override
   void initState() {
     super.initState();
@@ -51,29 +53,38 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
           return Container(
             height: 80,
             width: MediaQuery.of(context).size.width / 7, // 7 days in a row
-            child: ListTile(
-              selected: widget.selectedDate == date,
-              selectedTileColor: Colors.blueAccent.shade400,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-              isThreeLine: true,
-              title: Text(
-                date.day.toString(),
-                textAlign: TextAlign.center,
-              ),
-              subtitle: Column(
+            color: _isSelected(date) ? Colors.blueAccent.shade400 : Colors.transparent,
+            child: GestureDetector(
+              onTap: () => widget.onDateChange(date),
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    DateFormat(DateFormat.ABBR_MONTH).format(date),
-                    textAlign: TextAlign.center,
-                  ),
                   Text(
                     DateFormat(DateFormat.ABBR_WEEKDAY).format(date),
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    date.day.toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    DateFormat(DateFormat.ABBR_MONTH).format(date),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ],
               ),
-              onTap: () => widget.onDateChange(date),
             ),
           );
         },
