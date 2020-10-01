@@ -24,7 +24,11 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance
-      .addPostFrameCallback((_) => _scrollController.jumpTo(widget.selectedDate.difference(_session.yearBeginsAt).inDays * MediaQuery.of(context).size.width / 7));
+      .addPostFrameCallback((_) => _scrollController.animateTo(
+        widget.selectedDate.difference(_session.yearBeginsAt).inDays * MediaQuery.of(context).size.width / 7,
+        duration: Duration(milliseconds: 100),
+        curve: Curves.linear,
+      ));
 
     return Container(
       height: 80,
