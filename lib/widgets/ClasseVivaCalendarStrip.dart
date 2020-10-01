@@ -63,11 +63,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
                 DateFormat(DateFormat.ABBR_MONTH).format(date),
                 textAlign: TextAlign.center,
               ),
-              onTap: () {
-                // TODO
-
-                widget.onDateChange(date);
-              },
+              onTap: () => widget.onDateChange(date),
             ),
           );
         },
