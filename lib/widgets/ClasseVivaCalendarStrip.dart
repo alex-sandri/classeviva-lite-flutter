@@ -7,9 +7,12 @@ class ClasseVivaCalendarStrip extends StatefulWidget {
 
   final void Function(DateTime) onDateChange;
 
+  final ClasseVivaCalendarStripController controller;
+
   ClasseVivaCalendarStrip({
     @required this.selectedDate,
     @required this.onDateChange,
+    @required this.controller,
   });
 
   @override
@@ -19,39 +22,24 @@ class ClasseVivaCalendarStrip extends StatefulWidget {
 class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
   final ClasseViva _session = ClasseViva.current;
 
-  final ScrollController _scrollController = ScrollController();
-
   bool _isSelected(DateTime date) => date == widget.selectedDate;
 
   double _getScreenWidth() => MediaQuery.of(context).size.width;
-
-  double _getSelectedDateScrollOffset() => widget.selectedDate.difference(_session.yearBeginsAt).inDays * _getScreenWidth() / 7;
-
-  void _jumpToSelectedDate() => _scrollController.jumpTo(_getSelectedDateScrollOffset());
-
-  void _animateToSelectedDate() => _scrollController.animateTo(
-    _getSelectedDateScrollOffset(),
-    duration: Duration(milliseconds: 100),
-    curve: Curves.linear,
-  );
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance
-      .addPostFrameCallback((_) => _jumpToSelectedDate());
+      .addPostFrameCallback((_) => widget.controller.jumpTo(widget.selectedDate));
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance
-      .addPostFrameCallback((_) => _animateToSelectedDate());
-
     return Container(
       height: 80,
       child: ListView.builder(
-        controller: _scrollController,
+        controller: widget.controller._scrollController,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays + 1,
@@ -103,4 +91,25 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
       ),
     );
   }
+}
+
+class ClasseVivaCalendarStripController
+{
+  final BuildContext context;
+
+  final ScrollController _scrollController = ScrollController();
+
+  ClasseVivaCalendarStripController({ @required this.context });
+
+  static ClasseVivaCalendarStripController of(BuildContext context) => ClasseVivaCalendarStripController(context: context);
+
+  double _getDateScrollOffset(DateTime date) => date.difference(ClasseViva.current.yearBeginsAt).inDays * MediaQuery.of(context).size.width / 7;
+
+  void jumpTo(DateTime date) => _scrollController.jumpTo(_getDateScrollOffset(date));
+
+  void animateTo(DateTime date) => _scrollController.animateTo(
+    _getDateScrollOffset(date),
+    duration: Duration(milliseconds: 100),
+    curve: Curves.linear,
+  );
 }

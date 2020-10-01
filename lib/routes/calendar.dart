@@ -26,15 +26,19 @@ class _CalendarState extends State<Calendar> {
     DateTime.now().day,
   );
 
+  ClasseVivaCalendarStripController _calendarStripController;
+
   DaysPageController _daysPageController;
 
   void _setDate(DateTime date) {
+    _calendarStripController.animateTo(date);
+
+    _daysPageController.jumpToDay(date);
+
     setState(() {
       _date = DateTime(date.year, date.month, date.day);
 
       _calendar = null;
-
-      _daysPageController.jumpToDay(date);
     });
 
     _handleRefresh();
@@ -54,6 +58,8 @@ class _CalendarState extends State<Calendar> {
 
   void initState() {
     super.initState();
+
+    _calendarStripController = ClasseVivaCalendarStripController.of(context);
 
     if (_session.yearEndsAt.isBefore(_date))
       _date = _session.yearEndsAt;
@@ -99,6 +105,7 @@ class _CalendarState extends State<Calendar> {
             child: ClasseVivaCalendarStrip(
               selectedDate: _date,
               onDateChange: _setDate,
+              controller: _calendarStripController,
             ),
           ),
         ),
