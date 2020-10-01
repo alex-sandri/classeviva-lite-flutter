@@ -35,6 +35,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
             width: MediaQuery.of(context).size.width / 7, // 7 days in a row
             child: ListTile(
               selected: widget.selectedDate == date,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
               title: Text(
                 date.day.toString(),
                 textAlign: TextAlign.center,
