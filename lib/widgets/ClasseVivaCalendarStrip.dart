@@ -73,6 +73,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 4),
