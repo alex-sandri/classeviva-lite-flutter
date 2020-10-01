@@ -55,13 +55,23 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
               selected: widget.selectedDate == date,
               selectedTileColor: Colors.blueAccent.shade400,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              isThreeLine: true,
               title: Text(
                 date.day.toString(),
                 textAlign: TextAlign.center,
               ),
-              subtitle: Text(
-                DateFormat(DateFormat.ABBR_MONTH).format(date),
-                textAlign: TextAlign.center,
+              subtitle: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    DateFormat(DateFormat.ABBR_MONTH).format(date),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    DateFormat(DateFormat.ABBR_WEEKDAY).format(date),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
               onTap: () => widget.onDateChange(date),
             ),
