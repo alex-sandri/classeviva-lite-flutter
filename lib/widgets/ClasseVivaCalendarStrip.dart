@@ -19,11 +19,22 @@ class ClasseVivaCalendarStrip extends StatefulWidget {
 class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
   final ClasseViva _session = ClasseViva.current;
 
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance
+      .addPostFrameCallback((_) => _scrollController.jumpTo(widget.selectedDate.difference(_session.yearBeginsAt).inDays * MediaQuery.of(context).size.width / 7));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 80,
       child: ListView.builder(
+        controller: _scrollController,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays + 1,
