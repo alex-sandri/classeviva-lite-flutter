@@ -24,8 +24,6 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
 
   bool _isSelected(DateTime date) => date == widget.selectedDate;
 
-  double _getScreenWidth() => MediaQuery.of(context).size.width;
-
   @override
   void initState() {
     super.initState();
@@ -48,7 +46,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
 
           return Container(
             height: 80,
-            width: _getScreenWidth() / 7, // 7 days in a row
+            width: MediaQuery.of(context).size.width / 7, // 7 days in a row
             color: _isSelected(date) ? Colors.blueAccent.shade400 : Colors.transparent,
             child: InkWell(
               onTap: () => widget.onDateChange(date),
