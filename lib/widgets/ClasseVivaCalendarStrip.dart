@@ -64,6 +64,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
                     DateFormat(DateFormat.ABBR_WEEKDAY).format(date),
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: _isSelected(date) ? Colors.white : Colors.white70,
                       fontSize: 14,
                     ),
                   ),
@@ -72,6 +73,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
                     date.day.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: _isSelected(date) ? Colors.white : Colors.white70,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -81,6 +83,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
                     DateFormat(DateFormat.ABBR_MONTH).format(date),
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: _isSelected(date) ? Colors.white : Colors.white70,
                       fontSize: 14,
                     ),
                   ),
