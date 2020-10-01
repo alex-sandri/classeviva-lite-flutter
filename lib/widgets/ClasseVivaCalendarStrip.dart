@@ -23,22 +23,30 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
 
   bool _isSelected(DateTime date) => date == widget.selectedDate;
 
+  double _getScreenWidth() => MediaQuery.of(context).size.width;
+
+  double _getSelectedDateScrollOffset() => widget.selectedDate.difference(_session.yearBeginsAt).inDays * _getScreenWidth() / 7;
+
+  void _jumpToSelectedDate() => _scrollController.jumpTo(_getSelectedDateScrollOffset());
+
+  void _animateToSelectedDate() => _scrollController.animateTo(
+    _getSelectedDateScrollOffset(),
+    duration: Duration(milliseconds: 100),
+    curve: Curves.linear,
+  );
+
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance
-      .addPostFrameCallback((_) => _scrollController.jumpTo(widget.selectedDate.difference(_session.yearBeginsAt).inDays * MediaQuery.of(context).size.width / 7));
+      .addPostFrameCallback((_) => _jumpToSelectedDate());
   }
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance
-      .addPostFrameCallback((_) => _scrollController.animateTo(
-        widget.selectedDate.difference(_session.yearBeginsAt).inDays * MediaQuery.of(context).size.width / 7,
-        duration: Duration(milliseconds: 100),
-        curve: Curves.linear,
-      ));
+      .addPostFrameCallback((_) => _animateToSelectedDate());
 
     return Container(
       height: 80,
@@ -52,7 +60,7 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
 
           return Container(
             height: 80,
-            width: MediaQuery.of(context).size.width / 7, // 7 days in a row
+            width: _getScreenWidth() / 7, // 7 days in a row
             color: _isSelected(date) ? Colors.blueAccent.shade400 : Colors.transparent,
             child: InkWell(
               onTap: () => widget.onDateChange(date),
