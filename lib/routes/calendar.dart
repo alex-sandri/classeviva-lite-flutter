@@ -7,8 +7,7 @@ import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:date_picker_timeline/extra/style.dart';
+import 'package:classeviva_lite/widgets/ClasseVivaCalendarStrip.dart';
 import 'package:flutter/material.dart';
 
 class Calendar extends StatefulWidget {
@@ -21,25 +20,25 @@ class _CalendarState extends State<Calendar> {
 
   ClasseVivaCalendar _calendar;
 
-  final DatePickerController _datePickerController = DatePickerController();
-
   DateTime _date = DateTime(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
   );
 
+  ClasseVivaCalendarStripController _calendarStripController;
+
   DaysPageController _daysPageController;
 
   void _setDate(DateTime date) {
+    _calendarStripController.animateTo(date);
+
+    _daysPageController.jumpToDay(date);
+
     setState(() {
       _date = DateTime(date.year, date.month, date.day);
 
       _calendar = null;
-
-      _datePickerController.animateToDate(_date, duration: Duration(milliseconds: 100));
-
-      _daysPageController.jumpToDay(date);
     });
 
     _handleRefresh();
@@ -60,13 +59,12 @@ class _CalendarState extends State<Calendar> {
   void initState() {
     super.initState();
 
+    _calendarStripController = ClasseVivaCalendarStripController.of(context);
+
     if (_session.yearEndsAt.isBefore(_date))
       _date = _session.yearEndsAt;
 
     _handleRefresh();
-
-    WidgetsBinding.instance
-      .addPostFrameCallback((_) => _datePickerController.jumpToSelection());
   }
 
   @override
@@ -102,20 +100,12 @@ class _CalendarState extends State<Calendar> {
             ),
           ],
           bottom: PreferredSize(
-            // Height of the DatePicker widget
+            // Height of the ClasseVivaCalendarStrip widget
             preferredSize: Size.fromHeight(80),
-            child: DatePicker(
-              _session.yearBeginsAt,
-              controller: _datePickerController,
-              initialSelectedDate: _date,
-              daysCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays + 1,
+            child: ClasseVivaCalendarStrip(
+              selectedDate: _date,
               onDateChange: _setDate,
-              monthTextStyle: defaultMonthTextStyle.copyWith(color: Colors.white70),
-              dateTextStyle: defaultDateTextStyle.copyWith(color: Colors.white70),
-              dayTextStyle: defaultDayTextStyle.copyWith(color: Colors.white70),
-              selectedTextColor: Colors.white,
-              selectionColor: Colors.blueAccent.shade400,
-              locale: Localizations.localeOf(context).languageCode,
+              controller: _calendarStripController,
             ),
           ),
         ),
