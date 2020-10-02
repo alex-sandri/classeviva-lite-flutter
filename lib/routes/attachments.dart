@@ -18,10 +18,48 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+class ClasseVivaAttachmentFolder
+{
+  final String name;
+  
+  final String teacher;
+
+  final DateTime lastUpdated;
+
+  final List<ClasseVivaAttachment> attachments;
+
+  ClasseVivaAttachmentFolder({
+    @required this.name,
+    @required this.teacher,
+    @required this.lastUpdated,
+    @required this.attachments,
+  });
+}
+
 extension on List<ClasseVivaAttachment>
 {
-  Map<String, List<ClasseVivaAttachment>> get folders {
-    return groupBy(this, (attachment) => attachment.folder + attachment.teacher);
+  List<ClasseVivaAttachmentFolder> get folders {
+    final List<ClasseVivaAttachmentFolder> folders = [];
+
+    final Set<String> teachers = this.map((attachment) => attachment.teacher).toSet();
+
+    teachers.forEach((teacher) {
+      final Map<String, List<ClasseVivaAttachment>> teacherFolders = groupBy(
+        this.where((element) => element.teacher == teacher),
+        (attachment) => attachment.folder,
+      );
+
+      teacherFolders.forEach((key, value) {
+        folders.add(ClasseVivaAttachmentFolder(
+          name: key,
+          teacher: teacher,
+          lastUpdated: value.first.date,
+          attachments: value,
+        ));
+      });
+    });
+
+    return folders;
   }
 }
 
@@ -35,7 +73,7 @@ class _AttachmentsState extends State<Attachments> {
 
   List<ClasseVivaAttachment> _attachments;
 
-  Map<String, List<ClasseVivaAttachment>> _folders;
+  List<ClasseVivaAttachmentFolder> _folders;
 
   bool _showFolders = false;
 
@@ -133,24 +171,24 @@ class _AttachmentsState extends State<Attachments> {
                     ? ListView.builder(
                         itemCount: _folders.length,
                         itemBuilder: (context, index) {
-                          final MapEntry<String, List<ClasseVivaAttachment>> folder = _folders.entries.elementAt(index);
+                          final ClasseVivaAttachmentFolder folder = _folders[index];
 
                           return ExpansionTile(
-                            title: Text(folder.key),
+                            title: Text(folder.name),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  folder.value.first.teacher,
+                                  folder.teacher,
                                   style: TextStyle(color: Colors.white70),
                                 ),
                                 Text(
-                                  DateFormat.yMMMMd().add_jms().format(folder.value.first.date),
+                                  DateFormat.yMMMMd().add_jms().format(folder.lastUpdated),
                                   style: TextStyle(color: Colors.white70),
                                 ),
                               ],
                             ),
-                            children: folder.value.map((attachment) => AttachmentListTile(attachment)).toList(),
+                            children: folder.attachments.map((attachment) => AttachmentListTile(attachment)).toList(),
                           );
                         },
                       )
