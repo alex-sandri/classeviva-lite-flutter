@@ -1152,7 +1152,7 @@ class ClasseViva
 
     if (result.isError) return;
 
-    final List<ClasseVivaMessage> messages = ((jsonDecode(result.response.body) ?? []) as List).map((item) => ClasseVivaMessage.fromJson(item)).toList();
+    final List<ClasseVivaMessage> messages = (jsonDecode(result.response.body)["OAS"]["rows"] as List).map((item) => ClasseVivaMessage.fromJson(item)).toList();
 
     messages.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
