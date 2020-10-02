@@ -73,6 +73,15 @@ class _MessagesState extends State<Messages> {
                               SelectableText(message.content),
                             ],
                           ),
+                          trailing: message.isRead
+                            ? Tooltip(
+                                message: "Non letto",
+                                child: Icon(
+                                  Icons.circle,
+                                  color: ClasseViva.PRIMARY_LIGHT,
+                                ),
+                              )
+                            : null,
                         );
                       },
                     ),
