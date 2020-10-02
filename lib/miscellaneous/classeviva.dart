@@ -97,7 +97,7 @@ class ClasseVivaEndpoints
 
   String payments() => "$baseUrl/pfo/app/default/scadenze.php";
 
-  String messages() => "$baseUrl/acc/app/default/me.php?v=messages";
+  String messages() => "$baseUrl/sps/app/default/SocMsgApi.php?a=acGetMsgPag";
 }
 
 class ClasseVivaSession
