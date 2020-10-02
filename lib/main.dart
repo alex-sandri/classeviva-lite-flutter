@@ -19,6 +19,7 @@ import 'package:classeviva_lite/models/ClasseVivaFinalGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/models/ClasseVivaLesson.dart';
+import 'package:classeviva_lite/models/ClasseVivaMessage.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
@@ -66,6 +67,7 @@ void main() async {
   /* 19 */ Hive.registerAdapter(ClasseVivaBulletinBoardItemDetailsAttachmentAdapter());
   /* 20 */ Hive.registerAdapter(ClasseVivaFinalGradeAdapter());
   /* 21 */ Hive.registerAdapter(ClasseVivaAbsenceMonthAdapter());
+  /* 22 */ Hive.registerAdapter(ClasseVivaMessageAdapter());
 
   await PreferencesManager.initialize();
 

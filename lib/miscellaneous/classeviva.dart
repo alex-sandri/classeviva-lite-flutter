@@ -19,6 +19,7 @@ import 'package:classeviva_lite/models/ClasseVivaFinalGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/models/ClasseVivaLesson.dart';
+import 'package:classeviva_lite/models/ClasseVivaMessage.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
@@ -95,6 +96,8 @@ class ClasseVivaEndpoints
   String homework() => "$baseUrl/fml/app/default/regdidattica_studenti_compito.php";
 
   String payments() => "$baseUrl/pfo/app/default/scadenze.php";
+
+  String messages() => "$baseUrl/acc/app/default/me.php?v=messages";
 }
 
 class ClasseVivaSession
@@ -1135,6 +1138,33 @@ class ClasseViva
     await CacheManager.set("books", books);
 
     yield books;
+	}
+
+  Stream<List<ClasseVivaMessage>> getMessages() async* {
+    yield (CacheManager.get("messages") as List<dynamic>)?.whereType<ClasseVivaMessage>()?.toList();
+
+    await checkValidSession();
+
+		final result = await HttpManager.get(
+			url: _endpoints.messages(),
+      headers: getSessionCookieHeader(),
+    );
+
+    if (result.isError) return;
+
+    final document = parse(result.response.body);
+
+    List<ClasseVivaMessage> messages = [];
+
+    document.querySelectorAll("").forEach((message) {
+      messages.add(ClasseVivaMessage(
+
+      ));
+    });
+
+    await CacheManager.set("messages", messages);
+
+    yield messages;
 	}
 
 	static Future<ClasseViva> createSession(String uid, String pwd, { String year = "" }) async {
