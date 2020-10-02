@@ -59,6 +59,8 @@ extension on List<ClasseVivaAttachment>
       });
     });
 
+    folders.sort((a, b) => -a.lastUpdated.compareTo(b.lastUpdated));
+
     return folders;
   }
 }
