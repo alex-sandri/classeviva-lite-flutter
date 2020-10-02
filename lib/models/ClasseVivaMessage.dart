@@ -28,4 +28,12 @@ class ClasseVivaMessage
     @required this.createdAt,
     @required this.isRead,
   });
+
+  static ClasseVivaMessage fromJson(Map<String, dynamic> json) => ClasseVivaMessage(
+    id: json["msg_id"],
+    subject: json["oggetto"],
+    content: json["testo"],
+    createdAt: DateTime.parse(json["dinsert"]),
+    isRead: json["read_status"] == "1",
+  );
 }

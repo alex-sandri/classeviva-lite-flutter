@@ -1152,15 +1152,9 @@ class ClasseViva
 
     if (result.isError) return;
 
-    final document = parse(result.response.body);
+    final List<ClasseVivaMessage> messages = ((jsonDecode(result.response.body) ?? []) as List).map((item) => ClasseVivaMessage.fromJson(item)).toList();
 
-    List<ClasseVivaMessage> messages = [];
-
-    document.querySelectorAll("").forEach((message) {
-      messages.add(ClasseVivaMessage(
-
-      ));
-    });
+    messages.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
     await CacheManager.set("messages", messages);
 
