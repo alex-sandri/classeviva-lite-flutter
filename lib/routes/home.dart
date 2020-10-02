@@ -41,6 +41,11 @@ class _HomeState extends State<Home> {
           elevation: 0,
           actions: <Widget>[
             IconButton(
+              icon: Icon(Icons.message),
+              tooltip: "Messaggi",
+              onPressed: () => null,
+            ),
+            IconButton(
               icon: Icon(Icons.exit_to_app),
               tooltip: "Esci",
               onPressed: () async {
