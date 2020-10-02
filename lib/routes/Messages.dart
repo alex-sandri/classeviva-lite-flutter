@@ -69,7 +69,7 @@ class _MessagesState extends State<Messages> {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              SelectableText(DateFormat.yMMMMd().format(message.createdAt)),
+                              SelectableText(DateFormat.yMMMMd().add_jms().format(message.createdAt)),
                               SelectableText(message.content),
                             ],
                           ),
