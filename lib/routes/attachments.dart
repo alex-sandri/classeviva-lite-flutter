@@ -133,8 +133,14 @@ class _AttachmentsState extends State<Attachments> {
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(folder.value.first.teacher),
-                                Text(DateFormat.yMMMMd().add_jms().format(folder.value.first.date)),
+                                Text(
+                                  folder.value.first.teacher,
+                                  style: TextStyle(color: Colors.white70),
+                                ),
+                                Text(
+                                  DateFormat.yMMMMd().add_jms().format(folder.value.first.date),
+                                  style: TextStyle(color: Colors.white70),
+                                ),
                               ],
                             ),
                             children: folder.value.map((attachment) => AttachmentListTile(attachment)).toList(),
