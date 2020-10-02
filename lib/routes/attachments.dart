@@ -130,7 +130,13 @@ class _AttachmentsState extends State<Attachments> {
 
                           return ExpansionTile(
                             title: Text(folder.key),
-                            subtitle: Text(folder.value.first.teacher),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(folder.value.first.teacher),
+                                Text(DateFormat.yMMMMd().add_jms().format(folder.value.first.date)),
+                              ],
+                            ),
                             children: folder.value.map((attachment) => AttachmentListTile(attachment)).toList(),
                           );
                         },
