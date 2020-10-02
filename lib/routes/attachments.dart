@@ -18,6 +18,13 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+extension on List<ClasseVivaAttachment>
+{
+  Map<String, List<ClasseVivaAttachment>> get folders {
+    return groupBy(this, (attachment) => attachment.folder + attachment.teacher);
+  }
+}
+
 class Attachments extends StatefulWidget {
   @override
   _AttachmentsState createState() => _AttachmentsState();
@@ -43,7 +50,7 @@ class _AttachmentsState extends State<Attachments> {
         setState(() {
           _attachments = attachments;
 
-          _folders = groupBy(attachments, (attachment) => attachment.folder);
+          _folders = attachments.folders;
         });
     }
   }
