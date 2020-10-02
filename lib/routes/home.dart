@@ -1,6 +1,7 @@
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
+import 'package:classeviva_lite/routes/Messages.dart';
 import 'package:classeviva_lite/routes/about.dart';
 import 'package:classeviva_lite/routes/absences.dart';
 import 'package:classeviva_lite/routes/agenda.dart';
@@ -43,7 +44,7 @@ class _HomeState extends State<Home> {
             IconButton(
               icon: Icon(Icons.message),
               tooltip: "Messaggi",
-              onPressed: () => null,
+              onPressed: () => Get.to(Messages()),
             ),
             IconButton(
               icon: Icon(Icons.exit_to_app),
