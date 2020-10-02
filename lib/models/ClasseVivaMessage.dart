@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:html/parser.dart';
 
 part 'ClasseVivaMessage.g.dart';
 
@@ -29,11 +30,18 @@ class ClasseVivaMessage
     @required this.isRead,
   });
 
-  static ClasseVivaMessage fromJson(Map<String, dynamic> json) => ClasseVivaMessage(
-    id: json["msg_id"],
-    subject: json["oggetto"],
-    content: json["testo"],
-    createdAt: DateTime.parse(json["dinsert"]),
-    isRead: json["read_status"] == "1",
-  );
+  static ClasseVivaMessage fromJson(Map<String, dynamic> json) 
+  {
+    final rawContent = parse(json["testo"]).body;
+
+    rawContent.querySelectorAll("*").forEach((element) => element.remove());
+
+    return ClasseVivaMessage(
+      id: json["msg_id"],
+      subject: json["oggetto"],
+      content: rawContent.text,
+      createdAt: DateTime.parse(json["dinsert"]),
+      isRead: json["read_status"] == "1",
+    );
+  }
 }
