@@ -97,7 +97,7 @@ class ClasseVivaEndpoints
 
   String payments() => "$baseUrl/pfo/app/default/scadenze.php";
 
-  String messages() => "$baseUrl/sps/app/default/SocMsgApi.php?a=acGetMsgPag";
+  String messages({ int messagesPerPage }) => "$baseUrl/sps/app/default/SocMsgApi.php?a=acGetMsgPag&mpp=$messagesPerPage";
 }
 
 class ClasseVivaSession
@@ -1146,7 +1146,7 @@ class ClasseViva
     await checkValidSession();
 
 		final result = await HttpManager.get(
-			url: _endpoints.messages(),
+			url: _endpoints.messages(messagesPerPage: 50),
       headers: getSessionCookieHeader(),
     );
 
