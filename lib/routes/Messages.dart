@@ -75,7 +75,7 @@ class _MessagesState extends State<Messages> {
                               Text(message.content),
                             ],
                           ),
-                          trailing: message.isRead
+                          trailing: !message.isRead
                             ? Tooltip(
                                 message: "Non letto",
                                 child: Icon(
