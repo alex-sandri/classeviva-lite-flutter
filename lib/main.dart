@@ -29,6 +29,7 @@ import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,31 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:workmanager/workmanager.dart' as wm;
+
+Future<void> checkForNewMessages() async {
+  await for (final List<ClasseVivaMessage> messages in ClasseViva.current.getMessages())
+  {
+    messages.where((message) => !message.isRead).forEach((message) {
+      FlutterLocalNotificationsPlugin().show(0, message.subject, message.content, NotificationDetails(
+        AndroidNotificationDetails(
+          "0",
+          "Messaggi",
+          "Messaggi",
+        ),
+        IOSNotificationDetails(),
+      ));
+    });
+  }
+}
+
+void callbackDispatcher() async {
+  wm.Workmanager.executeTask((task, inputData) async {
+    await checkForNewMessages();
+
+    return true;
+  });
+}
 
 void main() async {
   await FlutterDownloader.initialize(debug: false);
@@ -72,6 +98,31 @@ void main() async {
   await PreferencesManager.initialize();
 
   await CacheManager.initialize();
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+    AndroidInitializationSettings("app_icon"),
+    IOSInitializationSettings(),
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onSelectNotification: (payload) => null,
+  );
+
+  wm.Workmanager.initialize(callbackDispatcher);
+
+  wm.Workmanager.registerPeriodicTask(
+    "fetchMessages",
+    "fetchMessages",
+    frequency: Duration(minutes: 15),
+    constraints: wm.Constraints(
+      networkType: wm.NetworkType.connected,
+    ),
+  );
+
+  checkForNewMessages();
 
   Widget home;
 
