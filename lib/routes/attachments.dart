@@ -137,7 +137,7 @@ class _AttachmentsState extends State<Attachments> {
               child: Text("Compiti"),
               onPressed: () => Get.to(ClasseVivaWebview(
                 title: "Compiti",
-                url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).homework()),
+                url: Uri.parse(ClasseVivaEndpoints.current.homework()),
               )),
             ),
             IconButton(

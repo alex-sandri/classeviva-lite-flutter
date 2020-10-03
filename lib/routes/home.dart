@@ -170,7 +170,7 @@ class _HomeState extends State<Home> {
                       title: Text("Aule Virtuali"),
                       onTap: () => Get.to(ClasseVivaWebview(
                         title: "Aule Virtuali",
-                        url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).virtualClassrooms()),
+                        url: Uri.parse(ClasseVivaEndpoints.current.virtualClassrooms()),
                       )),
                     ),
                   ),
@@ -180,7 +180,7 @@ class _HomeState extends State<Home> {
                       title: Text("Colloqui"),
                       onTap: () => Get.to(ClasseVivaWebview(
                         title: "Colloqui",
-                        url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).meetings()),
+                        url: Uri.parse(ClasseVivaEndpoints.current.meetings()),
                       )),
                     ),
                   ),
@@ -190,7 +190,7 @@ class _HomeState extends State<Home> {
                       title: Text("Sportello"),
                       onTap: () => Get.to(ClasseVivaWebview(
                         title: "Sportello",
-                        url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).helpDesk()),
+                        url: Uri.parse(ClasseVivaEndpoints.current.helpDesk()),
                       )),
                     ),
                   ),
@@ -209,7 +209,7 @@ class _HomeState extends State<Home> {
                         title: Text("Pagamenti"),
                         onTap: () => Get.to(ClasseVivaWebview(
                           title: "Pagamenti",
-                          url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).payments()),
+                          url: Uri.parse(ClasseVivaEndpoints.current.payments()),
                         )),
                       ),
                     ),
@@ -256,7 +256,7 @@ class _HomeState extends State<Home> {
                 title: Text("ClasseViva Web"),
                 onTap: () => Get.to(ClasseVivaWebview(
                   title: "ClasseViva Web",
-                  url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
+                  url: Uri.parse(ClasseVivaEndpoints.current.baseUrl),
                 )),
               ),
               Divider(),

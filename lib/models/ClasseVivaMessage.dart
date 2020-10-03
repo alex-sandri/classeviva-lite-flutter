@@ -1,3 +1,4 @@
+import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -47,6 +48,6 @@ class ClasseVivaMessage
   }
 
   Future<void> markAsRead() => HttpManager.get(
-    url: "https://web.spaggiari.eu/sps/app/default/SocMsgApi.php?a=acSetDRead&mids%5B%5D=$id",
+    url: ClasseVivaEndpoints.current.messageMarkAsRead(id: id),
   );
 }

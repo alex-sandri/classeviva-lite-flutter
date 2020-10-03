@@ -132,14 +132,12 @@ class MyApp extends StatelessWidget {
           final QuickActions quickActions = QuickActions();
 
           quickActions.initialize((shortcutType) {
-            final ClasseViva _session = ClasseViva.current;
-
             switch (shortcutType)
             {
               case "action_web":
                 Get.to(ClasseVivaWebview(
                   title: "ClasseViva Web",
-                  url: Uri.parse(ClasseVivaEndpoints(_session.getShortYear()).baseUrl),
+                  url: Uri.parse(ClasseVivaEndpoints.current.baseUrl),
                 ));
                 break;
             }
