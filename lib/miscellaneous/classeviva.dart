@@ -98,6 +98,8 @@ class ClasseVivaEndpoints
   String payments() => "$baseUrl/pfo/app/default/scadenze.php";
 
   String messages({ int messagesPerPage }) => "$baseUrl/sps/app/default/SocMsgApi.php?a=acGetMsgPag&mpp=$messagesPerPage";
+
+  String messageMarkAsRead({ String id }) => "$baseUrl/sps/app/default/SocMsgApi.php?a=acSetDRead&mids%5B%5D=$id";
 }
 
 class ClasseVivaSession
