@@ -49,5 +49,6 @@ class ClasseVivaMessage
 
   Future<void> markAsRead() => HttpManager.get(
     url: ClasseVivaEndpoints.current.messageMarkAsRead(id: id),
+    headers: ClasseViva.current.getSessionCookieHeader(),
   );
 }
