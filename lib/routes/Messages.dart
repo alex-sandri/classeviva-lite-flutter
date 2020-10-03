@@ -84,7 +84,11 @@ class _MessagesState extends State<Messages> {
                                 ),
                               )
                             : null,
-                          onTap: () => Get.to(Message(message)),
+                          onTap: () {
+                            message.markAsRead();
+
+                            Get.to(Message(message));
+                          },
                         );
                       },
                     ),
