@@ -51,6 +51,8 @@ Future<void> checkForNewMessages() async {
         ),
         IOSNotificationDetails(),
       ));
+
+      message.markAsRead();
     });
   }
 }
