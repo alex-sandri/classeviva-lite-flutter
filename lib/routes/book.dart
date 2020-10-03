@@ -3,32 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Book extends StatefulWidget {
+class Book extends StatelessWidget {
   final ClasseVivaBook book;
 
   Book(this.book);
 
-  @override
-  _BookState createState() => _BookState();
-}
-
-class _BookState extends State<Book> {
   Future<void> _launchUrl(String url) async {
     if (await canLaunch(url)) await launch(url);
   }
 
   @override
   Widget build(BuildContext context) {
-    final ClasseVivaBook book = widget.book;
-
     return Material(
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              book.title,
-            ),
+            title: Text(book.title),
             bottom: TabBar(
               tabs: [
                 Tab(
@@ -51,9 +42,7 @@ class _BookState extends State<Book> {
                     spacing: 4,
                     children: book.categories.map((category) {
                       return Chip(
-                        label: SelectableText(
-                          category,
-                        ),
+                        label: SelectableText(category),
                       );
                     }).toList(),
                   ),
@@ -62,9 +51,7 @@ class _BookState extends State<Book> {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 8),
-                  SelectableText(
-                    book.description,
-                  ),
+                  SelectableText(book.description),
                   SizedBox(height: 8),
                   DataTable(
                     headingRowHeight: 0,
