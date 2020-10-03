@@ -1,7 +1,9 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaMessage.dart';
+import 'package:classeviva_lite/routes/Message.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Messages extends StatefulWidget {
@@ -65,12 +67,12 @@ class _MessagesState extends State<Messages> {
                         final ClasseVivaMessage message = _messages[index];
 
                         return ListTile(
-                          title: SelectableText(message.subject),
+                          title: Text(message.subject),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              SelectableText(DateFormat.yMMMMd().add_jms().format(message.createdAt)),
-                              SelectableText(message.content),
+                              Text(DateFormat.yMMMMd().add_jms().format(message.createdAt)),
+                              Text(message.content),
                             ],
                           ),
                           trailing: message.isRead
@@ -82,6 +84,7 @@ class _MessagesState extends State<Messages> {
                                 ),
                               )
                             : null,
+                          onTap: () => Get.to(Message(message)),
                         );
                       },
                     ),
