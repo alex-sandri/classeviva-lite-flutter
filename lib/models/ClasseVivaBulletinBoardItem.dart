@@ -17,61 +17,61 @@ class ClasseVivaBulletinBoardItem
   final String testo;
 
   @HiveField(3)
-  final DateTime data_start;
+  final DateTime startDate;
 
   @HiveField(4)
-  final DateTime data_stop;
+  final DateTime endDate;
 
   @HiveField(5)
-  final String tipo_com;
+  final String type;
 
   @HiveField(6)
-  final String tipo_com_desc;
+  final String typeDescription;
 
   @HiveField(7)
-  final String nome_file;
+  final String fileName;
 
   @HiveField(8)
-  final String richieste;
+  final String requests;
 
   @HiveField(9)
   final String id_relazione;
 
   @HiveField(10)
-  final bool conf_lettura;
+  final bool isRead;
 
   @HiveField(11)
-  final bool flag_risp;
+  final bool answerFlag;
 
   @HiveField(12)
-  final String testo_risp;
+  final String answerText;
 
   @HiveField(13)
-  final String file_risp;
+  final String answerFile;
 
   @HiveField(14)
-  final bool modificato;
+  final bool edited;
 
   @HiveField(15)
-  final DateTime evento_data;
+  final DateTime eventDate;
 
   ClasseVivaBulletinBoardItem({
     @required this.id,
     @required this.titolo,
     @required this.testo,
-    @required this.data_start,
-    @required this.data_stop,
-    @required this.tipo_com,
-    @required this.tipo_com_desc,
-    @required this.nome_file,
-    @required this.richieste,
+    @required this.startDate,
+    @required this.endDate,
+    @required this.type,
+    @required this.typeDescription,
+    @required this.fileName,
+    @required this.requests,
     @required this.id_relazione,
-    @required this.conf_lettura,
-    @required this.flag_risp,
-    @required this.testo_risp,
-    @required this.file_risp,
-    @required this.modificato,
-    @required this.evento_data,
+    @required this.isRead,
+    @required this.answerFlag,
+    @required this.answerText,
+    @required this.answerFile,
+    @required this.edited,
+    @required this.eventDate,
   });
 
   factory ClasseVivaBulletinBoardItem.fromJson(Map<String, dynamic> json)
@@ -84,19 +84,19 @@ class ClasseVivaBulletinBoardItem
       id: json["id"],
       titolo: json["titolo"],
       testo: json["testo"],
-      data_start: DateFormat("dd-MM-yyyy").parse(startDateString),
-      data_stop: DateFormat("dd-MM-yyyy").parse(endDateString),
-      tipo_com: json["tipo_com"],
-      tipo_com_desc: json["tipo_com_desc"],
-      nome_file: json["nome_file"],
-      richieste: json["richieste"],
+      startDate: DateFormat("dd-MM-yyyy").parse(startDateString),
+      endDate: DateFormat("dd-MM-yyyy").parse(endDateString),
+      type: json["tipo_com"],
+      typeDescription: json["tipo_com_desc"],
+      fileName: json["nome_file"],
+      requests: json["richieste"],
       id_relazione: json["id_relazione"],
-      conf_lettura: json["conf_lettura"] == "letto",
-      flag_risp: json["flag_risp"] == "1",
-      testo_risp: json["testo_risp"],
-      file_risp: json["file_risp"],
-      modificato: json["modificato"] == "1",
-      evento_data: DateFormat("dd-MM-yyyy").parse(eventDateString),
+      isRead: json["conf_lettura"] == "letto",
+      answerFlag: json["flag_risp"] == "1",
+      answerText: json["testo_risp"],
+      answerFile: json["file_risp"],
+      edited: json["modificato"] == "1",
+      eventDate: DateFormat("dd-MM-yyyy").parse(eventDateString),
     );
   }
 }

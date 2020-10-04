@@ -923,7 +923,7 @@ class ClasseViva
 
     items.sort((a, b) {
       // Most recent first
-      return b.evento_data.compareTo(a.evento_data);
+      return b.eventDate.compareTo(a.eventDate);
     });
 
     await CacheManager.set("bulletin-board", items);

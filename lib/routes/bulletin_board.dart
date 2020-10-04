@@ -42,9 +42,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Bacheca'
-          ),
+          title: Text("Bacheca"),
           actions: [
             IconButton(
               icon: Icon(Icons.search),
@@ -63,9 +61,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
           ],
         ),
         body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -86,7 +82,7 @@ class _BulletinBoardState extends State<BulletinBoard> {
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _items == null
+                  child: _items.isNull
                     ? Spinner()
                     : ListView.builder(
                         itemCount: _items.isNotEmpty
@@ -122,27 +118,21 @@ class BulletinBoardListTile extends StatelessWidget {
     return ListTile(
       onTap: () => Get.to(BulletinBoardItem(item)),
       trailing: Icon(
-        item.conf_lettura
+        item.isRead
           ? Icons.mail
           : Icons.drafts,
-        color: item.conf_lettura
+        color: item.isRead
           ? Colors.green
           : Colors.red,
       ),
-      title: Text(
-        item.titolo,
-      ),
+      title: Text(item.titolo),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 5,),
-          Text(
-            DateFormat.yMMMMd().format(item.evento_data),
-          ),
-          SizedBox(height: 5,),
-          Text(
-            item.tipo_com_desc,
-          ),
+          SizedBox(height: 5),
+          Text(DateFormat.yMMMMd().format(item.eventDate)),
+          SizedBox(height: 5),
+          Text(item.typeDescription),
         ],
       )
     );
