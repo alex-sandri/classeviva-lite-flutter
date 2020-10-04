@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 part 'ClasseVivaBulletinBoardItem.g.dart';
 
@@ -83,16 +84,8 @@ class ClasseVivaBulletinBoardItem
       id: json["id"],
       titolo: json["titolo"],
       testo: json["testo"],
-      data_start: DateTime(
-        int.parse(startDateString.split("-").last),
-        int.parse(startDateString.split("-")[1]),
-        int.parse(startDateString.split("-").first),
-      ),
-      data_stop: DateTime(
-        int.parse(endDateString.split("-").last),
-        int.parse(endDateString.split("-")[1]),
-        int.parse(endDateString.split("-").first),
-      ),
+      data_start: DateFormat("dd-MM-yyyy").parse(startDateString),
+      data_stop: DateFormat("dd-MM-yyyy").parse(endDateString),
       tipo_com: json["tipo_com"],
       tipo_com_desc: json["tipo_com_desc"],
       nome_file: json["nome_file"],
@@ -103,11 +96,7 @@ class ClasseVivaBulletinBoardItem
       testo_risp: json["testo_risp"],
       file_risp: json["file_risp"],
       modificato: json["modificato"] == "1",
-      evento_data: DateTime(
-        int.parse(eventDateString.split("-").last),
-        int.parse(eventDateString.split("-")[1]),
-        int.parse(eventDateString.split("-").first),
-      ),
+      evento_data: DateFormat("dd-MM-yyyy").parse(eventDateString),
     );
   }
 }
