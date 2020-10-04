@@ -65,7 +65,21 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
                   child: _result == null
                     ? Spinner()
                     : ((widget as ClasseVivaRefreshableView<T>).isResultEmpty(_result)
-                      ? Center(child: SelectableText(widget.emptyResultMessage))
+                      ? LayoutBuilder(
+                          builder: (context, constraints) => ListView(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(20.0),
+                                constraints: BoxConstraints(
+                                  minHeight: constraints.maxHeight,
+                                ),
+                                child: Center(
+                                  child: SelectableText(widget.emptyResultMessage),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       : (widget as ClasseVivaRefreshableView<T>).builder(_result)
                     ),
                 ),
