@@ -176,7 +176,7 @@ class AgendaItemTile extends StatelessWidget {
               children: [
                 ListTile(
                   title: SelectableText("Data inserimento"),
-                  subtitle: SelectableText(_item.addedDate),
+                  subtitle: SelectableText(dateFormat.format(_item.addedDate)),
                 ),
               ],
             ),

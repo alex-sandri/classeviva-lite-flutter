@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 part 'ClasseVivaAgendaItem.g.dart';
 
@@ -22,7 +23,7 @@ class ClasseVivaAgendaItem
 	final bool allDay;
 
   @HiveField(5)
-	final String addedDate;
+	final DateTime addedDate;
 
   @HiveField(6)
 	final String content;
@@ -81,7 +82,7 @@ class ClasseVivaAgendaItem
       start: DateTime.parse(json["start"]),
       end: DateTime.parse(json["end"]),
       allDay: json["allDay"],
-      addedDate: json["data_inserimento"],
+      addedDate: DateFormat("dd-MM-yyyy HH:mm:ss").parse(json["data_inserimento"]),
       content: json["nota_2"],
       masterId: json["master_id"],
       classId: json["classe_id"],
