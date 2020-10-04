@@ -1,7 +1,7 @@
 import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
-import 'package:classeviva_lite/widgets/spinner.dart';
+import 'package:classeviva_lite/widgets/ClasseVivaRefreshableView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
@@ -19,108 +19,65 @@ class _AgendaState extends State<Agenda> {
 
   DateTime _end;
 
-  List<ClasseVivaAgendaItem> _items;
-
-  Future<void> _handleRefresh() async {
-    await for (final List<ClasseVivaAgendaItem> items in _session.getAgenda(_start, _end))
-    {
-      if (items == null) continue;
-
-      if (mounted)
-        setState(() {
-          _items = items;
-        });
-    }
-  }
-
   void initState() {
     super.initState();
 
     _start = _session.yearBeginsAt;
 
     _end = _session.yearEndsAt;
-
-    _handleRefresh();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Agenda & Compiti"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.calendar_today),
-              tooltip: "Cambia periodo",
-              onPressed: () async {
-                final DateTimeRange selectedDateRange = await showDateRangePicker(
-                  context: context,
-                  initialDateRange: DateTimeRange(start: _start, end: _end),
-                  firstDate: _session.yearBeginsAt,
-                  lastDate: _session.yearEndsAt,
-                );
+    return ClasseVivaRefreshableView<List<ClasseVivaAgendaItem>>(
+      title: "Agenda & Compiti",
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.calendar_today),
+          tooltip: "Cambia periodo",
+          onPressed: () async {
+            final DateTimeRange selectedDateRange = await showDateRangePicker(
+              context: context,
+              initialDateRange: DateTimeRange(start: _start, end: _end),
+              firstDate: _session.yearBeginsAt,
+              lastDate: _session.yearEndsAt,
+            );
 
-                if (selectedDateRange != null)
-                {
-                  _start = DateTime(selectedDateRange.start.year, selectedDateRange.start.month, selectedDateRange.start.day);
-                  _end = DateTime(selectedDateRange.end.year, selectedDateRange.end.month, selectedDateRange.end.day, 23, 59, 59);
+            if (selectedDateRange != null)
+            {
+              _start = DateTime(selectedDateRange.start.year, selectedDateRange.start.month, selectedDateRange.start.day);
+              _end = DateTime(selectedDateRange.end.year, selectedDateRange.end.month, selectedDateRange.end.day, 23, 59, 59);
 
-                  _handleRefresh();
-                }
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.search),
-              tooltip: "Cerca",
-              onPressed: () => showSearch(
-                context: context,
-                delegate: ClasseVivaSearchDelegate<ClasseVivaAgendaItem>(
-                  stream: (query) async* {
-                    final ClasseViva session = ClasseViva.current;
-
-                    yield* session.getAgenda(session.yearBeginsAt, session.yearEndsAt, query: query);
-                  },
-                  builder: (item) => AgendaItemTile(item),
-                ),
-              ),
-            ),
-          ],
+              //_handleRefresh();
+            }
+          },
         ),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _items == null
-                  ? Spinner()
-                  : ListView.separated(
-                      separatorBuilder: (context, index) => Divider(),
-                      itemCount: _items.isNotEmpty
-                        ? _items.length
-                        : 1,
-                      itemBuilder: (context, index) {
-                        if (_items.isEmpty)
-                          return SelectableText(
-                            "Non sono presenti elementi in agenda nel periodo selezionato",
-                            textAlign: TextAlign.center,
-                          );
+        IconButton(
+          icon: Icon(Icons.search),
+          tooltip: "Cerca",
+          onPressed: () => showSearch(
+            context: context,
+            delegate: ClasseVivaSearchDelegate<ClasseVivaAgendaItem>(
+              stream: (query) async* {
+                final ClasseViva session = ClasseViva.current;
 
-                        final ClasseVivaAgendaItem item = _items[index];
-
-                        return AgendaItemTile(item);
-                      },
-                    ),
-                )
-              ),
-            ],
+                yield* session.getAgenda(session.yearBeginsAt, session.yearEndsAt, query: query);
+              },
+              builder: (item) => AgendaItemTile(item),
+            ),
           ),
         ),
-      ),
+      ],
+      stream: () => _session.getAgenda(_start, _end),
+      builder: (items) {
+        return ListView.separated(
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: items.length,
+          itemBuilder: (context, index) => AgendaItemTile(items[index]),
+        );
+      },
+      isResultEmpty: (result) => result.isEmpty,
+      emptyResultMessage: "Non sono presenti elementi in agenda nel periodo selezionato",
     );
   }
 }
