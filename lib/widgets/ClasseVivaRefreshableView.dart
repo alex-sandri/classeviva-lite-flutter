@@ -65,7 +65,7 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
                   child: _result == null
                     ? Spinner()
                     : ((widget as ClasseVivaRefreshableView<T>).isResultEmpty(_result)
-                      ? SelectableText(widget.emptyResultMessage)
+                      ? Center(child: SelectableText(widget.emptyResultMessage))
                       : (widget as ClasseVivaRefreshableView<T>).builder(_result)
                     ),
                 ),
