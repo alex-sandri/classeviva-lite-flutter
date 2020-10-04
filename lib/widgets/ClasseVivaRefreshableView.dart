@@ -54,7 +54,7 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
                   backgroundColor: Theme.of(context).appBarTheme.color,
                   child: _result == null
                   ? Spinner()
-                  : widget.builder(_result),
+                  : (widget as ClasseVivaRefreshableView<T>).builder(_result),
                 ),
               ),
             ],
