@@ -29,6 +29,7 @@ import 'package:get/get.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
+import 'package:intl/intl.dart';
 import 'package:rxdart/rxdart.dart';
 
 
@@ -367,18 +368,12 @@ class ClasseViva
       {
         final grade = nextSibling;
 
-        final String dateString = grade.querySelectorAll(".voto_data").first.text.trim();
-
         grades.add(ClasseVivaGrade(
 					subject: subject,
 					grade: grade.querySelector(".s_reg_testo").text.trim(),
 					type: grade.querySelectorAll(".voto_data").last.text.trim(),
 					description: grade.querySelector("[colspan=\"32\"] span").text.trim(),
-					date: DateTime(
-            int.parse(dateString.split("/").last),
-            int.parse(dateString.split("/")[1]),
-            int.parse(dateString.split("/").first),
-          ),
+					date: DateFormat("dd/MM/yyyy").parse(grade.querySelectorAll(".voto_data").first.text.trim()),
         ));
 
         nextSibling = nextSibling.nextElementSibling;
@@ -585,14 +580,7 @@ class ClasseViva
 				name: attachment.querySelector(".row_contenuto_desc").text.trim(),
 				folder: parentFolderElement.text.trim(),
 				type: type,
-				date: DateTime(
-          int.parse(dateString.split("-").last),
-          int.parse(dateString.split("-")[1]),
-          int.parse(dateString.split("-").first),
-          int.parse(timeString.split(":").first),
-          int.parse(timeString.split(":")[1]),
-          int.parse(timeString.split(":").last),
-        ),
+				date: DateFormat("dd-MM-yyyy HH:mm:ss").parse("$dateString $timeString"),
 				url: url,
       ));
 		});
@@ -628,11 +616,7 @@ class ClasseViva
 
 			demerits.add(ClasseVivaDemerit(
 				teacher: demerit.querySelector(":first-child").text.trim(),
-				date: DateTime(
-          int.parse(dateString.split("-").last),
-          int.parse(dateString.split("-")[1]),
-          int.parse(dateString.split("-").first),
-        ),
+				date: DateFormat("dd/MM/yyyy").parse(dateString),
 				content: demerit.querySelector(":nth-child(5)").text.trim(),
 				type: demerit.querySelector(":last-child").text.trim(),
 			));
@@ -892,11 +876,7 @@ class ClasseViva
 
 			lessons.add(ClasseVivaLesson(
         teacher: lesson.querySelector("td:first-child").text.trim(),
-        date: DateTime(
-          int.parse(dateString.split("-").last),
-          int.parse(dateString.split("-")[1]),
-          int.parse(dateString.split("-").first),
-        ),
+        date: DateFormat("dd/MM/yyyy").parse(dateString),
         description: lesson.querySelector("td:nth-child(5)").text.trim(),
       ));
 		});
