@@ -139,7 +139,7 @@ class AgendaItemTile extends StatelessWidget {
     if (showDay) dateFormat = dateFormat.add_yMMMMd();
 
     return ListTile(
-      title: SelectableText(_item.autore_desc),
+      title: SelectableText(_item.authorDescription),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -147,7 +147,7 @@ class AgendaItemTile extends StatelessWidget {
           SelectableText("(${dateFormat.format(_item.start)} - ${dateFormat.format(_item.end)})"),
           SizedBox(height: 5),
           SelectableLinkify(
-            text: _item.nota_2,
+            text: _item.content,
             options: LinkifyOptions(humanize: false),
             onOpen: (link) async {
               if (await canLaunch(link.url)) await launch(link.url);
@@ -176,7 +176,7 @@ class AgendaItemTile extends StatelessWidget {
               children: [
                 ListTile(
                   title: SelectableText("Data inserimento"),
-                  subtitle: SelectableText(_item.data_inserimento),
+                  subtitle: SelectableText(_item.addedDate),
                 ),
               ],
             ),

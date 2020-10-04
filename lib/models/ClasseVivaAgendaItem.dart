@@ -22,37 +22,37 @@ class ClasseVivaAgendaItem
 	final bool allDay;
 
   @HiveField(5)
-	final String data_inserimento;
+	final String addedDate;
 
   @HiveField(6)
-	final String nota_2;
+	final String content;
 
   @HiveField(7)
-	final String master_id;
+	final String masterId;
 
   @HiveField(8)
-	final String classe_id;
+	final String classId;
 
   @HiveField(9)
-	final String classe_desc;
+	final String classDescription;
 
   @HiveField(10)
-	final int gruppo;
+	final int group;
 
   @HiveField(11)
-	final String autore_desc;
+	final String authorDescription;
 
   @HiveField(12)
-	final String autore_id;
+	final String authorId;
 
   @HiveField(13)
-	final String tipo;
+	final String type;
 
   @HiveField(14)
-	final String materia_desc;
+	final String subjectDescription;
 
   @HiveField(15)
-	final String materia_id;
+	final String subjectId;
 
   ClasseVivaAgendaItem({
     @required this.id,
@@ -60,17 +60,17 @@ class ClasseVivaAgendaItem
     @required this.start,
     @required this.end,
     @required this.allDay,
-    @required this.data_inserimento,
-    @required this.nota_2,
-    @required this.master_id,
-    @required this.classe_id,
-    @required this.classe_desc,
-    @required this.gruppo,
-    @required this.autore_desc,
-    @required this.autore_id,
-    @required this.tipo,
-    @required this.materia_desc,
-    @required this.materia_id,
+    @required this.addedDate,
+    @required this.content,
+    @required this.masterId,
+    @required this.classId,
+    @required this.classDescription,
+    @required this.group,
+    @required this.authorDescription,
+    @required this.authorId,
+    @required this.type,
+    @required this.subjectDescription,
+    @required this.subjectId,
   });
 
   factory ClasseVivaAgendaItem.fromJson(Map<String, dynamic> json)
@@ -81,17 +81,17 @@ class ClasseVivaAgendaItem
       start: DateTime.parse(json["start"]),
       end: DateTime.parse(json["end"]),
       allDay: json["allDay"],
-      data_inserimento: json["data_inserimento"],
-      nota_2: json["nota_2"],
-      master_id: json["master_id"],
-      classe_id: json["classe_id"],
-      classe_desc: json["classe_desc"],
-      gruppo: json["gruppo"],
-      autore_desc: json["autore_desc"],
-      autore_id: json["autore_id"],
-      tipo: json["tipo"],
-      materia_desc: json["materia_desc"],
-      materia_id: json["materia_id"]
+      addedDate: json["data_inserimento"],
+      content: json["nota_2"],
+      masterId: json["master_id"],
+      classId: json["classe_id"],
+      classDescription: json["classe_desc"],
+      group: json["gruppo"],
+      authorDescription: json["autore_desc"],
+      authorId: json["autore_id"],
+      type: json["tipo"],
+      subjectDescription: json["materia_desc"],
+      subjectId: json["materia_id"]
     );
   }
 }

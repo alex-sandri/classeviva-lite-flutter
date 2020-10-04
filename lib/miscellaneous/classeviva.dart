@@ -463,7 +463,7 @@ class ClasseViva
       items
         ?.where((item) =>
           item
-          .nota_2
+          .content
           .toLowerCase()
           .contains(query.toLowerCase())
         )
