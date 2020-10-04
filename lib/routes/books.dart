@@ -1,88 +1,38 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaBook.dart';
 import 'package:classeviva_lite/routes/book.dart';
-import 'package:classeviva_lite/widgets/spinner.dart';
+import 'package:classeviva_lite/widgets/ClasseVivaRefreshableView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Books extends StatefulWidget {
-  @override
-  _BooksState createState() => _BooksState();
-}
-
-class _BooksState extends State<Books> {
-  final ClasseViva _session = ClasseViva.current;
-
-  List<ClasseVivaBook> _books;
-
-  Future<void> _handleRefresh() async {
-    await for (final List<ClasseVivaBook> books in _session.getBooks())
-    {
-      if (books == null) continue;
-
-      if (mounted)
-        setState(() {
-          _books = books;
-        });
-    }
-  }
-
-  void initState() {
-    super.initState();
-
-    _handleRefresh();
-  }
-
+class Books extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Libri"
-          ),
-        ),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
+    return ClasseVivaRefreshableView<List<ClasseVivaBook>>(
+      title: "Libri",
+      stream: () => ClasseViva.current.getBooks(),
+      builder: (books) {
+        return ListView.separated(
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: books.isNotEmpty
+            ? books.length
+            : 1,
+          itemBuilder: (context, index) {
+            if (books.isEmpty)
+              return SelectableText(
+                "Non sono presenti libri",
+                textAlign: TextAlign.center,
+              );
+
+            final ClasseVivaBook book = books[index];
+
+            return ListTile(
+              title: Text(book.title),
+              onTap: () => Get.to(Book(book)),
+            );
           },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _books == null
-                  ? Spinner()
-                  : ListView.separated(
-                      separatorBuilder: (context, index) => Divider(),
-                      itemCount: _books.isNotEmpty
-                        ? _books.length
-                        : 1,
-                      itemBuilder: (context, index) {
-                        if (_books.isEmpty)
-                          return SelectableText(
-                            "Non sono presenti libri",
-                            textAlign: TextAlign.center,
-                          );
-
-                        final ClasseVivaBook book = _books[index];
-
-                        return ListTile(
-                          title: Text(
-                            book.title,
-                          ),
-                          onTap: () => Get.to(Book(book)),
-                        );
-                      },
-                    ),
-                )
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      }
     );
   }
 }
