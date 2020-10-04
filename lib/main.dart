@@ -42,6 +42,8 @@ import 'package:workmanager/workmanager.dart' as wm;
 Future<void> checkForNewMessages() async {
   await for (final List<ClasseVivaMessage> messages in ClasseViva.current.getMessages())
   {
+    if (messages.isNull) continue;
+
     messages.where((message) => !message.isRead).forEach((message) {
       FlutterLocalNotificationsPlugin().show(0, message.subject, message.content, NotificationDetails(
         AndroidNotificationDetails(
