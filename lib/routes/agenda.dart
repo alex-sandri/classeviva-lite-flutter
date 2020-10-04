@@ -88,9 +88,7 @@ class _AgendaState extends State<Agenda> {
           ],
         ),
         body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -141,17 +139,13 @@ class AgendaItemTile extends StatelessWidget {
     if (showDay) dateFormat = dateFormat.add_yMMMMd();
 
     return ListTile(
-      title: SelectableText(
-        _item.autore_desc,
-      ),
+      title: SelectableText(_item.autore_desc),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 5,),
-          SelectableText(
-            "(${dateFormat.format(_item.start)} - ${dateFormat.format(_item.end)})",
-          ),
-          SizedBox(height: 5,),
+          SizedBox(height: 5),
+          SelectableText("(${dateFormat.format(_item.start)} - ${dateFormat.format(_item.end)})"),
+          SizedBox(height: 5),
           SelectableLinkify(
             text: _item.nota_2,
             options: LinkifyOptions(humanize: false),
@@ -170,7 +164,25 @@ class AgendaItemTile extends StatelessWidget {
             },
           ),
         ],
-      )
+      ),
+      trailing: IconButton(
+        icon: Icon(Icons.info),
+        tooltip: "Informazioni",
+        onPressed: () => showDialog(
+          context: context,
+          child: Dialog(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                ListTile(
+                  title: SelectableText("Data inserimento"),
+                  subtitle: SelectableText(_item.data_inserimento),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
