@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class ClasseVivaRefreshableView<T> extends StatefulWidget {
   final String title;
 
+  final List<Widget> actions;
+
   final Stream<T> Function() stream;
 
   final Widget Function(T result) builder;
@@ -14,6 +16,7 @@ class ClasseVivaRefreshableView<T> extends StatefulWidget {
 
   ClasseVivaRefreshableView({
     @required this.title,
+    this.actions,
     @required this.stream,
     @required this.builder,
     @required this.isResultEmpty,
@@ -48,6 +51,7 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          actions: widget.actions,
         ),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
