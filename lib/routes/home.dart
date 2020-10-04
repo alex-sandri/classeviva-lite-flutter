@@ -10,7 +10,7 @@ import 'package:classeviva_lite/routes/Books.dart';
 import 'package:classeviva_lite/routes/bulletin_board.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/routes/calendar.dart';
-import 'package:classeviva_lite/routes/demerits.dart';
+import 'package:classeviva_lite/routes/Demerits.dart';
 import 'package:classeviva_lite/routes/final_grades.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/routes/lessons.dart';
