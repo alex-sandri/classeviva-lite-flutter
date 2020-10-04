@@ -616,7 +616,7 @@ class ClasseViva
 
 			demerits.add(ClasseVivaDemerit(
 				teacher: demerit.querySelector(":first-child").text.trim(),
-				date: DateFormat("dd/MM/yyyy").parse(dateString),
+				date: DateFormat("dd-MM-yyyy").parse(dateString),
 				content: demerit.querySelector(":nth-child(5)").text.trim(),
 				type: demerit.querySelector(":last-child").text.trim(),
 			));
@@ -876,7 +876,7 @@ class ClasseViva
 
 			lessons.add(ClasseVivaLesson(
         teacher: lesson.querySelector("td:first-child").text.trim(),
-        date: DateFormat("dd/MM/yyyy").parse(dateString),
+        date: DateFormat("dd-MM-yyyy").parse(dateString),
         description: lesson.querySelector("td:nth-child(5)").text.trim(),
       ));
 		});
