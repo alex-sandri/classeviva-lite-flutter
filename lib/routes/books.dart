@@ -14,16 +14,8 @@ class Books extends StatelessWidget {
       builder: (books) {
         return ListView.separated(
           separatorBuilder: (context, index) => Divider(),
-          itemCount: books.isNotEmpty
-            ? books.length
-            : 1,
+          itemCount: books.length,
           itemBuilder: (context, index) {
-            if (books.isEmpty)
-              return SelectableText(
-                "Non sono presenti libri",
-                textAlign: TextAlign.center,
-              );
-
             final ClasseVivaBook book = books[index];
 
             return ListTile(
@@ -32,7 +24,9 @@ class Books extends StatelessWidget {
             );
           },
         );
-      }
+      },
+      isResultEmpty: (result) => result.isEmpty,
+      emptyResultMessage: "Non sono presenti libri",
     );
   }
 }

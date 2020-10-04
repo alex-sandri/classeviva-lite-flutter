@@ -8,10 +8,16 @@ class ClasseVivaRefreshableView<T> extends StatefulWidget {
 
   final Widget Function(T result) builder;
 
+  final bool Function(T result) isResultEmpty;
+
+  final String emptyResultMessage;
+
   ClasseVivaRefreshableView({
     @required this.title,
     @required this.stream,
     @required this.builder,
+    @required this.isResultEmpty,
+    @required this.emptyResultMessage,
   });
 
   @override
@@ -53,8 +59,11 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
                   onRefresh: _handleRefresh,
                   backgroundColor: Theme.of(context).appBarTheme.color,
                   child: _result == null
-                  ? Spinner()
-                  : (widget as ClasseVivaRefreshableView<T>).builder(_result),
+                    ? Spinner()
+                    : ((widget as ClasseVivaRefreshableView<T>).isResultEmpty(_result)
+                      ? SelectableText(widget.emptyResultMessage)
+                      : (widget as ClasseVivaRefreshableView<T>).builder(_result)
+                    ),
                 ),
               ),
             ],
