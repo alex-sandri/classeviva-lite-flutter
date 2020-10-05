@@ -90,6 +90,7 @@ class _AttachmentsState extends State<Attachments> {
         setState(() {
           _attachments = attachments;
 
+          // Do not show duplicates when not showing the folders
           _attachments = _attachments.where((element) => _attachments.indexOf(element) == _attachments.indexWhere((elementa) => elementa.id == element.id)).toList();
 
           _folders = attachments.folders;
