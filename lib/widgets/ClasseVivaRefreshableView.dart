@@ -49,7 +49,7 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
   final ReceivePort _port = ReceivePort();
 
   static void downloadCallback(String id, DownloadTaskStatus status, int progress) {
-    final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port');
+    final SendPort send = IsolateNameServer.lookupPortByName("downloader_send_port");
 
     send.send([id, status, progress]);
   }
@@ -60,7 +60,7 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
 
     _handleRefresh();
 
-    IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
+    IsolateNameServer.registerPortWithName(_port.sendPort, "downloader_send_port");
 
     _port.listen((dynamic data) {
       String id = data[0];
@@ -74,7 +74,7 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
 
   @override
   void dispose() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    IsolateNameServer.removePortNameMapping("downloader_send_port");
 
     super.dispose();
   }
