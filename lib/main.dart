@@ -44,18 +44,21 @@ Future<void> checkForNewMessages() async {
   {
     if (messages.isNull) continue;
 
-    messages.where((message) => !message.isRead).forEach((message) {
-      FlutterLocalNotificationsPlugin().show(0, message.subject, message.content, NotificationDetails(
-        AndroidNotificationDetails(
-          "0",
-          "Messaggi",
-          "Messaggi",
-        ),
-        IOSNotificationDetails(),
-      ));
+    messages
+      .getRange(0, messages.indexWhere((message) => message.isRead))
+      .where((message) => !message.isRead)
+      .forEach((message) {
+        FlutterLocalNotificationsPlugin().show(0, message.subject, message.content, NotificationDetails(
+          AndroidNotificationDetails(
+            "0",
+            "Messaggi",
+            "Messaggi",
+          ),
+          IOSNotificationDetails(),
+        ));
 
-      message.markAsRead();
-    });
+        message.markAsRead();
+      });
   }
 }
 
