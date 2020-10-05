@@ -6,6 +6,8 @@ class ClasseVivaRefreshableView<T> extends StatefulWidget {
 
   final List<Widget> actions;
 
+  final Widget head;
+
   final Stream<T> Function() stream;
 
   final Widget Function(T result) builder;
@@ -17,6 +19,7 @@ class ClasseVivaRefreshableView<T> extends StatefulWidget {
   ClasseVivaRefreshableView({
     @required this.title,
     this.actions,
+    this.head,
     @required this.stream,
     @required this.builder,
     @required this.isResultEmpty,
@@ -64,6 +67,9 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                if (widget.head != null)
+                  widget.head,
+
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: _handleRefresh,
