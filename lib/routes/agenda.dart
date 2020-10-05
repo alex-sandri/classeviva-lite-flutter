@@ -32,25 +32,29 @@ class _AgendaState extends State<Agenda> {
     return ClasseVivaRefreshableView<List<ClasseVivaAgendaItem>>(
       title: "Agenda & Compiti",
       actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.calendar_today),
-          tooltip: "Cambia periodo",
-          onPressed: () async {
-            final DateTimeRange selectedDateRange = await showDateRangePicker(
-              context: context,
-              initialDateRange: DateTimeRange(start: _start, end: _end),
-              firstDate: _session.yearBeginsAt,
-              lastDate: _session.yearEndsAt,
+        Builder(
+          builder: (context) {
+            return IconButton(
+              icon: Icon(Icons.calendar_today),
+              tooltip: "Cambia periodo",
+              onPressed: () async {
+                final DateTimeRange selectedDateRange = await showDateRangePicker(
+                  context: context,
+                  initialDateRange: DateTimeRange(start: _start, end: _end),
+                  firstDate: _session.yearBeginsAt,
+                  lastDate: _session.yearEndsAt,
+                );
+
+                if (selectedDateRange != null)
+                {
+                  _start = DateTime(selectedDateRange.start.year, selectedDateRange.start.month, selectedDateRange.start.day);
+                  _end = DateTime(selectedDateRange.end.year, selectedDateRange.end.month, selectedDateRange.end.day, 23, 59, 59);
+
+                  ClasseVivaRefreshableViewRefreshNotification().dispatch(context);
+                }
+              },
             );
-
-            if (selectedDateRange != null)
-            {
-              _start = DateTime(selectedDateRange.start.year, selectedDateRange.start.month, selectedDateRange.start.day);
-              _end = DateTime(selectedDateRange.end.year, selectedDateRange.end.month, selectedDateRange.end.day, 23, 59, 59);
-
-              //_handleRefresh();
-            }
-          },
+          }
         ),
         IconButton(
           icon: Icon(Icons.search),

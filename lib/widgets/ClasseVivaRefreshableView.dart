@@ -48,46 +48,56 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: widget.actions,
-        ),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _result == null
-                    ? Spinner()
-                    : ((widget as ClasseVivaRefreshableView<T>).isResultEmpty(_result)
-                      ? LayoutBuilder(
-                          builder: (context, constraints) => ListView(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(20.0),
-                                constraints: BoxConstraints(
-                                  minHeight: constraints.maxHeight,
+      child: NotificationListener<ClasseVivaRefreshableViewRefreshNotification>(
+        onNotification: (notification) {
+          _handleRefresh();
+
+          return true;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+            actions: widget.actions,
+          ),
+          body: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: _handleRefresh,
+                    backgroundColor: Theme.of(context).appBarTheme.color,
+                    child: _result == null
+                      ? Spinner()
+                      : ((widget as ClasseVivaRefreshableView<T>).isResultEmpty(_result)
+                        ? LayoutBuilder(
+                            builder: (context, constraints) => ListView(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(20.0),
+                                  constraints: BoxConstraints(
+                                    minHeight: constraints.maxHeight,
+                                  ),
+                                  child: Center(
+                                    child: SelectableText(widget.emptyResultMessage),
+                                  ),
                                 ),
-                                child: Center(
-                                  child: SelectableText(widget.emptyResultMessage),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : (widget as ClasseVivaRefreshableView<T>).builder(_result)
-                    ),
+                              ],
+                            ),
+                          )
+                        : (widget as ClasseVivaRefreshableView<T>).builder(_result)
+                      ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+class ClasseVivaRefreshableViewRefreshNotification extends Notification
+{}
