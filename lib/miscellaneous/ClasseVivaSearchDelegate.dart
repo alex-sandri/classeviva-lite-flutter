@@ -7,10 +7,15 @@ class ClasseVivaSearchDelegate<T> extends SearchDelegate
 
   final Widget Function(T) builder;
 
+  final ListView Function(List<T>) listBuilder;
+
   ClasseVivaSearchDelegate({
     @required this.stream,
-    @required this.builder,
-  }): super(searchFieldStyle: TextStyle(color: Colors.white70));
+    this.builder,
+    this.listBuilder
+  }):
+    assert(builder != null || listBuilder != null),
+    super(searchFieldStyle: TextStyle(color: Colors.white70));
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -48,6 +53,8 @@ class ClasseVivaSearchDelegate<T> extends SearchDelegate
         if (!snapshot.hasData) return Spinner();
 
         final List<T> items = snapshot.data;
+
+        if (listBuilder != null) return listBuilder(items);
 
         return ListView.separated(
           separatorBuilder: (context, index) => Divider(),
