@@ -2,7 +2,6 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart';
 
 part 'ClasseVivaMessage.g.dart';
