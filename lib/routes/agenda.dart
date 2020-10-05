@@ -69,49 +69,58 @@ class _AgendaState extends State<Agenda> {
 
                 yield* session.getAgenda(session.yearBeginsAt, session.yearEndsAt, query: query);
               },
-              builder: (item) => AgendaItemTile(item),
+              rawBuilder: (items) => _AgendaListView(items),
             ),
           ),
         ),
       ],
       stream: () => _session.getAgenda(_start, _end),
-      builder: (items) {
-        final Map<DateTime, List<ClasseVivaAgendaItem>> itemsGroupedByDay = groupBy(items, (item) => DateTime(
-          item.start.year,
-          item.start.month,
-          item.start.day,
-        ));
-
-        return ListView.builder(
-          itemCount: itemsGroupedByDay.length,
-          itemBuilder: (context, index) {
-            final MapEntry<DateTime, List<ClasseVivaAgendaItem>> itemsForDay = itemsGroupedByDay.entries.elementAt(index);
-
-            return StickyHeader(
-              header: Container(
-                color: ClasseViva.PRIMARY_LIGHT,
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: SelectableText(
-                  DateFormat.yMMMMd().format(itemsForDay.key),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              content: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: itemsForDay.value.length,
-                itemBuilder: (context, index) => AgendaItemTile(itemsForDay.value[index]),
-              ),
-            );
-          },
-        );
-      },
+      builder: (items) => _AgendaListView(items),
       isResultEmpty: (result) => result.isEmpty,
       emptyResultMessage: "Non sono presenti elementi in agenda nel periodo selezionato",
+    );
+  }
+}
+
+class _AgendaListView extends StatelessWidget {
+  final List<ClasseVivaAgendaItem> items;
+
+  _AgendaListView(this.items);
+
+  @override
+  Widget build(BuildContext context) {
+    final Map<DateTime, List<ClasseVivaAgendaItem>> itemsGroupedByDay = groupBy(items, (item) => DateTime(
+      item.start.year,
+      item.start.month,
+      item.start.day,
+    ));
+
+    return ListView.builder(
+      itemCount: itemsGroupedByDay.length,
+      itemBuilder: (context, index) {
+        final MapEntry<DateTime, List<ClasseVivaAgendaItem>> itemsForDay = itemsGroupedByDay.entries.elementAt(index);
+
+        return StickyHeader(
+          header: Container(
+            color: ClasseViva.PRIMARY_LIGHT,
+            width: double.infinity,
+            padding: const EdgeInsets.all(8),
+            child: SelectableText(
+              DateFormat.yMMMMd().format(itemsForDay.key),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          content: ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: itemsForDay.value.length,
+            itemBuilder: (context, index) => AgendaItemTile(itemsForDay.value[index]),
+          ),
+        );
+      },
     );
   }
 }
