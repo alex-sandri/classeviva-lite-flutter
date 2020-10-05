@@ -5,7 +5,7 @@ import 'package:classeviva_lite/routes/Messages.dart';
 import 'package:classeviva_lite/routes/about.dart';
 import 'package:classeviva_lite/routes/Absences.dart';
 import 'package:classeviva_lite/routes/Agenda.dart';
-import 'package:classeviva_lite/routes/attachments.dart';
+import 'package:classeviva_lite/routes/Attachments.dart';
 import 'package:classeviva_lite/routes/Books.dart';
 import 'package:classeviva_lite/routes/bulletin_board.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';

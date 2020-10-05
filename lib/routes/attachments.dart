@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
+import 'package:classeviva_lite/widgets/ClasseVivaRefreshableView.dart';
 import 'package:classeviva_lite/widgets/classeviva_webview.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:collection/collection.dart';
@@ -71,32 +72,9 @@ class Attachments extends StatefulWidget {
 }
 
 class _AttachmentsState extends State<Attachments> {
-  final ClasseViva _session = ClasseViva.current;
-
-  List<ClasseVivaAttachment> _attachments;
-
-  List<ClasseVivaAttachmentFolder> _folders;
-
   bool _showFolders = false;
 
   ReceivePort _port = ReceivePort();
-
-  Future<void> _handleRefresh() async {
-    await for (final List<ClasseVivaAttachment> attachments in _session.getAttachments())
-    {
-      if (attachments == null) continue;
-
-      if (mounted)
-        setState(() {
-          _attachments = attachments;
-
-          // Do not show duplicates when not showing the folders
-          _attachments = _attachments.where((element) => _attachments.indexOf(element) == _attachments.indexWhere((elementa) => elementa.id == element.id)).toList();
-
-          _folders = attachments.folders;
-        });
-    }
-  }
 
   static void downloadCallback(String id, DownloadTaskStatus status, int progress) {
     final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port');
@@ -107,8 +85,6 @@ class _AttachmentsState extends State<Attachments> {
   @override
   void initState() {
     super.initState();
-
-    _handleRefresh();
 
     IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
 
@@ -131,79 +107,69 @@ class _AttachmentsState extends State<Attachments> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Didattica"),
-          actions: [
-            FlatButton(
-              child: Text("Compiti"),
-              onPressed: () => Get.to(ClasseVivaWebview(
-                title: "Compiti",
-                url: Uri.parse(ClasseVivaEndpoints.current.homework()),
-              )),
-            ),
-            IconButton(
-              icon: Icon(Icons.search),
-              tooltip: "Cerca",
-              onPressed: () => showSearch(
-                context: context,
-                delegate: ClasseVivaSearchDelegate<ClasseVivaAttachment>(
-                  stream: (query) => ClasseViva.current.getAttachments(query: query),
-                  builder: (item) => AttachmentListTile(item),
-                ),
-              ),
-            ),
-          ],
+    return ClasseVivaRefreshableView<List<ClasseVivaAttachment>>(
+      title: "Didattica",
+      actions: [
+        FlatButton(
+          child: Text("Compiti"),
+          onPressed: () => Get.to(ClasseVivaWebview(
+            title: "Compiti",
+            url: Uri.parse(ClasseVivaEndpoints.current.homework()),
+          )),
         ),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SwitchListTile(
-                title: Text("Mostra cartelle"),
-                value: _showFolders,
-                onChanged: (checked) => setState(() => _showFolders = checked),
-              ),
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _handleRefresh,
-                  backgroundColor: Theme.of(context).appBarTheme.color,
-                  child: _showFolders
-                    ? ListView.builder(
-                        itemCount: _folders.length,
-                        itemBuilder: (context, index) {
-                          final ClasseVivaAttachmentFolder folder = _folders[index];
-
-                          return ExpansionTile(
-                            title: Text(folder.name),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  folder.teacher,
-                                  style: TextStyle(color: Colors.white70),
-                                ),
-                                Text(
-                                  DateFormat.yMMMMd().add_jms().format(folder.lastUpdated),
-                                  style: TextStyle(color: Colors.white70),
-                                ),
-                              ],
-                            ),
-                            children: folder.attachments.map((attachment) => AttachmentListTile(attachment)).toList(),
-                          );
-                        },
-                      )
-                    : AttachmentsListView(_attachments),
-                ),
-              ),
-            ],
+        IconButton(
+          icon: Icon(Icons.search),
+          tooltip: "Cerca",
+          onPressed: () => showSearch(
+            context: context,
+            delegate: ClasseVivaSearchDelegate<ClasseVivaAttachment>(
+              stream: (query) => ClasseViva.current.getAttachments(query: query),
+              builder: (item) => AttachmentListTile(item),
+            ),
           ),
         ),
+      ],
+      head: SwitchListTile(
+        title: Text("Mostra cartelle"),
+        value: _showFolders,
+        onChanged: (checked) => setState(() => _showFolders = checked),
       ),
+      stream: () => ClasseViva.current.getAttachments(),
+      builder: (attachments) {
+        // Do not show duplicates when not showing the folders
+        attachments = attachments.where((element) => attachments.indexOf(element) == attachments.indexWhere((elementa) => elementa.id == element.id)).toList();
+
+        final List<ClasseVivaAttachmentFolder> folders = attachments.folders;
+
+        return _showFolders
+          ? ListView.builder(
+              itemCount: folders.length,
+              itemBuilder: (context, index) {
+                final ClasseVivaAttachmentFolder folder = folders[index];
+
+                return ExpansionTile(
+                  title: Text(folder.name),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        folder.teacher,
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      Text(
+                        DateFormat.yMMMMd().add_jms().format(folder.lastUpdated),
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ],
+                  ),
+                  children: folder.attachments.map((attachment) => AttachmentListTile(attachment)).toList(),
+                );
+              },
+            )
+          : AttachmentsListView(attachments);
+      },
+      isResultEmpty: (result) => result.isEmpty,
+      emptyResultMessage: "Non sono presenti elementi in Didattica",
     );
   }
 }
