@@ -275,7 +275,7 @@ class _CalendarState extends State<Calendar> {
                       shrinkWrap: true,
                       separatorBuilder: (context, index) => Divider(),
                       itemCount: calendar.agenda.length,
-                      itemBuilder: (context, index) => AgendaItemTile(calendar.agenda[index], showDay: false),
+                      itemBuilder: (context, index) => AgendaItemTile(calendar.agenda[index]),
                     ),
                 ],
               ),
