@@ -2,6 +2,7 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/miscellaneous/http_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart';
 
 part 'ClasseVivaMessage.g.dart';
@@ -36,7 +37,9 @@ class ClasseVivaMessage
   {
     final rawContent = parse(json["testo"]).body;
 
-    rawContent.querySelectorAll("*").forEach((element) => element.remove());
+    rawContent.querySelectorAll("*:not(br)").forEach((element) => element.remove());
+
+    rawContent.innerHtml = rawContent.innerHtml.replaceAll("<br>", "\n");
 
     return ClasseVivaMessage(
       id: json["msg_id"],
