@@ -2,7 +2,7 @@ import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaBasicProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/Messages.dart';
-import 'package:classeviva_lite/routes/about.dart';
+import 'package:classeviva_lite/routes/About.dart';
 import 'package:classeviva_lite/routes/Absences.dart';
 import 'package:classeviva_lite/routes/Agenda.dart';
 import 'package:classeviva_lite/routes/Attachments.dart';

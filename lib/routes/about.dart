@@ -7,9 +7,7 @@ class About extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Informazioni"
-          ),
+          title: Text("Informazioni"),
         ),
         body: ListView(
           children: [
@@ -20,9 +18,7 @@ class About extends StatelessWidget {
                 builder: (context, packageInfo) {
                   if (!packageInfo.hasData) return Container();
 
-                  return Text(
-                    "${packageInfo.data.version} (${packageInfo.data.buildNumber})",
-                  );
+                  return Text("${packageInfo.data.version} (${packageInfo.data.buildNumber})");
                 },
               ),
             ),
