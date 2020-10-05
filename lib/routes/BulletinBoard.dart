@@ -1,6 +1,6 @@
 import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItem.dart';
-import 'package:classeviva_lite/routes/bulletin_board_item.dart';
+import 'package:classeviva_lite/routes/BulletinBoardItem.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:flutter/material.dart';
