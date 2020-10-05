@@ -136,10 +136,10 @@ class _AttachmentsState extends State<Attachments> {
       ),
       stream: () => ClasseViva.current.getAttachments(),
       builder: (attachments) {
+        final List<ClasseVivaAttachmentFolder> folders = attachments.folders;
+
         // Do not show duplicates when not showing the folders
         attachments = attachments.where((element) => attachments.indexOf(element) == attachments.indexWhere((elementa) => elementa.id == element.id)).toList();
-
-        final List<ClasseVivaAttachmentFolder> folders = attachments.folders;
 
         return _showFolders
           ? ListView.builder(
