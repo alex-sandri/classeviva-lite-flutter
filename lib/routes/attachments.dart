@@ -1,6 +1,3 @@
-import 'dart:isolate';
-import 'dart:ui';
-
 import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
@@ -73,37 +70,6 @@ class Attachments extends StatefulWidget {
 
 class _AttachmentsState extends State<Attachments> {
   bool _showFolders = false;
-
-  ReceivePort _port = ReceivePort();
-
-  static void downloadCallback(String id, DownloadTaskStatus status, int progress) {
-    final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port');
-
-    send.send([id, status, progress]);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
-
-    _port.listen((dynamic data) {
-      String id = data[0];
-      DownloadTaskStatus status = data[1];
-
-      if (status == DownloadTaskStatus.complete) FlutterDownloader.open(taskId: id);
-    });
-
-    FlutterDownloader.registerCallback(downloadCallback);
-  }
-
-  @override
-  void dispose() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
