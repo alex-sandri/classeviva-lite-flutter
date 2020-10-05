@@ -88,7 +88,18 @@ class _AgendaState extends State<Agenda> {
             final MapEntry<DateTime, List<ClasseVivaAgendaItem>> itemsForDay = itemsGroupedByDay.entries.elementAt(index);
 
             return StickyHeader(
-              header: Text(itemsForDay.key.toString()),
+              header: Container(
+                color: ClasseViva.PRIMARY_LIGHT,
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                child: SelectableText(
+                  DateFormat.yMMMMd().format(itemsForDay.key),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               content: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
