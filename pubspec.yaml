@@ -46,6 +46,7 @@ dependencies:
   calendar_views: ^0.5.2
   workmanager: ^0.2.3
   flutter_local_notifications: ^1.4.4+5
+  sticky_headers: ^0.1.8+1
   flutter:
     sdk: flutter
   flutter_localizations:

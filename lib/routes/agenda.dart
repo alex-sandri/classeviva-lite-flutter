@@ -2,9 +2,11 @@ import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableView.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Agenda extends StatefulWidget {
@@ -74,10 +76,27 @@ class _AgendaState extends State<Agenda> {
       ],
       stream: () => _session.getAgenda(_start, _end),
       builder: (items) {
-        return ListView.separated(
-          separatorBuilder: (context, index) => Divider(),
-          itemCount: items.length,
-          itemBuilder: (context, index) => AgendaItemTile(items[index]),
+        final Map<DateTime, List<ClasseVivaAgendaItem>> itemsGroupedByDay = groupBy(items, (item) => DateTime(
+          item.start.year,
+          item.start.month,
+          item.start.day,
+        ));
+
+        return ListView.builder(
+          itemCount: itemsGroupedByDay.length,
+          itemBuilder: (context, index) {
+            final MapEntry<DateTime, List<ClasseVivaAgendaItem>> itemsForDay = itemsGroupedByDay.entries.elementAt(index);
+
+            return StickyHeader(
+              header: Text(itemsForDay.key.toString()),
+              content: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: itemsForDay.value.length,
+                itemBuilder: (context, index) => AgendaItemTile(itemsForDay.value[index]),
+              ),
+            );
+          },
         );
       },
       isResultEmpty: (result) => result.isEmpty,
