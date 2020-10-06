@@ -38,6 +38,8 @@ class _ClasseVivaRefreshableViewState<T> extends State<ClasseVivaRefreshableView
   T _result;
 
   Future<void> _handleRefresh() async {
+    setState(() => _result = null);
+
     await for (final T result in widget.stream())
     {
       if (result == null) continue;
