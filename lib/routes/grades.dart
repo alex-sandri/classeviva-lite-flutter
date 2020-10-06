@@ -2,6 +2,7 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
+import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableWidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -29,29 +30,6 @@ class _GradesState extends State<Grades> {
           _periods = periods;
         });
     }
-  }
-
-  Text _getAverageGradeChangeTextWidget(double previous, double current) {
-    bool changed = previous != current;
-    bool increased = current > previous;
-
-    return Text(
-      changed
-        ? (increased
-            ? "↑"
-            : "↓"
-          )
-        : "=",
-      style: TextStyle(
-        color: changed
-          ? (increased
-              ? Colors.green
-              : Colors.red
-            )
-          : Colors.orange,
-        fontSize: 30,
-      ),
-    );
   }
 
   void initState() {
@@ -103,221 +81,14 @@ class _GradesState extends State<Grades> {
               ),
               ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
                 stream: () => ClasseViva.current.getGrades(),
-                builder: (grades) {
-                  final Map<String, List<ClasseVivaGrade>> subjects = groupBy(grades, (grade) => grade.subject);
-
-                  return ListView.builder(
-                    itemCount: subjects.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == 0)
-                        return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Media Totale",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                SizedBox(height: 8,),
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 50,
-                                      width: 50,
-                                      child: CircularProgressIndicator(
-                                        value: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()) / 10,
-                                        valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
-                                          subject: "",
-                                          grade: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
-                                          type: "",
-                                          description: "",
-                                          date: DateTime.now(),
-                                        ))),
-                                      ),
-                                    ),
-                                    Text(
-                                      ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-
-                      final String subject = subjects.keys.elementAt(index - 1);
-                      final List<ClasseVivaGrade> grades = subjects.values.elementAt(index - 1);
-
-                      final List<ClasseVivaGrade> gradesValidForAverageCount = ClasseViva.getGradesValidForAverageCount(grades);
-
-                      final ClasseVivaGrade lastGrade = gradesValidForAverageCount.first;
-
-                      final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
-                      final double averageGrade = ClasseViva.getAverageGrade(grades);
-
-                      return ExpansionTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: ThemeManager.isLightTheme(context)
-                            ? Colors.black
-                            : Colors.white,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Center(
-                                child: CircularProgressIndicator(
-                                  value: averageGrade != -1
-                                    ? averageGrade / 10
-                                    : 1,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    averageGrade != -1
-                                      ? ClasseViva.getGradeColor(ClasseVivaGrade(
-                                          subject: "",
-                                          grade: averageGrade.toStringAsFixed(1),
-                                          type: "",
-                                          description: "",
-                                          date: DateTime.now(),
-                                        ))
-                                      : Colors.blue,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                averageGrade != -1
-                                  ? averageGrade.toStringAsFixed(1)
-                                  : "N/A",
-                              ),
-                            ],
-                          ),
-                        ),
-                        title: Text(subject),
-                        subtitle: previousAverageGrade != -1
-                          ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
-                          : null,
-                        children: grades.map((grade) => GradeTile(grade)).toList(),
-                      );
-                    },
-                  );
-                },
+                builder: (grades) => _GradesAveragesList(grades),
                 isResultEmpty: (result) => result.isEmpty,
                 emptyResultMessage: "Non sono presenti valutazioni",
               ),
               ..._periods.map((period) {
                 return ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
                   stream: () => ClasseViva.current.getGrades(),
-                  builder: (grades) {
-                    final Map<String, List<ClasseVivaGrade>> subjects = groupBy(period.grades, (ClasseVivaGrade grade) => grade.subject);
-
-                    return ListView.builder(
-                      itemCount: subjects.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index == 0)
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Media ${period.name}",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                SizedBox(height: 8,),
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 50,
-                                      width: 50,
-                                      child: CircularProgressIndicator(
-                                        value: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()) / 10,
-                                        valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
-                                          subject: "",
-                                          grade: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
-                                          type: "",
-                                          description: "",
-                                          date: DateTime.now(),
-                                        ))),
-                                      ),
-                                    ),
-                                    Text(
-                                      ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-
-                        final String subject = subjects.keys.elementAt(index - 1);
-                        final List<ClasseVivaGrade> grades = subjects.values.elementAt(index - 1);
-
-                        final List<ClasseVivaGrade> gradesValidForAverageCount = ClasseViva.getGradesValidForAverageCount(grades);
-
-                        final ClasseVivaGrade lastGrade = gradesValidForAverageCount.first;
-
-                        final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
-                        final double averageGrade = ClasseViva.getAverageGrade(grades);
-
-                        return ExpansionTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            foregroundColor: ThemeManager.isLightTheme(context)
-                              ? Colors.black
-                              : Colors.white,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Center(
-                                  child: CircularProgressIndicator(
-                                    value: averageGrade != -1
-                                      ? averageGrade / 10
-                                      : 1,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      averageGrade != -1
-                                        ? ClasseViva.getGradeColor(ClasseVivaGrade(
-                                            subject: "",
-                                            grade: averageGrade.toStringAsFixed(1),
-                                            type: "",
-                                            description: "",
-                                            date: DateTime.now(),
-                                          ))
-                                        : Colors.blue,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  averageGrade != -1
-                                    ? averageGrade.toStringAsFixed(1)
-                                    : "N/A",
-                                  style: TextStyle(
-                                    color: ThemeManager.isLightTheme(context)
-                                      ? Colors.black
-                                      : Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          title: Text(subject),
-                          subtitle: previousAverageGrade != -1
-                            ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
-                            : null,
-                          children: grades.map((grade) => GradeTile(grade)).toList(),
-                        );
-                      },
-                    );
-                  },
+                  builder: (grades) => _GradesAveragesList(grades),
                   isResultEmpty: (result) => result.isEmpty,
                   emptyResultMessage: "Non sono presenti valutazioni",
                 );
@@ -393,6 +164,139 @@ class GradeTile extends StatelessWidget {
           ),
         ],
       )
+    );
+  }
+}
+
+class _GradesAveragesList extends StatelessWidget {
+  final List<ClasseVivaGrade> grades;
+
+  _GradesAveragesList(this.grades);
+
+  Text _getAverageGradeChangeTextWidget(double previous, double current) {
+    bool changed = previous != current;
+    bool increased = current > previous;
+
+    return Text(
+      changed
+        ? (increased
+            ? "↑"
+            : "↓"
+          )
+        : "=",
+      style: TextStyle(
+        color: changed
+          ? (increased
+              ? Colors.green
+              : Colors.red
+            )
+          : Colors.orange,
+        fontSize: 30,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Map<String, List<ClasseVivaGrade>> subjects = groupBy(grades, (grade) => grade.subject);
+
+    return ListView.builder(
+      itemCount: subjects.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0)
+          return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Media Totale",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(height: 8,),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(
+                          value: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()) / 10,
+                          valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
+                            subject: "",
+                            grade: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                            type: "",
+                            description: "",
+                            date: DateTime.now(),
+                          ))),
+                        ),
+                      ),
+                      Text(
+                        ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+
+        final String subject = subjects.keys.elementAt(index - 1);
+        final List<ClasseVivaGrade> grades = subjects.values.elementAt(index - 1);
+
+        final List<ClasseVivaGrade> gradesValidForAverageCount = ClasseViva.getGradesValidForAverageCount(grades);
+
+        final ClasseVivaGrade lastGrade = gradesValidForAverageCount.first;
+
+        final double previousAverageGrade = ClasseViva.getAverageGrade(gradesValidForAverageCount.where((grade) => grade != lastGrade).toList());
+        final double averageGrade = ClasseViva.getAverageGrade(grades);
+
+        return ExpansionTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            foregroundColor: ThemeManager.isLightTheme(context)
+              ? Colors.black
+              : Colors.white,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Center(
+                  child: CircularProgressIndicator(
+                    value: averageGrade != -1
+                      ? averageGrade / 10
+                      : 1,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      averageGrade != -1
+                        ? ClasseViva.getGradeColor(ClasseVivaGrade(
+                            subject: "",
+                            grade: averageGrade.toStringAsFixed(1),
+                            type: "",
+                            description: "",
+                            date: DateTime.now(),
+                          ))
+                        : Colors.blue,
+                    ),
+                  ),
+                ),
+                Text(
+                  averageGrade != -1
+                    ? averageGrade.toStringAsFixed(1)
+                    : "N/A",
+                ),
+              ],
+            ),
+          ),
+          title: Text(subject),
+          subtitle: previousAverageGrade != -1
+            ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
+            : null,
+          children: grades.map((grade) => GradeTile(grade)).toList(),
+        );
+      },
     );
   }
 }
