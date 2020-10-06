@@ -31,8 +31,6 @@ class _GradesState extends State<Grades> {
     }
   }
 
-  Future<void> _handleRefresh() => _fetchPeriods();
-
   Text _getAverageGradeChangeTextWidget(double previous, double current) {
     bool changed = previous != current;
     bool increased = current > previous;
@@ -59,7 +57,7 @@ class _GradesState extends State<Grades> {
   void initState() {
     super.initState();
 
-    _handleRefresh();
+    _fetchPeriods();
   }
 
   @override
