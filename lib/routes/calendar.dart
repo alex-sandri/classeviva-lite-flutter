@@ -5,7 +5,7 @@ import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendarLesson.dart';
 import 'package:classeviva_lite/routes/Absences.dart';
 import 'package:classeviva_lite/routes/Agenda.dart';
-import 'package:classeviva_lite/routes/grades.dart';
+import 'package:classeviva_lite/routes/Grades.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaCalendarStrip.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableWidget.dart';
