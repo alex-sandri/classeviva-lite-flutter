@@ -2,6 +2,7 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
+import 'package:classeviva_lite/widgets/ClasseVivaRefreshableWidget.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -116,43 +117,26 @@ class _GradesState extends State<Grades> {
           ),
           body: TabBarView(
             children: [
-              GradesView(
-                session: _session,
-                grades: _grades,
-                refreshHandler: _handleRefresh,
-                childBuilder: () {
+              ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
+                stream: () => ClasseViva.current.getGrades(),
+                builder: (grades) {
                   return ListView.builder(
-                    itemCount: _grades.isNotEmpty
-                        ? _grades.length
-                        : 1,
-                    itemBuilder: (context, index) {
-                      if (_grades.isEmpty)
-                        return SelectableText(
-                          "Non sono presenti valutazioni",
-                          textAlign: TextAlign.center,
-                        );
-
-                      final ClasseVivaGrade grade = _grades[index];
-
-                      return GradeTile(grade);
-                    },
+                    itemCount: grades.length,
+                    itemBuilder: (context, index) => GradeTile(grades[index]),
                   );
                 },
+                isResultEmpty: (result) => result.isEmpty,
+                emptyResultMessage: "Non sono presenti valutazioni",
               ),
-              GradesView(
-                session: _session,
-                grades: _grades,
-                refreshHandler: _handleRefresh,
-                childBuilder: () {
+              ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
+                stream: () => ClasseViva.current.getGrades(),
+                builder: (grades) {
+                  final Map<String, List<ClasseVivaGrade>> subjects = groupBy(grades, (grade) => grade.subject);
+
                   return ListView.builder(
-                    itemCount: _subjects.length + 1,
+                    itemCount: subjects.length + 1,
                     itemBuilder: (context, index) {
-                      if (_subjects.isEmpty)
-                        return SelectableText(
-                          "Non sono presenti valutazioni",
-                          textAlign: TextAlign.center,
-                        );
-                      else if (index == 0)
+                      if (index == 0)
                         return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -172,10 +156,10 @@ class _GradesState extends State<Grades> {
                                       height: 50,
                                       width: 50,
                                       child: CircularProgressIndicator(
-                                        value: ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()) / 10,
+                                        value: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()) / 10,
                                         valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.getGradeColor(ClasseVivaGrade(
                                           subject: "",
-                                          grade: ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                                          grade: ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
                                           type: "",
                                           description: "",
                                           date: DateTime.now(),
@@ -183,7 +167,7 @@ class _GradesState extends State<Grades> {
                                       ),
                                     ),
                                     Text(
-                                      ClasseViva.getAverageGrade(_subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
+                                      ClasseViva.getAverageGrade(subjects.values.expand((element) => element).toList()).toStringAsFixed(1),
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
@@ -194,8 +178,8 @@ class _GradesState extends State<Grades> {
                             ),
                           );
 
-                      final String subject = _subjects.keys.elementAt(index - 1);
-                      final List<ClasseVivaGrade> grades = _subjects.values.elementAt(index - 1);
+                      final String subject = subjects.keys.elementAt(index - 1);
+                      final List<ClasseVivaGrade> grades = subjects.values.elementAt(index - 1);
 
                       final List<ClasseVivaGrade> gradesValidForAverageCount = ClasseViva.getGradesValidForAverageCount(grades);
 
@@ -248,13 +232,13 @@ class _GradesState extends State<Grades> {
                     },
                   );
                 },
+                isResultEmpty: (result) => result.isEmpty,
+                emptyResultMessage: "Non sono presenti valutazioni",
               ),
               ..._periods.map((period) {
-                return GradesView(
-                  session: _session,
-                  grades: period.grades,
-                  refreshHandler: _handleRefresh,
-                  childBuilder: () {
+                return ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
+                  stream: () => ClasseViva.current.getGrades(),
+                  builder: (grades) {
                     final Map<String, List<ClasseVivaGrade>> subjects = groupBy(period.grades, (ClasseVivaGrade grade) => grade.subject);
 
                     return ListView.builder(
@@ -366,6 +350,8 @@ class _GradesState extends State<Grades> {
                       },
                     );
                   },
+                  isResultEmpty: (result) => result.isEmpty,
+                  emptyResultMessage: "Non sono presenti valutazioni",
                 );
               }),
             ]
