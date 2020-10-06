@@ -3,7 +3,6 @@ import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableWidget.dart';
-import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -18,25 +17,7 @@ class Grades extends StatefulWidget {
 class _GradesState extends State<Grades> {
   final ClasseViva _session = ClasseViva.current;
 
-  List<ClasseVivaGrade> _grades;
-
-  Map<String, List<ClasseVivaGrade>> _subjects;
-
   List<ClasseVivaGradesPeriod> _periods = [];
-
-  Future<void> _fetchGrades() async {
-    await for (final List<ClasseVivaGrade> grades in _session.getGrades())
-    {
-      if (grades == null) continue;
-
-      _subjects = groupBy(grades, (grade) => grade.subject);
-
-      if (mounted)
-        setState(() {
-          _grades = grades;
-        });
-    }
-  }
 
   Future<void> _fetchPeriods() async {
     await for (final List<ClasseVivaGradesPeriod> periods in _session.getPeriods())
@@ -50,13 +31,7 @@ class _GradesState extends State<Grades> {
     }
   }
 
-  Future<void> _handleRefresh() async {
-    setState(() {
-      _grades = null;
-    });
-
-    await Future.wait([ _fetchGrades(), _fetchPeriods() ]);
-  }
+  Future<void> _handleRefresh() => _fetchPeriods();
 
   Text _getAverageGradeChangeTextWidget(double previous, double current) {
     bool changed = previous != current;
