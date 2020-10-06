@@ -11,7 +11,7 @@ import 'package:classeviva_lite/routes/BulletinBoard.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/routes/Calendar.dart';
 import 'package:classeviva_lite/routes/Demerits.dart';
-import 'package:classeviva_lite/routes/final_grades.dart';
+import 'package:classeviva_lite/routes/FinalGrades.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/routes/lessons.dart';
 import 'package:classeviva_lite/routes/manage_accounts.dart';
