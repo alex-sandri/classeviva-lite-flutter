@@ -93,9 +93,7 @@ class _GradesState extends State<Grades> {
         length: 2 + _periods.length,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              'Valutazioni'
-            ),
+            title: Text("Valutazioni"),
             bottom: TabBar(
               isScrollable: true,
               tabs: [
