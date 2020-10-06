@@ -45,36 +45,29 @@ class _ClasseVivaRefreshableWidgetState<T> extends State<ClasseVivaRefreshableWi
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: _handleRefresh,
-              backgroundColor: Theme.of(context).appBarTheme.color,
-              child: _result == null
-                ? LinearProgressIndicator()
-                : ((widget as ClasseVivaRefreshableWidget<T>).isResultEmpty(_result)
-                  ? LayoutBuilder(
-                      builder: (context, constraints) => ListView(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(20.0),
-                            constraints: BoxConstraints(
-                              minHeight: constraints.maxHeight,
-                            ),
-                            child: Center(
-                              child: SelectableText(widget.emptyResultMessage),
-                            ),
-                          ),
-                        ],
+      child: RefreshIndicator(
+        onRefresh: _handleRefresh,
+        backgroundColor: Theme.of(context).appBarTheme.color,
+        child: _result == null
+          ? LinearProgressIndicator()
+          : ((widget as ClasseVivaRefreshableWidget<T>).isResultEmpty(_result)
+            ? LayoutBuilder(
+                builder: (context, constraints) => ListView(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(20.0),
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
                       ),
-                    )
-                  : (widget as ClasseVivaRefreshableWidget<T>).builder(_result)
+                      child: Center(
+                        child: SelectableText(widget.emptyResultMessage),
+                      ),
+                    ),
+                  ],
                 ),
-            ),
+              )
+            : (widget as ClasseVivaRefreshableWidget<T>).builder(_result)
           ),
-        ],
       ),
     );
   }
