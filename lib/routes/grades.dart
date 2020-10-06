@@ -81,14 +81,14 @@ class _GradesState extends State<Grades> {
               ),
               ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
                 stream: () => ClasseViva.current.getGrades(),
-                builder: (grades) => _GradesAveragesList(grades),
+                builder: (grades) => _GradesAveragesList(title: "Totale", grades: grades),
                 isResultEmpty: (result) => result.isEmpty,
                 emptyResultMessage: "Non sono presenti valutazioni",
               ),
               ..._periods.map((period) {
                 return ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
                   stream: () => ClasseViva.current.getGrades(),
-                  builder: (grades) => _GradesAveragesList(grades),
+                  builder: (grades) => _GradesAveragesList(title: period.name, grades: period.grades),
                   isResultEmpty: (result) => result.isEmpty,
                   emptyResultMessage: "Non sono presenti valutazioni",
                 );
@@ -169,9 +169,14 @@ class GradeTile extends StatelessWidget {
 }
 
 class _GradesAveragesList extends StatelessWidget {
+  final String title;
+
   final List<ClasseVivaGrade> grades;
 
-  _GradesAveragesList(this.grades);
+  _GradesAveragesList({
+    @required this.title,
+    @required this.grades
+  });
 
   Text _getAverageGradeChangeTextWidget(double previous, double current) {
     bool changed = previous != current;
@@ -210,7 +215,7 @@ class _GradesAveragesList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Media Totale",
+                    "Media $title",
                     style: TextStyle(
                       fontSize: 20,
                     ),
