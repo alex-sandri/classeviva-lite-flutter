@@ -14,7 +14,7 @@ import 'package:classeviva_lite/routes/Demerits.dart';
 import 'package:classeviva_lite/routes/FinalGrades.dart';
 import 'package:classeviva_lite/routes/grades.dart';
 import 'package:classeviva_lite/routes/lessons.dart';
-import 'package:classeviva_lite/routes/manage_accounts.dart';
+import 'package:classeviva_lite/routes/ManageAccounts.dart';
 import 'package:classeviva_lite/routes/Settings.dart';
 import 'package:classeviva_lite/routes/SignIn.dart';
 import 'package:classeviva_lite/widgets/classeviva_webview.dart';
