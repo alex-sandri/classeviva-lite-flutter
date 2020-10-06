@@ -23,7 +23,7 @@ import 'package:classeviva_lite/models/ClasseVivaMessage.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfileAvatar.dart';
 import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
-import 'package:classeviva_lite/routes/sign_in.dart';
+import 'package:classeviva_lite/routes/SignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html/dom.dart' as dom;
