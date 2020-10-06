@@ -35,10 +35,16 @@ class _BulletinBoardState extends State<BulletinBoard> {
           ),
         ),
       ],
-      head: SwitchListTile(
-        title: Text("Nascondi comunicazioni non attive"),
-        value: _hideInactive,
-        onChanged: (checked) => setState(() => _hideInactive = checked),
+      head: Builder(
+        builder: (context) => SwitchListTile(
+          title: Text("Nascondi comunicazioni non attive"),
+          value: _hideInactive,
+          onChanged: (checked) {
+            setState(() => _hideInactive = checked);
+
+            ClasseVivaRefreshableViewRefreshNotification().dispatch(context);
+          },
+        ),
       ),
       stream: () => ClasseViva.current.getBulletinBoard(hideInactive: _hideInactive),
       builder: (items) {
