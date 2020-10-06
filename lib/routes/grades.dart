@@ -217,12 +217,7 @@ class _GradesState extends State<Grades> {
                     return ListView.builder(
                       itemCount: subjects.length + 1,
                       itemBuilder: (context, index) {
-                        if (subjects.isEmpty)
-                          return SelectableText(
-                            "Non sono presenti valutazioni",
-                            textAlign: TextAlign.center,
-                          );
-                        else if (index == 0)
+                        if (index == 0)
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
