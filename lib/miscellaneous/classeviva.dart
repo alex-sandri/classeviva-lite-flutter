@@ -897,7 +897,7 @@ class ClasseViva
         )
         ?.toList();
 
-    yield _search((CacheManager.get("bulletin-board") as List<dynamic>)?.whereType<ClasseVivaBulletinBoardItem>()?.toList(), query);
+    yield _search((CacheManager.get("bulletin-board-$hideInactive") as List<dynamic>)?.whereType<ClasseVivaBulletinBoardItem>()?.toList(), query);
 
     await checkValidSession();
 
@@ -926,7 +926,7 @@ class ClasseViva
       return b.eventDate.compareTo(a.eventDate);
     });
 
-    await CacheManager.set("bulletin-board", items);
+    await CacheManager.set("bulletin-board-$hideInactive", items);
 
 		yield _search(items, query);
 	}
