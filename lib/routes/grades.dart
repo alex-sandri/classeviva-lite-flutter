@@ -2,7 +2,6 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/models/ClasseVivaGrade.dart';
 import 'package:classeviva_lite/models/ClasseVivaGradesPeriod.dart';
-import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableWidget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
