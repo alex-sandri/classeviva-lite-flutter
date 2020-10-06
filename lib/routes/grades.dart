@@ -362,46 +362,6 @@ class _GradesState extends State<Grades> {
   }
 }
 
-class GradesView extends StatelessWidget {
-  final ClasseViva session;
-
-  final List<ClasseVivaGrade> grades;
-
-  final Widget Function() childBuilder;
-
-  final Future<void> Function() refreshHandler;
-
-  GradesView({
-    @required this.session,
-    @required this.grades,
-    @required this.childBuilder,
-    @required this.refreshHandler,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: refreshHandler,
-              backgroundColor: Theme.of(context).appBarTheme.color,
-              child: grades == null
-                ? Spinner()
-                : childBuilder(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class GradeTile extends StatelessWidget {
   final ClasseVivaGrade grade;
 
