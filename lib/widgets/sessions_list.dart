@@ -2,7 +2,7 @@ import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
-import 'package:classeviva_lite/routes/home.dart';
+import 'package:classeviva_lite/routes/Home.dart';
 import 'package:classeviva_lite/routes/SignIn.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
