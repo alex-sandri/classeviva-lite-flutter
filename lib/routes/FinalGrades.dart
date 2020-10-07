@@ -1,7 +1,7 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaFinalGrade.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableView.dart';
-import 'package:classeviva_lite/widgets/classeviva_webview.dart';
+import 'package:classeviva_lite/widgets/ClassevivaWebview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

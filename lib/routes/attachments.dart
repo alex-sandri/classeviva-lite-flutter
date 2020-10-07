@@ -2,7 +2,7 @@ import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAttachment.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableView.dart';
-import 'package:classeviva_lite/widgets/classeviva_webview.dart';
+import 'package:classeviva_lite/widgets/ClassevivaWebview.dart';
 import 'package:classeviva_lite/widgets/spinner.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';

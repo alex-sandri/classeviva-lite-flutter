@@ -26,7 +26,7 @@ import 'package:classeviva_lite/models/ClasseVivaSubject.dart';
 import 'package:classeviva_lite/routes/Home.dart';
 import 'package:classeviva_lite/routes/SignIn.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
-import 'package:classeviva_lite/widgets/classeviva_webview.dart';
+import 'package:classeviva_lite/widgets/ClassevivaWebview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

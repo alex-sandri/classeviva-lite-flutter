@@ -57,10 +57,8 @@ class _ClasseVivaWebviewState extends State<ClasseVivaWebview> {
             if (_loadProgress < 100)
               LinearProgressIndicator(
                 value: _loadProgress.toDouble(),
-                backgroundColor: Colors.transparent,
-                valueColor: AlwaysStoppedAnimation<Color>(ThemeManager.isLightTheme(context)
-                  ? Theme.of(context).primaryColor
-                  : Theme.of(context).accentColor),
+                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation<Color>(ClasseViva.PRIMARY_LIGHT),
               ),
           ],
         ),
