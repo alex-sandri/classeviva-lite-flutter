@@ -1,5 +1,4 @@
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
-import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
