@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItem.dart';
 import 'package:classeviva_lite/models/ClasseVivaBulletinBoardItemDetails.dart';
-import 'package:classeviva_lite/widgets/spinner.dart';
+import 'package:classeviva_lite/widgets/ClasseVivaRefreshableWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,18 +26,6 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
 
   ReceivePort _port = ReceivePort();
 
-  Future<void> _handleRefresh() async {
-    await for (final ClasseVivaBulletinBoardItemDetails item in _session.getBulletinBoardItemDetails(widget._item.id))
-    {
-      if (item == null) continue;
-
-      if (mounted)
-        setState(() {
-          _item = item;
-        });
-    }
-  }
-
   Future<void> _requestPermission() async {
     PermissionStatus permission = await Permission.storage.status;
 
@@ -53,8 +41,6 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
   @override
   void initState() {
     super.initState();
-
-    _handleRefresh();
 
     IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
 
@@ -82,9 +68,7 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              widget._item.titolo,
-            ),
+            title: Text(widget._item.titolo),
             bottom: TabBar(
               tabs: [
                 Tab(
@@ -100,58 +84,46 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
           ),
           body: TabBarView(
             children: [
-              RefreshIndicator(
-                onRefresh: _handleRefresh,
-                backgroundColor: Theme.of(context).appBarTheme.color,
-                child: _item == null
-                ? Spinner()
-                : Padding(
+              ClasseVivaRefreshableWidget<ClasseVivaBulletinBoardItemDetails>(
+                stream: () => ClasseViva.current.getBulletinBoardItemDetails(widget._item.id),
+                builder: (details) {
+                  return Padding(
                     padding: EdgeInsets.all(4),
-                    child: SelectableText(
-                      _item.description,
-                    ),
-                  ),
+                    child: SelectableText(details.description),
+                  );
+                },
+                isResultEmpty: (result) => false,
+                emptyResultMessage: null,
               ),
-              RefreshIndicator(
-                onRefresh: _handleRefresh,
-                backgroundColor: Theme.of(context).appBarTheme.color,
-                child: _item == null
-                ? Spinner()
-                : ListView.builder(
-                  itemCount: _item.attachments.isNotEmpty
-                    ? _item.attachments.length
-                    : 1,
-                  itemBuilder: (context, index) {
-                    if (_item.attachments.isEmpty)
-                      return Padding(
-                        padding: EdgeInsets.all(4),
-                        child: SelectableText(
-                          "Non sono presenti allegati",
-                        ),
+              ClasseVivaRefreshableWidget<ClasseVivaBulletinBoardItemDetails>(
+                stream: () => ClasseViva.current.getBulletinBoardItemDetails(widget._item.id),
+                builder: (details) {
+                  return ListView.builder(
+                    itemCount: details.attachments.length,
+                    itemBuilder: (context, index) {
+                      final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index];
+
+                      return ListTile(
+                        onTap: () async {
+                          await _requestPermission();
+
+                          await FlutterDownloader.enqueue(
+                            url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
+                            savedDir: (Theme.of(context).platform == TargetPlatform.android
+                              ? await getExternalStorageDirectory()
+                              : await getApplicationDocumentsDirectory()).path,
+                            showNotification: true,
+                            openFileFromNotification: true,
+                            headers: _session.getSessionCookieHeader(),
+                          );
+                        },
+                        title: Text(attachment.name),
                       );
-
-                    final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index];
-
-                    return ListTile(
-                      onTap: () async {
-                        await _requestPermission();
-
-                        await FlutterDownloader.enqueue(
-                          url: "https://web${_session.getShortYear()}.spaggiari.eu/sif/app/default/bacheca_personale.php?action=file_download&com_id=${attachment.id}",
-                          savedDir: (Theme.of(context).platform == TargetPlatform.android
-                            ? await getExternalStorageDirectory()
-                            : await getApplicationDocumentsDirectory()).path,
-                          showNotification: true,
-                          openFileFromNotification: true,
-                          headers: _session.getSessionCookieHeader(),
-                        );
-                      },
-                      title: Text(
-                        attachment.name,
-                      ),
-                    );
-                  },
-                ),
+                    },
+                  );
+                },
+                isResultEmpty: (result) => result.attachments.isEmpty,
+                emptyResultMessage: "Non sono presenti allegati",
               ),
             ],
           ),
