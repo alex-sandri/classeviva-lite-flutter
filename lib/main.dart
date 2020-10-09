@@ -45,8 +45,7 @@ Future<void> checkForNewMessages() async {
     if (messages.isNull) continue;
 
     messages
-      .getRange(0, messages.indexWhere((message) => message.isRead))
-      .where((message) => !message.isRead)
+      .takeWhile((message) => !message.isRead)
       .forEach((message) {
         FlutterLocalNotificationsPlugin().show(0, message.subject, message.content, NotificationDetails(
           AndroidNotificationDetails(
