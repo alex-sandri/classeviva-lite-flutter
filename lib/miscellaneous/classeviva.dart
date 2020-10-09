@@ -269,7 +269,7 @@ class ClasseViva
   }
 
 	Stream<ClasseVivaBasicProfile> getBasicProfile() async* {
-    yield CacheManager.get("basicProfile");
+    yield CacheManager.get("basicProfile-${session.id}");
 
     await checkValidSession();
 
@@ -287,13 +287,13 @@ class ClasseViva
 			school: document.querySelector(".scuola").text.trim(),
     );
 
-    await CacheManager.set("basicProfile", basicProfile);
+    await CacheManager.set("basicProfile-${session.id}", basicProfile);
 
 		yield basicProfile;
 	}
 
   Stream<ClasseVivaProfile> getProfile() async* {
-    yield CacheManager.get("profile");
+    yield CacheManager.get("profile-${session.id}");
 
     await checkValidSession();
 
@@ -337,7 +337,7 @@ class ClasseViva
         ),
       );
 
-      await CacheManager.set("profile", profile);
+      await CacheManager.set("profile-${session.id}", profile);
 
       yield profile;
     }
