@@ -88,7 +88,7 @@ class _GradesState extends State<Grades> {
                 return ClasseVivaRefreshableWidget<List<ClasseVivaGrade>>(
                   stream: () => ClasseViva.current.getGrades(),
                   builder: (grades) => _GradesAveragesList(title: period.name, grades: period.grades),
-                  isResultEmpty: (result) => result.isEmpty,
+                  isResultEmpty: (result) => period.grades.isEmpty,
                   emptyResultMessage: "Non sono presenti valutazioni",
                 );
               }),
