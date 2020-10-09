@@ -1,4 +1,4 @@
-import 'package:classeviva_lite/widgets/sessions_list.dart';
+import 'package:classeviva_lite/widgets/SessionsList.dart';
 import 'package:flutter/material.dart';
 
 class ManageAccounts extends StatelessWidget {

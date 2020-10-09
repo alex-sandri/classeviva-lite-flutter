@@ -27,14 +27,7 @@ class SessionsList extends StatefulWidget {
 }
 
 class _SessionsListState extends State<SessionsList> {
-  List<ClasseVivaSession> _sessions;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _sessions = ClasseViva.getAllSessions();
-  }
+  final List<ClasseVivaSession> _sessions = ClasseViva.getAllSessions();
 
   @override
   Widget build(BuildContext context) {
