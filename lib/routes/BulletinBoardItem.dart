@@ -22,8 +22,6 @@ class BulletinBoardItem extends StatefulWidget {
 class _BulletinBoardItemState extends State<BulletinBoardItem> {
   final ClasseViva _session = ClasseViva.current;
 
-  ClasseVivaBulletinBoardItemDetails _item;
-
   ReceivePort _port = ReceivePort();
 
   Future<void> _requestPermission() async {
@@ -101,7 +99,7 @@ class _BulletinBoardItemState extends State<BulletinBoardItem> {
                   return ListView.builder(
                     itemCount: details.attachments.length,
                     itemBuilder: (context, index) {
-                      final ClasseVivaBulletinBoardItemDetailsAttachment attachment = _item.attachments[index];
+                      final ClasseVivaBulletinBoardItemDetailsAttachment attachment = details.attachments[index];
 
                       return ListTile(
                         onTap: () async {
