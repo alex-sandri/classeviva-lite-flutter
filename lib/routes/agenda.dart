@@ -106,7 +106,7 @@ class _AgendaListView extends StatelessWidget {
           header: Material(
             color: ClasseViva.PRIMARY_LIGHT,
             child: InkWell(
-              onTap: () => Get.to(Calendar()),
+              onTap: () => Get.to(Calendar(day: itemsForDay.key)),
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),

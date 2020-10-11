@@ -12,6 +12,10 @@ import 'package:classeviva_lite/widgets/ClasseVivaRefreshableWidget.dart';
 import 'package:flutter/material.dart';
 
 class Calendar extends StatefulWidget {
+  final DateTime day;
+
+  Calendar({ this.day });
+
   @override
   _CalendarState createState() => _CalendarState();
 }
@@ -19,11 +23,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   final ClasseViva _session = ClasseViva.current;
 
-  DateTime _date = DateTime(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
-  );
+  DateTime _date;
 
   ClasseVivaCalendarStripController _calendarStripController;
 
@@ -41,6 +41,12 @@ class _CalendarState extends State<Calendar> {
     super.initState();
 
     _calendarStripController = ClasseVivaCalendarStripController.of(context);
+
+    _date = widget.day ?? DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
 
     if (_session.yearEndsAt.isBefore(_date))
       _date = _session.yearEndsAt;
