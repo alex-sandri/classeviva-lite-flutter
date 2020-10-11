@@ -1,10 +1,12 @@
 import 'package:classeviva_lite/miscellaneous/ClasseVivaSearchDelegate.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAgendaItem.dart';
+import 'package:classeviva_lite/routes/Calendar.dart';
 import 'package:classeviva_lite/widgets/ClasseVivaRefreshableView.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -101,15 +103,20 @@ class _AgendaListView extends StatelessWidget {
         final MapEntry<DateTime, List<ClasseVivaAgendaItem>> itemsForDay = itemsGroupedByDay.entries.elementAt(index);
 
         return StickyHeader(
-          header: Container(
+          header: Material(
             color: ClasseViva.PRIMARY_LIGHT,
-            width: double.infinity,
-            padding: const EdgeInsets.all(8),
-            child: SelectableText(
-              DateFormat.yMMMMd().format(itemsForDay.key),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+            child: InkWell(
+              onTap: () => Get.to(Calendar()),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  DateFormat.yMMMMd().format(itemsForDay.key),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                alignment: Alignment.center,
               ),
             ),
           ),
