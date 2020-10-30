@@ -42,7 +42,11 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
         shrinkWrap: true,
         itemCount: _session.yearEndsAt.difference(_session.yearBeginsAt).inDays + 1,
         itemBuilder: (context, index) {
-          final DateTime date = _session.yearBeginsAt.add(Duration(days: index));
+          final DateTime date = DateTime(
+            _session.yearBeginsAt.year,
+            _session.yearBeginsAt.month,
+            index + 1,
+          );
 
           return Container(
             height: 80,
