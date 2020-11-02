@@ -1028,6 +1028,11 @@ class ClasseViva
       (grades, agenda, absences) {
         if (grades == null || agenda == null || absences == null) return null;
 
+        agenda.sort((a, b) {
+          // Earliest first
+          return a.start.compareTo(b.start);
+        });
+
         final ClasseVivaCalendar calendar = ClasseVivaCalendar(
           date: date,
           grades: grades.where((grade) => grade.date.isAtSameMomentAs(date)).toList(),

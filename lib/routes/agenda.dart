@@ -102,6 +102,11 @@ class _AgendaListView extends StatelessWidget {
       itemBuilder: (context, index) {
         final MapEntry<DateTime, List<ClasseVivaAgendaItem>> itemsForDay = itemsGroupedByDay.entries.elementAt(index);
 
+        itemsForDay.value.sort((a, b) {
+          // Earliest first
+          return a.start.compareTo(b.start);
+        });
+
         return StickyHeader(
           header: Material(
             color: ClasseViva.PRIMARY_LIGHT,
