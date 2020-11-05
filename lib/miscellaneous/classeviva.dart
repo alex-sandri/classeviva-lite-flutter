@@ -419,6 +419,8 @@ class ClasseViva
         subject.querySelectorAll(".cella_voto").forEach((grade) {
           final String dateString = grade.querySelector(".voto_data").text.trim();
 
+          if (dateString.isEmpty) return;
+
           final int year = int.parse(dateString.split("/").last.replaceAll(RegExp(r'^0+(?=.)'), "")) <= 8
             ? getYear() + 1
             : getYear();
