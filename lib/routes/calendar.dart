@@ -31,7 +31,7 @@ class _CalendarState extends State<Calendar> {
   void _setDate(DateTime date) {
     _calendarStripController.animateTo(date);
 
-    _pageController.jumpToPage(_date.difference(_session.yearBeginsAt).inDays.abs());
+    _pageController.jumpToPage(date.difference(_session.yearBeginsAt).inDays.abs());
 
     setState(() => _date = DateTime(date.year, date.month, date.day));
   }
