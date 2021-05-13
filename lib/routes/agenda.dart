@@ -176,7 +176,7 @@ class AgendaItemTile extends StatelessWidget {
         tooltip: "Informazioni",
         onPressed: () => showDialog(
           context: context,
-          child: Dialog(
+          builder: (_) => Dialog(
             child: ListView(
               shrinkWrap: true,
               children: [
