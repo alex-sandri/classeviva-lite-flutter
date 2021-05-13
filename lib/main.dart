@@ -42,19 +42,19 @@ import 'package:workmanager/workmanager.dart' as wm;
 Future<void> checkForNewMessages() async {
   await for (final List<ClasseVivaMessage> messages in ClasseViva.current.getMessages())
   {
-    if (messages.isNull) continue;
+    if (messages == null) continue;
 
     for (final ClasseVivaMessage message in messages)
     {
       if (message.isRead) continue;
 
       await FlutterLocalNotificationsPlugin().show(0, message.subject, message.content, NotificationDetails(
-        AndroidNotificationDetails(
+        android: AndroidNotificationDetails(
           "0",
           "Messaggi",
           "Messaggi",
         ),
-        IOSNotificationDetails(),
+        iOS: IOSNotificationDetails(),
       ));
 
       await message.markAsRead();
@@ -63,7 +63,7 @@ Future<void> checkForNewMessages() async {
 }
 
 void callbackDispatcher() async {
-  wm.Workmanager.executeTask((task, inputData) async {
+  wm.Workmanager().executeTask((task, inputData) async {
     await checkForNewMessages();
 
     return true;
@@ -109,8 +109,8 @@ void main() async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   final InitializationSettings initializationSettings = InitializationSettings(
-    AndroidInitializationSettings("app_icon"),
-    IOSInitializationSettings(),
+    android: AndroidInitializationSettings("app_icon"),
+    iOS: IOSInitializationSettings(),
   );
 
   await flutterLocalNotificationsPlugin.initialize(
@@ -118,9 +118,9 @@ void main() async {
     onSelectNotification: (payload) => null,
   );
 
-  wm.Workmanager.initialize(callbackDispatcher);
+  wm.Workmanager().initialize(callbackDispatcher);
 
-  wm.Workmanager.registerPeriodicTask(
+  wm.Workmanager().registerPeriodicTask(
     "fetchMessages",
     "fetchMessages",
     frequency: Duration(minutes: 15),

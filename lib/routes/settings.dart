@@ -73,7 +73,7 @@ class _SettingsState extends State<Settings> {
                 onTap: () async {
                   await CacheManager.empty();
 
-                  Scaffold
+                  ScaffoldMessenger
                     .of(context)
                     .showSnackBar(SnackBar(content: Text("Cache svuotata")));
                 },

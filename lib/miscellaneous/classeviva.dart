@@ -152,7 +152,7 @@ class ClasseVivaSession
 
   static Future<ClasseVivaSession> create({ String uid, String pwd, String year = "" }) async {
     final response = await http.post(
-			ClasseVivaEndpoints(year).auth(),
+			Uri.parse(ClasseVivaEndpoints(year).auth()),
       headers: {
 				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
 			},

@@ -10,7 +10,8 @@ class AuthenticationManager
   static Future<bool> authenticate() async {
     final LocalAuthentication localAuthentication = LocalAuthentication();
 
-    bool didAuthenticate = await localAuthentication.authenticateWithBiometrics(
+    bool didAuthenticate = await localAuthentication.authenticate(
+      biometricOnly: true,
       localizedReason: "Accedi"
     );
 

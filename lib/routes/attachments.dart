@@ -76,7 +76,7 @@ class _AttachmentsState extends State<Attachments> {
     return ClasseVivaRefreshableView<List<ClasseVivaAttachment>>(
       title: "Didattica",
       actions: [
-        FlatButton(
+        TextButton(
           child: Text("Compiti"),
           onPressed: () => Get.to(ClasseVivaWebview(
             title: "Compiti",
@@ -203,7 +203,7 @@ class AttachmentListTile extends StatelessWidget {
             break;
           case ClasseVivaAttachmentType.Text:
             final response = await http.get(
-              url,
+              Uri.parse(url),
               headers: session.getSessionCookieHeader(),
             );
 

@@ -1,4 +1,3 @@
-import 'package:calendar_views/calendar_views.dart';
 import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaAbsence.dart';
 import 'package:classeviva_lite/models/ClasseVivaCalendar.dart';
@@ -27,12 +26,12 @@ class _CalendarState extends State<Calendar> {
 
   ClasseVivaCalendarStripController _calendarStripController;
 
-  DaysPageController _daysPageController;
+  PageController _pageController;
 
   void _setDate(DateTime date) {
     _calendarStripController.animateTo(date);
 
-    _daysPageController.jumpToDay(date);
+    _pageController.jumpToPage(_date.difference(_session.yearBeginsAt).inDays.abs());
 
     setState(() => _date = DateTime(date.year, date.month, date.day));
   }
@@ -54,9 +53,8 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    _daysPageController = DaysPageController(
-      daysPerPage: 1,
-      firstDayOnInitialPage: _date,
+    _pageController = PageController(
+      initialPage: _date.difference(_session.yearBeginsAt).inDays.abs(),
     );
 
     return Material(
@@ -94,12 +92,12 @@ class _CalendarState extends State<Calendar> {
             ),
           ),
         ),
-        body: DaysPageView(
-          controller: _daysPageController,
-          onDaysChanged: (dates) => _setDate(dates.first),
-          pageBuilder: (context, dates) {
+        body: PageView.builder(
+          controller: _pageController,
+          onPageChanged: (index) => _setDate(_session.yearBeginsAt.add(Duration(days: index))),
+          itemBuilder: (context, index) {
             return ClasseVivaRefreshableWidget<ClasseVivaCalendar>(
-              stream: () => ClasseViva.current.getCalendar(dates.first),
+              stream: () => ClasseViva.current.getCalendar(_session.yearBeginsAt.add(Duration(days: index))),
               builder: (calendar) {
                 return ListView(
                   children: [

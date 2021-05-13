@@ -109,20 +109,22 @@ class _SignInState extends State<SignIn> {
                     if (!_showSpinner)
                       Container(
                         width: double.infinity,
-                        child: FlatButton(
-                          color: ThemeManager.isLightTheme(context)
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).accentColor,
-                          colorBrightness: ThemeManager.isLightTheme(context)
-                            ? Brightness.dark
-                            : Brightness.light,
-                          disabledColor: Theme.of(context).disabledColor,
-                          padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
+                        child: TextButton(
                           child: Icon(
                             Icons.check,
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                              ),
+                            ),
+                            foregroundColor: MaterialStateProperty.all(
+                              ThemeManager.isLightTheme(context)
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).accentColor
+                            ),
                           ),
                           onPressed: _disableButton ? null : () async {
                             setState(() {

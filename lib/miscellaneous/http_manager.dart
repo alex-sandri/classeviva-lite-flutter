@@ -12,7 +12,7 @@ class HttpManager
 
     try
     {
-      response = await http.get(url, headers: headers);
+      response = await http.get(Uri.parse(url), headers: headers);
     }
     on SocketException
     {
