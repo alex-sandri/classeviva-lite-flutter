@@ -4,7 +4,6 @@ import 'package:classeviva_lite/miscellaneous/classeviva.dart';
 import 'package:classeviva_lite/models/ClasseVivaProfile.dart';
 import 'package:classeviva_lite/routes/Home.dart';
 import 'package:classeviva_lite/routes/SignIn.dart';
-import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeleton_text/skeleton_text.dart';
