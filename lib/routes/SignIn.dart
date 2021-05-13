@@ -109,22 +109,9 @@ class _SignInState extends State<SignIn> {
                     if (!_showSpinner)
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.all(15),
                         child: TextButton(
                           child: Icon(
                             Icons.check,
-                          ),
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(4)),
-                              ),
-                            ),
-                            foregroundColor: MaterialStateProperty.all(
-                              ThemeManager.isLightTheme(context)
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).accentColor
-                            ),
                           ),
                           onPressed: _disableButton ? null : () async {
                             setState(() {

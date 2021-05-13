@@ -167,6 +167,25 @@ class MyApp extends StatelessWidget {
         tabBarTheme: TabBarTheme(
           indicator: UnderlineTabIndicator(),
         ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.disabled))
+              {
+                return Colors.grey.withAlpha(150);
+              }
+
+              return ClasseViva.PRIMARY_LIGHT;
+            }),
+            padding: MaterialStateProperty.all(EdgeInsets.all(15)),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData.dark().copyWith(
@@ -179,6 +198,25 @@ class MyApp extends StatelessWidget {
         ),
         tabBarTheme: TabBarTheme(
           indicator: UnderlineTabIndicator(),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(Colors.black),
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.disabled))
+              {
+                return Colors.grey.shade700;
+              }
+
+              return Colors.white;
+            }),
+            padding: MaterialStateProperty.all(EdgeInsets.all(15)),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

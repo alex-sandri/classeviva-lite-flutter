@@ -39,22 +39,9 @@ class _SessionsListState extends State<SessionsList> {
         if (_sessions.isNotEmpty)
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(15),
             child: TextButton(
               child: Text(
                 "Esci da tutte le sessioni"
-              ),
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                  ),
-                ),
-                foregroundColor: MaterialStateProperty.all(
-                  ThemeManager.isLightTheme(context)
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).accentColor
-                ),
               ),
               onPressed: () async {
                 for (int i = 0; i < _sessions.length; i++)
