@@ -372,7 +372,7 @@ class ClasseViva
 					subject: subject,
 					grade: grade.querySelector(".s_reg_testo").text.trim(),
 					type: grade.querySelectorAll(".voto_data").last.text.trim(),
-					description: grade.querySelector("[colspan=\"32\"] span").text.trim(),
+					description: grade.querySelector("[colspan=\"33\"] span").text.trim(),
 					date: DateFormat("dd/MM/yyyy").parse(grade.querySelectorAll(".voto_data").first.text.trim()),
         ));
 
