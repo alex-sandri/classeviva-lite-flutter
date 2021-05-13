@@ -78,6 +78,10 @@ class _AttachmentsState extends State<Attachments> {
       actions: [
         TextButton(
           child: Text("Compiti"),
+          style: Theme.of(context).textButtonTheme.style.copyWith(
+            foregroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          ),
           onPressed: () => Get.to(ClasseVivaWebview(
             title: "Compiti",
             url: Uri.parse(ClasseVivaEndpoints.current.homework()),
