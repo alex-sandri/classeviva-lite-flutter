@@ -991,9 +991,16 @@ class ClasseViva
       if (lesson.querySelector(".registro_firma_dett_docente") == null
         || lesson.id != "") return;
 
+      String subject = lesson.querySelector(".registro_firma_dett_materia").attributes["title"];
+
+      if (subject == ":materia_estesa:")
+      {
+        subject = lesson.querySelector(".registro_firma_dett_materia span:first-child").text.trim();
+      }
+
       lessons.add(ClasseVivaCalendarLesson(
         teacher: lesson.querySelector(".registro_firma_dett_docente div:first-child").text.trim(),
-        subject: lesson.querySelector(".registro_firma_dett_materia").attributes["title"],
+        subject: subject,
         type: lesson.querySelector(".registro_firma_dett_argomento_nota").previousElementSibling.text.trim(),
         description: lesson.querySelector(".registro_firma_dett_argomento_nota").text.trim(),
         hour: int.parse(
