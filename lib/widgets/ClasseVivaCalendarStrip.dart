@@ -50,8 +50,10 @@ class _ClasseVivaCalendarStripState extends State<ClasseVivaCalendarStrip> {
 
           return Container(
             height: 80,
+            color: _isSelected(date)
+              ? Colors.white38
+              : Colors.transparent,
             width: MediaQuery.of(context).size.width / 7, // 7 days in a row
-            color: _isSelected(date) ? Colors.blueAccent.shade400 : Colors.transparent,
             child: InkWell(
               onTap: () => widget.onDateChange(date),
               child: Column(
