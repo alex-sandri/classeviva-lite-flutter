@@ -158,12 +158,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: 'ClasseViva Lite',
-      theme: ThemeData.light().copyWith(
-        appBarTheme: AppBarTheme(
-          color: ClasseViva.PRIMARY_LIGHT,
-          foregroundColor: Colors.white,
-        ),
-      ),
+      theme: ThemeConfig.light(context),
       darkTheme: ThemeConfig.dark(context),
       themeMode: ThemeManager.themeMode,
       home: Builder(

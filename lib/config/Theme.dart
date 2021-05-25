@@ -2,12 +2,12 @@ import 'package:classeviva_lite/config/Config.dart';
 import 'package:flutter/material.dart';
 
 class ThemeConfig {
-  static ThemeData dark(BuildContext context) {
-    return ThemeData.dark().copyWith(
-      accentColor: Config.SECONDARY_COLOR,
+  static ThemeData light(BuildContext context) {
+    return ThemeData.light().copyWith(
       appBarTheme: AppBarTheme(
         brightness: Brightness.dark,
         color: Config.PRIMARY_COLOR,
+        foregroundColor: Config.SECONDARY_COLOR,
         elevation: 0,
       ),
       cardTheme: Theme.of(context).cardTheme.copyWith(
@@ -15,7 +15,81 @@ class ThemeConfig {
           borderRadius: BorderRadius.circular(4),
         ),
       ),
-      colorScheme: ColorScheme.dark(
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: TextStyle(
+          color: Colors.black,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            color: Config.SECONDARY_COLOR,
+          ),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            color: Config.SECONDARY_COLOR,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(
+            color: Config.SECONDARY_COLOR,
+          ),
+        ),
+      ),
+      tabBarTheme: TabBarTheme(
+        indicator: UnderlineTabIndicator(),
+      ),
+      textTheme: Theme.of(context).textTheme
+        .copyWith(
+          headline6: Theme.of(context).textTheme.headline6.copyWith(
+            fontSize: 30,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all(Config.SECONDARY_COLOR),
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.disabled))
+            {
+              return Config.PRIMARY_COLOR.withAlpha(150);
+            }
+
+            return Config.PRIMARY_COLOR;
+          }),
+          padding: MaterialStateProperty.all(EdgeInsets.all(15)),
+          textStyle: MaterialStateProperty.all(
+            TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static ThemeData dark(BuildContext context) {
+    return ThemeData.dark().copyWith(
+      accentColor: Config.SECONDARY_COLOR,
+      appBarTheme: AppBarTheme(
+        brightness: Brightness.dark,
+        color: Config.PRIMARY_COLOR,
+        foregroundColor: Config.SECONDARY_COLOR,
+        elevation: 0,
+      ),
+      cardTheme: Theme.of(context).cardTheme.copyWith(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+        ),
+      ),
+      colorScheme: ColorScheme.dark().copyWith(
         primary: Config.SECONDARY_COLOR,
       ),
       inputDecorationTheme: InputDecorationTheme(
