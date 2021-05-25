@@ -28,6 +28,11 @@ class ClasseVivaSearchDelegate<T> extends SearchDelegate
           color: Colors.white,
         ),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        enabledBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
+      ),
     );
   }
   

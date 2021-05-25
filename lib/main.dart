@@ -28,6 +28,7 @@ import 'package:classeviva_lite/routes/Home.dart';
 import 'package:classeviva_lite/routes/SignIn.dart';
 import 'package:classeviva_lite/miscellaneous/theme_manager.dart';
 import 'package:classeviva_lite/widgets/ClassevivaWebview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -72,7 +73,7 @@ void callbackDispatcher() async {
 }
 
 void main() async {
-  await FlutterDownloader.initialize(debug: false);
+  await FlutterDownloader.initialize(debug: kDebugMode);
 
   await Hive.initFlutter();
 
