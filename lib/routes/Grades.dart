@@ -103,9 +103,13 @@ class _GradesState extends State<Grades> {
 class GradeTile extends StatelessWidget {
   final ClasseVivaGrade grade;
 
+  final bool showSubject;
   final bool showDay;
 
-  GradeTile(this.grade, { this.showDay = true, });
+  GradeTile(this.grade, {
+    this.showDay = true,
+    this.showSubject = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +127,9 @@ class GradeTile extends StatelessWidget {
         radius: 25,
       ),
       title: SelectableText(
-        grade.subject,
+        showSubject
+          ? grade.subject
+          : grade.type,
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,12 +142,13 @@ class GradeTile extends StatelessWidget {
                   DateFormat.yMMMMd().format(grade.date),
                 ),
 
-              Expanded(
-                child: SelectableText(
-                  showDay ? " - ${grade.type}" : grade.type,
-                  maxLines: 1,
+              if (showSubject)
+                Expanded(
+                  child: SelectableText(
+                    showDay ? "- ${grade.type}" : grade.type,
+                    maxLines: 1,
+                  ),
                 ),
-              ),
             ],
           ),
           SelectableLinkify(
@@ -298,7 +305,7 @@ class _GradesAveragesList extends StatelessWidget {
           subtitle: previousAverageGrade != -1
             ? _getAverageGradeChangeTextWidget(previousAverageGrade, averageGrade)
             : null,
-          children: grades.map((grade) => GradeTile(grade)).toList(),
+          children: grades.map((grade) => GradeTile(grade, showSubject: false)).toList(),
         );
       },
     );
