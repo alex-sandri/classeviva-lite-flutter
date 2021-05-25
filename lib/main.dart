@@ -1,5 +1,6 @@
 import 'package:classeviva_lite/adapters/ColorAdapter.dart';
 import 'package:classeviva_lite/adapters/DurationAdapter.dart';
+import 'package:classeviva_lite/config/Theme.dart';
 import 'package:classeviva_lite/miscellaneous/PreferencesManager.dart';
 import 'package:classeviva_lite/miscellaneous/authentication_manager.dart';
 import 'package:classeviva_lite/miscellaneous/cache_manager.dart';
@@ -157,69 +158,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'ClasseViva Lite',
       theme: ThemeData.light().copyWith(
-        brightness: Brightness.light,
-        primaryColor: ClasseViva.PRIMARY_LIGHT,
-        accentColor: Colors.white,
         appBarTheme: AppBarTheme(
           color: ClasseViva.PRIMARY_LIGHT,
-          elevation: 0,
+          foregroundColor: Colors.white,
         ),
-        tabBarTheme: TabBarTheme(
-          indicator: UnderlineTabIndicator(),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all(Colors.white),
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
-              if (states.contains(MaterialState.disabled))
-              {
-                return Colors.grey.withAlpha(150);
-              }
-
-              return ClasseViva.PRIMARY_LIGHT;
-            }),
-            padding: MaterialStateProperty.all(EdgeInsets.all(15)),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
-          ),
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      darkTheme: ThemeData.dark().copyWith(
-        brightness: Brightness.dark,
-        primaryColor: Colors.black87,
-        accentColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          color: ClasseViva.PRIMARY_LIGHT,
-          elevation: 0,
-        ),
-        tabBarTheme: TabBarTheme(
-          indicator: UnderlineTabIndicator(),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all(Colors.black),
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
-              if (states.contains(MaterialState.disabled))
-              {
-                return Colors.grey.shade700;
-              }
-
-              return Colors.white;
-            }),
-            padding: MaterialStateProperty.all(EdgeInsets.all(15)),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
-          ),
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      darkTheme: ThemeConfig.dark(context),
       themeMode: ThemeManager.themeMode,
       home: Builder(
         builder: (context) {

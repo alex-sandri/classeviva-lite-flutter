@@ -307,10 +307,11 @@ class HomeDrawerHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               profile.data.profilePic,
+              SizedBox(height: 10),
               Text(
                 profile.data.name,
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).appBarTheme.foregroundColor,
                   fontWeight: FontWeight.w900,
                   fontSize: 25,
                 ),
@@ -318,14 +319,14 @@ class HomeDrawerHeader extends StatelessWidget {
               Text(
                 profile.data.school,
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).appBarTheme.foregroundColor,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               Text(
                 "${_session.getYear()}/${_session.getYear() + 1}",
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).appBarTheme.foregroundColor,
                   fontWeight: FontWeight.w400,
                 ),
               ),
